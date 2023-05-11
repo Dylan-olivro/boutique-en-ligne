@@ -26,10 +26,8 @@ require_once('./class/user.php');
     <?php require_once('./include/header.php'); ?>
     <main>
         <form action="" method="post">
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" value="<?= $_SESSION['user']->login ?>" autofocus>
             <label for="email">Email</label>
-            <input type="text" id="email" name="email" value="<?= $_SESSION['user']->email ?>">
+            <input type="text" id="email" name="email" value="<?= $_SESSION['user']->email ?>" autofocus>
             <label for="firstname">Firstname</label>
             <input type="text" id="firstname" name="firstname" value="<?= $_SESSION['user']->firstname ?>">
             <label for="lastname">Lastname</label>
@@ -37,11 +35,11 @@ require_once('./class/user.php');
             <label for="password">Password</label>
             <input type="password" name="password">
             <input type="submit" name="submit" class="input">
-            <a href="mdp.php">Changer de mot de passe</a>
+            <a href="modifyPassword.php">Changer de mot de passe</a>
 
             <?php
             if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, $_POST['login'], $_POST['password'], $_POST['email'], $_POST['firstname'], $_POST['lastname']);
+                $user = new User($_SESSION['user']->id, $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['password']);
                 $user->update($bdd);
             }
             ?>

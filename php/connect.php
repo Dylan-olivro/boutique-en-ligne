@@ -24,8 +24,8 @@ if (isset($_SESSION['user'])) {
     <?php require_once('./include/header.php'); ?>
     <main>
         <form action="" method="post">
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" placeholder="Login" autofocus>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Email" autofocus>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Password">
             <input type="submit" name="submit" class="input">
@@ -35,7 +35,7 @@ if (isset($_SESSION['user'])) {
             if (isset($_POST['submit'])) {
 
                 // var_dump($result);
-                $user = new User('', $_POST['login'], $_POST['password'], '', '', '');
+                $user = new User('', $_POST['email'], '', '', $_POST['password']);
                 $user->connect($bdd);
                 $user->isConnected();
             }

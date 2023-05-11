@@ -27,10 +27,8 @@ if (isset($_SESSION['user'])) {
     <?php require_once('./include/header.php'); ?>
     <main>
         <form action="" method="post">
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" autofocus>
             <label for="email">Email</label>
-            <input type="text" id="email" name="email">
+            <input type="text" id="email" name="email" autofocus>
             <label for="password">Password</label>
             <input type="password" id="password" name="password">
             <label for="confirm_password">Confirm password</label>
@@ -43,7 +41,7 @@ if (isset($_SESSION['user'])) {
             <?php
 
             if (isset($_POST['submit'])) {
-                $user = new User('', $_POST['login'], $_POST['password'], $_POST['email'],  $_POST['firstname'], $_POST['lastname']);
+                $user = new User('', $_POST['email'],  $_POST['firstname'], $_POST['lastname'], $_POST['password']);
                 $user->register($bdd);
             }
             ?>

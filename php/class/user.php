@@ -24,25 +24,25 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
 class User
 {
     public $id;
-    public $login;
-    public $password;
+    // public $login;
     public $email;
     public $firstname;
     public $lastname;
+    public $password;
 
-    public function __construct($id, $login, $password, $email, $firstname, $lastname)
+    public function __construct($id, $email, $firstname, $lastname, $password,)
     {
         $this->id = $id;
-        $this->login = $login;
-        $this->password = $password;
+        // $this->login = $login;
         $this->email = $email;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
+        $this->password = $password;
     }
 
     public function getAllinfo()
     {
-        return $this->login;
+        // return $this->login;
         return $this->password;
         return $this->email;
         return $this->firstname;
@@ -54,14 +54,14 @@ class User
         $recupUser->execute([$_POST['login']]);
     }
 
-    public function getLogin($login)
-    {
-        return $this->login;
-    }
-    public function setLogin($login)
-    {
-        $this->login = $login;
-    }
+    // public function getLogin($login)
+    // {
+    //     return $this->login;
+    // }
+    // public function setLogin($login)
+    // {
+    //     $this->login = $login;
+    // }
 
     public function getPassword($password)
     {
@@ -104,54 +104,51 @@ class User
 
     public function register($bdd)
     {
-        $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ?");
-        $recupUser->execute([$this->login]);
-        $insertUser = $bdd->prepare("INSERT INTO utilisateurs (login,password, email,firstname,lastname) VALUES(?,?,?,?,?)");
 
-        if (login($this->login) == false) {
-        } elseif (email($this->email) == false) {
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ?");
+        $recupUser->execute([$this->email]);
+        $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
+
+        if (email($this->email) == false) {
         } elseif (password($this->password) == false) {
         } elseif (confirm_password($_POST['confirm_password']) == false) {
         } elseif (firstname($this->firstname) == false) {
         } elseif (lastname($this->lastname) == false) {
         } elseif (same_password($this->password, $_POST['confirm_password']) == false) {
-        } elseif (special_login($this->login) == false) {
         } elseif ($recupUser->rowCount() > 0) {
-            echo 'Login déjà utilisé';
+            echo 'Email déjà utilisé';
         } else {
-            $insertUser->execute([$this->login, password_hash($this->password, PASSWORD_DEFAULT), $this->email, $this->firstname, $this->lastname]);
-            header('Location:connexion.php');
+            $insertUser->execute([$this->email, $this->lastname, $this->firstname, password_hash($this->password, PASSWORD_DEFAULT)]);
+            header('Location:../index.php');
         }
     }
 
 
     public function connect($bdd)
     {
-        $request = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ?");
-        $request->execute([$this->login]);
+        $request = $bdd->prepare("SELECT * FROM users WHERE email = ?");
+        $request->execute([$this->email]);
         $res = $request->fetchAll(PDO::FETCH_OBJ);
         // var_dump($res);
 
-        $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ? AND password = ?");
-        $recupUser->execute([$this->login, $res[0]->password]);
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+        $recupUser->execute([$this->email, $res[0]->password]);
         $result = $recupUser->fetch(PDO::FETCH_OBJ);
         // $_SESSION['user'] = serialize($this);
 
-        if (login($this->login) == false) {
+        if (email($this->email) == false) {
         } elseif (password($this->password) == false) {
-        } elseif (special_login($this->login) == false) {
         } elseif ($recupUser->rowCount() > 0) {
             if ($result != false) {
                 if (password_verify($this->password, $result->password)) {
                     $this->id = $result->id;
-                    $this->login = $result->login;
-                    $this->password = $result->password;
                     $this->email = $result->email;
                     $this->firstname = $result->firstname;
                     $this->lastname = $result->lastname;
+                    $this->password = $result->password;
 
                     $_SESSION['user'] = $this;
-                    header('Location: index.php');
+                    header('Location: ../index.php');
                 }
             }
         } else {
@@ -162,35 +159,32 @@ class User
     public function update($bdd)
     {
 
-        $request = $bdd->prepare("SELECT * FROM utilisateurs WHERE id = ?");
+        $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
         $request->execute([$this->id]);
         $res = $request->fetchAll(PDO::FETCH_OBJ);
         // var_dump($res[0]->password);
 
-        $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ? AND id != ?");
-        $recupUser->execute([$this->login, $this->id]);
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND id != ?");
+        $recupUser->execute([$this->email, $this->id]);
         // var_dump($res);
-        $insertUser = $bdd->prepare("UPDATE utilisateurs SET login = ?,password = ?,email = ?, firstname = ?,lastname = ? WHERE id = ? ");
+        $insertUser = $bdd->prepare("UPDATE users SET email = ?, firstname = ?, lastname = ?, password = ? WHERE id = ? ");
 
-        if (login($this->login) == false) {
-        } elseif (email($this->email) == false) {
+        if (email($this->email) == false) {
         } elseif (password($this->password) == false) {
         } elseif (firstname($this->firstname) == false) {
         } elseif (lastname($this->lastname) == false) {
-        } elseif (special_login($this->login) == false) {
         } elseif ($recupUser->rowCount() > 0) {
-            echo 'Login déjà utilisé';
+            echo 'Email déjà utilisé';
         } else {
             if ($this->password != password_verify($this->password, $res[0]->password)) {
                 echo  "Ce n'est pas le bon mot de passe";
             } else {
-                $insertUser->execute([$this->login, $res[0]->password, $this->email, $this->firstname, $this->lastname, $this->id]);
-                $_SESSION['user']->login = $this->login;
-                $_SESSION['user']->password = $this->password;
+                $insertUser->execute([$this->email, $this->firstname, $this->lastname, $res[0]->password, $this->id]);
                 $_SESSION['user']->email = $this->email;
                 $_SESSION['user']->firstname = $this->firstname;
                 $_SESSION['user']->lastname = $this->lastname;
-                header('Location:profil.php');
+                $_SESSION['user']->password = $this->password;
+                header('Location:./profil.php');
             }
         }
     }

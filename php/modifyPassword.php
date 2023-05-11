@@ -36,7 +36,7 @@ if (!isset($_SESSION['user'])) {
 
             <?php
             if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, '', password_hash($_POST['new_password'], PASSWORD_DEFAULT), '', '', '');
+                $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT));
                 $user->updatePassword($bdd);
             }
             ?>
