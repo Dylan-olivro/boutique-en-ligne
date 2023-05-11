@@ -33,6 +33,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
     // TODO: HEADER
 ?>
     <header>
+        <!-- 1ere NAV POUR LOGO, SEARCH BAR, CONN ET PANIER -->
         <nav>
             <a href="../index.php">Index</a>
             <?php
@@ -43,6 +44,10 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                 <a href="./connect.php">Connect</a>
                 <a href="./signUp.php">signUp</a>
             <?php } ?>
+        </nav>
+        <!-- 2e NAV POUR LES CATEGORIES PARENTS -->
+        <nav>
+            
         </nav>
     </header>
 <?php }
