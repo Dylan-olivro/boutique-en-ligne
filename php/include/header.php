@@ -12,7 +12,7 @@ $url .= $_SERVER['HTTP_HOST'];
 $url .= $_SERVER['REQUEST_URI'];
 $splitURL = explode('boutique-en-ligne', $url);  //PHP
 
-if ($splitURL[1] === '/index.php') {
+if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
     // TODO: HEADER INDEX
 ?>
     <header>
