@@ -10,8 +10,9 @@ else {
 $url .= "://";
 $url .= $_SERVER['HTTP_HOST'];
 $url .= $_SERVER['REQUEST_URI'];
-$splitURL = explode('boutique-en-ligne', $url);  //PHP
+$splitURL = explode('boutique-en-ligne', $url);
 
+// CONDITION SI ON EST SUR L'INDEX OU PAS
 if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
     require_once('./php/include/bdd.php');
     require_once('./php/include/function.php');
@@ -24,7 +25,6 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
 class User
 {
     public $id;
-    // public $login;
     public $email;
     public $firstname;
     public $lastname;
@@ -33,7 +33,6 @@ class User
     public function __construct($id, $email, $firstname, $lastname, $password,)
     {
         $this->id = $id;
-        // $this->login = $login;
         $this->email = $email;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -42,26 +41,20 @@ class User
 
     public function getAllinfo()
     {
-        // return $this->login;
         return $this->password;
         return $this->email;
         return $this->firstname;
         return $this->lastname;
     }
-    public function getId($bdd)
-    {
-        $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ?");
-        $recupUser->execute([$_POST['login']]);
-    }
 
-    // public function getLogin($login)
-    // {
-    //     return $this->login;
-    // }
-    // public function setLogin($login)
-    // {
-    //     $this->login = $login;
-    // }
+    public function getId($id)
+    {
+        return $this->id;
+    }
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     public function getPassword($password)
     {
@@ -190,11 +183,11 @@ class User
     }
     public function updatePassword($bdd)
     {
-        $request = $bdd->prepare("SELECT * FROM utilisateurs WHERE id = ?");
+        $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
         $request->execute([$this->id]);
         $res = $request->fetchAll(PDO::FETCH_OBJ);
         // var_dump($res);
-        $insertUser = $bdd->prepare("UPDATE utilisateurs SET password = ? WHERE id = ? ");
+        $insertUser = $bdd->prepare("UPDATE users SET password = ? WHERE id = ? ");
 
 
         if (password($this->password) == false) {
@@ -205,7 +198,7 @@ class User
         } else {
             $insertUser->execute([$this->password, $this->id]);
             $_SESSION['user']->password = $this->password;
-            header('Location:profil.php');
+            header('Location:./profil.php');
         }
     }
     public function disconnect()
