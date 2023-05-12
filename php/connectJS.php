@@ -49,6 +49,8 @@ if (isset($_POST['submit'])) {
             </p>
         </form>
     </main>
+    <?php require_once('./php/include/header-save.php') ?>
+
 </body>
 <style>
     form {

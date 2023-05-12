@@ -44,6 +44,7 @@ var_dump($_SESSION);
             ?>
         </form>
     </main>
+    <?php require_once('./php/include/header-save.php') ?>
 </body>
 <style>
     form {

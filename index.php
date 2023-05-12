@@ -25,6 +25,7 @@ require_once('./php/class/user.php');
 
     var_dump($result);
     ?>
+    <?php require_once('./php/include/header-save.php') ?>
 </body>
 
 </html>
