@@ -17,6 +17,14 @@ require_once('./php/class/user.php');
 
 <body>
     <?php require_once('./php/include/header.php') ?>
+
+    <?php
+    $recupArticle = $bdd->prepare('SELECT * FROM items');
+    $recupArticle->execute();
+    $result = $recupArticle->fetchAll(PDO::FETCH_ASSOC);
+
+    var_dump($result);
+    ?>
 </body>
 
 </html>
