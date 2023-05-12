@@ -1,12 +1,19 @@
 <?php
-require_once('./class/user.php');
-
+require_once('./class/userJS.php');
+$message = '';
 // session_destroy();
-if (!isset($_SESSION['user'])) {
+if (isset($_SESSION['user'])) {
     header('Location:index.php');
 }
+if (isset($_POST['submit'])) {
+    $email = trim(htmlspecialchars($_POST['email']));
+    $firstname = trim(htmlspecialchars($_POST['firstname']));
+    $lastname = trim(htmlspecialchars($_POST['lastname']));
 
-// var_dump($_SESSION['user']);
+
+    $user = new User('', $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['password']);
+    $user->register($bdd, $message);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +22,9 @@ if (!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Modify</title>
+    <!-- <link rel="stylesheet" href="./css/common.css"> -->
+    <title>Sign Up</title>
+    <script src="../js/signUpJS.js" defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -24,24 +33,23 @@ if (!isset($_SESSION['user'])) {
 
 <body>
     <?php require_once('./include/header.php'); ?>
-
     <main>
-        <form action="" method="post">
+        <form action="" method="post" id="signup">
+            <label for="email">Email</label>
+            <input type="" id="email" name="email" autofocus>
+            <label for="firstname">Firstname</label>
+            <input type="text" id="firstname" name="firstname">
+            <label for="lastname">Lastname</label>
+            <input type="text" id="lastname" name="lastname">
             <label for="password">Password</label>
-            <input type="password" name="password">
-            <label for="new_password">New Password</label>
-            <input type="password" name="new_password">
+            <input type="password" id="password" name="password">
+            <label for="confirm_password">Confirm password</label>
+            <input type="password" id="confirm_password" name="confirm_password">
             <input type="submit" name="submit" class="input">
+            <p id="message"><?= $message ?></p>
 
-            <?php
-            if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT));
-                $user->updatePassword($bdd);
-            }
-            ?>
         </form>
     </main>
-
 </body>
 <style>
     form {
