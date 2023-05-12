@@ -95,16 +95,16 @@ class User
         $this->lastname = $lastname;
     }
 
-    public function register($bdd, $message)
+    public function register($bdd)
     {
         $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ?");
         $recupUser->execute([$this->email]);
         $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
 
         if ($recupUser->rowCount() > 0) {
-            // ! CORRIGER LE PROBLEME D'AFFICHAGE DU MESSAGE D'ERREUR
-            $message = 'Email déjà utilisé';
+            $_SESSION['message'] = 'Email déjà utilisé';
         } else {
+            unset($_SESSION['message']);
             $insertUser->execute([$this->email, $this->lastname, $this->firstname, password_hash($this->password, PASSWORD_DEFAULT)]);
             header('Location:../index.php');
         }
@@ -133,11 +133,14 @@ class User
                     $this->password = $result->password;
 
                     $_SESSION['user'] = $this;
+                    unset($_SESSION['message']);
                     header('Location: ../index.php');
                 }
             }
         } else {
-            echo 'uilisateurs inconnu';
+            $_SESSION['message'] = 'utilisateurs inconnu';
+            //? VOIR SI ON PEUT S'EN PASSER
+            header('Location: connectJS.php');
         }
     }
 

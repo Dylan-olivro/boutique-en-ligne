@@ -29,7 +29,13 @@ if (isset($_SESSION['user'])) {
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Password">
             <input type="submit" name="submit" class="input">
-            <p id="message"></p>
+            <p id="message">
+                <?php
+                if (!empty($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                }
+                ?>
+            </p>
 
             <?php
 

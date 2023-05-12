@@ -1,6 +1,5 @@
 <?php
 require_once('./class/userJS.php');
-$message = '';
 // session_destroy();
 if (isset($_SESSION['user'])) {
     header('Location:index.php');
@@ -10,10 +9,8 @@ if (isset($_POST['submit'])) {
     $firstname = trim(htmlspecialchars($_POST['firstname']));
     $lastname = trim(htmlspecialchars($_POST['lastname']));
 
-
     $user = new User('', $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['password']);
-    $user->register($bdd, $message);
-    // ! CORRIGER LE PROBLEME D'AFFICHAGE DU MESSAGE D'ERREUR
+    $user->register($bdd);
 }
 ?>
 <!DOCTYPE html>
@@ -47,7 +44,13 @@ if (isset($_POST['submit'])) {
             <label for="confirm_password">Confirm password</label>
             <input type="password" id="confirm_password" name="confirm_password">
             <input type="submit" name="submit" class="input">
-            <p id="message"><?= $message ?></p>
+            <p id="message">
+                <?php
+                if (!empty($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                }
+                ?>
+            </p>
 
         </form>
     </main>
