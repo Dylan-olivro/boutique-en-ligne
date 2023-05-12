@@ -4,7 +4,18 @@ require_once('./class/userJS.php');
 if (isset($_SESSION['user'])) {
     header('Location:index.php');
 }
+
+if (isset($_POST['submit'])) {
+    $email = trim(htmlspecialchars($_POST['email']));
+    $password = $_POST['password'];
+
+    $user = new User('', $email, '', '', $password);
+    $user->connect($bdd);
+    // $user->isConnected();
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,16 +47,6 @@ if (isset($_SESSION['user'])) {
                 }
                 ?>
             </p>
-
-            <?php
-
-            if (isset($_POST['submit'])) {
-                $user = new User('', $_POST['email'], '', '', $_POST['password']);
-                $user->connect($bdd);
-                // $user->isConnected();
-            }
-
-            ?>
         </form>
     </main>
 </body>

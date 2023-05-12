@@ -8,8 +8,9 @@ if (isset($_POST['submit'])) {
     $email = trim(htmlspecialchars($_POST['email']));
     $firstname = trim(htmlspecialchars($_POST['firstname']));
     $lastname = trim(htmlspecialchars($_POST['lastname']));
+    $password = $_POST['password'];
 
-    $user = new User('', $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['password']);
+    $user = new User('', $email, $firstname, $lastname, $password);
     $user->register($bdd);
 }
 ?>
