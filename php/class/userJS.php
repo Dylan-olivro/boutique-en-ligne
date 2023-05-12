@@ -102,10 +102,11 @@ class User
         $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
 
         if ($recupUser->rowCount() > 0) {
+            // ! CORRIGER LE PROBLEME D'AFFICHAGE DU MESSAGE D'ERREUR
             $message = 'Email déjà utilisé';
         } else {
             $insertUser->execute([$this->email, $this->lastname, $this->firstname, password_hash($this->password, PASSWORD_DEFAULT)]);
-            // header('Location:../index.php');
+            header('Location:../index.php');
         }
     }
 
@@ -117,14 +118,12 @@ class User
         $res = $request->fetchAll(PDO::FETCH_OBJ);
         // var_dump($res);
 
-        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-        $recupUser->execute([$this->email, $res[0]->password]);
-        $result = $recupUser->fetch(PDO::FETCH_OBJ);
-        // $_SESSION['user'] = serialize($this);
+        if ($request->rowCount() > 0) {
 
-        if (email($this->email) == false) {
-        } elseif (password($this->password) == false) {
-        } elseif ($recupUser->rowCount() > 0) {
+            $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+            $recupUser->execute([$this->email, $res[0]->password]);
+            $result = $recupUser->fetch(PDO::FETCH_OBJ);
+
             if ($result != false) {
                 if (password_verify($this->password, $result->password)) {
                     $this->id = $result->id;

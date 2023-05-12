@@ -22,7 +22,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
             <?php
             if (isset($_SESSION['user'])) { ?>
                 <a href="./php/profil.php">Profil</a>
-                <a href="./php/include/disconnect.php">Disconnect</a>
+                <a href="./php/disconnect.php">Disconnect</a>
             <?php } else { ?>
                 <a href="./php/connect.php">connect</a>
                 <a href="./php/signUp.php">signUp</a>
