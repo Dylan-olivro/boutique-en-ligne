@@ -23,12 +23,16 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
             if (isset($_SESSION['user'])) { ?>
                 <a href="./php/profil.php">Profil</a>
                 <a href="./php/disconnect.php">Disconnect</a>
-            <?php } else { ?>
+                <?php if ($_SESSION['user']->role !== 0) { ?>
+                    <a href="./php/admin.php">admin</a>
+                    <a href="./php/addItems.php">add Items</a>
+                <?php
+                }
+            } else { ?>
                 <a href="./php/connect.php">connect</a>
                 <a href="./php/connectJS.php">connectJS</a>
                 <a href="./php/signUp.php">signUp</a>
                 <a href="./php/signUpJS.php">signUpJS</a>
-                <a href="./php/addItems.php">add Items</a>
             <?php } ?>
         </nav>
     </div>
@@ -41,12 +45,17 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
             <?php
             if (isset($_SESSION['user'])) { ?>
                 <a href="./profil.php">Profil</a>
-                <a href="./disconnect.php">Deco</a>
-            <?php } else { ?>
+                <a href="./disconnect.php">Disconnect</a>
+                <?php if ($_SESSION['user']->role == 2) { ?>
+                    <a href="./admin.php">admin</a>
+                    <a href="./addItems.php">add Items</a>
+                <?php
+                }
+            } else { ?>
                 <a href="./connect.php">connect</a>
                 <a href="./connectJS.php">connectJS</a>
                 <a href="./signUp.php">signUp</a>
-                <a href="./addItems.php">add Items</a>
+                <a href="./php/signUpJS.php">signUpJS</a>
             <?php } ?>
         </nav>
     </div>

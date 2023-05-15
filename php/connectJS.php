@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $email = trim(htmlspecialchars($_POST['email']));
     $password = $_POST['password'];
 
-    $user = new User('', $email, '', '', $password);
+    $user = new User('', $email, '', '', $password, '');
     $user->connect($bdd);
     // $user->isConnected();
 }
