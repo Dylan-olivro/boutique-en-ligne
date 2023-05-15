@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 
             <label for="description">description</label>
             <input type="text" id="description" name="description">
-
+            <!-- Ajouter les conditions pour pouvoir rentrer que des nombres -->
             <label for="name">price</label>
             <input type="text" id="price" name="price">
 
