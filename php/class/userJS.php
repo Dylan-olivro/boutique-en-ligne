@@ -97,7 +97,7 @@ class User
 
     public function register($bdd)
     {
-        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ?");
+        $recupUser = $bdd->prepare("SELECT email FROM users WHERE email = ?");
         $recupUser->execute([$this->email]);
         $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
 
@@ -113,7 +113,7 @@ class User
 
     public function connect($bdd)
     {
-        $request = $bdd->prepare("SELECT * FROM users WHERE email = ?");
+        $request = $bdd->prepare("SELECT email FROM users WHERE email = ?");
         $request->execute([$this->email]);
         $res = $request->fetchAll(PDO::FETCH_OBJ);
         // var_dump($res);
