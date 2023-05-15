@@ -9,23 +9,17 @@ require_once('./class/item.php');
 // var_dump($date);
 
 if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $description = $_POST['description'];
+
+    $name = trim(htmlspecialchars($_POST['name']));
+    $description = trim(htmlspecialchars($_POST['description']));
     $date = date("Y-m-d H:i:s");
     $price = $_POST['price'];
     $stock = $_POST['stock'];
     $category = $_POST['category'];
 
     $item = new Item('', $name, $description, $date, $price, $stock, $category);
-    $item->add($bdd);
+    $item->addItem($bdd);
 }
-
-
-$recupItems2 = $bdd->prepare('SELECT * FROM items INNER JOIN liaison_items_category ON items.id = liaison_items_category.id_item');
-$recupItems2->execute();
-$res = $recupItems2->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($res);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -27,8 +27,10 @@ class Item
     public $date;
     public $price;
     public $stock;
+    public $image;
     public $category;
 
+    // ! ajouter image dans __construct
     public function __construct($id, $name, $description, $date, $price, $stock, $category)
     {
         $this->id = $id;
@@ -37,6 +39,7 @@ class Item
         $this->date = $date;
         $this->price = $price;
         $this->stock = $stock;
+        // $this->image = $image;
         $this->category = $category;
     }
 
@@ -106,6 +109,17 @@ class Item
         return $this;
     }
 
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
     public function getCategory()
     {
         return $this->category;
@@ -116,22 +130,25 @@ class Item
         $this->category = $category;
         return $this;
     }
-    public function add($bdd)
+    public function addItem($bdd)
     {
         $insertItems = $bdd->prepare("INSERT INTO items (name,description,date,price,stock) VALUES(?,?,?,?,?)");
         $insertItems->execute([$this->name, $this->description, $this->date, $this->price, $this->stock]);
 
-        // $articleInfo = $bdd->prepare("SELECT articles.id, articles.article FROM articles INNER JOIN utilisateurs ON articles.id_utilisateur = utilisateurs.id WHERE utilisateurs.id = $this->id_utilisateur ORDER BY articles.id DESC");
-
-        $recupItems = $bdd->prepare('SELECT * FROM items ORDER BY items.id DESC');
-        // $recupItems = $bdd->prepare('SELECT items.id,liaison_items_category.id_item FROM items INNER JOIN liaison_items_category ON items.id = liaison_items_category.id_item ORDER BY items.id DESC');
-        $recupItems->execute();
-        $resultItems = $recupItems->fetch(PDO::FETCH_ASSOC);
-        // var_dump($resultItems);
+        $returnItems = $bdd->prepare('SELECT * FROM items ORDER BY items.id DESC');
+        $returnItems->execute();
+        $resultItems = $returnItems->fetch(PDO::FETCH_OBJ);
 
         $insertCategory = $bdd->prepare('INSERT INTO liaison_items_category (id_item,id_category) VALUES(?,?)');
-        $insertCategory->execute([$resultItems['id'], $this->category]);
+        $insertCategory->execute([$resultItems->id, $this->category]);
 
         header('Location: addItems.php');
+    }
+
+    public function returnItems($bdd)
+    {
+        $returnItems = $bdd->prepare('SELECT * FROM items INNER JOIN liaison_items_category ON items.id = liaison_items_category.id_item');
+        $returnItems->execute();
+        $resultItems = $returnItems->fetchAll(PDO::FETCH_ASSOC);
     }
 }
