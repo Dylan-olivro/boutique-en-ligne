@@ -5,7 +5,8 @@
 // });
 
 let iconSite = document.getElementById("iconSite");
-var burger = window.matchMedia("(max-width: 768px)");
+let searchDiv = document.getElementById("searchDiv");
+var burger = window.matchMedia("(max-width: 991px)");
 
 $("#iconSite").on("click", function () {
   $("#navCategories").prependTo("#testDiv");
@@ -17,8 +18,12 @@ function myFunction() {
   if (burger.matches) {
     // If media query matches
     $("#searchBar").prependTo("#navCategories");
-} else {
-    $("#searchBar").prependTo("#navPrincipale");
+    searchDiv.style.display = "none";
+    iconSite.style.backgroundColor = "yellow";
+    console.log("YELLOW");
+  } else {
+    searchDiv.style.display = "block";
+    $("#searchBar").prependTo("#searchDiv");
     iconSite.style.backgroundColor = "pink";
     console.log("PINK");
   }

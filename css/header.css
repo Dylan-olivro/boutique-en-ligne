@@ -1,0 +1,32 @@
+.container-fluid {
+  --bs-gutter-x: 8rem !important;
+}
+.navbar {
+  --bs-navbar-padding-y: 1rem !important;
+}
+.navbar-nav {
+  display: flex !important;
+  flex-direction: row !important;
+}
+.nav-item {
+  margin-right: 1em !important;
+}
+#navbarSupportedContent {
+  background-color: lightblue;
+  width: auto;
+}
+
+@media screen and (min-width: 992px) {
+  #navbarSupportedContent {
+    background-color: lightblue;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .container-fluid {
+    --bs-gutter-x: 2rem !important;
+  }
+}
