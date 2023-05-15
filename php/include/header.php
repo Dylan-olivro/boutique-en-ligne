@@ -19,32 +19,31 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
     <header>
         <!-- début 1ere nav -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
+            <div class="container-fluid d-flex flex-column">
                 <!-- <div class="navPrincipaleAvecLogo"> -->
-                    <div class=""></div>
-                <a class="navbar-brand" href="#">LOGO ACCUEIL</a>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-user fa-lg"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-                </li>
-                </ul>
+                <div class="navPrincipale d-flex justify-content-between w-100" id="navPrincipale">
+                    <a class="navbar-brand" id="iconSite" href="#">LOGO ACCUEIL</a>
+                    <ul class="navbar-nav mb-2 mb-lg-0 w-75" id="searchBar">
+                        <form class="d-flex  w-100" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                        </form>
+                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-user fa-lg"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                        </li>
+                    </ul>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="navPrincipale" id="">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <form class="d-flex" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-                            </form>
-                        </ul>
-                    </div>
                     <!-- </div> -->
-                        <div class="navCategories">
+                    <div class="navCategories" id="navCategories">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,22 +55,22 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                                     <!-- <li><hr class="dropdown-divider"></li> -->
                                     <li><a class="dropdown-item" href="#">Tablette</a></li>
                                 </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Composants
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Processeur</a></li>
-                                <li><a class="dropdown-item" href="#">Carte graphique</a></li>
-                                <!-- <li><hr class="dropdown-divider"></li> -->
-                                <li><a class="dropdown-item" href="#">Carte mère</a></li>
-                            </ul>
-                        </li>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Composants
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Processeur</a></li>
+                                    <li><a class="dropdown-item" href="#">Carte graphique</a></li>
+                                    <!-- <li><hr class="dropdown-divider"></li> -->
+                                    <li><a class="dropdown-item" href="#">Carte mère</a></li>
+                                </ul>
+                            </li>
                         </ul>
+                    </div>
                 </div>
-                </div>
-                </div>
+            </div>
         </nav><!-- début 2e nav -->
         <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
