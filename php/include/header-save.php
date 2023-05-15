@@ -42,8 +42,10 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                 <a href="./profil.php">Profil</a>
                 <a href="./disconnect.php">Deco</a>
             <?php } else { ?>
-                <a href="./connect.php">Connect</a>
-                <a href="./signUp.php">signUp</a>
+                <a href="./php/connect.php">connect</a>
+                <a href="./php/connectJS.php">connectJS</a>
+                <a href="./php/signUp.php">signUp</a>
+                <a href="./php/signUpJS.php">signUpJS</a>
             <?php } ?>
         </nav>
     </div>
