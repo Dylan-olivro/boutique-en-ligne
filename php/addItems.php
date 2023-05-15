@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
             <input type="text" id="description" name="description">
 
             <label for="name">price</label>
-            <input type="number" id="price" name="price">
+            <input type="text" id="price" name="price">
 
             <label for="name">stock</label>
             <input type="number" id="stock" name="stock">
