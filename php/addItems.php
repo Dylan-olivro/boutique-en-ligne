@@ -8,7 +8,7 @@ require_once('./class/item.php');
 // $date2 = new date();
 // var_dump($date);
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['addItem'])) {
 
     $name = trim(htmlspecialchars($_POST['name']));
     $description = trim(htmlspecialchars($_POST['description']));
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
             <label for="name">Category</label>
             <input type="number" id="category" name="category">
 
-            <input type="submit" name="submit">
+            <input type="submit" name="addItem">
         </form>
     </main>
     <?php require_once('./include/header-save.php') ?>

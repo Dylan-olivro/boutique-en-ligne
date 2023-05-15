@@ -23,8 +23,7 @@ require_once('./php/class/user.php');
     $recupArticle = $bdd->prepare('SELECT * FROM items');
     $recupArticle->execute();
     $result = $recupArticle->fetchAll(PDO::FETCH_ASSOC);
-
-    var_dump($result);
+    var_dump($_SESSION);
     ?>
     <?php require_once('./php/include/header-save.php') ?>
 </body>
