@@ -5,29 +5,7 @@ let password = document.querySelector("#password");
 let cpassword = document.querySelector("#confirm_password");
 let formSignUp = document.querySelector("#signup");
 let message = document.querySelector("#message");
-// LES FONCTIONS checkEmail ET validate SERVENT A VERIFIER SI L'EMAIL EST CONFORME
-function checkEmail(email) {
-  let re =
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,10}))$/;
-  return re.test(email.value);
-}
-function validate() {
-  if (checkEmail(email)) {
-    message.innerText = "Adresse e-mail valide";
-    return true;
-  } else {
-    message.innerText = "Adresse e-mail non valide";
-    return false;
-  }
-}
-// SERT A VERIFIER QU'IL Y A QUE DES LETTRES DANS UN INPUT
-function allLetter(inputtxt) {
-  let letters = /^[A-Za-z]+$/;
-  if (inputtxt.value.match(letters)) {
-    return true;
-  }
-  return false;
-}
+
 // FONCTION INSCRIPTION
 function isSignUp() {
   // EMAIL

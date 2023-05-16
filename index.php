@@ -1,5 +1,6 @@
 <?php
 require_once('./php/class/user.php');
+ob_start('ob_gzhandler');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +20,7 @@ require_once('./php/class/user.php');
     <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
+    <script src="./js/function.js" defer></script>
     <script src="./js/header.js" defer></script>
 </head>
 

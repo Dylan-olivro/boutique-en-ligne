@@ -14,6 +14,7 @@ function isLogin() {
     return true;
   }
 }
+
 formLogin.addEventListener("submit", (e) => {
   if (isLogin() == false) {
     e.preventDefault();
