@@ -29,25 +29,29 @@ class User
     public $firstname;
     public $lastname;
     public $password;
+    public $role;
 
-    public function __construct($id, $email, $firstname, $lastname, $password,)
+    public function __construct($id, $email, $firstname, $lastname, $password, $role)
     {
         $this->id = $id;
         $this->email = $email;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->password = $password;
+        $this->role = $role;
     }
 
     public function getAllinfo()
     {
-        return $this->password;
+        return $this->id;
         return $this->email;
         return $this->firstname;
         return $this->lastname;
+        return $this->password;
+        return $this->role;
     }
 
-    public function getId($id)
+    public function getId()
     {
         return $this->id;
     }
@@ -56,17 +60,7 @@ class User
         $this->id = $id;
     }
 
-    public function getPassword($password)
-    {
-        return $this->password;
-    }
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-
-    public function getEmail($email)
+    public function getEmail()
     {
         return $this->email;
     }
@@ -75,8 +69,7 @@ class User
         $this->email = $email;
     }
 
-
-    public function getFirstname($firstname)
+    public function getFirstname()
     {
         return $this->firstname;
     }
@@ -85,14 +78,31 @@ class User
         $this->firstname = $firstname;
     }
 
-
-    public function getLastname($lastname)
+    public function getLastname()
     {
         return $this->lastname;
     }
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+    public function setRole($role)
+    {
+        $this->role = $role;
     }
 
     public function register($bdd)
@@ -113,10 +123,10 @@ class User
 
     public function connect($bdd)
     {
-        $request = $bdd->prepare("SELECT email FROM users WHERE email = ?");
+        $request = $bdd->prepare("SELECT * FROM users WHERE email = ?");
         $request->execute([$this->email]);
         $res = $request->fetchAll(PDO::FETCH_OBJ);
-        // var_dump($res);
+        var_dump($res);
 
         if ($request->rowCount() > 0) {
 
@@ -131,9 +141,11 @@ class User
                     $this->firstname = $result->firstname;
                     $this->lastname = $result->lastname;
                     $this->password = $result->password;
+                    $this->role = $result->role;
 
                     $_SESSION['user'] = $this;
                     unset($_SESSION['message']);
+                    var_dump($_SESSION);
                     header('Location: ../index.php');
                 }
             }
