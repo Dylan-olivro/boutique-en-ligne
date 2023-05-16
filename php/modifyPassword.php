@@ -1,5 +1,5 @@
 <?php
-require_once('./class/user.php');
+require_once('./class/userJS.php');
 
 if (!isset($_SESSION['user'])) {
     header('Location:index.php');
@@ -37,7 +37,7 @@ if (!isset($_SESSION['user'])) {
 
             <?php
             if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT));
+                $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT), $_SESSION['user']->role);
                 $user->updatePassword($bdd);
             }
             ?>
