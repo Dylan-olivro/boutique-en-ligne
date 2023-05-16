@@ -1,0 +1,40 @@
+#navbarBurger {
+  background-color: lightblue;
+  width: 100%;
+  /* display: flex; */
+  justify-content: center;
+}
+#searchBarBurger{
+  display: none;
+}
+@media screen and (max-width: 991px) {
+  .container-fluid {
+    --bs-gutter-x: 8rem !important;
+  }
+  .navbar {
+    --bs-navbar-padding-y: 1rem !important;
+  }
+  .navbar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+  .nav-item {
+    margin-right: 1em !important;
+  }
+  #navbarBurger {
+    background-color: lightblue;
+    width: auto;
+  }
+  #searchBarBurger{
+    display: block;
+  }
+  #searchBar{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .container-fluid {
+    --bs-gutter-x: 2rem !important;
+  }
+}

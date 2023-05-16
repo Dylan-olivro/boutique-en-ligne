@@ -1,9 +1,17 @@
 <?php
 require_once('./class/user.php');
 
+<<<<<<< HEAD
 if (!isset($_SESSION['user'])) {
     header('Location:index.php');
 }
+=======
+
+// session_destroy();
+// if (!isset($_SESSION['user'])) {
+//     header('Location:index.php');
+// }
+>>>>>>> header
 
 var_dump($_SESSION);
 ?>
