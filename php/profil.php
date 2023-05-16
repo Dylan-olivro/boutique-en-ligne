@@ -1,9 +1,9 @@
 <?php
-require_once('./class/userJS.php');
+require_once('./class/user.php');
 ob_start('ob_gzhandler');
 
 if (!isset($_SESSION['user'])) {
-    header('Location:index.php');
+    header('Location:../index.php');
 }
 
 // var_dump($_SESSION);
@@ -25,12 +25,14 @@ if (!isset($_SESSION['user'])) {
     <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
+    <script src="../js/function.js" defer></script>
+    <script src="../js/user/profil.js" defer></script>
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <form action="" method="post">
+        <form action="" method="post" id="formProfil">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" value="<?= $_SESSION['user']->email ?>" autofocus>
             <label for="firstname">Firstname</label>

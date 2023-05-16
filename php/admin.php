@@ -4,7 +4,7 @@ require_once('./class/item.php');
 ob_start('ob_gzhandler');
 
 if ($_SESSION['user']->admin !== 2) {
-    header('Location:index.php');
+    header('Location: ../index.php');
 }
 
 // AJOUT DES ITEMS
@@ -37,6 +37,7 @@ if (isset($_POST['addItem'])) {
     <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
+    <script src="../js/function.js" defer></script>
     <script src="../js/admin.js" defer></script>
 </head>
 

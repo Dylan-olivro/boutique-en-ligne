@@ -1,10 +1,22 @@
 <?php
 require_once('./class/user.php');
+ob_start('ob_gzhandler');
 
 if (isset($_SESSION['user'])) {
-    header('Location:index.php');
+    header('Location:../index.php');
 }
+
+if (isset($_POST['submit'])) {
+    $email = trim(htmlspecialchars($_POST['email']));
+    $password = $_POST['password'];
+
+    $user = new User('', $email, '', '', $password, '');
+    $user->connect($bdd);
+    // $user->isConnected();
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,30 +34,30 @@ if (isset($_SESSION['user'])) {
     <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
+    <script src="../js/function.js" defer></script>
+    <script src="../js/user/connectJS.js" defer></script>
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <form action="" method="post">
+        <form action="" method="post" id="formLogin">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" placeholder="Email" autofocus>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Password">
             <input type="submit" name="submit" class="input">
-
-            <?php
-
-            if (isset($_POST['submit'])) {
-                $user = new User('', $_POST['email'], '', '', $_POST['password']);
-                $user->connect($bdd);
-                $user->isConnected();
-            }
-
-            ?>
+            <p id="message">
+                <?php
+                if (!empty($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                }
+                ?>
+            </p>
         </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
+
 </body>
 <style>
     form {
