@@ -145,7 +145,6 @@ class User
 
                     $_SESSION['user'] = $this;
                     unset($_SESSION['message']);
-                    var_dump($_SESSION);
                     header('Location: ../index.php');
                 }
             }
