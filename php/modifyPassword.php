@@ -1,8 +1,9 @@
 <?php
-require_once('./class/userJS.php');
+require_once('./class/user.php');
+ob_start('ob_gzhandler');
 
 if (!isset($_SESSION['user'])) {
-    header('Location:index.php');
+    header('Location:../index.php');
 }
 
 ?>
@@ -20,24 +21,32 @@ if (!isset($_SESSION['user'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <!-- JAVASCRIPT -->
+    <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
+    <!-- JAVASCRIPT -->
+    <script src="../js/function.js" defer></script>
+    <script src="../js/user/modifyPassword.js" defer></script>
+
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
 
     <main>
-        <form action="" method="post">
+        <form action="" method="post" id="formUpdatePassword">
             <label for="password">Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password" id="password">
             <label for="new_password">New Password</label>
-            <input type="password" name="new_password">
+            <input type="password" name="new_password" id="new_password">
             <input type="submit" name="submit" class="input">
+            <p id="message"></p>
 
             <?php
+            // var_dump($_SESSION);
+            // unset($_SESSION['message']);
+
             if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT), $_SESSION['user']->role);
+                $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT), '');
                 $user->updatePassword($bdd);
             }
             ?>
