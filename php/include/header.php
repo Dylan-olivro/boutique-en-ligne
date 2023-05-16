@@ -54,7 +54,8 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                     <div id="searchBurgerDiv">
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             <form class="d-flex w-100" role="search">
-                                <input class="form-control" id="searchBarBurger" type="search" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
+                                <input class="form-control" id="searchBarBurger" name="searchBarBurger" type="search" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
+                                <div id="searchResults"></div>
                             </form>
                         </ul>
                     </div>
