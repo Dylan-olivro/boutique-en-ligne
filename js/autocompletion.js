@@ -14,13 +14,13 @@ console.log("hello Autocompletion");
 //       searchResults.style.display = "block";
     //   console.log("./php/autocompletion.php/?search=" + searchResultsInput.value);
       fetch("./php/autocompletion.php/?search=" + searchResultsInput.value)
-        .then((response) => {
-          return response.json();
+        .then(response => {
+        return response.json();
         })
-        .then((data) => {
+        .then(data => {
             // console.log(data);
         //   data.forEach((element) => {
-            console.log("element.nom");
+            console.log(data);
             let searchResultsP = document.createElement("p");
             searchResultsP.innerHTML = 'TEST results';
             searchResults.appendChild(searchResultsP);
