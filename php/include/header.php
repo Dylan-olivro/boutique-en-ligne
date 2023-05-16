@@ -1,5 +1,4 @@
 <?php
-require_once('./php/class/item.php');
 
 $returnCategoryParent = $bdd->prepare('SELECT * FROM category WHERE id_parent = 0');
 $returnCategoryParent->execute();
@@ -20,6 +19,7 @@ $url .= $_SERVER['REQUEST_URI'];
 $splitURL = explode('boutique-en-ligne', $url);  //PHP
 
 if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
+    require_once('./php/class/item.php');
 ?>
     <!-- <link rel="stylesheet" href="../../css/header.css"> -->
     <header>
@@ -64,25 +64,25 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                             <?php
                             foreach ($resultCategoryParent as $key) {
                                 // var_dump($key['name']);                                
-                                 ?>
+                            ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <?= $key->name; ?>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <?php
-                                                $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
-                                                $returnCategoryChild->execute([$key->id]);
-                                                $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);                                     
-                                        foreach($resultCategoryChild as $key2){
-                                            ?>
-                                        <li><a class="dropdown-item" href="#"><?= $key2->name; ?></a></li>
+                                        $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
+                                        $returnCategoryChild->execute([$key->id]);
+                                        $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
+                                        foreach ($resultCategoryChild as $key2) {
+                                        ?>
+                                            <li><a class="dropdown-item" href="#"><?= $key2->name; ?></a></li>
                                         <?php
-                                    }
-                                    ?>
+                                        }
+                                        ?>
                                     </ul>
                                 </li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
@@ -93,6 +93,8 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
         </div>
     </header>
 <?php } else {
+    require_once('./class/item.php');
+
     // TODO: HEADER
 ?>
     <header>
@@ -137,25 +139,25 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                             <?php
                             foreach ($resultCategoryParent as $key) {
                                 // var_dump($key['name']);                                
-                                 ?>
+                            ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <?= $key->name; ?>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <?php
-                                                $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
-                                                $returnCategoryChild->execute([$key->id]);
-                                                $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);                                     
-                                        foreach($resultCategoryChild as $key2){
-                                            ?>
-                                        <li><a class="dropdown-item" href="#"><?= $key2->name; ?></a></li>
+                                        $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
+                                        $returnCategoryChild->execute([$key->id]);
+                                        $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
+                                        foreach ($resultCategoryChild as $key2) {
+                                        ?>
+                                            <li><a class="dropdown-item" href="#"><?= $key2->name; ?></a></li>
                                         <?php
-                                    }
-                                    ?>
+                                        }
+                                        ?>
                                     </ul>
                                 </li>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>

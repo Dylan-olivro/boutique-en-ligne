@@ -1,11 +1,12 @@
 <?php
-require_once('./class/user.php');
+require_once('./class/userJS.php');
+ob_start('ob_gzhandler');
 
 if (!isset($_SESSION['user'])) {
     header('Location:index.php');
 }
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,11 +40,16 @@ var_dump($_SESSION);
             <label for="password">Password</label>
             <input type="password" name="password">
             <input type="submit" name="submit" class="input">
+            <p id="message">
+                <?php if (!empty($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                } ?>
+            </p>
             <a href="modifyPassword.php">Changer de mot de passe</a>
 
             <?php
             if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['password']);
+                $user = new User($_SESSION['user']->id, $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['password'], $_SESSION['user']->role);
                 $user->update($bdd);
             }
             ?>

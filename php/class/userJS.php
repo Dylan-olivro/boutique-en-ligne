@@ -131,14 +131,13 @@ class User
     {
         $request = $bdd->prepare("SELECT * FROM users WHERE email = ?");
         $request->execute([$this->email]);
-        $res = $request->fetchAll(PDO::FETCH_OBJ);
-
+        $res = $request->fetch(PDO::FETCH_OBJ);
         if (email($this->email) == false) {
         } elseif (password($this->password) == false) {
         } elseif ($request->rowCount() > 0) {
 
             $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-            $recupUser->execute([$this->email, $res[0]->password]);
+            $recupUser->execute([$this->email, $res->password]);
             $result = $recupUser->fetch(PDO::FETCH_OBJ);
 
             if ($result != false) {
@@ -167,7 +166,7 @@ class User
 
         $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
         $request->execute([$this->id]);
-        $res = $request->fetchAll(PDO::FETCH_OBJ);
+        $res = $request->fetch(PDO::FETCH_OBJ);
 
         $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND id != ?");
         $recupUser->execute([$this->email, $this->id]);
@@ -178,12 +177,13 @@ class User
         } elseif (firstname($this->firstname) == false) {
         } elseif (lastname($this->lastname) == false) {
         } elseif ($recupUser->rowCount() > 0) {
-            echo 'Email déjà utilisé';
+            $_SESSION['message'] = 'Email déjà utilisé';
         } else {
-            if ($this->password != password_verify($this->password, $res[0]->password)) {
-                echo  "Ce n'est pas le bon mot de passe";
+            if ($this->password != password_verify($this->password, $res->password)) {
+                $_SESSION['message'] = 'Ce n\'est pas le bon mot de passe';
             } else {
-                $insertUser->execute([$this->email, $this->firstname, $this->lastname, $res[0]->password, $this->id]);
+                unset($_SESSION['message']);
+                $insertUser->execute([$this->email, $this->firstname, $this->lastname, $res->password, $this->id]);
                 $_SESSION['user']->email = $this->email;
                 $_SESSION['user']->firstname = $this->firstname;
                 $_SESSION['user']->lastname = $this->lastname;
@@ -197,13 +197,14 @@ class User
     {
         $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
         $request->execute([$this->id]);
-        $res = $request->fetchAll(PDO::FETCH_OBJ);
+        $res = $request->fetch(PDO::FETCH_OBJ);
+        var_dump($res);
         $insertUser = $bdd->prepare("UPDATE users SET password = ? WHERE id = ? ");
 
         if (password($this->password) == false) {
         } elseif (empty($_POST['new_password'])) {
             echo 'Champ New Password vide';
-        } elseif ($_POST['password'] != password_verify($_POST['password'], $res[0]->password)) {
+        } elseif ($_POST['password'] != password_verify($_POST['password'], $res->password)) {
             echo  "Ce n'est pas le bon mot de passe";
         } else {
             $insertUser->execute([$this->password, $this->id]);
