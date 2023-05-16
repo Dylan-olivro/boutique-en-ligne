@@ -111,7 +111,13 @@ class User
         $recupUser->execute([$this->email]);
         $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
 
-        if ($recupUser->rowCount() > 0) {
+        if (email($this->email) == false) {
+        } elseif (password($this->password) == false) {
+        } elseif (confirm_password($_POST['confirm_password']) == false) {
+        } elseif (firstname($this->firstname) == false) {
+        } elseif (lastname($this->lastname) == false) {
+        } elseif (same_password($this->password, $_POST['confirm_password']) == false) {
+        } elseif ($recupUser->rowCount() > 0) {
             $_SESSION['message'] = 'Email déjà utilisé';
         } else {
             unset($_SESSION['message']);
@@ -126,9 +132,10 @@ class User
         $request = $bdd->prepare("SELECT * FROM users WHERE email = ?");
         $request->execute([$this->email]);
         $res = $request->fetchAll(PDO::FETCH_OBJ);
-        var_dump($res);
 
-        if ($request->rowCount() > 0) {
+        if (email($this->email) == false) {
+        } elseif (password($this->password) == false) {
+        } elseif ($request->rowCount() > 0) {
 
             $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
             $recupUser->execute([$this->email, $res[0]->password]);
@@ -161,11 +168,9 @@ class User
         $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
         $request->execute([$this->id]);
         $res = $request->fetchAll(PDO::FETCH_OBJ);
-        // var_dump($res[0]->password);
 
         $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND id != ?");
         $recupUser->execute([$this->email, $this->id]);
-        // var_dump($res);
         $insertUser = $bdd->prepare("UPDATE users SET email = ?, firstname = ?, lastname = ?, password = ? WHERE id = ? ");
 
         if (email($this->email) == false) {
@@ -187,14 +192,13 @@ class User
             }
         }
     }
+
     public function updatePassword($bdd)
     {
         $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
         $request->execute([$this->id]);
         $res = $request->fetchAll(PDO::FETCH_OBJ);
-        // var_dump($res);
         $insertUser = $bdd->prepare("UPDATE users SET password = ? WHERE id = ? ");
-
 
         if (password($this->password) == false) {
         } elseif (empty($_POST['new_password'])) {
@@ -215,32 +219,11 @@ class User
     public function isConnected()
     {
         if (isset($_SESSION['user']->login)) {
-            echo 'Connected';
+            // echo 'Connected';
             return true;
         } else {
-            echo 'Disconnected';
+            // echo 'Disconnected';
             return false;
         }
     }
 }
-
-// $user = new User($login, $password, $email, $firstname, $lastname);
-// $user = new User('a', 'a', 'a', 'a', 'a');
-// var_dump($user);
-
-// $user->register($bdd);
-// $user->connect($bdd);
-// $user->disconnect();
-// $user->isConnected();
-
-// $user->getAllinfo();
-// $user->getLogin();
-// $user->setLogin();
-// $user->getPassword();
-// $user->setPassword();
-// $user->getEmail();
-// $user->setEmail();
-// $user->getFirstname();
-// $user->setFirstname();
-// $user->getLastname();
-// $user->setLastname();
