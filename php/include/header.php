@@ -22,7 +22,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
     require_once('./php/class/item.php');
 ?>
     <!-- <link rel="stylesheet" href="../../css/header.css"> -->
-    <header>
+    <header id="allHeader">
         <!-- début 1ere nav -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid d-flex flex-column">
@@ -34,6 +34,9 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                             <form method="get" class="d-flex w-100" role="search">
                                 <input class="form-control" id="searchBar" name="searchBar" type="search" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
                                 <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                                <div id="searchResultsDesktopDiv">
+                                    <!-- <div id="searchResultsDesktop"></div> -->
+                                </div>
                             </form>
                         </ul>
                     </div>
@@ -43,6 +46,9 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <img id="darkMode" src="./assets/img_darkMode/moon.png" alt="" srcset="">
                         </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBurger" aria-controls="navbarBurger" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,13 +61,15 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             <form method="get" class="d-flex w-100" role="search">
                                 <input class="form-control" id="searchBarBurger" name="searchBarBurger" type="search" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
-                                <div id="searchResults"></div>
+                                <div id="searchResultsBurgerDiv">
+                                    <div id="searchResultsBurger"></div>
+                                </div>
                             </form>
                         </ul>
                     </div>
                     <div class="navCategories" id="navCategories">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <a href="" class="nav-link">Tous les produits</a>
+                            <a href="./php/productsFilter.php" class="nav-link">Tous les produits</a>
                             <?php
                             foreach ($resultCategoryParent as $key) {
                                 // var_dump($key['name']);                                
