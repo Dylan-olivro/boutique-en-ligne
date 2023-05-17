@@ -3,7 +3,7 @@ require_once('./class/user.php');
 require_once('./class/item.php');
 ob_start('ob_gzhandler');
 
-if ($_SESSION['user']->admin !== 2) {
+if ($_SESSION['user']->role !== 2) {
     header('Location: ../index.php');
 }
 
