@@ -8,7 +8,7 @@ console.log("hello Autocompletion");
     searchResultsInput.addEventListener("keyup", () => {
       // console.log(searchResultsInput.value);
       if (searchResultsInput.value == "") {
-      searchResults.innerHTML = "";
+      searchResults.innerHTML = ""; 
       searchResults.style.display = "none";
       searchResults.style.color = "green";
     } else {
