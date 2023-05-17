@@ -31,6 +31,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
             } else { ?>
                 <a href="./php/connect.php">connect</a>
                 <a href="./php/signUp.php">signUp</a>
+                <a href="./php/add_item.php">ADD</a>
             <?php } ?>
         </nav>
     </div>
@@ -52,6 +53,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
             } else { ?>
                 <a href="./connect.php">connect</a>
                 <a href="./signUp.php">signUp</a>
+                <a href="./add_item.php">ADD</a>
             <?php } ?>
         </nav>
     </div>

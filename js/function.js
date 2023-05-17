@@ -6,6 +6,15 @@ function allLetter(inputtxt) {
   }
   return false;
 }
+// ---------------------------------------
+
+function allNumber(inputnumber) {
+  let numbers = /^\d*(.\d{0,2})?$/;
+  if (inputnumber.value.match(numbers)) {
+    return true;
+  }
+  return false;
+}
 
 // LES FONCTIONS checkEmail ET validate SERVENT A VERIFIER SI L'EMAIL EST CONFORME
 function checkEmail(email) {
