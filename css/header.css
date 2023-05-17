@@ -50,6 +50,7 @@
 }
 .resultsName{
   font-weight: bolder;
+  margin: 0;
 }
 .resultsDesc{
   font-size: 0.7em;

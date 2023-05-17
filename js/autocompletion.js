@@ -5,7 +5,7 @@ let searchResultsDesktopDiv = document.getElementById(
 ); //la div globale
 // let searchResults = document.getElementById("searchResultsDesktop"); //la div des résultats
 
-console.log("hello Autocompletion");
+// console.log("hello Autocompletion");
 
 // if (searchResultsInput) {
 searchResultsInput.addEventListener("keyup", () => {
@@ -20,7 +20,7 @@ searchResultsInput.addEventListener("keyup", () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         data.forEach((element) => {
           // console.log(element.name);
           let resultsDiv = document.createElement("div");
@@ -41,10 +41,11 @@ searchResultsInput.addEventListener("keyup", () => {
           resultsDesc.className = "resultsDesc";
           resultsLink.className = "resultsLink";
 
-          resultsImg.src = element.image;
+          resultsImg.src = "./assets/img_item/CorsairK55RGBPRO.webp";
           resultsName.innerText = element.name;
           resultsDesc.innerText = element.description;
-          resultsLink.href = "./php/item=" + element.id + ".php";
+          resultsLink.href = "";
+          console.log("hello");
 
           resultsImgDiv.append(resultsImg);
           resultsNameDescDiv.append(resultsName, resultsDesc);
