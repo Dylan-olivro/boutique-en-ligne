@@ -6,12 +6,14 @@ console.log("hello Autocompletion");
 
 // if (searchResultsInput) {
     searchResultsInput.addEventListener("keyup", () => {
-      console.log(searchResultsInput.value);
-//     searchResults.innerHTML = "";
-//     if (searchResultsInput.value == "") {
-//       searchResults.style.display = "none";
-//     } else {
-//       searchResults.style.display = "block";
+      // console.log(searchResultsInput.value);
+      if (searchResultsInput.value == "") {
+      searchResults.innerHTML = "";
+      searchResults.style.display = "none";
+      searchResults.style.color = "green";
+    } else {
+      searchResults.style.color = "red";
+      searchResults.style.display = "block";
     //   console.log("./php/autocompletion.php/?search=" + searchResultsInput.value);
       fetch("./php/autocompletion.php/?search=" + searchResultsInput.value)
         .then(response => {
@@ -20,12 +22,12 @@ console.log("hello Autocompletion");
         .then(data => {
             // console.log(data);
         //   data.forEach((element) => {
-            console.log(data);
+            // console.log(data);
             let searchResultsP = document.createElement("p");
             searchResultsP.innerHTML = 'TEST results';
-            searchResults.appendChild(searchResultsP);
+            searchResults.append(searchResultsP);
         //   });
         });
-    // }
+    }
   });
 // }
