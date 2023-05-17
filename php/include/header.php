@@ -22,7 +22,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
     require_once('./php/class/item.php');
 ?>
     <!-- <link rel="stylesheet" href="../../css/header.css"> -->
-    <header>
+    <header id="allHeader">
         <!-- début 1ere nav -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid d-flex flex-column">
@@ -47,6 +47,9 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
                         </li>
+                        <li class="nav-item">
+                            <img id="darkMode" src="./assets/img_darkMode/moon.png" alt="" srcset="">
+                        </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBurger" aria-controls="navbarBurger" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -66,7 +69,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                     </div>
                     <div class="navCategories" id="navCategories">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <a href="" class="nav-link">Tous les produits</a>
+                            <a href="./php/productsFilter.php" class="nav-link">Tous les produits</a>
                             <?php
                             foreach ($resultCategoryParent as $key) {
                                 // var_dump($key['name']);                                

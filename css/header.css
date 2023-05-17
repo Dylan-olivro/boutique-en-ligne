@@ -24,6 +24,18 @@
   display: none;
 }
 
+.searchBarBurgerCSS {
+  background-color: green;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 4em;
+  left: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+}
+
 .resultsDiv {
   display: flex;
 }
@@ -48,13 +60,27 @@
 .resultsLink:hover {
   color: red;
 }
-.resultsName{
+
+.resultsName {
   font-weight: bolder;
   margin: 0;
 }
-.resultsDesc{
+
+.resultsDesc {
   font-size: 0.7em;
 }
+
+#darkMode {
+  cursor: pointer;
+  zoom: 0.4;
+  /* content: url(../assets/img_darkMode/moon.png); */
+}
+
+.dark-mode {
+  background-color: black !important;
+  color: white !important;
+}
+
 @media screen and (max-width: 991px) {
   .container-fluid {
     --bs-gutter-x: 8rem !important;
