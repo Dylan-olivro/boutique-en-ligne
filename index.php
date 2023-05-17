@@ -22,6 +22,7 @@ ob_start('ob_gzhandler');
     <!-- JAVASCRIPT -->
     <script src="./js/function.js" defer></script>
     <script src="./js/header.js" defer></script>
+    <script src="./js/autocompletion.js" defer></script>
 </head>
 
 <body>

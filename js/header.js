@@ -3,7 +3,7 @@ let searchBarBurger = document.getElementById("searchBarBurger");
 let searchBurgerDiv = document.getElementById("searchBurgerDiv");
 
 $(searchBarBurger).keyup(function () {
-  console.log(searchBarBurger.value);
+  // console.log(searchBarBurger.value);
   if(searchBarBurger.value != ""){
     searchBurgerDiv.style.backgroundColor = "green";
     searchBurgerDiv.style.position = "absolute";
