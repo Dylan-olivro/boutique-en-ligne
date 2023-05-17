@@ -29,12 +29,17 @@ ob_start('ob_gzhandler');
     <?php require_once('./php/include/header.php') ?>
 
     <?php
-    var_dump($_SESSION);
-    // $recupArticle = $bdd->prepare('SELECT * FROM items');
-    // $recupArticle->execute();
-    // $result = $recupArticle->fetchAll(PDO::FETCH_ASSOC);
+    // var_dump($_SESSION);
+    $recupArticle = $bdd->prepare('SELECT * FROM items');
+    $recupArticle->execute();
+    $result = $recupArticle->fetchAll(PDO::FETCH_ASSOC);
 
     // var_dump($result);
+    foreach ($result as $key) {
+        var_dump($key);
+        # code...
+        echo '<img src=".' . $key['image'] . '" alt="">';
+    }
     ?>
     <?php require_once('./php/include/header-save.php') ?>
 </body>
