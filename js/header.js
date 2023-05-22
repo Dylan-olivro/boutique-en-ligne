@@ -4,10 +4,10 @@ let searchBurgerDiv = document.getElementById("searchBurgerDiv");
 let searchBar = document.getElementById("searchBar");
 let darkMode = document.getElementById("darkMode");
 let darkModeState = false;
-let searchBarBurgerValue = searchBarBurger.value
+let searchBarBurgerValue = searchBarBurger.value;
+let allBody = document.body;
 
 darkMode.addEventListener("click", () => {
-  let allBody = document.body;
   if (darkModeState == false) {
     allBody.classList.toggle("dark-mode");
     darkMode.src = "./assets/img_darkMode/sun.png";
@@ -49,7 +49,7 @@ $(searchBarBurger).keyup(function () {
 });
 // fin de la searchBar en burger
 
-// ! à ne pas utiliser mais c'est, pour info, une autre façon, en JS, de passer la searchbar dans le burger (fonction addListener obsolète). La méthode utilisée finalement est en CSS avec une DIV 'display block' et une 'none'.
+// ! à ne pas utiliser mais c'est, pour info, une autre façon, en JS, de passer la searchbar dans le burger en déplaçant des div dans d'autres div au moment voulu (fonction addListener obsolète). La méthode utilisée finalement est en CSS avec une DIV 'display block' et une 'none'.
 // let iconSite = document.getElementById("iconSite");
 // let searchDiv = document.getElementById("searchDiv");
 // var burger = window.matchMedia("(max-width: 991px)");
