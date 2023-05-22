@@ -21,30 +21,11 @@ darkMode.addEventListener("click", () => {
 
 $(searchBarBurger).keyup(function () {
   if (searchBarBurger.value != "") {
-    console.log(searchBarBurger.value.length);
+    // console.log(searchBarBurger.value.length);
     searchBurgerDiv.classList.add("searchBarBurgerCSS");
-    // console.log(searchBarBurger.value);
-    // searchBurgerDiv.style.backgroundColor = "green";
-    // searchBurgerDiv.style.position = "absolute";
-    // searchBurgerDiv.style.margin = "0";
-    // searchBurgerDiv.style.padding = "0";
-    // searchBurgerDiv.style.top = "4em";
-    // searchBurgerDiv.style.left = "0";
-    // searchBurgerDiv.style.zIndex = "2";
-    // searchBurgerDiv.style.width = "100vw";
-    // searchBurgerDiv.style.height = "100vh";
   } else {
     // console.log(searchBarBurger.value);
     searchBurgerDiv.classList.remove("searchBarBurgerCSS");
-    // searchBurgerDiv.style.backgroundColor = "yellow";
-    // searchBurgerDiv.style.position = "";
-    // searchBurgerDiv.style.margin = "";
-    // searchBurgerDiv.style.padding = "";
-    // searchBurgerDiv.style.top = "";
-    // searchBurgerDiv.style.left = "";
-    // searchBurgerDiv.style.zIndex = "";
-    // searchBurgerDiv.style.width = "";
-    // searchBurgerDiv.style.height = "";
   }
 });
 // fin de la searchBar en burger

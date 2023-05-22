@@ -1,0 +1,5 @@
+darkMode.addEventListener("click", () => {
+  
+  });
+  
+  

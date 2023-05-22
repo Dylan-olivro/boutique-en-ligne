@@ -1,5 +1,4 @@
 <?php
-
 $returnCategoryParent = $bdd->prepare('SELECT * FROM category WHERE id_parent = 0');
 $returnCategoryParent->execute();
 $resultCategoryParent = $returnCategoryParent->fetchAll(PDO::FETCH_OBJ);
