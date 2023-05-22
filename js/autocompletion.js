@@ -61,3 +61,14 @@ searchResultsInput.addEventListener("keyup", () => {
   }
 });
 // }
+
+// Permet de faire disparaitre la div des results quand on clique en dehors
+window.addEventListener('click', function(e){   
+  if (searchBar.contains(e.target) && searchResultsInput.value != ""){
+    searchResultsDesktopDiv.style.display = "block";
+    // Clicked in box
+  } else{
+    searchResultsDesktopDiv.style.display = "none";
+    // Clicked outside the box
+  }
+});
