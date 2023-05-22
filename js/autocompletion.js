@@ -1,5 +1,5 @@
 let searchResultsInput = document.getElementById("searchBar"); //le input desktop
-console.log(searchResultsInput);
+// console.log(searchResultsInput);
 let searchInputBurger = document.getElementById("searchBarBurger"); //le input dans le burger
 let searchResultsDesktopDiv = document.getElementById(
   "searchResultsDesktopDiv"
