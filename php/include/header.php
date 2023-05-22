@@ -28,7 +28,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
             <div class="container-fluid d-flex flex-column">
                 <!-- <div class="navPrincipaleAvecLogo"> -->
                 <div class="navPrincipale d-flex justify-content-between w-100" id="navPrincipale">
-                    <a class="navbar-brand" id="iconSite" href="#">LOGO</a>
+                    <a class="navbar-brand" id="iconSite" href="./index.php">LOGO</a>
                     <div class="w-50" id="searchDiv">
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             <form method="get" class="d-flex w-100" role="search">
@@ -69,7 +69,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                     </div>
                     <div class="navCategories" id="navCategories">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <a href="./php/productsFilter.php" class="nav-link">Tous les produits</a>
+                            <a href="./php/itemFilter.php" class="nav-link">Tous les produits</a>
                             <?php
                             foreach ($resultCategoryParent as $key) {
                                 // var_dump($key['name']);                                
@@ -113,7 +113,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
             <div class="container-fluid d-flex flex-column">
                 <!-- <div class="navPrincipaleAvecLogo"> -->
                 <div class="navPrincipale d-flex justify-content-between w-100" id="navPrincipale">
-                    <a class="navbar-brand" id="iconSite" href="#">LOGO</a>
+                    <a class="navbar-brand" id="iconSite" href="../index.php">LOGO</a>
                     <div class="w-50" id="searchDiv">
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             <form method="get" class="d-flex w-100" role="search">
@@ -155,6 +155,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                     <div class="navCategories" id="navCategories">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <a href="./php/productsFilter.php" class="nav-link">Tous les produits</a>
+                            <a href="./itemFilter.php" class="nav-link">Tous les produits</a>
                             <?php
                             foreach ($resultCategoryParent as $key) {
                                 // var_dump($key['name']);                                
