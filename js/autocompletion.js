@@ -1,13 +1,23 @@
 let searchResultsInput = document.getElementById("searchBar"); //le input desktop
+console.log(searchResultsInput);
 let searchInputBurger = document.getElementById("searchBarBurger"); //le input dans le burger
 let searchResultsDesktopDiv = document.getElementById(
   "searchResultsDesktopDiv"
 ); //la div globale
 // let searchResults = document.getElementById("searchResultsDesktop"); //la div des résultats
-
-// console.log("hello Autocompletion");
-
-// if (searchResultsInput) {
+function getPage() {
+  let url = window.location.href;
+  let page = url.split("/")[4];
+  if (page == "php") {
+    let php = "";
+    let image = ".";
+    return [php, image];
+  } else {
+    let php = "php/";
+    let image = "";
+    return [php, image];
+  }
+}// if (searchResultsInput) {
 searchResultsInput.addEventListener("keyup", () => {
   // console.log(searchResultsInput.value);
   searchResultsDesktopDiv.innerHTML = "";
@@ -15,7 +25,10 @@ searchResultsInput.addEventListener("keyup", () => {
     searchResultsDesktopDiv.style.display = "none";
   } else {
     searchResultsDesktopDiv.style.display = "block";
-    fetch("./php/autocompletion.php/?search=" + searchResultsInput.value)
+    console.log(getPage());
+    fetch(
+      `./${getPage()[0]}autocompletion.php/?search=${searchResultsInput.value}`
+    )
       .then((response) => {
         return response.json();
       })
@@ -41,10 +54,12 @@ searchResultsInput.addEventListener("keyup", () => {
           resultsDesc.className = "resultsDesc";
           resultsLink.className = "resultsLink";
 
-          resultsImg.src = "./assets/img_item/CorsairK55RGBPRO.webp";
+          resultsImg.src = `.${
+            getPage()[1]
+          }/assets/img_item/CorsairK55RGBPRO.webp`;
           resultsName.innerText = element.name;
           resultsDesc.innerText = element.description;
-          resultsLink.href = "";
+          resultsLink.href = `./${getPage()[0]}detail.php?id=${element.id}`;
           console.log("hello");
 
           resultsImgDiv.append(resultsImg);
