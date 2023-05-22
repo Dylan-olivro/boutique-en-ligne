@@ -26,6 +26,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                 <?php if ($_SESSION['user']->role !== 0) { ?>
                     <a href="./php/admin.php">admin</a>
                     <a href="./php/addItems.php">add Items</a>
+                    <a href="./php/detail.php">detail</a>
                 <?php
                 }
             } else { ?>
@@ -48,6 +49,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                 <?php if ($_SESSION['user']->role == 2) { ?>
                     <a href="./admin.php">admin</a>
                     <a href="./addItems.php">add Items</a>
+                    <a href="./detail.php">detail</a>
                 <?php
                 }
             } else { ?>
