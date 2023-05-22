@@ -6,6 +6,10 @@ if (isset($_POST['ajouter'])) {
     $insertIntoPanier = $bdd->prepare('INSERT INTO panier (id_user,id_item) VALUES(?,?)');
     $insertIntoPanier->execute([$_SESSION['user']->id, $_GET['id']]);
 }
+if (isset($_POST['vider'])) {
+    $deletePanier = $bdd->prepare('DELETE FROM panier WHERE id_user = ?');
+    $deletePanier->execute([$_SESSION['user']->id]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +21,7 @@ if (isset($_POST['ajouter'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail</title>
     <!-- CSS -->
+    <link rel="stylesheet" href="../css/header.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -27,6 +32,8 @@ if (isset($_POST['ajouter'])) {
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
     <script src="../js/detail.js" defer></script>
+    <script src="../js/autocompletion.js" defer></script>
+
 </head>
 
 <body>
@@ -40,6 +47,10 @@ if (isset($_POST['ajouter'])) {
         <?php
         }
         ?>
+
+        <form action="" method="post">
+            <input type="submit" name="vider" value="Vider le panier">
+        </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
 
