@@ -44,7 +44,7 @@ searchResultsInput.addEventListener("keyup", () => {
           resultsImg.src = "./assets/img_item/CorsairK55RGBPRO.webp";
           resultsName.innerText = element.name;
           resultsDesc.innerText = element.description;
-          resultsLink.href = "";
+          resultsLink.href = `./php/detail.php?id=${element.id}`;
           console.log("hello");
 
           resultsImgDiv.append(resultsImg);
