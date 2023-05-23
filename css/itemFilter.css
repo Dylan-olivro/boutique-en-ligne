@@ -1,18 +1,20 @@
 .categoryChildDiv {
-    /* display: none; */
-}
-/* .categoryChildDivNone {
     display: none;
-} */
-/* .categoryChildDivBlock {
-    display: block;
-} */
+}
 
-#allMain{
+.categoryChildDivBlock {
+    display: block;
+}
+
+#container {
     display: flex !important;
     flex-direction: row;
 }
 
-main li{
+main li {
     list-style: none;
 }
+
+/* .categoryParentDiv:active .categoryChildDiv {
+    display: block;
+} */

@@ -34,7 +34,7 @@ ob_start('ob_gzhandler');
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <div id="allMain">
+        <div id="container">
         <form action="" method="get">
             <div id="filterDiv">
                 <?php
@@ -43,31 +43,30 @@ ob_start('ob_gzhandler');
                 ?>
                     <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
                         <ul>
-                            <li class="resultParent" id="<?= $key->id; ?>">
+                            <li class="resultParent dropdown-toggle" id="<?= $key->id; ?>">
                                 <?= $key->name; ?>
                             </li>
+                            <ul class="categoryChildDiv" id="categoryChildDiv<?= $key->id; ?>" data-parent-id="<?= $key->id; ?>">
                             <?php
                             $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
                             $returnCategoryChild->execute([$key->id]);
                             $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
                             foreach ($resultCategoryChild as $key2) {
                             ?>
-
-                                <ul class="categoryChildDiv" id="categoryChildDiv" data-parent-id="<?= $key->id; ?>">
                                     <li id="<?= $key2->name; ?>">
                                         <input type="radio" name="subCategory" id="<?= $key2->id; ?>">
                                         <?= $key2->name; ?>
                                     </li>
-                                </ul>
-                            <?php
+                                    <?php
                             }
                             ?>
+                            </ul>
                         </ul>
                         </a>
 
-                        <ul class="dropdown-menu categoryParent">
+                        <!-- <ul class="dropdown-menu categoryParent"> -->
                     </div>
-                    </ul>
+                    <!-- </ul> -->
                 <?php
                 }
                 ?>
