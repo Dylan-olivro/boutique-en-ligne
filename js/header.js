@@ -8,16 +8,28 @@ let searchBarBurgerValue = searchBarBurger.value;
 let allBody = document.body;
 
 darkMode.addEventListener("click", () => {
-  if (darkModeState == false) {
-    allBody.classList.toggle("dark-mode");
-    darkMode.src = "./assets/img_darkMode/sun.png";
-    darkModeState = true;
-  } else {
-    allBody.classList.toggle("dark-mode");
-    darkMode.src = "./assets/img_darkMode/moon.png";
-    darkModeState = false;
-  }
+  let actualTheme = allBody.className;
+
+  allBody.classList.toggle("dark-mode");
+  localStorage.setItem("Mytheme", actualTheme);
+  console.log(localStorage);
 });
+
+if (localStorage.getItem("Mytheme")) {
+  allBody.classList.toggle(localStorage.getItem("Mytheme"));
+}
+
+// darkMode.addEventListener("click", () => {
+//   if (darkModeState == false) {
+//     allBody.classList.toggle("dark-mode");
+//     darkMode.src = "./assets/img_darkMode/sun.png";
+//     darkModeState = true;
+//   } else {
+//     allBody.classList.toggle("dark-mode");
+//     darkMode.src = "./assets/img_darkMode/moon.png";
+//     darkModeState = false;
+//   }
+// });
 
 $(searchBarBurger).keyup(function () {
   if (searchBarBurger.value != "") {

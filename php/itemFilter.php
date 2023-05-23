@@ -17,6 +17,7 @@ ob_start('ob_gzhandler');
     <title>Filter Products</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/itemFilter.css">
+    <link rel="stylesheet" href="../css/header.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -26,7 +27,6 @@ ob_start('ob_gzhandler');
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/user/profil.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <script src="../js/itemFilter.js" defer></script>
 </head>
@@ -34,37 +34,47 @@ ob_start('ob_gzhandler');
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <div id="filterDiv">
-            <?php
-            foreach ($resultCategoryParent as $key) {
-                // var_dump($key['name']);                                
-            ?>
-                <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
-                    <ul>
-                        <li class="resultParent">
-                        <?= $key->name; ?>
-                    </li>
+        <div id="allMain">
+        <form action="" method="get">
+            <div id="filterDiv">
+                <?php
+                foreach ($resultCategoryParent as $key) {
+                    // var_dump($key['name']);                                
+                ?>
+                    <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
+                        <ul>
+                            <li class="resultParent" id="<?= $key->id; ?>">
+                                <?= $key->name; ?>
+                            </li>
                             <?php
-                        $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
-                        $returnCategoryChild->execute([$key->id]);
-                        $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
-                        foreach ($resultCategoryChild as $key2) {
-                        ?>
-                            <div class="categoryChildDiv" id="categoryChildDiv" data-parent-id="<?= $key->id; ?>">
-                                <?= $key2->name; ?>
-                            </div>
-                        <?php
-                        }
-                        ?>
-                    </ul>
-                    </a>
+                            $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
+                            $returnCategoryChild->execute([$key->id]);
+                            $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
+                            foreach ($resultCategoryChild as $key2) {
+                            ?>
 
-                    <ul class="dropdown-menu categoryParent">
-                </div>
-                </ul>
-            <?php
-            }
-            ?>
+                                <ul class="categoryChildDiv" id="categoryChildDiv" data-parent-id="<?= $key->id; ?>">
+                                    <li id="<?= $key2->name; ?>">
+                                        <input type="radio" name="subCategory" id="<?= $key2->id; ?>">
+                                        <?= $key2->name; ?>
+                                    </li>
+                                </ul>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                        </a>
+
+                        <ul class="dropdown-menu categoryParent">
+                    </div>
+                    </ul>
+                <?php
+                }
+                ?>
+            </div>
+        </form>
+        <div id="allItems">
+        </div>
         </div>
     </main>
 </body>

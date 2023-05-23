@@ -1,9 +1,18 @@
-/* .categoryChildDiv {
+.categoryChildDiv {
+    /* display: none; */
+}
+/* .categoryChildDivNone {
     display: none;
 } */
-.categoryChildDivNone {
-    display: none;
-}
 /* .categoryChildDivBlock {
     display: block;
 } */
+
+#allMain{
+    display: flex !important;
+    flex-direction: row;
+}
+
+main li{
+    list-style: none;
+}
