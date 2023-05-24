@@ -3,13 +3,13 @@ let categoryChild = document.querySelectorAll("input[type='radio']");
 let categoryParent = document.querySelectorAll(".resultParent");
 
 // * afficher ou cacher les child dans le parent correspondant au click du parent
-categoryParent.forEach(element => {
+categoryParent.forEach((element) => {
   element.addEventListener("click", () => {
-    let childElement = document.querySelectorAll("#categoryChildDiv"+element.getAttribute('id'));
-    childElement[0].classList.toggle("categoryChildDivBlock");  
-});
-});
-  
+    let childElement = document.querySelectorAll("#categoryChildDiv" + element.getAttribute("id"));
+    childElement[0].classList.toggle("categoryChildDivBlock");
+  });
+}); 
+
 // * générer les enfants dans le parent correspondant
 for (let i = 0; i < categoryChild.length; i++) {
   categoryChild[i].addEventListener("click", () => {

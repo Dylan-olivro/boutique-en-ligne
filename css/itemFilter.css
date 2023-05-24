@@ -15,6 +15,6 @@ main li {
     list-style: none;
 }
 
-/* .categoryParentDiv:active .categoryChildDiv {
+/* .categoryParentDiv:hover .categoryChildDiv {
     display: block;
 } */
