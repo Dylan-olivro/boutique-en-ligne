@@ -132,7 +132,7 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                             <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
                         </li>
                         <li class="nav-item">
-                            <img id="darkMode" src="./assets/img_darkMode/moon.png" alt="" srcset="">
+                            <img id="darkMode" src="../assets/img_darkMode/moon.png" alt="" srcset="">
                         </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBurger" aria-controls="navbarBurger" aria-expanded="false" aria-label="Toggle navigation">

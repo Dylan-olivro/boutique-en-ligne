@@ -5,19 +5,8 @@ let searchResultsDesktopDiv = document.getElementById(
   "searchResultsDesktopDiv"
 ); //la div globale
 // let searchResults = document.getElementById("searchResultsDesktop"); //la div des résultats
-function getPage() {
-  let url = window.location.href;
-  let page = url.split("/")[4];
-  if (page == "php") {
-    let php = "";
-    let image = ".";
-    return [php, image];
-  } else {
-    let php = "php/";
-    let image = "";
-    return [php, image];
-  }
-}// if (searchResultsInput) {
+
+// if (searchResultsInput) {
 searchResultsInput.addEventListener("keyup", () => {
   // console.log(searchResultsInput.value);
   searchResultsDesktopDiv.innerHTML = "";
@@ -60,7 +49,7 @@ searchResultsInput.addEventListener("keyup", () => {
           resultsName.innerText = element.name;
           resultsDesc.innerText = element.description;
           resultsLink.href = `./${getPage()[0]}detail.php?id=${element.id}`;
-          console.log("hello");
+          // console.log("hello");
 
           resultsImgDiv.append(resultsImg);
           resultsNameDescDiv.append(resultsName, resultsDesc);
