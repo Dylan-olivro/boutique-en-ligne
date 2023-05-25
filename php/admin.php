@@ -7,27 +7,53 @@ ob_start('ob_gzhandler');
 if ($_SESSION['user']->role !== 2) {
     header('Location: ../index.php');
 }
-
 // AJOUT DES ITEMS
-if (isset($_POST['addItem'])) {
-    $name = trim(htmlspecialchars($_POST['name']));
-    $description = trim(htmlspecialchars($_POST['description']));
+if (isset($_POST['buttonAddItem'])) {
+    $nameItem = trim(htmlspecialchars($_POST['nameItem']));
+    $descriptionItem = trim(htmlspecialchars($_POST['descriptionItem']));
     $date = date("Y-m-d H:i:s");
-    $price = trim(htmlspecialchars($_POST['price']));;
-    $stock = trim(htmlspecialchars($_POST['stock']));;
-    $category = trim(htmlspecialchars($_POST['category']));;
+    $priceItem = trim(htmlspecialchars($_POST['priceItem']));;
+    $stockItem = trim(htmlspecialchars($_POST['stockItem']));;
+    $categoryItem = trim(htmlspecialchars($_POST['categoryItem']));;
 
-    $item = new Item(null, $name, $description, $date, $price, $stock, $category);
-    $itemCategory = new Category(null, null, $category);
+    $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
+    $category = new Category(null, null, $categoryItem);
 
     $item->addItem($bdd);
-    $itemCategory->liaisonItemCategory($bdd);
+    $category->liaisonItemCategory($bdd);
 }
+
 // SUPPRIMER DES ITEMS
-if (isset($_POST['deleteItem'])) {
-    $id_item = $_POST['id_item'];
-    $item = new Item($id_item, null, null, null, null, null, null);
+if (isset($_POST['buttonDeleteItem'])) {
+    $itemID = $_POST['itemID'];
+    $item = new Item($itemID, null, null, null, null, null, null);
     $item->deleteItem($bdd);
+}
+
+// AJOUTER UNE CATEGORIE
+if (isset($_POST['buttonAddCategory'])) {
+    $nameCategory = trim(htmlspecialchars($_POST['nameCategory']));
+    $idParent = trim(htmlspecialchars($_POST['idParent']));
+
+    $category = new Category(null, $nameCategory, $idParent);
+    $category->addCategory($bdd);
+}
+
+// SUPPRIMER UNE CATEGORIE
+if (isset($_POST['buttonDeleteCategory'])) {
+    $idCategory = trim(htmlspecialchars($_POST['idCategory']));;
+
+    $category = new Category($idCategory, null, null);
+    $category->deleteCategory($bdd);
+}
+
+function getEditItemID()
+{
+    if (isset($_GET['editItemID'])) {
+        $id = intval($_GET['editItemID']);
+        // var_dump($id);
+        return $id;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -71,77 +97,79 @@ if (isset($_POST['deleteItem'])) {
 
                 <div id="addItem">
                     <h3>Ajouter un Produit</h3>
-                    <form action="" method="post" id="formItem">
+                    <form action="" method="post" id="formAddItem">
 
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name">
+                        <label for="nameItem">Name</label>
+                        <input type="text" id="nameItem" name="nameItem">
 
-                        <label for="description">description</label>
-                        <input type="text" id="description" name="description">
+                        <label for="descriptionItem">Description</label>
+                        <input type="text" id="descriptionItem" name="descriptionItem">
 
-                        <label for="price">price</label>
-                        <input type="text" id="price" name="price">
+                        <label for="priceItem">Price</label>
+                        <input type="text" id="priceItem" name="priceItem">
 
-                        <label for="stock">stock</label>
-                        <input type="number" id="stock" name="stock">
+                        <label for="stockItem">Stock</label>
+                        <input type="number" id="stockItem" name="stockItem">
 
-                        <label for="category">Category</label>
-                        <input type="number" id="category" name="category">
+                        <label for="categoryItem">Category</label>
+                        <input type="number" id="categoryItem" name="categoryItem">
 
-                        <input type="submit" name="addItem" value="Ajouter">
+                        <input type="submit" name="buttonAddItem" value="Ajouter">
                     </form>
                 </div>
 
                 <div id="deleteItem">
                     <h3>Supprimer un item</h3>
 
-                    <form action="" method="post">
-                        <input type="number" name="id_item">
-                        <input type="submit" name="deleteItem" value="Supprimer">
+                    <form action="" method="post" id="formDeleteItem">
+                        <label for="itemID">ID de l'item</label>
+                        <input type="number" name="itemID" id="itemID">
+                        <input type="submit" name="buttonDeleteItem" value="Supprimer">
                     </form>
                 </div>
 
                 <div id="editItem">
                     <h3>Modifier un item</h3>
-                    <form action="" method="get">
-                        <input type="number" name="id_item2">
+                    <form action="" method="get" id="formEditItem">
+                        <label for="editItemID">ID item</label>
+                        <input type="number" name="editItemID" id="editItemID" value="<?= getEditItemID(); ?>">
                         <input type="submit" name="editItem" value="Modifier">
                     </form>
                     <?php
-                    if (isset($_GET['id_item2'])) {
-                        $id_item = $_GET['id_item2'];
-                        $item = new Item($id_item, null, null, null, null, null, null);
-                        $info = $item->returnItem($bdd);
+                    if (isset($_GET['editItemID'])) {
+                        $editItemID = $_GET['editItemID'];
+                        $item = new Item($editItemID, null, null, null, null, null, null);
+                        $infoItem = $item->returnItem($bdd);
                         // var_dump($info->name);
                     ?>
                         <h3>Update Item</h3>
-                        <form action="" method="post">
-                            <label for="name2">Name</label>
-                            <input type="text" id="name2" name="name2" value="<?= $info->name ?>">
+                        <form action="" method="post" id="formUpdateItem">
+                            <label for="updateNameItem">Name</label>
+                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= $infoItem->name ?>">
 
-                            <label for="description2">description</label>
-                            <input type="text" id="description2" name="description2" value="<?= $info->description ?>">
+                            <label for="updateDescriptionItem">Description</label>
+                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= $infoItem->description ?>">
 
-                            <label for="price2">price</label>
-                            <input type="text" id="price2" name="price2" value="<?= $info->price ?>">
+                            <label for="updatePriceItem">Price</label>
+                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= $infoItem->price ?>">
 
-                            <label for="stock2">stock</label>
-                            <input type="number" id="stock2" name="stock2" value="<?= $info->stock ?>">
+                            <label for="updateSotckItem">Stock</label>
+                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= $infoItem->stock ?>">
 
-                            <label for="image2">image</label>
-                            <input type="text" id="image2" name="image2" value="<?= $info->image ?>">
+                            <label for="updateImageItem">Image</label>
+                            <input type="text" id="updateImageItem" name="updateImageItem" value="<?= $infoItem->image ?>">
 
                             <input type="submit" name="updateItem" value="Update">
                         </form>
                     <?php
                         if (isset($_POST['updateItem'])) {
-                            $name = trim(htmlspecialchars($_POST['name2']));
-                            $description = trim(htmlspecialchars($_POST['description2']));
-                            $price = $_POST['price2'];
-                            $stock = $_POST['stock2'];
-                            $image = $_POST['image2'];
+                            $updateNameItem = trim(htmlspecialchars($_POST['updateNameItem']));
+                            $updateDescriptionItem = trim(htmlspecialchars($_POST['updateDescriptionItem']));
+                            $updatePriceItem = $_POST['updatePriceItem'];
+                            $updateSotckItem = $_POST['updateSotckItem'];
+                            $updateImageItem = $_POST['updateImageItem'];
 
-                            $item = new Item($id_item, $name, $description, null, $price, $stock, $image);
+                            $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem, $updateImageItem);
                             $item->editItem($bdd);
                             header('Location: admin.php');
                         }
@@ -153,6 +181,25 @@ if (isset($_POST['deleteItem'])) {
             <!-- SECTION POUR LES CATEGORIES -->
             <h2>CATEGORY</h2>
             <div id="divCategory">
+                <div id="addCategory">
+                    <h3>Ajouter une Categorie</h3>
+                    <form action="" method="post" id="formAddCategory">
+                        <label for="nameCategory">Name</label>
+                        <input type="text" name="nameCategory" id="nameCategory">
+                        <label for="idParent">ID parent</label>
+                        <input type="number" name="idParent" id="idParent">
+                        <input type="submit" name="buttonAddCategory" value="Ajouter">
+                    </form>
+                </div>
+                <div id="deleteCategory">
+                    <h3>Supprimer une Categorie</h3>
+                    <form action="" method="post" id="formDeleteCategory">
+                        <label for="idCategory">ID category</label>
+                        <input type="text" name="idCategory" id="idCategory">
+                        <input type="submit" name="buttonDeleteCategory" value="Supprimer">
+                    </form>
+
+                </div>
             </div>
 
             <!-- SECTION POUR LES USERS -->

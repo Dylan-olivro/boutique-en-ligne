@@ -12,7 +12,7 @@ class Category
         $this->name = $name;
         $this->id_parent = $id_parent;
     }
-    public function addCategoty($bdd)
+    public function addCategory($bdd)
     {
         $addCategory = $bdd->prepare("INSERT INTO category (name,id_parent) VALUES (?,?)");
         $addCategory->execute([$this->name, $this->id_parent]);
