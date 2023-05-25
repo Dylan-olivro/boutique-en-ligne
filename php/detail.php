@@ -54,6 +54,12 @@ if (isset($_POST['vider'])) {
     </main>
     <?php require_once('./include/header-save.php') ?>
 
+    //! TEST POUR LA CROIX D'UN INPUT SEARCH
+    <form action="">
+        <input type="search" id="test">
+        <input type="search" id="searchInput" />
+        <span id="clearIcon" class="search-icon">&#10006;</span>
+    </form>
 </body>
 <style>
 

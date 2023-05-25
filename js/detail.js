@@ -13,3 +13,11 @@ fetch(`./traitement_detail.php?id=${getID()}`)
       console.log(element);
     });
   });
+
+  //! TEST POUR LA CROIX D'UN INPUT SEARCH
+const input = document.getElementById("test");
+console.log(input);
+input.addEventListener("change", () => {
+  console.log("ok");
+  console.log(input.value.length);
+});
