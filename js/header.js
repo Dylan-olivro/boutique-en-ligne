@@ -3,16 +3,19 @@ let searchBarBurger = document.getElementById("searchBarBurger");
 let searchBurgerDiv = document.getElementById("searchBurgerDiv");
 let searchBar = document.getElementById("searchBar");
 let darkMode = document.getElementById("darkMode");
+let navPrincipale = document.getElementById("navPrincipale");
 let darkModeState = false;
 let searchBarBurgerValue = searchBarBurger.value;
 let allBody = document.body;
+let allHeader = document.header;
 
 darkMode.addEventListener("click", () => {
   let actualTheme = allBody.className;
 
+  // navPrincipale.classList.toggle("dark-mode");
   allBody.classList.toggle("dark-mode");
   localStorage.setItem("Mytheme", actualTheme);
-  console.log(localStorage);
+  console.log(localStorage.Mytheme);
 });
 
 if (localStorage.getItem("Mytheme")) {
