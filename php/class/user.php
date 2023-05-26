@@ -143,12 +143,12 @@ class User
 
             if ($result != false) {
                 if (password_verify($this->password, $result->password)) {
-                    $this->id = $result->id;
+                    $this->id = intval($result->id);
                     $this->email = $result->email;
                     $this->firstname = $result->firstname;
                     $this->lastname = $result->lastname;
                     $this->password = $result->password;
-                    $this->role = $result->role;
+                    $this->role = intval($result->role);
 
                     $_SESSION['user'] = $this;
                     unset($_SESSION['message']);

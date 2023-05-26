@@ -37,7 +37,7 @@ function validate() {
 function getPage() {
   let url = window.location.href;
   let page = url.split("/")[5];
-  console.log(page);
+  // console.log(page);
   if (page == "php") {
     let php = "";
     let image = ".";

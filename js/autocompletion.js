@@ -1,5 +1,4 @@
 let searchResultsInput = document.getElementById("searchBar"); //le input desktop
-// console.log(searchResultsInput);
 let searchInputBurger = document.getElementById("searchBarBurger"); //le input dans le burger
 let searchResultsDesktopDiv = document.getElementById(
   "searchResultsDesktopDiv"
@@ -7,14 +6,14 @@ let searchResultsDesktopDiv = document.getElementById(
 // let searchResults = document.getElementById("searchResultsDesktop"); //la div des résultats
 
 // if (searchResultsInput) {
-searchResultsInput.addEventListener("keyup", () => {
+  searchResultsInput.addEventListener("keyup", () => {
   // console.log(searchResultsInput.value);
   searchResultsDesktopDiv.innerHTML = "";
   if (searchResultsInput.value == "") {
     searchResultsDesktopDiv.style.display = "none";
   } else {
     searchResultsDesktopDiv.style.display = "block";
-    console.log(getPage());
+    // console.log(getPage());
     fetch(
       `./${getPage()[0]}autocompletion.php/?search=${searchResultsInput.value}`
     )
@@ -22,8 +21,13 @@ searchResultsInput.addEventListener("keyup", () => {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
+        if (data.length == 0) {
+           let noResult = document.createElement("p");
+           noResult.innerText = "Aucun résultat trouvé";
+           searchResultsDesktopDiv.append(noResult);
+         }
         data.forEach((element) => {
+          // console.log(searchResultsInput);
           // console.log(element.name);
           let resultsDiv = document.createElement("div");
           let resultsImgDiv = document.createElement("div");
@@ -51,11 +55,16 @@ searchResultsInput.addEventListener("keyup", () => {
           resultsLink.href = `./${getPage()[0]}detail.php?id=${element.id}`;
           // console.log("hello");
 
-          resultsImgDiv.append(resultsImg);
-          resultsNameDescDiv.append(resultsName, resultsDesc);
-          resultsDiv.append(resultsImgDiv, resultsNameDescDiv);
-          resultsLink.append(resultsDiv);
-          searchResultsDesktopDiv.append(resultsLink);
+          // for(i=0; i < 5 ; i++){
+          if (searchResultsDesktopDiv.children.length < 5) {
+            resultsImgDiv.append(resultsImg);
+            resultsNameDescDiv.append(resultsName, resultsDesc);
+            resultsDiv.append(resultsImgDiv, resultsNameDescDiv);
+            resultsLink.append(resultsDiv);
+            searchResultsDesktopDiv.append(resultsLink);
+          }
+          // console.log(typeof element);
+          // }
 
           // let searchResultsP = document.createElement("p");
           // searchResultsP.innerHTML = 'TEST results';
@@ -67,11 +76,11 @@ searchResultsInput.addEventListener("keyup", () => {
 // }
 
 // Permet de faire disparaitre la div des results quand on clique en dehors
-window.addEventListener('click', function(e){   
-  if (searchBar.contains(e.target) && searchResultsInput.value != ""){
+window.addEventListener("click", function (e) {
+  if (searchBar.contains(e.target) && searchResultsInput.value != "") {
     searchResultsDesktopDiv.style.display = "block";
     // Clicked in box
-  } else{
+  } else {
     searchResultsDesktopDiv.style.display = "none";
     // Clicked outside the box
   }
