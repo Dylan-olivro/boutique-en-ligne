@@ -1,23 +1,68 @@
 <?php
 require_once('./class/user.php');
 require_once('./class/item.php');
+require_once('./class/category.php');
 ob_start('ob_gzhandler');
 
 if ($_SESSION['user']->role !== 2) {
     header('Location: ../index.php');
 }
-
 // AJOUT DES ITEMS
-if (isset($_POST['addItem'])) {
-    $name = trim(htmlspecialchars($_POST['name']));
-    $description = trim(htmlspecialchars($_POST['description']));
+if (isset($_POST['buttonAddItem'])) {
+    $nameItem = trim(htmlspecialchars($_POST['nameItem']));
+    $descriptionItem = trim(htmlspecialchars($_POST['descriptionItem']));
     $date = date("Y-m-d H:i:s");
-    $price = $_POST['price'];
-    $stock = $_POST['stock'];
-    $category = $_POST['category'];
+    $priceItem = trim(htmlspecialchars($_POST['priceItem']));
+    $stockItem = trim(htmlspecialchars($_POST['stockItem']));
+    $categoryItem = trim(htmlspecialchars($_POST['categoryItem']));
 
-    $item = new Item('', $name, $description, $date, $price, $stock, $category);
+    $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
+    $category = new Category(null, null, $categoryItem);
+
     $item->addItem($bdd);
+    $category->liaisonItemCategory($bdd);
+}
+
+// SUPPRIMER DES ITEMS
+if (isset($_POST['buttonDeleteItem'])) {
+    $itemID = $_POST['itemID'];
+    $item = new Item($itemID, null, null, null, null, null, null);
+    $item->deleteItem($bdd);
+}
+
+// AJOUTER UNE CATEGORIE
+if (isset($_POST['buttonAddCategory'])) {
+    $nameCategory = trim(htmlspecialchars($_POST['nameCategory']));
+    $idParent = trim(htmlspecialchars($_POST['idParent']));
+
+    $category = new Category(null, $nameCategory, $idParent);
+    $category->addCategory($bdd);
+}
+
+// SUPPRIMER UNE CATEGORIE
+if (isset($_POST['buttonDeleteCategory'])) {
+    $idCategory = trim(htmlspecialchars($_POST['idCategory']));;
+
+    $category = new Category($idCategory, null, null);
+    $category->deleteCategory($bdd);
+}
+
+// MODIFIER UNE CATEGORIE
+if (isset($_POST['buttonUpdateCategory'])) {
+    $updateIdCategory = trim(htmlspecialchars($_POST['updateIdCategory']));
+    $updateNameCategory = trim(htmlspecialchars($_POST['updateNameCategory']));
+
+    $category = new Category($updateIdCategory, $updateNameCategory, null);
+    $category->updateCategory($bdd);
+}
+
+function getEditItemID()
+{
+    if (isset($_GET['editItemID'])) {
+        $id = intval($_GET['editItemID']);
+        // var_dump($id);
+        return $id;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -30,6 +75,7 @@ if (isset($_POST['addItem'])) {
     <title>Admin</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/admin.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -39,8 +85,8 @@ if (isset($_POST['addItem'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/admin.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <!-- <script src="../js/admin.js" defer></script> -->
 
 </head>
 
@@ -48,13 +94,135 @@ if (isset($_POST['addItem'])) {
     <?php require_once('./include/header.php');
     ?>
     <main>
-        <div id="nav">
-            <!-- page -->
+        <!-- <div id="nav">
             <p id="titleUser">User</p>
             <p id="titleItem">Item</p>
             <p id="titleCategory">Category</p>
-        </div>
+        </div> -->
         <section id="container">
+            <!-- SECTION POUR LES ITEMS -->
+            <h2>ITEMS</h2>
+            <div id="divItem">
+
+                <div id="addItem">
+                    <h3>Ajouter un Produit</h3>
+                    <form action="" method="post" id="formAddItem">
+
+                        <label for="nameItem">Name</label>
+                        <input type="text" id="nameItem" name="nameItem">
+
+                        <label for="descriptionItem">Description</label>
+                        <input type="text" id="descriptionItem" name="descriptionItem">
+
+                        <label for="priceItem">Price</label>
+                        <input type="text" id="priceItem" name="priceItem">
+
+                        <label for="stockItem">Stock</label>
+                        <input type="number" id="stockItem" name="stockItem">
+
+                        <label for="categoryItem">Category</label>
+                        <input type="number" id="categoryItem" name="categoryItem">
+
+                        <input type="submit" name="buttonAddItem" value="Ajouter">
+                    </form>
+                </div>
+
+                <div id="deleteItem">
+                    <h3>Supprimer un item</h3>
+
+                    <form action="" method="post" id="formDeleteItem">
+                        <label for="itemID">ID de l'item</label>
+                        <input type="number" name="itemID" id="itemID">
+                        <input type="submit" name="buttonDeleteItem" value="Supprimer">
+                    </form>
+                </div>
+
+                <div id="editItem">
+                    <h3>Modifier un item</h3>
+                    <form action="" method="get" id="formEditItem">
+                        <label for="editItemID">ID item</label>
+                        <input type="number" name="editItemID" id="editItemID" value="<?= getEditItemID(); ?>">
+                        <input type="submit" name="editItem" value="Modifier">
+                    </form>
+                    <?php
+                    if (isset($_GET['editItemID'])) {
+                        $editItemID = trim(htmlspecialchars($_GET['editItemID']));
+                        $item = new Item($editItemID, null, null, null, null, null, null);
+                        $infoItem = $item->returnItem($bdd);
+                        // var_dump($info->name);
+                    ?>
+                        <h3>Update Item</h3>
+                        <form action="" method="post" id="formUpdateItem">
+                            <label for="updateNameItem">Name</label>
+                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= $infoItem->name ?>">
+
+                            <label for="updateDescriptionItem">Description</label>
+                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= $infoItem->description ?>">
+
+                            <label for="updatePriceItem">Price</label>
+                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= $infoItem->price ?>">
+
+                            <label for="updateSotckItem">Stock</label>
+                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= $infoItem->stock ?>">
+
+                            <label for="updateImageItem">Image</label>
+                            <input type="text" id="updateImageItem" name="updateImageItem" value="<?= $infoItem->image ?>">
+
+                            <input type="submit" name="updateItem" value="Update">
+                        </form>
+                    <?php
+                        if (isset($_POST['updateItem'])) {
+                            $updateNameItem = trim(htmlspecialchars($_POST['updateNameItem']));
+                            $updateDescriptionItem = trim(htmlspecialchars($_POST['updateDescriptionItem']));
+                            $updatePriceItem = trim(htmlspecialchars($_POST['updatePriceItem']));
+                            $updateSotckItem = trim(htmlspecialchars($_POST['updateSotckItem']));
+                            $updateImageItem = trim(htmlspecialchars($_POST['updateImageItem']));
+
+                            $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem, $updateImageItem);
+                            $item->editItem($bdd);
+                            header('Location: admin.php');
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <!-- SECTION POUR LES CATEGORIES -->
+            <h2>CATEGORY</h2>
+            <div id="divCategory">
+                <div id="addCategory">
+                    <h3>Ajouter une Categorie</h3>
+                    <form action="" method="post" id="formAddCategory">
+                        <label for="nameCategory">Name</label>
+                        <input type="text" name="nameCategory" id="nameCategory">
+                        <label for="idParent">ID parent</label>
+                        <input type="number" name="idParent" id="idParent">
+                        <input type="submit" name="buttonAddCategory" value="Ajouter">
+                    </form>
+                </div>
+                <div id="deleteCategory">
+                    <h3>Supprimer une Categorie</h3>
+                    <form action="" method="post" id="formDeleteCategory">
+                        <label for="idCategory">ID category</label>
+                        <input type="text" name="idCategory" id="idCategory">
+                        <input type="submit" name="buttonDeleteCategory" value="Supprimer">
+                    </form>
+                </div>
+
+                <div id="updateCategory">
+                    <h3>Modifier une Categorie</h3>
+                    <form action="" method="post" id="formUpdateCategory">
+                        <label for="updateIdCategory">ID category</label>
+                        <input type="text" name="updateIdCategory" id="updateIdCategory">
+                        <label for="updateNameCategory">New Name</label>
+                        <input type="text" name="updateNameCategory" id="updateNameCategory">
+                        <input type="submit" name="buttonUpdateCategory" value="Modifier">
+                    </form>
+                </div>
+            </div>
+
+            <!-- SECTION POUR LES USERS -->
+            <h2>USER</h2>
             <div id="divUser">
                 <div class="w-75">
                     <h1 class="text-center m-4">All Users</h1>
@@ -131,30 +299,7 @@ if (isset($_POST['addItem'])) {
                     </div>
                 </div>
             </div>
-            <div id="divItem">
-                <form action="" method="post" id="formItem">
 
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name">
-
-                    <label for="description">description</label>
-                    <input type="text" id="description" name="description">
-
-                    <label for="name">price</label>
-                    <input type="text" id="price" name="price">
-
-                    <label for="name">stock</label>
-                    <input type="number" id="stock" name="stock">
-
-                    <label for="name">Category</label>
-                    <input type="number" id="category" name="category">
-
-                    <input type="submit" name="addItem" value="Ajouter">
-                </form>
-            </div>
-            <div id="divCategory">
-                <p>Je suis le contenu de CATEGORY</p>
-            </div>
         </section>
     </main>
     <?php require_once('./include/header-save.php') ?>
