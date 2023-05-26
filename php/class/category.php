@@ -21,6 +21,9 @@ class Category
     {
         $deleteCategory = $bdd->prepare("DELETE FROM category WHERE id = ?");
         $deleteCategory->execute([$this->id]);
+
+        $deleteLiaison = $bdd->prepare("DELETE FROM liaison_items_category WHERE id_category = ?");
+        $deleteLiaison->execute([$this->id]);
     }
     public function liaisonItemCategory($bdd)
     {
@@ -32,5 +35,10 @@ class Category
         $insertLiaison->execute([$result->id, $this->id_parent]);
 
         header('Location: admin.php');
+    }
+    public function updateCategory($bdd)
+    {
+        $updateCategory = $bdd->prepare("UPDATE category SET name = ? WHERE id = ?");
+        $updateCategory->execute([$this->name, $this->id]);
     }
 }

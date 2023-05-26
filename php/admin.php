@@ -12,9 +12,9 @@ if (isset($_POST['buttonAddItem'])) {
     $nameItem = trim(htmlspecialchars($_POST['nameItem']));
     $descriptionItem = trim(htmlspecialchars($_POST['descriptionItem']));
     $date = date("Y-m-d H:i:s");
-    $priceItem = trim(htmlspecialchars($_POST['priceItem']));;
-    $stockItem = trim(htmlspecialchars($_POST['stockItem']));;
-    $categoryItem = trim(htmlspecialchars($_POST['categoryItem']));;
+    $priceItem = trim(htmlspecialchars($_POST['priceItem']));
+    $stockItem = trim(htmlspecialchars($_POST['stockItem']));
+    $categoryItem = trim(htmlspecialchars($_POST['categoryItem']));
 
     $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
     $category = new Category(null, null, $categoryItem);
@@ -45,6 +45,15 @@ if (isset($_POST['buttonDeleteCategory'])) {
 
     $category = new Category($idCategory, null, null);
     $category->deleteCategory($bdd);
+}
+
+// MODIFIER UNE CATEGORIE
+if (isset($_POST['buttonUpdateCategory'])) {
+    $updateIdCategory = trim(htmlspecialchars($_POST['updateIdCategory']));
+    $updateNameCategory = trim(htmlspecialchars($_POST['updateNameCategory']));
+
+    $category = new Category($updateIdCategory, $updateNameCategory, null);
+    $category->updateCategory($bdd);
 }
 
 function getEditItemID()
@@ -137,7 +146,7 @@ function getEditItemID()
                     </form>
                     <?php
                     if (isset($_GET['editItemID'])) {
-                        $editItemID = $_GET['editItemID'];
+                        $editItemID = trim(htmlspecialchars($_GET['editItemID']));
                         $item = new Item($editItemID, null, null, null, null, null, null);
                         $infoItem = $item->returnItem($bdd);
                         // var_dump($info->name);
@@ -165,9 +174,9 @@ function getEditItemID()
                         if (isset($_POST['updateItem'])) {
                             $updateNameItem = trim(htmlspecialchars($_POST['updateNameItem']));
                             $updateDescriptionItem = trim(htmlspecialchars($_POST['updateDescriptionItem']));
-                            $updatePriceItem = $_POST['updatePriceItem'];
-                            $updateSotckItem = $_POST['updateSotckItem'];
-                            $updateImageItem = $_POST['updateImageItem'];
+                            $updatePriceItem = trim(htmlspecialchars($_POST['updatePriceItem']));
+                            $updateSotckItem = trim(htmlspecialchars($_POST['updateSotckItem']));
+                            $updateImageItem = trim(htmlspecialchars($_POST['updateImageItem']));
 
                             $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem, $updateImageItem);
                             $item->editItem($bdd);
@@ -198,7 +207,17 @@ function getEditItemID()
                         <input type="text" name="idCategory" id="idCategory">
                         <input type="submit" name="buttonDeleteCategory" value="Supprimer">
                     </form>
+                </div>
 
+                <div id="updateCategory">
+                    <h3>Modifier une Categorie</h3>
+                    <form action="" method="post" id="formUpdateCategory">
+                        <label for="updateIdCategory">ID category</label>
+                        <input type="text" name="updateIdCategory" id="updateIdCategory">
+                        <label for="updateNameCategory">New Name</label>
+                        <input type="text" name="updateNameCategory" id="updateNameCategory">
+                        <input type="submit" name="buttonUpdateCategory" value="Modifier">
+                    </form>
                 </div>
             </div>
 
