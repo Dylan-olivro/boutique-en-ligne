@@ -1,12 +1,15 @@
 <?php
 require_once('./class/user.php');
+require_once('./class/adress.php');
+
 ob_start('ob_gzhandler');
 
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
-// var_dump($_SESSION);
+$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
+$allUserAdress = $adress->returnAdressByUser($bdd);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,8 +30,8 @@ if (!isset($_SESSION['user'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/user/profil.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/user/profil.js" defer></script>
 
 </head>
 
@@ -44,21 +47,46 @@ if (!isset($_SESSION['user'])) {
             <input type="text" id="lastname" name="lastname" value="<?= $_SESSION['user']->lastname ?>">
             <label for="password">Password</label>
             <input type="password" name="password">
-            <input type="submit" name="submit" class="input">
+            <input type="submit" name="updateUser" class="input" value="Enregistrer">
             <p id="message">
                 <?php if (!empty($_SESSION['message'])) {
                     echo $_SESSION['message'];
                 } ?>
             </p>
             <a href="modifyPassword.php">Changer de mot de passe</a>
+            <a href="addAdress.php">Ajouter une adresse</a>
 
             <?php
-            if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['password'], $_SESSION['user']->role);
+            if (isset($_POST['updateUser'])) {
+                $email = trim(htmlspecialchars($_POST['email']));
+                $firstname = trim(htmlspecialchars($_POST['firstname']));
+                $lastname = trim(htmlspecialchars($_POST['lastname']));
+                $password = $_POST['password'];
+
+                $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
                 $user->update($bdd);
-            }
-            ?>
+            } ?>
         </form>
+        <?php
+        foreach ($allUserAdress as $userAdress) { ?>
+            <div style="border: 1px solid; margin-bottom:10px !important">
+                <p><?= $userAdress->numero ?></p>
+                <p><?= $userAdress->name ?></p>
+                <p><?= $userAdress->postcode ?></p>
+                <p><?= $userAdress->city ?></p>
+                <a href="modifyAdress.php?id=<?= $userAdress->id ?>"><button>Modifier</button></a>
+                <form action="" method="post">
+                    <input type="submit" value="Supprimer" name="deleteAdress<?= $userAdress->id ?>">
+                </form>
+            </div>
+        <?php
+            if (isset($_POST['deleteAdress' . $userAdress->id])) {
+                $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
+                $adress->deleteAdress($bdd);
+                header('Location: profil.php');
+            }
+        }
+        ?>
     </main>
     <?php require_once('./include/header-save.php') ?>
 </body>

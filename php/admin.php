@@ -60,7 +60,6 @@ function getEditItemID()
 {
     if (isset($_GET['editItemID'])) {
         $id = intval($_GET['editItemID']);
-        // var_dump($id);
         return $id;
     }
 }
@@ -91,8 +90,7 @@ function getEditItemID()
 </head>
 
 <body>
-    <?php require_once('./include/header.php');
-    ?>
+    <?php require_once('./include/header.php'); ?>
     <main>
         <!-- <div id="nav">
             <p id="titleUser">User</p>
@@ -149,7 +147,6 @@ function getEditItemID()
                         $editItemID = trim(htmlspecialchars($_GET['editItemID']));
                         $item = new Item($editItemID, null, null, null, null, null, null);
                         $infoItem = $item->returnItem($bdd);
-                        // var_dump($info->name);
                     ?>
                         <h3>Update Item</h3>
                         <form action="" method="post" id="formUpdateItem">
