@@ -153,7 +153,6 @@ if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
                     </div>
                     <div class="navCategories" id="navCategories">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <a href="./php/productsFilter.php" class="nav-link">Tous les produits</a>
                             <a href="./itemFilter.php" class="nav-link">Tous les produits</a>
                             <?php
                             foreach ($resultCategoryParent as $key) {
