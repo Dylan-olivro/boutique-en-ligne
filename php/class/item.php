@@ -1,24 +1,4 @@
 <?php
-if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-    $url = "https";
-else {
-    $url = "http";
-}
-// ASSEMBLAGE DE L'URL
-$url .= "://";
-$url .= $_SERVER['HTTP_HOST'];
-$url .= $_SERVER['REQUEST_URI'];
-$splitURL = explode('boutique-en-ligne', $url);
-
-// CONDITION SI ON EST SUR L'INDEX OU PAS
-if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
-    require_once('./php/include/bdd.php');
-    require_once('./php/include/function.php');
-} else {
-    require_once('./include/bdd.php');
-    require_once('./include/function.php');
-}
-
 class Item
 {
     public $id;
@@ -28,10 +8,9 @@ class Item
     public $price;
     public $stock;
     public $image;
-    public $category;
 
-    // ! ajouter image dans __construct
-    public function __construct($id, $name, $description, $date, $price, $stock, $category)
+    // ! ajouter image dans __construct et verifier tout le code en rapport avec les items
+    public function __construct($id, $name, $description, $date, $price, $stock)
     {
         $this->id = $id;
         $this->name = $name;
@@ -40,7 +19,6 @@ class Item
         $this->price = $price;
         $this->stock = $stock;
         // $this->image = $image;
-        $this->category = $category;
     }
 
     public function getId()
@@ -120,35 +98,42 @@ class Item
         return $this;
     }
 
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    public function setCategory($category)
-    {
-        $this->category = $category;
-        return $this;
-    }
     public function addItem($bdd)
     {
-        $insertItems = $bdd->prepare("INSERT INTO items (name,description,date,price,stock) VALUES(?,?,?,?,?)");
-        $insertItems->execute([$this->name, $this->description, $this->date, $this->price, $this->stock]);
+        $insertItem = $bdd->prepare("INSERT INTO items (name,description,date,price,stock) VALUES(?,?,?,?,?)");
+        $insertItem->execute([$this->name, $this->description, $this->date, $this->price, $this->stock]);
 
-        $returnItems = $bdd->prepare('SELECT * FROM items ORDER BY items.id DESC');
-        $returnItems->execute();
-        $resultItems = $returnItems->fetch(PDO::FETCH_OBJ);
+        // $returnItems = $bdd->prepare('SELECT * FROM items ORDER BY items.id DESC');
+        // $returnItems->execute();
+        // $resultItems = $returnItems->fetch(PDO::FETCH_OBJ);
 
-        $insertCategory = $bdd->prepare('INSERT INTO liaison_items_category (id_item,id_category) VALUES(?,?)');
-        $insertCategory->execute([$resultItems->id, $this->category]);
+        // $insertCategory = $bdd->prepare('INSERT INTO liaison_items_category (id_item,id_category) VALUES(?,?)');
+        // $insertCategory->execute([$resultItems->id, $this->category]);
 
-        header('Location: addItems.php');
+        // header('Location: admin.php');
     }
-
+    public function deleteItem($bdd)
+    {
+        $deleteItem = $bdd->prepare('DELETE FROM items WHERE id = ?');
+        $deleteItem->execute([$this->id]);
+    }
+    public function editItem($bdd)
+    {
+        $editItem = $bdd->prepare('UPDATE items SET name = ?, description = ?, price = ?, stock = ?, image = ? WHERE id = ?');
+        $editItem->execute([$this->name, $this->description, $this->price, $this->stock, $this->image, $this->id]);
+    }
     public function returnItems($bdd)
     {
         $returnItems = $bdd->prepare('SELECT * FROM items INNER JOIN liaison_items_category ON items.id = liaison_items_category.id_item');
         $returnItems->execute();
-        $resultItems = $returnItems->fetchAll(PDO::FETCH_ASSOC);
+        $result = $returnItems->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function returnItem($bdd)
+    {
+        $returnItem = $bdd->prepare('SELECT * FROM items WHERE id = ?');
+        $returnItem->execute([$this->id]);
+        $result = $returnItem->fetch(PDO::FETCH_OBJ);
+        return $result;
     }
 }
