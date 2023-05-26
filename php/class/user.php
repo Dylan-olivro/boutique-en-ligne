@@ -1,24 +1,33 @@
 <?php
 session_start();
 // RECUPERER L'URL POUR SAVOIR SI C'EST L'INDEX OU LES AUTRES PAGES
-if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-    $url = "https";
-else {
-    $url = "http";
+function getURL()
+{
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+        $url = "https";
+    else {
+        $url = "http";
+    }
+    // ASSEMBLAGE DE L'URL
+    $url .= "://";
+    $url .= $_SERVER['HTTP_HOST'];
+    $url .= $_SERVER['REQUEST_URI'];
+    $splitURL = explode('boutique-en-ligne', $url);
+    $splitURL2 = explode('/', $splitURL[1]);
+    return [$splitURL, $splitURL2];
 }
-// ASSEMBLAGE DE L'URL
-$url .= "://";
-$url .= $_SERVER['HTTP_HOST'];
-$url .= $_SERVER['REQUEST_URI'];
-$splitURL = explode('boutique-en-ligne', $url);
-
 // CONDITION SI ON EST SUR L'INDEX OU PAS
-if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
+if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
     require_once('./php/include/bdd.php');
     require_once('./php/include/function.php');
 } else {
-    require_once('./include/bdd.php');
-    require_once('./include/function.php');
+    if (getURL()[1][2] === 'user') {
+        require_once('../include/bdd.php');
+        require_once('../include/function.php');
+    } else {
+        require_once('./include/bdd.php');
+        require_once('./include/function.php');
+    }
 }
 
 

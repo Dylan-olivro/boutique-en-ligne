@@ -1,9 +1,14 @@
 <?php
-require_once('./class/user.php');
-ob_start('ob_gzhandler');
+require_once('../class/user.php');
+require_once('../class/adress.php');
+require_once('../class/image.php');
+require_once('../class/item.php');
+require_once('../class/category.php');
+
+ob_start();
 
 if (!isset($_SESSION['user'])) {
-    header('Location:../index.php');
+    header('Location:../../index.php');
 }
 
 ?>
@@ -26,14 +31,14 @@ if (!isset($_SESSION['user'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/user/modifyPassword.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/user/modifyPassword.js" defer></script>
 
 
 </head>
 
 <body>
-    <?php require_once('./include/header.php'); ?>
+    <?php require_once('../include/header.php'); ?>
 
     <main>
         <form action="" method="post" id="formUpdatePassword">
@@ -45,9 +50,6 @@ if (!isset($_SESSION['user'])) {
             <p id="message"></p>
 
             <?php
-            // var_dump($_SESSION);
-            // unset($_SESSION['message']);
-
             if (isset($_POST['submit'])) {
                 $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT), '');
                 $user->updatePassword($bdd);
@@ -55,7 +57,7 @@ if (!isset($_SESSION['user'])) {
             ?>
         </form>
     </main>
-    <?php require_once('./include/header-save.php') ?>
+    <?php require_once('../include/header-save.php') ?>
 </body>
 <style>
     form {

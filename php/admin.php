@@ -1,8 +1,10 @@
 <?php
 require_once('./class/user.php');
+require_once('./class/adress.php');
+require_once('./class/image.php');
 require_once('./class/item.php');
 require_once('./class/category.php');
-ob_start('ob_gzhandler');
+ob_start();
 
 if ($_SESSION['user']->role !== 2) {
     header('Location: ../index.php');

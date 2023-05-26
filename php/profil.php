@@ -1,8 +1,11 @@
 <?php
 require_once('./class/user.php');
 require_once('./class/adress.php');
+require_once('./class/image.php');
+require_once('./class/item.php');
+require_once('./class/category.php');
 
-ob_start('ob_gzhandler');
+ob_start();
 
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
@@ -53,7 +56,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     echo $_SESSION['message'];
                 } ?>
             </p>
-            <a href="modifyPassword.php">Changer de mot de passe</a>
+            <a href="./user/modifyPassword.php">Changer de mot de passe</a>
             <a href="addAdress.php">Ajouter une adresse</a>
 
             <?php
