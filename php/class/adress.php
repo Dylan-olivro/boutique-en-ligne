@@ -22,16 +22,19 @@ class Adress
     {
         $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city)  VALUES(?,?,?,?,?)');
         $addAdress->execute([$this->id_user, $this->numero, $this->name, $this->postcode, $this->city]);
+        header('Location: ../profil.php');
     }
     public function deleteAdress($bdd)
     {
         $deleteAdress = $bdd->prepare('DELETE FROM adress WHERE id = ? AND id_user = ?');
         $deleteAdress->execute([$this->id, $this->id_user]);
+        header('Location: ../profil.php');
     }
     public function updateAdress($bdd)
     {
         $updateAdress = $bdd->prepare('UPDATE adress SET numero = ?, name = ?, postcode = ?, city = ? WHERE id = ? AND id_user = ?');
         $updateAdress->execute([$this->numero, $this->name, $this->postcode, $this->city, $this->id, $this->id_user]);
+        header('Location: admin.php');
     }
     public function returnAdressById($bdd)
     {

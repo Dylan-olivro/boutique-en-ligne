@@ -1,10 +1,5 @@
 <?php
 require_once('./php/class/user.php');
-require_once('./php/class/adress.php');
-require_once('./php/class/image.php');
-require_once('./php/class/item.php');
-require_once('./php/class/category.php');
-ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">

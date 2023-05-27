@@ -1,5 +1,8 @@
 <?php
 session_start();
+// ob_start();
+ob_start('ob_gzhandler');
+
 // RECUPERER L'URL POUR SAVOIR SI C'EST L'INDEX OU LES AUTRES PAGES
 function getURL()
 {
@@ -20,13 +23,25 @@ function getURL()
 if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
     require_once('./php/include/bdd.php');
     require_once('./php/include/function.php');
+    require_once('./php/class/adress.php');
+    require_once('./php/class/image.php');
+    require_once('./php/class/item.php');
+    require_once('./php/class/category.php');
 } else {
     if (getURL()[1][2] === 'user') {
         require_once('../include/bdd.php');
         require_once('../include/function.php');
+        require_once('../class/adress.php');
+        require_once('../class/image.php');
+        require_once('../class/item.php');
+        require_once('../class/category.php');
     } else {
         require_once('./include/bdd.php');
         require_once('./include/function.php');
+        require_once('./class/adress.php');
+        require_once('./class/image.php');
+        require_once('./class/item.php');
+        require_once('./class/category.php');
     }
 }
 
@@ -223,7 +238,7 @@ class User
             unset($_SESSION['message']);
             $insertUser->execute([$this->password, $this->id]);
             $_SESSION['user']->password = $this->password;
-            header('Location:./profil.php');
+            header('Location:../profil.php');
         }
     }
     public function disconnect()

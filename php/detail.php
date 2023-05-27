@@ -1,11 +1,5 @@
 <?php
 require_once('./class/user.php');
-require_once('./class/adress.php');
-require_once('./class/image.php');
-require_once('./class/item.php');
-require_once('./class/category.php');
-
-ob_start('ob_gzhandler');
 
 if (isset($_POST['ajouter'])) {
     $insertIntoPanier = $bdd->prepare('INSERT INTO panier (id_user,id_item) VALUES(?,?)');

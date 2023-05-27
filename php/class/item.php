@@ -110,17 +110,19 @@ class Item
         // $insertCategory = $bdd->prepare('INSERT INTO liaison_items_category (id_item,id_category) VALUES(?,?)');
         // $insertCategory->execute([$resultItems->id, $this->category]);
 
-        // header('Location: admin.php');
+        header('Location: admin.php');
     }
     public function deleteItem($bdd)
     {
         $deleteItem = $bdd->prepare('DELETE FROM items WHERE id = ?');
         $deleteItem->execute([$this->id]);
+        header('Location: admin.php');
     }
     public function editItem($bdd)
     {
         $editItem = $bdd->prepare('UPDATE items SET name = ?, description = ?, price = ?, stock = ?, image = ? WHERE id = ?');
         $editItem->execute([$this->name, $this->description, $this->price, $this->stock, $this->image, $this->id]);
+        header('Location: admin.php');
     }
     public function returnItems($bdd)
     {

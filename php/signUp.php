@@ -1,10 +1,5 @@
 <?php
 require_once('./class/user.php');
-require_once('./class/adress.php');
-require_once('./class/image.php');
-require_once('./class/item.php');
-require_once('./class/category.php');
-ob_start('ob_gzhandler');
 
 if (isset($_SESSION['user'])) {
     header('Location:../index.php');
@@ -50,15 +45,15 @@ if (isset($_POST['submit'])) {
     <main>
         <form action="" method="post" id="signup">
             <label for="email">Email</label>
-            <input type="" id="email" name="email" autofocus>
+            <input type="" id="email" name="email" required autofocus>
             <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname">
+            <input type="text" id="firstname" name="firstname" required>
             <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname">
+            <input type="text" id="lastname" name="lastname" required>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" required>
             <label for="confirm_password">Confirm password</label>
-            <input type="password" id="confirm_password" name="confirm_password">
+            <input type="password" id="confirm_password" name="confirm_password" required>
             <input type="submit" name="submit" class="input">
             <p id="message">
                 <?php

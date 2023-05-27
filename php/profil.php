@@ -1,11 +1,5 @@
 <?php
 require_once('./class/user.php');
-require_once('./class/adress.php');
-require_once('./class/image.php');
-require_once('./class/item.php');
-require_once('./class/category.php');
-
-ob_start();
 
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
@@ -41,35 +35,38 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <form action="" method="post" id="formProfil">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" value="<?= $_SESSION['user']->email ?>" autofocus>
-            <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname" value="<?= $_SESSION['user']->firstname ?>">
-            <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname" value="<?= $_SESSION['user']->lastname ?>">
-            <label for="password">Password</label>
-            <input type="password" name="password">
-            <input type="submit" name="updateUser" class="input" value="Enregistrer">
-            <p id="message">
-                <?php if (!empty($_SESSION['message'])) {
-                    echo $_SESSION['message'];
+        <div>
+
+            <form action="" method="post" id="formProfil">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" value="<?= $_SESSION['user']->email ?>" required autofocus>
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname" value="<?= $_SESSION['user']->firstname ?>" required>
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname" value="<?= $_SESSION['user']->lastname ?>" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" required>
+                <input type="submit" name="updateUser" class="input" value="Enregistrer">
+                <p id="message">
+                    <?php if (!empty($_SESSION['message'])) {
+                        echo $_SESSION['message'];
+                    } ?>
+                </p>
+                <a href="./user/modifyPassword.php">Changer de mot de passe</a>
+                <a href="./user/addAdress.php">Ajouter une adresse</a>
+
+                <?php
+                if (isset($_POST['updateUser'])) {
+                    $email = trim(htmlspecialchars($_POST['email']));
+                    $firstname = trim(htmlspecialchars($_POST['firstname']));
+                    $lastname = trim(htmlspecialchars($_POST['lastname']));
+                    $password = $_POST['password'];
+
+                    $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
+                    $user->update($bdd);
                 } ?>
-            </p>
-            <a href="./user/modifyPassword.php">Changer de mot de passe</a>
-            <a href="addAdress.php">Ajouter une adresse</a>
-
-            <?php
-            if (isset($_POST['updateUser'])) {
-                $email = trim(htmlspecialchars($_POST['email']));
-                $firstname = trim(htmlspecialchars($_POST['firstname']));
-                $lastname = trim(htmlspecialchars($_POST['lastname']));
-                $password = $_POST['password'];
-
-                $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
-                $user->update($bdd);
-            } ?>
-        </form>
+            </form>
+        </div>
         <?php
         foreach ($allUserAdress as $userAdress) { ?>
             <div style="border: 1px solid; margin-bottom:10px !important">
@@ -77,7 +74,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 <p><?= $userAdress->name ?></p>
                 <p><?= $userAdress->postcode ?></p>
                 <p><?= $userAdress->city ?></p>
-                <a href="modifyAdress.php?id=<?= $userAdress->id ?>"><button>Modifier</button></a>
+                <a href="./user/modifyAdress.php?id=<?= $userAdress->id ?>"><button>Modifier</button></a>
                 <form action="" method="post">
                     <input type="submit" value="Supprimer" name="deleteAdress<?= $userAdress->id ?>">
                 </form>
@@ -94,7 +91,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
     <?php require_once('./include/header-save.php') ?>
 </body>
 <style>
-    form {
+    /* form {
         display: flex;
         flex-direction: column;
     }
@@ -109,7 +106,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
     label {
         font-size: 1.5rem;
 
-    }
+    } */
 </style>
 
 </html>
