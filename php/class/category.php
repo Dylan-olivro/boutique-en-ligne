@@ -44,4 +44,64 @@ class Category
         $updateCategory->execute([$this->name, $this->id]);
         header('Location: admin.php');
     }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id_parent
+     */ 
+    public function getId_parent()
+    {
+        return $this->id_parent;
+    }
+
+    /**
+     * Set the value of id_parent
+     *
+     * @return  self
+     */ 
+    public function setId_parent($id_parent)
+    {
+        $this->id_parent = $id_parent;
+
+        return $this;
+    }
 }

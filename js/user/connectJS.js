@@ -1,7 +1,8 @@
-let email = document.querySelector("#email");
-let password = document.querySelector("#password");
-let message = document.querySelector("#message");
-let formLogin = document.querySelector("#formLogin");
+const email = document.querySelector("#email");
+const password = document.querySelector("#password");
+const message = document.querySelector("#message");
+const formLogin = document.querySelector("#formLogin");
+const buttonShow = document.getElementById("showPassword");
 
 function isLogin() {
   if (email.value == "") {
@@ -20,3 +21,5 @@ formLogin.addEventListener("submit", (e) => {
     e.preventDefault();
   }
 });
+
+showPassword(buttonShow, password);

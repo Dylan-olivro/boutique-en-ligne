@@ -5,6 +5,8 @@ let password = document.querySelector("#password");
 let cpassword = document.querySelector("#confirm_password");
 let formSignUp = document.querySelector("#signup");
 let message = document.querySelector("#message");
+const buttonShow = document.getElementById("showPassword");
+const buttonShow2 = document.getElementById("showConfirmPassword");
 
 // FONCTION INSCRIPTION
 function isSignUp() {
@@ -51,3 +53,6 @@ formSignUp.addEventListener("submit", (e) => {
     e.preventDefault();
   }
 });
+
+showPassword(buttonShow, password);
+showPassword(buttonShow2, cpassword);

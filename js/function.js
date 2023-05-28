@@ -48,3 +48,16 @@ function getPage() {
     return [php, image];
   }
 }
+
+// FONCTION POUR MONTER OU CACHER LE MOT DE PASSE
+function showPassword(button, password) {
+  button.addEventListener("click", () => {
+    if (password.type == "password") {
+      password.type = "text";
+      button.innerHTML = '<i class="fa-solid fa-eye"></i>';
+    } else {
+      password.type = "password";
+      button.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+    }
+  });
+}

@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $email = trim(htmlspecialchars($_POST['email']));
     $password = $_POST['password'];
 
-    $user = new User('', $email, '', '', $password, '');
+    $user = new User(null, $email, null, null, $password, null);
     $user->connect($bdd);
     // $user->isConnected();
 }
@@ -35,8 +35,8 @@ if (isset($_POST['submit'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/user/connectJS.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/user/connectJS.js" defer></script>
 
 </head>
 
@@ -48,6 +48,7 @@ if (isset($_POST['submit'])) {
             <input type="text" id="email" name="email" placeholder="Email" required autofocus>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
             <input type="submit" name="submit" class="input">
             <p id="message">
                 <?php
