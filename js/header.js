@@ -11,7 +11,6 @@ let allHeader = document.header;
 
 darkMode.addEventListener("click", () => {
   let actualTheme = allBody.className;
-
   // navPrincipale.classList.toggle("dark-mode");
   allBody.classList.toggle("dark-mode");
   localStorage.setItem("Mytheme", actualTheme);
