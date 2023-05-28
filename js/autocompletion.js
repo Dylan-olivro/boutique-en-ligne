@@ -5,8 +5,11 @@ let searchResultsDesktopDiv = document.getElementById(
 ); //la div globale
 // let searchResults = document.getElementById("searchResultsDesktop"); //la div des résultats
 
+// todo : creer une fonction de recherche article avec le nom
+//findItem(ItemName):[]
+
 // if (searchResultsInput) {
-  searchResultsInput.addEventListener("keyup", () => {
+searchResultsInput.addEventListener("keyup", () => {
   // console.log(searchResultsInput.value);
   searchResultsDesktopDiv.innerHTML = "";
   if (searchResultsInput.value == "") {
@@ -22,10 +25,10 @@ let searchResultsDesktopDiv = document.getElementById(
       })
       .then((data) => {
         if (data.length == 0) {
-           let noResult = document.createElement("p");
-           noResult.innerText = "Aucun résultat trouvé";
-           searchResultsDesktopDiv.append(noResult);
-         }
+          let noResult = document.createElement("p");
+          noResult.innerText = "Aucun résultat trouvé";
+          searchResultsDesktopDiv.append(noResult);
+        }
         data.forEach((element) => {
           // console.log(searchResultsInput);
           // console.log(element.name);
