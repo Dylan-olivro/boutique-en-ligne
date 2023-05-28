@@ -22,7 +22,7 @@ class Item
     {
         $insertItem = $bdd->prepare("INSERT INTO items (name,description,date,price,stock) VALUES(?,?,?,?,?)");
         $insertItem->execute([$this->name, $this->description, $this->date, $this->price, $this->stock]);
-        header('Location: admin.php');
+        // header('Location: admin.php');
     }
     public function deleteItem($bdd)
     {
@@ -32,8 +32,8 @@ class Item
     }
     public function editItem($bdd)
     {
-        $editItem = $bdd->prepare('UPDATE items SET name = ?, description = ?, price = ?, stock = ?, image = ? WHERE id = ?');
-        $editItem->execute([$this->name, $this->description, $this->price, $this->stock, $this->image, $this->id]);
+        $editItem = $bdd->prepare('UPDATE items SET name = ?, description = ?, price = ?, stock = ? WHERE id = ?');
+        $editItem->execute([$this->name, $this->description, $this->price, $this->stock, $this->id]);
         header('Location: admin.php');
     }
     public function returnItems($bdd)

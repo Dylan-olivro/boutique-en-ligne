@@ -36,7 +36,7 @@ class Category
         $insertLiaison = $bdd->prepare('INSERT INTO liaison_items_category (id_item,id_category) VALUES(?,?)');
         $insertLiaison->execute([$result->id, $this->id_parent]);
 
-        header('Location: admin.php');
+        // header('Location: admin.php');
     }
     public function updateCategory($bdd)
     {

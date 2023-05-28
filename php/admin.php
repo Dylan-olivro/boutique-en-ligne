@@ -1,7 +1,7 @@
 <?php
 require_once('./class/user.php');
 
-if ($_SESSION['user']->role !== 2) {
+if ($_SESSION['user']->role == 0) {
     header('Location: ../index.php');
 }
 // AJOUT DES ITEMS
@@ -13,11 +13,21 @@ if (isset($_POST['buttonAddItem'])) {
     $stockItem = trim(htmlspecialchars($_POST['stockItem']));
     $categoryItem = trim(htmlspecialchars($_POST['categoryItem']));
 
-    $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
+    $item = new Item('', $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
     $category = new Category(null, null, $categoryItem);
-
     $item->addItem($bdd);
     $category->liaisonItemCategory($bdd);
+    if (isset($_FILES['file'])) {
+        // RECUPERE l'ID DU DERNIER ITEM
+        $returnLastID = $bdd->prepare("SELECT id FROM items ORDER BY items.id DESC");
+        $returnLastID->execute();
+        $resultID =  $returnLastID->fetch(PDO::FETCH_OBJ);
+
+        $file = $_FILES['file']['name'];
+        $image = new Image(null, $resultID->id, $file);
+        $image->addImage($bdd);
+    }
+    header('Location: admin.php');
 }
 
 // SUPPRIMER DES ITEMS
@@ -101,7 +111,7 @@ function getEditItemID()
 
                 <div id="addItem">
                     <h3>Ajouter un Produit</h3>
-                    <form action="" method="post" id="formAddItem">
+                    <form action="" method="post" id="formAddItem" enctype="multipart/form-data">
 
                         <label for="nameItem">Name</label>
                         <input type="text" id="nameItem" name="nameItem">
@@ -117,6 +127,9 @@ function getEditItemID()
 
                         <label for="categoryItem">Category</label>
                         <input type="number" id="categoryItem" name="categoryItem">
+
+                        <label for="file">Image</label>
+                        <input type="file" id="file" name="file">
 
                         <input type="submit" name="buttonAddItem" value="Ajouter">
                     </form>
@@ -172,7 +185,7 @@ function getEditItemID()
                             $updateSotckItem = trim(htmlspecialchars($_POST['updateSotckItem']));
                             $updateImageItem = trim(htmlspecialchars($_POST['updateImageItem']));
 
-                            $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem, $updateImageItem);
+                            $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
                             $item->editItem($bdd);
                         }
                     }

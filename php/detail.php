@@ -30,8 +30,8 @@ if (isset($_POST['vider'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/detail.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/detail.js" defer></script>
 
 </head>
 
@@ -52,13 +52,6 @@ if (isset($_POST['vider'])) {
         </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
-
-    //! TEST POUR LA CROIX D'UN INPUT SEARCH
-    <form action="">
-        <input type="search" id="test">
-        <input type="search" id="searchInput" />
-        <span id="clearIcon" class="search-icon">&#10006;</span>
-    </form>
 </body>
 <style>
 
