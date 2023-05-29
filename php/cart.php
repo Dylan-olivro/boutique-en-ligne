@@ -1,14 +1,14 @@
 <?php
 require_once('./class/user.php');
 
-if (isset($_POST['ajouter'])) {
-    $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(?,?)');
-    $insertIntoPanier->execute([$_SESSION['user']->id, $_GET['id']]);
+if (!isset($_SESSION['user'])) {
+    header('Location:../index.php');
 }
-if (isset($_POST['vider'])) {
-    $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
-    $deletePanier->execute([$_SESSION['user']->id]);
-}
+
+$returnCart = $bdd->prepare("SELECT * from cart WHERE id_user = ?");
+$returnCart->execute([$_SESSION['user']->id]);
+$result = $returnCart->fetchAll(PDO::FETCH_ASSOC);
+var_dump($result);
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ if (isset($_POST['vider'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail</title>
+    <title>Connect</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/header.css">
     <!-- BOOTSTRAP -->
@@ -31,27 +31,17 @@ if (isset($_POST['vider'])) {
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/detail.js" defer></script>
+    <!-- <script src="../js/user/connectJS.js" defer></script> -->
 
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <?php
-        if (isset($_SESSION['user'])) { ?>
-            <form action="" method="post">
-                <input type="submit" name="ajouter" value="Ajouter au panier">
-            </form>
-        <?php
-        }
-        ?>
 
-        <form action="" method="post">
-            <input type="submit" name="vider" value="Vider le panier">
-        </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
+
 </body>
 <style>
 

@@ -14,21 +14,19 @@ function includeHeaderSave($index, $href)
     <div>
         <nav>
             <a href="<?= $index ?>index.php">Index</a>
-            <!-- <a href="https://github.com/Dylan-olivro">Github</a> -->
             <?php
             if (isset($_SESSION['user'])) { ?>
                 <a href="<?= $href ?>profil.php">Profil</a>
-                <a href="<?= $href ?>disconnect.php">Disconnect</a>
+                <a href="<?= $href ?>detail.php">detail</a>
+                <a href="<?= $href ?>itemFilter.php">filterItem</a>
+                <a href="<?= $href ?>cart.php">Cart</a>
                 <?php if ($_SESSION['user']->role !== 0) { ?>
                     <a href="<?= $href ?>admin.php">admin</a>
-                    <a href="<?= $href ?>addItems.php">add Items</a>
-                    <a href="<?= $href ?>detail.php">detail</a>
-                <?php
-                }
-            } else { ?>
+                <?php } ?>
+                <a href="<?= $href ?>disconnect.php">Disconnect</a>
+            <?php } else { ?>
                 <a href="<?= $href ?>connect.php">connect</a>
                 <a href="<?= $href ?>signUp.php">signUp</a>
-                <a href="<?= $href ?>add_item.php">ADD</a>
             <?php } ?>
         </nav>
     </div>
