@@ -7,9 +7,6 @@
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -24,6 +21,9 @@ CREATE DATABASE IF NOT EXISTS `boutique` DEFAULT CHARACTER SET utf8mb4 COLLATE u
 USE `boutique`;
 
 -- --------------------------------------------------------
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 --
 -- Structure de la table `adress`
@@ -204,7 +204,7 @@ INSERT INTO `liaison_items_category` (`id`, `id_item`, `id_category`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `panier`
+-- Structure de la table `cart`
 --
 
 CREATE TABLE `cart` (
@@ -214,7 +214,7 @@ CREATE TABLE `cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `panier`
+-- Déchargement des données de la table `cart`
 --
 
 INSERT INTO `cart` (`id`, `id_user`, `id_item`) VALUES
@@ -288,9 +288,9 @@ ALTER TABLE `liaison_items_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `panier`
+-- Index pour la table `cart`
 --
-ALTER TABLE `panier`
+ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -334,9 +334,9 @@ ALTER TABLE `liaison_items_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT pour la table `panier`
+-- AUTO_INCREMENT pour la table `cart`
 --
-ALTER TABLE `panier`
+ALTER TABLE `cart`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --

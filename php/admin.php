@@ -1,19 +1,20 @@
 <?php
 require_once('./class/user.php');
-
+// ! OBLIGER DE RENTRER DES CHIFFRES DANS LES CHAMPS NUMBER ET PAS e OU -  
+// ! VERIFIER QUE LES CHAMPS priceItem, StockItem et categoryItem MARCHE ENCORE AVEC intval()
 if ($_SESSION['user']->role == 0) {
     header('Location: ../index.php');
 }
 // AJOUT DES ITEMS
 if (isset($_POST['buttonAddItem'])) {
-    $nameItem = trim(htmlspecialchars($_POST['nameItem']));
-    $descriptionItem = trim(htmlspecialchars($_POST['descriptionItem']));
+    $nameItem = trim(h($_POST['nameItem']));
+    $descriptionItem = trim(h($_POST['descriptionItem']));
     $date = date("Y-m-d H:i:s");
-    $priceItem = trim(htmlspecialchars($_POST['priceItem']));
-    $stockItem = trim(htmlspecialchars($_POST['stockItem']));
-    $categoryItem = trim(htmlspecialchars($_POST['categoryItem']));
+    $priceItem = trim(h(intval($_POST['priceItem'])));
+    $stockItem = trim(h(intval($_POST['stockItem'])));
+    $categoryItem = trim(h(intval($_POST['categoryItem'])));
 
-    $item = new Item('', $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
+    $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
     $category = new Category(null, null, $categoryItem);
     $item->addItem($bdd);
     $category->liaisonItemCategory($bdd);
@@ -27,15 +28,15 @@ if (isset($_POST['buttonAddItem'])) {
 
 // SUPPRIMER DES ITEMS
 if (isset($_POST['buttonDeleteItem'])) {
-    $itemID = $_POST['itemID'];
+    $itemID = trim(intval($_POST['itemID']));
     $item = new Item($itemID, null, null, null, null, null, null);
     $item->deleteItem($bdd);
 }
 
 // AJOUTER UNE CATEGORIE
 if (isset($_POST['buttonAddCategory'])) {
-    $nameCategory = trim(htmlspecialchars($_POST['nameCategory']));
-    $idParent = trim(htmlspecialchars($_POST['idParent']));
+    $nameCategory = trim(h($_POST['nameCategory']));
+    $idParent = trim(h(intval($_POST['idParent'])));
 
     $category = new Category(null, $nameCategory, $idParent);
     $category->addCategory($bdd);
@@ -43,7 +44,7 @@ if (isset($_POST['buttonAddCategory'])) {
 
 // SUPPRIMER UNE CATEGORIE
 if (isset($_POST['buttonDeleteCategory'])) {
-    $idCategory = trim(htmlspecialchars($_POST['idCategory']));;
+    $idCategory = trim(h(intval($_POST['idCategory'])));;
 
     $category = new Category($idCategory, null, null);
     $category->deleteCategory($bdd);
@@ -51,8 +52,8 @@ if (isset($_POST['buttonDeleteCategory'])) {
 
 // MODIFIER UNE CATEGORIE
 if (isset($_POST['buttonUpdateCategory'])) {
-    $updateIdCategory = trim(htmlspecialchars($_POST['updateIdCategory']));
-    $updateNameCategory = trim(htmlspecialchars($_POST['updateNameCategory']));
+    $updateIdCategory = trim(h(intval($_POST['updateIdCategory'])));
+    $updateNameCategory = trim(h($_POST['updateNameCategory']));
 
     $category = new Category($updateIdCategory, $updateNameCategory, null);
     $category->updateCategory($bdd);
@@ -61,7 +62,7 @@ if (isset($_POST['buttonUpdateCategory'])) {
 function getEditItemID()
 {
     if (isset($_GET['editItemID'])) {
-        $id = intval($_GET['editItemID']);
+        $id = trim(h(intval($_GET['editItemID'])));
         return $id;
     }
 }
@@ -144,41 +145,38 @@ function getEditItemID()
                     <h3>Modifier un item</h3>
                     <form action="" method="get" id="formEditItem">
                         <label for="editItemID">ID item</label>
-                        <input type="number" name="editItemID" id="editItemID" value="<?= getEditItemID(); ?>">
+                        <input type="number" name="editItemID" id="editItemID" value="<?= hd(getEditItemID()); ?>">
                         <input type="submit" name="editItem" value="Modifier">
                     </form>
                     <?php
                     if (isset($_GET['editItemID'])) {
-                        $editItemID = trim(htmlspecialchars($_GET['editItemID']));
-                        $item = new Item($editItemID, null, null, null, null, null, null);
+                        $editItemID = trim(h(intval($_GET['editItemID'])));
+                        $item = new Item($editItemID, null, null, null, null, null);
                         $infoItem = $item->returnItem($bdd);
                     ?>
                         <h3>Update Item</h3>
                         <form action="" method="post" id="formUpdateItem">
                             <label for="updateNameItem">Name</label>
-                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= $infoItem->name ?>">
+                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= hd($infoItem->name) ?>">
 
                             <label for="updateDescriptionItem">Description</label>
-                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= $infoItem->description ?>">
+                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= hd($infoItem->description) ?>">
 
                             <label for="updatePriceItem">Price</label>
-                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= $infoItem->price ?>">
+                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= hd($infoItem->price) ?>">
 
                             <label for="updateSotckItem">Stock</label>
-                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= $infoItem->stock ?>">
-
-                            <label for="updateImageItem">Image</label>
-                            <input type="text" id="updateImageItem" name="updateImageItem" value="<?= $infoItem->image ?>">
+                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= hd($infoItem->stock) ?>">
 
                             <input type="submit" name="updateItem" value="Update">
                         </form>
                     <?php
                         if (isset($_POST['updateItem'])) {
-                            $updateNameItem = trim(htmlspecialchars($_POST['updateNameItem']));
-                            $updateDescriptionItem = trim(htmlspecialchars($_POST['updateDescriptionItem']));
-                            $updatePriceItem = trim(htmlspecialchars($_POST['updatePriceItem']));
-                            $updateSotckItem = trim(htmlspecialchars($_POST['updateSotckItem']));
-                            $updateImageItem = trim(htmlspecialchars($_POST['updateImageItem']));
+                            $updateNameItem = trim(h($_POST['updateNameItem']));
+                            $updateDescriptionItem = trim(h($_POST['updateDescriptionItem']));
+                            $updatePriceItem = trim(h(intval($_POST['updatePriceItem'])));
+                            $updateSotckItem = trim(h(intval($_POST['updateSotckItem'])));
+                            $updateImageItem = trim(h($_POST['updateImageItem']));
 
                             $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
                             $item->editItem($bdd);
@@ -236,8 +234,8 @@ function getEditItemID()
 
                             <form method="post" class="d-flex flex-wrap justify-content-center" id="formUser">
                                 <div class="w-25 border rounded text-center m-2 pb-2 bg-primary-subtle">
-                                    <p class="m-1">Email : <?= $value['email'] ?></p>
-                                    <p class="m-1">User : <?= $value['firstname'] ?></p>
+                                    <p class="m-1">Email : <?= hd($value['email']) ?></p>
+                                    <p class="m-1">User : <?= hd($value['firstname']) ?></p>
                                     <p class="m-1">Role :
                                         <?php if ($value['role'] == 2) {
                                             echo 'Administrator';
@@ -264,7 +262,7 @@ function getEditItemID()
                                     if (isset($_POST['update' . $value['id']])) {
 
                                         $accept = $bdd->prepare("UPDATE users SET role = ? WHERE id = ? ");
-                                        $accept->execute([$_POST['role'], $value['id']]);
+                                        $accept->execute([intval($_POST['role']), $value['id']]);
                                         header('Location: ./admin.php');
                                     }
                                 }
@@ -281,7 +279,7 @@ function getEditItemID()
                         <?php
                         foreach ($result as $key => $value) {
                             if ($value['role'] == 2) : ?>
-                                <p class="text-warning fw-bold fs-5"><?= $value['firstname'] ?>, <?= $value['email'] ?>.</p>
+                                <p class="text-warning fw-bold fs-5"><?= hd($value['firstname']) ?>, <?= hd($value['email']) ?>.</p>
                         <?php
                             endif;
                         }
@@ -292,7 +290,7 @@ function getEditItemID()
                         <?php
                         foreach ($result as $key => $value) {
                             if ($value['role'] == 1) : ?>
-                                <p class="text-warning fw-bold fs-5"><?= $value['firstname'] ?>, <?= $value['email'] ?>.</p>
+                                <p class="text-warning fw-bold fs-5"><?= hd($value['firstname']) ?>, <?= hd($value['email']) ?>.</p>
                         <?php
                             endif;
                         }

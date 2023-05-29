@@ -39,17 +39,17 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
 
             <form action="" method="post" id="formProfil">
                 <label for="email">Email</label>
-                <input type="text" id="email" name="email" value="<?= $_SESSION['user']->email ?>" required autofocus>
+                <input type="text" id="email" name="email" value="<?= hd($_SESSION['user']->email) ?>" required autofocus>
                 <label for="firstname">Firstname</label>
-                <input type="text" id="firstname" name="firstname" value="<?= $_SESSION['user']->firstname ?>" required>
+                <input type="text" id="firstname" name="firstname" value="<?= hd($_SESSION['user']->firstname) ?>" required>
                 <label for="lastname">Lastname</label>
-                <input type="text" id="lastname" name="lastname" value="<?= $_SESSION['user']->lastname ?>" required>
+                <input type="text" id="lastname" name="lastname" value="<?= hd($_SESSION['user']->lastname) ?>" required>
                 <label for="password">Password</label>
                 <input type="password" name="password" required>
                 <input type="submit" name="updateUser" class="input" value="Enregistrer">
                 <p id="message">
-                    <?php if (!empty($_SESSION['message'])) {
-                        echo $_SESSION['message'];
+                    <?php if (!isEmpty($_SESSION['message'])) {
+                        echo h($_SESSION['message']);
                     } ?>
                 </p>
                 <a href="./user/modifyPassword.php">Changer de mot de passe</a>
@@ -57,10 +57,10 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
 
                 <?php
                 if (isset($_POST['updateUser'])) {
-                    $email = trim(htmlspecialchars($_POST['email']));
-                    $firstname = trim(htmlspecialchars($_POST['firstname']));
-                    $lastname = trim(htmlspecialchars($_POST['lastname']));
-                    $password = $_POST['password'];
+                    $email = trim(h($_POST['email']));
+                    $firstname = trim(h($_POST['firstname']));
+                    $lastname = trim(h($_POST['lastname']));
+                    $password = trim($_POST['password']);
 
                     $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
                     $user->update($bdd);
@@ -70,10 +70,10 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
         <?php
         foreach ($allUserAdress as $userAdress) { ?>
             <div style="border: 1px solid; margin-bottom:10px !important">
-                <p><?= $userAdress->numero ?></p>
-                <p><?= $userAdress->name ?></p>
-                <p><?= $userAdress->postcode ?></p>
-                <p><?= $userAdress->city ?></p>
+                <p><?= hd($userAdress->numero) ?></p>
+                <p><?= hd($userAdress->name) ?></p>
+                <p><?= hd($userAdress->postcode) ?></p>
+                <p><?= hd($userAdress->city) ?></p>
                 <a href="./user/modifyAdress.php?id=<?= $userAdress->id ?>"><button>Modifier</button></a>
                 <form action="" method="post">
                     <input type="submit" value="Supprimer" name="deleteAdress<?= $userAdress->id ?>">

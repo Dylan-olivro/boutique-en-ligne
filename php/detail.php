@@ -3,7 +3,7 @@ require_once('./class/user.php');
 
 if (isset($_POST['ajouter'])) {
     $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(?,?)');
-    $insertIntoPanier->execute([$_SESSION['user']->id, $_GET['id']]);
+    $insertIntoPanier->execute([$_SESSION['user']->id, trim(intval($_GET['id']))]);
 }
 if (isset($_POST['vider'])) {
     $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');

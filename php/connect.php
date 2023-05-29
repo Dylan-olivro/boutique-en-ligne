@@ -6,8 +6,8 @@ if (isset($_SESSION['user'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $email = trim(htmlspecialchars($_POST['email']));
-    $password = $_POST['password'];
+    $email = trim(h($_POST['email']));
+    $password = trim($_POST['password']);
 
     $user = new User(null, $email, null, null, $password, null);
     $user->connect($bdd);
@@ -52,8 +52,8 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" class="input">
             <p id="message">
                 <?php
-                if (!empty($_SESSION['message'])) {
-                    echo $_SESSION['message'];
+                if (!isEmpty($_SESSION['message'])) {
+                    echo h($_SESSION['message']);
                 }
                 ?>
             </p>

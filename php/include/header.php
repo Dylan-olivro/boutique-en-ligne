@@ -74,7 +74,7 @@ function includeHeader($bdd, $index, $url, $image)
                             ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <?= $key->name; ?>
+                                        <?= hd($key->name); ?>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <?php
@@ -83,7 +83,7 @@ function includeHeader($bdd, $index, $url, $image)
                                         $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
                                         foreach ($resultCategoryChild as $key2) {
                                         ?>
-                                            <li><a class="dropdown-item" href="#"><?= $key2->name; ?></a></li>
+                                            <li><a class="dropdown-item" href="#"><?= hd($key2->name); ?></a></li>
                                         <?php
                                         }
                                         ?>

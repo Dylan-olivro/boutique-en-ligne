@@ -6,13 +6,13 @@ if (isset($_SESSION['user'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $email = trim(htmlspecialchars($_POST['email']));
-    $firstname = trim(htmlspecialchars($_POST['firstname']));
-    $lastname = trim(htmlspecialchars($_POST['lastname']));
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $email = trim(h($_POST['email']));
+    $firstname = trim(h($_POST['firstname']));
+    $lastname = trim(h($_POST['lastname']));
+    $password = trim($_POST['password']);
+    $confirm_password = trim($_POST['confirm_password']);
 
-    $user = new User('', $email, $firstname, $lastname, $password, '');
+    $user = new User(null, $email, $firstname, $lastname, $password, null);
     $user->register($bdd, $confirm_password);
 }
 ?>
@@ -60,8 +60,8 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" class="input">
             <p id="message">
                 <?php
-                if (!empty($_SESSION['message'])) {
-                    echo $_SESSION['message'];
+                if (!isEmpty($_SESSION['message'])) {
+                    echo h($_SESSION['message']);
                 }
                 ?>
             </p>
