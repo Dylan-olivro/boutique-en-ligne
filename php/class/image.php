@@ -13,6 +13,10 @@ class Image
     }
     public function addImage($bdd)
     {
+        $returnLastID = $bdd->prepare("SELECT id FROM items ORDER BY items.id DESC");
+        $returnLastID->execute();
+        $resultID =  $returnLastID->fetch(PDO::FETCH_OBJ);
+
         $tmpName = $_FILES['file']['tmp_name'];
         $name = $_FILES['file']['name'];
         $size = $_FILES['file']['size'];
@@ -29,7 +33,7 @@ class Image
             move_uploaded_file($tmpName, '../assets/img_item/' . $this->name);
 
             $insertImage = $bdd->prepare('INSERT INTO image (id_item, name) VALUES (?,?)');
-            $insertImage->execute([$this->id_item, $this->name]);
+            $insertImage->execute([$resultID->id, $this->name]);
         } else {
             echo "Mauvaise extension ou taille trop grande, Une erreur est survenue";
         }

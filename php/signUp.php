@@ -10,9 +10,10 @@ if (isset($_POST['submit'])) {
     $firstname = trim(htmlspecialchars($_POST['firstname']));
     $lastname = trim(htmlspecialchars($_POST['lastname']));
     $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
     $user = new User('', $email, $firstname, $lastname, $password, '');
-    $user->register($bdd);
+    $user->register($bdd, $confirm_password);
 }
 ?>
 <!DOCTYPE html>

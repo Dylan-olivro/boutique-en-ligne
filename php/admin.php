@@ -18,13 +18,8 @@ if (isset($_POST['buttonAddItem'])) {
     $item->addItem($bdd);
     $category->liaisonItemCategory($bdd);
     if (isset($_FILES['file'])) {
-        // RECUPERE l'ID DU DERNIER ITEM
-        $returnLastID = $bdd->prepare("SELECT id FROM items ORDER BY items.id DESC");
-        $returnLastID->execute();
-        $resultID =  $returnLastID->fetch(PDO::FETCH_OBJ);
-
         $file = $_FILES['file']['name'];
-        $image = new Image(null, $resultID->id, $file);
+        $image = new Image(null, null, $file);
         $image->addImage($bdd);
     }
     header('Location: admin.php');

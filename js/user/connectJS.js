@@ -5,10 +5,10 @@ const formLogin = document.querySelector("#formLogin");
 const buttonShow = document.getElementById("showPassword");
 
 function isLogin() {
-  if (email.value == "") {
+  if (isEmpty(email.value)) {
     message.innerText = "Empty email field";
     return false;
-  } else if (password.value == "") {
+  } else if (isEmpty(password.value)) {
     message.innerText = "Empty password field";
     return false;
   } else {
@@ -17,7 +17,7 @@ function isLogin() {
 }
 
 formLogin.addEventListener("submit", (e) => {
-  if (isLogin() == false) {
+  if (!isLogin()) {
     e.preventDefault();
   }
 });

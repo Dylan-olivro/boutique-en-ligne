@@ -2,7 +2,8 @@
 session_start();
 // ob_start();
 ob_start('ob_gzhandler');
-
+// ! REGLER LE PROBLEME DU MESSAGE EN SESSION QUI RESTE SI ON CHANGE DE PAGE !
+// ! DEMANDER SI REQUIRED EST MIEUX VU QUE CA EMPECHE D'AFFICHER LES MESSAGE D'ERREUR !
 // RECUPERER L'URL POUR SAVOIR SI C'EST L'INDEX OU LES AUTRES PAGES
 function getURL()
 {
@@ -75,18 +76,18 @@ class User
         return $this->role;
     }
 
-    public function register($bdd)
+    public function register($bdd, $confirm_password)
     {
         $recupUser = $bdd->prepare("SELECT email FROM users WHERE email = ?");
         $recupUser->execute([$this->email]);
         $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
 
-        if (email($this->email) == false) {
-        } elseif (password($this->password) == false) {
-        } elseif (confirm_password($_POST['confirm_password']) == false) {
-        } elseif (firstname($this->firstname) == false) {
-        } elseif (lastname($this->lastname) == false) {
-        } elseif (same_password($this->password, $_POST['confirm_password']) == false) {
+        if (isEmpty($this->email)) {
+        } elseif (isEmpty($this->password)) {
+        } elseif (isEmpty($confirm_password)) {
+        } elseif (isEmpty($this->firstname)) {
+        } elseif (isEmpty($this->lastname)) {
+        } elseif (!isSame($this->password, $confirm_password)) {
         } elseif ($recupUser->rowCount() > 0) {
             $_SESSION['message'] = 'Email déjà utilisé';
         } else {
@@ -103,15 +104,15 @@ class User
         $request->execute([$this->email]);
         $res = $request->fetch(PDO::FETCH_OBJ);
 
-        if (email($this->email) == false) {
-        } elseif (password($this->password) == false) {
+        if (isEmpty($this->email)) {
+        } elseif (isEmpty($this->password)) {
         } elseif ($request->rowCount() > 0) {
 
             $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
             $recupUser->execute([$this->email, $res->password]);
             $result = $recupUser->fetch(PDO::FETCH_OBJ);
 
-            if ($result != false) {
+            if ($result) {
                 if (password_verify($this->password, $result->password)) {
                     $this->id = intval($result->id);
                     $this->email = $result->email;
@@ -143,10 +144,10 @@ class User
         $recupUser->execute([$this->email, $this->id]);
         $insertUser = $bdd->prepare("UPDATE users SET email = ?, firstname = ?, lastname = ?, password = ? WHERE id = ? ");
 
-        if (email($this->email) == false) {
-        } elseif (password($this->password) == false) {
-        } elseif (firstname($this->firstname) == false) {
-        } elseif (lastname($this->lastname) == false) {
+        if (isEmpty($this->email)) {
+        } elseif (isEmpty($this->password)) {
+        } elseif (isEmpty($this->firstname)) {
+        } elseif (isEmpty($this->lastname)) {
         } elseif ($recupUser->rowCount() > 0) {
             $_SESSION['message'] = 'Email déjà utilisé';
             //? VOIR SI ON PEUT S'EN PASSER
@@ -168,16 +169,16 @@ class User
         }
     }
 
-    public function updatePassword($bdd)
+    public function updatePassword($bdd, $old_password)
     {
         $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
         $request->execute([$this->id]);
         $res = $request->fetch(PDO::FETCH_OBJ);
         $insertUser = $bdd->prepare("UPDATE users SET password = ? WHERE id = ? ");
 
-        if (password($_POST['password']) == false) {
-        } elseif (password($this->password) == false) {
-        } elseif ($_POST['password'] != password_verify($_POST['password'], $res->password)) {
+        if (isEmpty($old_password)) {
+        } elseif (isEmpty($this->password)) {
+        } elseif ($old_password != password_verify($old_password, $res->password)) {
             $_SESSION['message'] = 'Ce n\'est pas le bon mot de passe';
             header('Location:./modifyPassword.php');
         } else {

@@ -24,9 +24,9 @@ if (!isset($_SESSION['user'])) {
     <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
-    <script src="../js/function.js" defer></script>
-    <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/user/modifyPassword.js" defer></script>
+    <script src="../../js/function.js" defer></script>
+    <script src="../../js/autocompletion.js" defer></script>
+    <script src="../../js/user/modifyPassword.js" defer></script>
 
 
 </head>
@@ -45,8 +45,11 @@ if (!isset($_SESSION['user'])) {
 
             <?php
             if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT), '');
-                $user->updatePassword($bdd);
+                $old_password = $_POST['password'];
+                $new_password = $_POST['new_password'];
+
+                $user = new User($_SESSION['user']->id, null, null, null, password_hash($new_password, PASSWORD_DEFAULT), null);
+                $user->updatePassword($bdd, $old_password);
             }
             ?>
         </form>

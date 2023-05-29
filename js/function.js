@@ -1,5 +1,11 @@
+function isEmpty($a) {
+  return $a == "" ? true : false;
+}
+function isSame($a, $b) {
+  return $a == $b ? true : false;
+}
 // FUNCTION POUR OBLIGER L'UTILISATEUR A METTRE QUE DES LETTRES
-function allLetter(inputtxt) {
+function isLetter(inputtxt) {
   let letters = /^[A-Za-z]+$/;
   if (inputtxt.value.match(letters)) {
     return true;
@@ -8,7 +14,7 @@ function allLetter(inputtxt) {
 }
 
 // FUNCTION POUR OBLIGER L'UTILISATEUR A METTRE QUE DES NOMBRES
-function allNumber(inputnumber) {
+function isNumber(inputnumber) {
   let numbers = /^\d*(.\d{0,2})?$/;
   if (inputnumber.value.match(numbers)) {
     return true;
