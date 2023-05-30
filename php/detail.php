@@ -4,13 +4,19 @@ require_once('./class/user.php');
 if (isset($_POST['ajouter'])) {
     $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(?,?)');
     $insertIntoPanier->execute([$_SESSION['user']->id, trim(intval($_GET['id']))]);
+    header('Location: detail.php?id=' . $_GET['id']);
 }
 
 
 $recupItem = $bdd->prepare("SELECT * FROM items WHERE id = ?");
 $recupItem->execute([$_GET['id']]);
 $resultItem = $recupItem->fetch(PDO::FETCH_OBJ);
-var_dump($resultItem);
+// var_dump($resultItem);
+
+$image = new Image(null, $_GET['id'], null, null);
+$result = $image->returnImagesByID($bdd);
+// var_dump($result);
+
 ?>
 
 <!DOCTYPE html>
@@ -47,14 +53,17 @@ var_dump($resultItem);
         <section id="container">
             <div id="item">
                 <div id="imageItem">
-
+                    <img src="../assets/img_item/<?= $result[0]->name ?>" alt="">
                 </div>
                 <div id="detailItem">
-                    <p>NAME: <?= $resultItem->name ?></p>
-                    <p>DESCRIPTION: <?= $resultItem->description ?></p>
-                    <div>
-                        <p>PRICE: <?= $resultItem->price ?></p>
-                        <p>STOCK: <?= $resultItem->stock ?></p>
+                    <p><?= $resultItem->name ?></p>
+
+                    <div id="description">Description :
+                        <p><?= $resultItem->description ?></p>
+                    </div>
+
+                    <div id="price_cart">
+                        <p><?= $resultItem->price ?></p>
                         <?php
                         if (isset($_SESSION['user'])) { ?>
                             <form action="" method="post">
@@ -68,19 +77,6 @@ var_dump($resultItem);
             </div>
         </section>
 
-
-
-
-
-
-
-
-
-        <!-- BOUTON PANIER -->
-
-        <form action="" method="post">
-            <input type="submit" name="vider" value="Vider le panier">
-        </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
 </body>
