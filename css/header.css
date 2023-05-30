@@ -3,7 +3,7 @@ main * {
   padding: 0 !important;
 }
 #navbarBurger {
-  background-color: lightblue;
+  background-color: #005078;
   width: 100%;
   /* display: flex; */
   justify-content: center;
@@ -105,7 +105,7 @@ main * {
   }
 
   #navbarBurger {
-    background-color: lightblue;
+    background-color: #007cb8;
     width: auto;
   }
 

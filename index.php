@@ -1,5 +1,19 @@
 <?php
 require_once('./php/class/user.php');
+
+// TODO: Revoir toutes les verif des formulaires en html, php et js
+// * AMELIORATION DU HEADER AVEC UNE FONCTION
+// * AJOUTS DES ADRESS AVEC BOUTON MODIFIER ET SUPPRIMER
+// * TOUS LES require DANS LE FICHIER USER
+// * CORRECTION DU ob_start()
+// * AJOUT D'UN BOUTON POUR CACHER OU AFFICHER LE MOT DE PASSE
+// * AJOUTS DES IMAGES
+// * AJOUT DE LA PAGE PANIER
+// * AMELIORATION DES FUNCTIONS
+// * CORRECTION DES htmlspecialchar POUR LA DATABASE
+// * AJOUT DE intval() POUR CERTAINE DONNEE
+// * DATABASE UPDATE
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
