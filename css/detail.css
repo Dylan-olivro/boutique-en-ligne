@@ -4,15 +4,30 @@ main * {
   padding: 0 !important;
   border: 1px dashed red;
 }
+/*  SECTION  */
+#container {
+}
+/* DIV */
 #item {
+  margin: auto !important;
   display: flex;
+  width: 80%;
 }
 #imageItem {
+  display: flex;
+  justify-content: center;
   flex: 1;
+}
+#imageItem img {
+  width: 400px;
 }
 #detailItem {
   flex: 1;
 }
-img {
-  width: 100%;
+#description {
+}
+#price_cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

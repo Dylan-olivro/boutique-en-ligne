@@ -1,5 +1,6 @@
 <?php
 require_once('./class/user.php');
+// ! FAIRE UNE CLASSE CART
 
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');

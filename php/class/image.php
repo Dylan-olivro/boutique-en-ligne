@@ -71,10 +71,10 @@ class Image
         $deleteImage->execute([$this->name]);
     }
 
-    public function returnImages($bdd)
+    public function returnImagesByID($bdd)
     {
-        $recupImage = $bdd->prepare('SELECT * FROM image');
-        $recupImage->execute();
+        $recupImage = $bdd->prepare('SELECT * FROM image WHERE id_item = ?');
+        $recupImage->execute([$this->id_item]);
         $result = $recupImage->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
