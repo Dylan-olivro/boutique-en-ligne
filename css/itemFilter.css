@@ -1,0 +1,20 @@
+.categoryChildDiv {
+    display: none;
+}
+
+.categoryChildDivBlock {
+    display: block;
+}
+
+#container {
+    display: flex !important;
+    flex-direction: row;
+}
+
+main li {
+    list-style: none;
+}
+
+/* .categoryParentDiv:hover .categoryChildDiv {
+    display: block;
+} */

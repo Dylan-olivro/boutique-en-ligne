@@ -1,10 +1,21 @@
 <?php
 require_once('./class/user.php');
-// session_destroy();
+
 if (isset($_SESSION['user'])) {
-    header('Location:index.php');
+    header('Location:../index.php');
 }
+
+if (isset($_POST['submit'])) {
+    $email = trim(h($_POST['email']));
+    $password = trim($_POST['password']);
+
+    $user = new User(null, $email, null, null, $password, null);
+    $user->connect($bdd);
+    // $user->isConnected();
+}
+var_dump($_SESSION);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,34 +24,43 @@ if (isset($_SESSION['user'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/header.css">
+    <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
+    <!-- JAVASCRIPT -->
+    <script src="../js/function.js" defer></script>
+    <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/user/connectJS.js" defer></script>
+
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <form action="" method="post">
+        <form action="" method="post" id="formLogin">
             <label for="email">Email</label>
-            <input type="text" id="email" name="email" placeholder="Email" autofocus>
+            <input type="text" id="email" name="email" placeholder="Email" required autofocus>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
             <input type="submit" name="submit" class="input">
-
-            <?php
-
-            if (isset($_POST['submit'])) {
-                $user = new User('', $_POST['email'], '', '', $_POST['password']);
-                $user->connect($bdd);
-                $user->isConnected();
-            }
-
-            ?>
+            <p id="message">
+                <?php
+                if(isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                }
+                ?>
+            </p>
         </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
+
 </body>
 <style>
     form {

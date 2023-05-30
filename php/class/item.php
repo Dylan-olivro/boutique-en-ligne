@@ -1,24 +1,4 @@
 <?php
-if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-    $url = "https";
-else {
-    $url = "http";
-}
-// ASSEMBLAGE DE L'URL
-$url .= "://";
-$url .= $_SERVER['HTTP_HOST'];
-$url .= $_SERVER['REQUEST_URI'];
-$splitURL = explode('boutique-en-ligne', $url);
-
-// CONDITION SI ON EST SUR L'INDEX OU PAS
-if ($splitURL[1] === '/index.php' || $splitURL[1] === '/') {
-    require_once('./php/include/bdd.php');
-    require_once('./php/include/function.php');
-} else {
-    require_once('./include/bdd.php');
-    require_once('./include/function.php');
-}
-
 class Item
 {
     public $id;
@@ -27,11 +7,8 @@ class Item
     public $date;
     public $price;
     public $stock;
-    public $image;
-    public $category;
 
-    // ! ajouter image dans __construct
-    public function __construct($id, $name, $description, $date, $price, $stock, $category)
+    public function __construct($id, $name, $description, $date, $price, $stock)
     {
         $this->id = $id;
         $this->name = $name;
@@ -39,116 +16,158 @@ class Item
         $this->date = $date;
         $this->price = $price;
         $this->stock = $stock;
-        // $this->image = $image;
-        $this->category = $category;
     }
 
+    public function addItem($bdd)
+    {
+        $insertItem = $bdd->prepare("INSERT INTO items (name,description,date,price,stock) VALUES(?,?,?,?,?)");
+        $insertItem->execute([$this->name, $this->description, $this->date, $this->price, $this->stock]);
+        // header('Location: admin.php');
+    }
+    public function deleteItem($bdd)
+    {
+        $deleteItem = $bdd->prepare('DELETE FROM items WHERE id = ?');
+        $deleteItem->execute([$this->id]);
+        header('Location: admin.php');
+    }
+    public function editItem($bdd)
+    {
+        $editItem = $bdd->prepare('UPDATE items SET name = ?, description = ?, price = ?, stock = ? WHERE id = ?');
+        $editItem->execute([$this->name, $this->description, $this->price, $this->stock, $this->id]);
+        header('Location: admin.php');
+    }
+    public function returnItems($bdd)
+    {
+        $returnItems = $bdd->prepare('SELECT * FROM items INNER JOIN liaison_items_category ON items.id = liaison_items_category.id_item');
+        $returnItems->execute();
+        $result = $returnItems->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function returnItem($bdd)
+    {
+        $returnItem = $bdd->prepare('SELECT * FROM items WHERE id = ?');
+        $returnItem->execute([$this->id]);
+        $result = $returnItem->fetch(PDO::FETCH_OBJ);
+        return $result;
+    }
+
+    /**
+     * Get the value of id
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
+    /**
+     * Get the value of name
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
+    /**
+     * Get the value of description
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * Set the value of description
+     *
+     * @return  self
+     */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
+    /**
+     * Get the value of date
+     */
     public function getDate()
     {
         return $this->date;
     }
 
+    /**
+     * Set the value of date
+     *
+     * @return  self
+     */
     public function setDate($date)
     {
         $this->date = $date;
+
         return $this;
     }
 
+    /**
+     * Get the value of price
+     */
     public function getPrice()
     {
         return $this->price;
     }
 
+    /**
+     * Set the value of price
+     *
+     * @return  self
+     */
     public function setPrice($price)
     {
         $this->price = $price;
+
         return $this;
     }
 
+    /**
+     * Get the value of stock
+     */
     public function getStock()
     {
         return $this->stock;
     }
 
+    /**
+     * Set the value of stock
+     *
+     * @return  self
+     */
     public function setStock($stock)
     {
         $this->stock = $stock;
+
         return $this;
-    }
-
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    public function setImage($image)
-    {
-        $this->image = $image;
-        return $this;
-    }
-
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    public function setCategory($category)
-    {
-        $this->category = $category;
-        return $this;
-    }
-    public function addItem($bdd)
-    {
-        $insertItems = $bdd->prepare("INSERT INTO items (name,description,date,price,stock) VALUES(?,?,?,?,?)");
-        $insertItems->execute([$this->name, $this->description, $this->date, $this->price, $this->stock]);
-
-        $returnItems = $bdd->prepare('SELECT * FROM items ORDER BY items.id DESC');
-        $returnItems->execute();
-        $resultItems = $returnItems->fetch(PDO::FETCH_OBJ);
-
-        $insertCategory = $bdd->prepare('INSERT INTO liaison_items_category (id_item,id_category) VALUES(?,?)');
-        $insertCategory->execute([$resultItems->id, $this->category]);
-
-        header('Location: addItems.php');
-    }
-
-    public function returnItems($bdd)
-    {
-        $returnItems = $bdd->prepare('SELECT * FROM items INNER JOIN liaison_items_category ON items.id = liaison_items_category.id_item');
-        $returnItems->execute();
-        $resultItems = $returnItems->fetchAll(PDO::FETCH_ASSOC);
     }
 }
