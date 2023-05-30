@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" class="input">
             <p id="message">
                 <?php
-                if (!isEmpty($_SESSION['message'])) {
+                if (isset($_SESSION['message'])) {
                     echo h($_SESSION['message']);
                 }
                 ?>

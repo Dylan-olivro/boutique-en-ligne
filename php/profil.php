@@ -48,7 +48,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 <input type="password" name="password" required>
                 <input type="submit" name="updateUser" class="input" value="Enregistrer">
                 <p id="message">
-                    <?php if (!isEmpty($_SESSION['message'])) {
+                    <?php if (isset($_SESSION['message'])) {
                         echo h($_SESSION['message']);
                     } ?>
                 </p>
