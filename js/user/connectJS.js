@@ -1,13 +1,14 @@
-let email = document.querySelector("#email");
-let password = document.querySelector("#password");
-let message = document.querySelector("#message");
-let formLogin = document.querySelector("#formLogin");
+const email = document.querySelector("#email");
+const password = document.querySelector("#password");
+const message = document.querySelector("#message");
+const formLogin = document.querySelector("#formLogin");
+const buttonShow = document.getElementById("showPassword");
 
 function isLogin() {
-  if (email.value == "") {
+  if (isEmpty(email.value)) {
     message.innerText = "Empty email field";
     return false;
-  } else if (password.value == "") {
+  } else if (isEmpty(password.value)) {
     message.innerText = "Empty password field";
     return false;
   } else {
@@ -16,7 +17,9 @@ function isLogin() {
 }
 
 formLogin.addEventListener("submit", (e) => {
-  if (isLogin() == false) {
+  if (!isLogin()) {
     e.preventDefault();
   }
 });
+
+showPassword(buttonShow, password);

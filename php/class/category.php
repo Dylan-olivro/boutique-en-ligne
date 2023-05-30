@@ -16,6 +16,7 @@ class Category
     {
         $addCategory = $bdd->prepare("INSERT INTO category (name,id_parent) VALUES (?,?)");
         $addCategory->execute([$this->name, $this->id_parent]);
+        header('Location: admin.php');
     }
     public function deleteCategory($bdd)
     {
@@ -24,6 +25,7 @@ class Category
 
         $deleteLiaison = $bdd->prepare("DELETE FROM liaison_items_category WHERE id_category = ?");
         $deleteLiaison->execute([$this->id]);
+        header('Location: admin.php');
     }
     public function liaisonItemCategory($bdd)
     {
@@ -34,11 +36,72 @@ class Category
         $insertLiaison = $bdd->prepare('INSERT INTO liaison_items_category (id_item,id_category) VALUES(?,?)');
         $insertLiaison->execute([$result->id, $this->id_parent]);
 
-        header('Location: admin.php');
+        // header('Location: admin.php');
     }
     public function updateCategory($bdd)
     {
         $updateCategory = $bdd->prepare("UPDATE category SET name = ? WHERE id = ?");
         $updateCategory->execute([$this->name, $this->id]);
+        header('Location: admin.php');
+    }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id_parent
+     */ 
+    public function getId_parent()
+    {
+        return $this->id_parent;
+    }
+
+    /**
+     * Set the value of id_parent
+     *
+     * @return  self
+     */ 
+    public function setId_parent($id_parent)
+    {
+        $this->id_parent = $id_parent;
+
+        return $this;
     }
 }

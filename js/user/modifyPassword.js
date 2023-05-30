@@ -4,11 +4,10 @@ let message = document.querySelector("#message");
 let formUpdatePassword = document.querySelector("#formUpdatePassword");
 
 function updatePassword() {
-  //   console.log(password.value);
-  if (password.value == "") {
+  if (isEmpty(password.value)) {
     message.innerText = "Empty password field";
     return false;
-  } else if (newPassword.value == "") {
+  } else if (isEmpty(newPassword.value)) {
     message.innerText = "Empty new password field";
     return false;
   } else {
@@ -17,7 +16,7 @@ function updatePassword() {
 }
 
 formUpdatePassword.addEventListener("submit", (e) => {
-  if (updatePassword() == false) {
+  if (!updatePassword()) {
     e.preventDefault();
   }
 });
