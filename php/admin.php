@@ -2,6 +2,7 @@
 require_once('./class/user.php');
 // ! OBLIGER DE RENTRER DES CHIFFRES DANS LES CHAMPS NUMBER ET PAS e OU -  
 // ! VERIFIER QUE LES CHAMPS priceItem, StockItem et categoryItem MARCHE ENCORE AVEC intval()
+// ! NE PAS OUBLIER DE CHANGER LES VALUES DES INPUT
 if ($_SESSION['user']->role == 0) {
     header('Location: ../index.php');
 }
@@ -13,6 +14,7 @@ if (isset($_POST['buttonAddItem'])) {
     $priceItem = trim(h(intval($_POST['priceItem'])));
     $stockItem = trim(h(intval($_POST['stockItem'])));
     $categoryItem = trim(h(intval($_POST['categoryItem'])));
+    $mainImage = trim(h(intval($_POST['mainImage'])));
 
     $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
     $category = new Category(null, null, $categoryItem);
@@ -20,7 +22,7 @@ if (isset($_POST['buttonAddItem'])) {
     $category->liaisonItemCategory($bdd);
     if (isset($_FILES['file'])) {
         $file = $_FILES['file']['name'];
-        $image = new Image(null, null, $file);
+        $image = new Image(null, null, $file, $mainImage);
         $image->addImage($bdd);
     }
     header('Location: admin.php');
@@ -119,13 +121,16 @@ function getEditItemID()
                         <input type="text" id="priceItem" name="priceItem">
 
                         <label for="stockItem">Stock</label>
-                        <input type="number" id="stockItem" name="stockItem">
+                        <input type="number" id="stockItem" name="stockItem" value="500">
 
                         <label for="categoryItem">Category</label>
                         <input type="number" id="categoryItem" name="categoryItem">
 
                         <label for="file">Image</label>
                         <input type="file" id="file" name="file">
+
+                        <label for="mainImage">mainImage</label>
+                        <input type="number" id="mainImage" name="mainImage" value="1">
 
                         <input type="submit" name="buttonAddItem" value="Ajouter">
                     </form>

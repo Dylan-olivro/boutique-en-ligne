@@ -4,12 +4,14 @@ class Image
     public $id;
     public $id_item;
     public $name;
+    public $main;
 
-    public function __construct($id, $id_item, $name)
+    public function __construct($id, $id_item, $name, $main)
     {
         $this->id = $id;
         $this->id_item = $id_item;
         $this->name = $name;
+        $this->main = $main;
     }
     public function addImage($bdd)
     {
@@ -32,8 +34,8 @@ class Image
         if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
             move_uploaded_file($tmpName, '../assets/img_item/' . $this->name);
 
-            $insertImage = $bdd->prepare('INSERT INTO image (id_item, name) VALUES (?,?)');
-            $insertImage->execute([$resultID->id, $this->name]);
+            $insertImage = $bdd->prepare('INSERT INTO image (id_item, name, main) VALUES (?,?,?)');
+            $insertImage->execute([$resultID->id, $this->name, $this->main]);
         } else {
             echo "Mauvaise extension ou taille trop grande, Une erreur est survenue";
         }

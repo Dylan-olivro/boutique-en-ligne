@@ -42,7 +42,7 @@ function validate() {
 // ! modifier pour le plesk ET/OU pour chacun suivant son dossier racine
 function getPage() {
   let url = window.location.href;
-  let page = url.split("/")[5];
+  let page = url.split("/")[4];
   // console.log(page);
   if (page == "php") {
     let php = "";
