@@ -7,30 +7,30 @@ let formProfil = document.querySelector("#formProfil");
 
 function updateUser() {
   // EMAIL
-  if (email.value == "") {
+  if (isEmpty(email.value)) {
     message.innerText = "Empty email field";
     return false;
-  } else if (validate() == false) {
+  } else if (!validate()) {
     return false;
   }
   // FIRSTNAME
-  else if (firstname.value == "") {
+  else if (isEmpty(firstname.value)) {
     message.innerText = "Empty firstname field";
     return false;
-  } else if (allLetter(firstname) == false) {
+  } else if (!isLetter(firstname)) {
     message.innerText = "Champ firstname invalid";
     return false;
   }
   // LASTNAME
-  else if (lastname.value == "") {
+  else if (isEmpty(lastname.value)) {
     message.innerText = "Empty lastname field";
     return false;
-  } else if (allLetter(lastname) == false) {
+  } else if (!isLetter(lastname)) {
     message.innerText = "Champ firstname invalid";
     return false;
   }
   // PASSWORD
-  else if (password.value == "") {
+  else if (isEmpty(password.value)) {
     message.innerText = "Empty password field";
     return false;
   } else {
@@ -39,7 +39,7 @@ function updateUser() {
 }
 
 formProfil.addEventListener("submit", (e) => {
-  if (updateUser() == false) {
+  if (!updateUser()) {
     e.preventDefault();
   }
 });

@@ -1,6 +1,5 @@
 <?php
 require_once('./class/user.php');
-ob_start('ob_gzhandler');
 
 // $returnCategoryParent = $bdd->prepare('SELECT * FROM category WHERE id_parent != 0');
 // $returnCategoryParent->execute();
@@ -35,45 +34,45 @@ ob_start('ob_gzhandler');
     <?php require_once('./include/header.php'); ?>
     <main>
         <div id="container">
-        <form action="" method="get">
-            <div id="filterDiv">
-                <?php
-                foreach ($resultCategoryParent as $key) {
-                    // var_dump($key['name']);                                
-                ?>
-                    <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
-                        <ul>
-                            <li class="resultParent dropdown-toggle" id="<?= $key->id; ?>">
-                                <?= $key->name; ?>
-                            </li>
-                            <ul class="categoryChildDiv" id="categoryChildDiv<?= $key->id; ?>" data-parent-id="<?= $key->id; ?>">
-                            <?php
-                            $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
-                            $returnCategoryChild->execute([$key->id]);
-                            $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
-                            foreach ($resultCategoryChild as $key2) {
-                            ?>
-                                    <li id="<?= $key2->name; ?>">
-                                        <input type="radio" name="subCategory" id="<?= $key2->id; ?>">
-                                        <?= $key2->name; ?>
-                                    </li>
+            <form action="" method="get">
+                <div id="filterDiv">
+                    <?php
+                    foreach ($resultCategoryParent as $key) {
+                        // var_dump($key['name']);                                
+                    ?>
+                        <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
+                            <ul>
+                                <li class="resultParent dropdown-toggle" id="<?= $key->id; ?>">
+                                    <?= $key->name; ?>
+                                </li>
+                                <ul class="categoryChildDiv" id="categoryChildDiv<?= $key->id; ?>" data-parent-id="<?= $key->id; ?>">
                                     <?php
-                            }
-                            ?>
+                                    $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
+                                    $returnCategoryChild->execute([$key->id]);
+                                    $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
+                                    foreach ($resultCategoryChild as $key2) {
+                                    ?>
+                                        <li id="<?= $key2->name; ?>">
+                                            <input type="radio" name="subCategory" id="<?= $key2->id; ?>">
+                                            <?= $key2->name; ?>
+                                        </li>
+                                    <?php
+                                    }
+                                    ?>
+                                </ul>
                             </ul>
-                        </ul>
-                        </a>
+                            </a>
 
-                        <!-- <ul class="dropdown-menu categoryParent"> -->
-                    </div>
-                    <!-- </ul> -->
-                <?php
-                }
-                ?>
+                            <!-- <ul class="dropdown-menu categoryParent"> -->
+                        </div>
+                        <!-- </ul> -->
+                    <?php
+                    }
+                    ?>
+                </div>
+            </form>
+            <div id="allItems">
             </div>
-        </form>
-        <div id="allItems">
-        </div>
         </div>
     </main>
 </body>
