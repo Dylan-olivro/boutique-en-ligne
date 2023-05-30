@@ -19,28 +19,51 @@ class Image
         $returnLastID->execute();
         $resultID =  $returnLastID->fetch(PDO::FETCH_OBJ);
 
-        $tmpName = $_FILES['file']['tmp_name'];
-        $name = $_FILES['file']['name'];
-        $size = $_FILES['file']['size'];
-        $error = $_FILES['file']['error'];
+        $tmpName = $this->name['tmp_name'];
+        $name = $this->name['name'];
+        $size = $this->name['size'];
+        $error = $this->name['error'];
 
         $tabExtension = explode('.', $name);
         $extension = strtolower(end($tabExtension));
-        $extensions = ['jpg', 'png', 'jpeg', 'gif'];
+        $extensions = ['jpg', 'png', 'jpeg', 'gif', 'webp'];
         $maxSize = 2000000;
         $uniqueName = uniqid('', true);
-        $this->name = $uniqueName . "." . $extension;
+        $file = $uniqueName . "." . $extension;
 
         if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
-            move_uploaded_file($tmpName, '../assets/img_item/' . $this->name);
+            move_uploaded_file($tmpName, '../assets/img_item/' . $file);
 
             $insertImage = $bdd->prepare('INSERT INTO image (id_item, name, main) VALUES (?,?,?)');
-            $insertImage->execute([$resultID->id, $this->name, $this->main]);
+            $insertImage->execute([$resultID->id, $file, $this->main]);
         } else {
             echo "Mauvaise extension ou taille trop grande, Une erreur est survenue";
         }
     }
 
+    public function addImageSecondary($bdd)
+    {
+        $tmpName = $this->name['tmp_name'];
+        $name = $this->name['name'];
+        $size = $this->name['size'];
+        $error = $this->name['error'];
+
+        $tabExtension = explode('.', $name);
+        $extension = strtolower(end($tabExtension));
+        $extensions = ['jpg', 'png', 'jpeg', 'gif', 'webp'];
+        $maxSize = 2000000;
+        $uniqueName = uniqid('', true);
+        $file = $uniqueName . "." . $extension;
+
+        if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
+            move_uploaded_file($tmpName, '../assets/img_item/' . $file);
+
+            $insertImage = $bdd->prepare('INSERT INTO image (id_item, name, main) VALUES (?,?,?)');
+            $insertImage->execute([$this->id_item, $file, $this->main]);
+        } else {
+            echo "Mauvaise extension ou taille trop grande, Une erreur est survenue";
+        }
+    }
     public function deleteImage($bdd)
     {
         unlink('../assets/img_item/' . $this->name);
