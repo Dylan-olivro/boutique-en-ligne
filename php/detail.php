@@ -1,13 +1,12 @@
 <?php
 require_once('./class/user.php');
-ob_start('ob_gzhandler');
 
 if (isset($_POST['ajouter'])) {
-    $insertIntoPanier = $bdd->prepare('INSERT INTO panier (id_user,id_item) VALUES(?,?)');
-    $insertIntoPanier->execute([$_SESSION['user']->id, $_GET['id']]);
+    $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(?,?)');
+    $insertIntoPanier->execute([$_SESSION['user']->id, trim(intval($_GET['id']))]);
 }
 if (isset($_POST['vider'])) {
-    $deletePanier = $bdd->prepare('DELETE FROM panier WHERE id_user = ?');
+    $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
     $deletePanier->execute([$_SESSION['user']->id]);
 }
 
@@ -37,8 +36,8 @@ var_dump($resultItem);
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/detail.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/detail.js" defer></script>
 
 </head>
 
@@ -87,7 +86,6 @@ var_dump($resultItem);
         </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
-
 </body>
 <style>
 

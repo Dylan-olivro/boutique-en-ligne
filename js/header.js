@@ -3,21 +3,36 @@ let searchBarBurger = document.getElementById("searchBarBurger");
 let searchBurgerDiv = document.getElementById("searchBurgerDiv");
 let searchBar = document.getElementById("searchBar");
 let darkMode = document.getElementById("darkMode");
+let navPrincipale = document.getElementById("navPrincipale");
 let darkModeState = false;
 let searchBarBurgerValue = searchBarBurger.value;
 let allBody = document.body;
+let allHeader = document.header;
 
 darkMode.addEventListener("click", () => {
-  if (darkModeState == false) {
-    allBody.classList.toggle("dark-mode");
-    darkMode.src = "./assets/img_darkMode/sun.png";
-    darkModeState = true;
-  } else {
-    allBody.classList.toggle("dark-mode");
-    darkMode.src = "./assets/img_darkMode/moon.png";
-    darkModeState = false;
-  }
+  let actualTheme = allBody.className;
+
+  // navPrincipale.classList.toggle("dark-mode");
+  allBody.classList.toggle("dark-mode");
+  localStorage.setItem("Mytheme", actualTheme);
+  console.log(localStorage.Mytheme);
 });
+
+if (localStorage.getItem("Mytheme")) {
+  allBody.classList.toggle(localStorage.getItem("Mytheme"));
+}
+
+// darkMode.addEventListener("click", () => {
+//   if (darkModeState == false) {
+//     allBody.classList.toggle("dark-mode");
+//     darkMode.src = "./assets/img_darkMode/sun.png";
+//     darkModeState = true;
+//   } else {
+//     allBody.classList.toggle("dark-mode");
+//     darkMode.src = "./assets/img_darkMode/moon.png";
+//     darkModeState = false;
+//   }
+// });
 
 $(searchBarBurger).keyup(function () {
   if (searchBarBurger.value != "") {

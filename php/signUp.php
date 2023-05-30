@@ -1,19 +1,19 @@
 <?php
 require_once('./class/user.php');
-ob_start('ob_gzhandler');
 
 if (isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
 if (isset($_POST['submit'])) {
-    $email = trim(htmlspecialchars($_POST['email']));
-    $firstname = trim(htmlspecialchars($_POST['firstname']));
-    $lastname = trim(htmlspecialchars($_POST['lastname']));
-    $password = $_POST['password'];
+    $email = trim(h($_POST['email']));
+    $firstname = trim(h($_POST['firstname']));
+    $lastname = trim(h($_POST['lastname']));
+    $password = trim($_POST['password']);
+    $confirm_password = trim($_POST['confirm_password']);
 
-    $user = new User('', $email, $firstname, $lastname, $password, '');
-    $user->register($bdd);
+    $user = new User(null, $email, $firstname, $lastname, $password, null);
+    $user->register($bdd, $confirm_password);
 }
 ?>
 <!DOCTYPE html>
@@ -36,8 +36,8 @@ if (isset($_POST['submit'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/user/signUpJS.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/user/signUpJS.js" defer></script>
 
 </head>
 
@@ -46,20 +46,22 @@ if (isset($_POST['submit'])) {
     <main>
         <form action="" method="post" id="signup">
             <label for="email">Email</label>
-            <input type="" id="email" name="email" autofocus>
+            <input type="" id="email" name="email" required autofocus>
             <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname">
+            <input type="text" id="firstname" name="firstname" required>
             <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname">
+            <input type="text" id="lastname" name="lastname" required>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" required>
+            <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
             <label for="confirm_password">Confirm password</label>
-            <input type="password" id="confirm_password" name="confirm_password">
+            <input type="password" id="confirm_password" name="confirm_password" required>
+            <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
             <input type="submit" name="submit" class="input">
             <p id="message">
                 <?php
-                if (!empty($_SESSION['message'])) {
-                    echo $_SESSION['message'];
+                if (isset($_SESSION['message'])) {
+                    echo h($_SESSION['message']);
                 }
                 ?>
             </p>
@@ -69,7 +71,7 @@ if (isset($_POST['submit'])) {
     <?php require_once('./include/header-save.php') ?>
 </body>
 <style>
-    form {
+    /* form {
         display: flex;
         flex-direction: column;
     }
@@ -84,7 +86,7 @@ if (isset($_POST['submit'])) {
     label {
         font-size: 1.5rem;
 
-    }
+    } */
 </style>
 
 </html>

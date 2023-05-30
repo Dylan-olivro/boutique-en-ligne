@@ -1,21 +1,11 @@
 <?php
-require_once('./class/user.php');
+require_once('../class/user.php');
 
-if (isset($_SESSION['user'])) {
-    header('Location:../index.php');
+if (!isset($_SESSION['user'])) {
+    header('Location:../../index.php');
 }
 
-if (isset($_POST['submit'])) {
-    $email = trim(h($_POST['email']));
-    $password = trim($_POST['password']);
-
-    $user = new User(null, $email, null, null, $password, null);
-    $user->connect($bdd);
-    // $user->isConnected();
-}
-var_dump($_SESSION);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,9 +13,9 @@ var_dump($_SESSION);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connect</title>
+    <title>Password Modify</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../../css/header.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -34,33 +24,37 @@ var_dump($_SESSION);
     <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
-    <script src="../js/function.js" defer></script>
-    <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/user/connectJS.js" defer></script>
+    <script src="../../js/function.js" defer></script>
+    <script src="../../js/autocompletion.js" defer></script>
+    <script src="../../js/user/modifyPassword.js" defer></script>
+
 
 </head>
 
 <body>
-    <?php require_once('./include/header.php'); ?>
+    <?php require_once('../include/header.php'); ?>
+
     <main>
-        <form action="" method="post" id="formLogin">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" placeholder="Email" required autofocus>
+        <form action="" method="post" id="formUpdatePassword">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
+            <input type="password" name="password" id="password">
+            <label for="new_password">New Password</label>
+            <input type="password" name="new_password" id="new_password">
             <input type="submit" name="submit" class="input">
-            <p id="message">
-                <?php
-                if(isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
-                }
-                ?>
-            </p>
+            <p id="message"></p>
+
+            <?php
+            if (isset($_POST['submit'])) {
+                $old_password = $_POST['password'];
+                $new_password = $_POST['new_password'];
+
+                $user = new User($_SESSION['user']->id, null, null, null, password_hash($new_password, PASSWORD_DEFAULT), null);
+                $user->updatePassword($bdd, $old_password);
+            }
+            ?>
         </form>
     </main>
-    <?php require_once('./include/header-save.php') ?>
-
+    <?php require_once('../include/header-save.php') ?>
 </body>
 <style>
     form {

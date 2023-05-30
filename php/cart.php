@@ -1,12 +1,16 @@
 <?php
 require_once('./class/user.php');
-ob_start('ob_gzhandler');
 
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
+$returnCart = $bdd->prepare("SELECT * from cart WHERE id_user = ?");
+$returnCart->execute([$_SESSION['user']->id]);
+$result = $returnCart->fetchAll(PDO::FETCH_ASSOC);
+var_dump($result);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +18,7 @@ if (!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Modify</title>
+    <title>Connect</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/header.css">
     <!-- BOOTSTRAP -->
@@ -26,54 +30,21 @@ if (!isset($_SESSION['user'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
-    <script src="../js/user/modifyPassword.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-
+    <!-- <script src="../js/user/connectJS.js" defer></script> -->
 
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
-
     <main>
-        <form action="" method="post" id="formUpdatePassword">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password">
-            <label for="new_password">New Password</label>
-            <input type="password" name="new_password" id="new_password">
-            <input type="submit" name="submit" class="input">
-            <p id="message"></p>
 
-            <?php
-            // var_dump($_SESSION);
-            // unset($_SESSION['message']);
-
-            if (isset($_POST['submit'])) {
-                $user = new User($_SESSION['user']->id, '', '', '', password_hash($_POST['new_password'], PASSWORD_DEFAULT), '');
-                $user->updatePassword($bdd);
-            }
-            ?>
-        </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
+
 </body>
 <style>
-    form {
-        display: flex;
-        flex-direction: column;
-    }
 
-    .input {
-        color: #f1b16a;
-        padding: 5px;
-        background-color: #121a2e;
-        margin-top: 10px;
-    }
-
-    label {
-        font-size: 1.5rem;
-
-    }
 </style>
 
 </html>
