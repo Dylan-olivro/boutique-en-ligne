@@ -21,7 +21,7 @@ if (isset($_POST['buttonAddItem'])) {
     $item->addItem($bdd);
     $category->liaisonItemCategory($bdd);
     if (isset($_FILES['file'])) {
-        $file = $_FILES['file']['name'];
+        $file = $_FILES['file'];
         $image = new Image(null, null, $file, $mainImage);
         $image->addImage($bdd);
     }
@@ -61,6 +61,15 @@ if (isset($_POST['buttonUpdateCategory'])) {
     $category->updateCategory($bdd);
 }
 
+if (isset($_POST['insertImage'])) {
+    if (isset($_FILES['imageSecondary'])) {
+        $file = $_FILES['imageSecondary'];
+        $itemID = $_POST['imageID'];
+        $image = new Image(null, $itemID, $file, 0);
+        $image->addImageSecondary($bdd);
+        header('Location: admin.php');
+    }
+}
 function getEditItemID()
 {
     if (isset($_GET['editItemID'])) {
@@ -188,6 +197,14 @@ function getEditItemID()
                         }
                     }
                     ?>
+                </div>
+                <div>
+                    <h3>image</h3>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="number" name="imageID" id="imageID">
+                        <input type="file" name="imageSecondary">
+                        <input type="submit" name="insertImage">
+                    </form>
                 </div>
             </div>
 
