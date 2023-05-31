@@ -34,7 +34,7 @@ class Image
         if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
             move_uploaded_file($tmpName, '../assets/img_item/' . $file);
 
-            $insertImage = $bdd->prepare('INSERT INTO image (id_item, name, main) VALUES (?,?,?)');
+            $insertImage = $bdd->prepare('INSERT INTO image (id_item, name_image, main) VALUES (?,?,?)');
             $insertImage->execute([$resultID->id, $file, $this->main]);
         } else {
             echo "Mauvaise extension ou taille trop grande, Une erreur est survenue";
@@ -58,7 +58,7 @@ class Image
         if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
             move_uploaded_file($tmpName, '../assets/img_item/' . $file);
 
-            $insertImage = $bdd->prepare('INSERT INTO image (id_item, name, main) VALUES (?,?,?)');
+            $insertImage = $bdd->prepare('INSERT INTO image (id_item, name_image, main) VALUES (?,?,?)');
             $insertImage->execute([$this->id_item, $file, $this->main]);
         } else {
             echo "Mauvaise extension ou taille trop grande, Une erreur est survenue";
@@ -67,7 +67,7 @@ class Image
     public function deleteImage($bdd)
     {
         unlink('../assets/img_item/' . $this->name);
-        $deleteImage = $bdd->prepare('DELETE FROM image WHERE name = ?');
+        $deleteImage = $bdd->prepare('DELETE FROM image WHERE name_image = ?');
         $deleteImage->execute([$this->name]);
     }
 
