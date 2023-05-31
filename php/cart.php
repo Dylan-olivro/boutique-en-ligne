@@ -16,21 +16,19 @@ if (isset($_POST['valider'])) {
     $insertCommand = $bdd->prepare('INSERT INTO command (id_user,date) VALUES (?,?)');
     $insertCommand->execute([$_SESSION['user']->id, $date]);
 
-    $recupCommandID = $bdd->prepare('SELECT id FROM command ORDER BY date DESC');
-    $recupCommandID->execute();
-    $resultID = $recupCommandID->fetch(PDO::FETCH_OBJ);
-    // var_dump($resultID);
+    $id = $bdd->lastInsertId();
+
     $prices = [];
     foreach ($result as $key) {
         array_push($prices, $key->price);
 
         $insertLiaison = $bdd->prepare('INSERT INTO liaison_cart_command (id_command,id_item) VALUES (?,?)');
-        $insertLiaison->execute([$resultID->id, $key->id_item]);
+        $insertLiaison->execute([$id, $key->id_item]);
     }
     $total = array_sum($prices);
 
     $insertCommand = $bdd->prepare('UPDATE command SET total = ? WHERE id = ? ');
-    $insertCommand->execute([$total, $resultID->id]);
+    $insertCommand->execute([$total, $id]);
 
     $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
     $deletePanier->execute([$_SESSION['user']->id]);

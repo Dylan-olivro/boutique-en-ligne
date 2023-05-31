@@ -1,6 +1,8 @@
 <?php
 require_once('./class/user.php');
 
+// ! VERIFIER AVEC PLESK POUR LES ACCENTS
+
 if (isset($_POST['ajouter'])) {
     $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(?,?)');
     $insertIntoPanier->execute([$_SESSION['user']->id, trim(intval($_GET['id']))]);
@@ -56,14 +58,14 @@ $result = $image->returnImagesByID($bdd);
                     <img src="../assets/img_item/<?= $result[0]->name ?>" alt="">
                 </div>
                 <div id="detailItem">
-                    <p><?= $resultItem->name ?></p>
+                    <p><?= hd($resultItem->name) ?></p>
 
                     <div id="description">Description :
-                        <p><?= $resultItem->description ?></p>
+                        <p><?= htmlspecialchars_decode($resultItem->description) ?></p>
                     </div>
 
                     <div id="price_cart">
-                        <p><?= $resultItem->price ?></p>
+                        <p><?= hd($resultItem->price) ?></p>
                         <?php
                         if (isset($_SESSION['user'])) { ?>
                             <form action="" method="post">
