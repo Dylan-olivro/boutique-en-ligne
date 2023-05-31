@@ -94,10 +94,6 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
             $returnCommand2->execute();
             $result2 = $returnCommand2->fetchAll(PDO::FETCH_OBJ);
 
-
-
-
-
             foreach ($result2 as $key2) {
                 $returnCommand = $bdd->prepare('SELECT * FROM command INNER JOIN liaison_cart_command ON command.id = liaison_cart_command.id_command INNER JOIN items ON liaison_cart_command.id_item = items.id WHERE id_user = ? AND command.id = ?');
                 $returnCommand->execute([$_SESSION['user']->id, $key2->id]);
@@ -106,23 +102,12 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 echo "Commande " . $key2->id;
                 echo '<br>';
                 echo "Total " . $key2->total . "€";
-                foreach ($result as $key) {
-            ?>
-                    <p><?= $key->name ?></p>
+                foreach ($result as $key) { ?>
 
-                <?php
-                }
-                ?>
-                <br>
+                    <p><?= hd($key->name) ?></p>
             <?php
-
-                // $returnCommand2 = $bdd->prepare('SELECT * FROM liaison_cart_command WHERE liaison_cart_command.id_command = ?');
-                // $returnCommand2->execute([$key->id_command]);
-                // $result2 = $returnCommand2->fetchAll(PDO::FETCH_OBJ);
-                // var_dump($result2);
-
-
-                // var_dump($key);
+                }
+                echo '<br>';
             }
             ?>
         </div>
