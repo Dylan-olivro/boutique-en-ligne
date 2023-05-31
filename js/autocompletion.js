@@ -21,6 +21,7 @@ let searchResultsDesktopDiv = document.getElementById(
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         if (data.length == 0) {
            let noResult = document.createElement("p");
            noResult.innerText = "Aucun résultat trouvé";
@@ -49,7 +50,7 @@ let searchResultsDesktopDiv = document.getElementById(
 
           resultsImg.src = `.${
             getPage()[1]
-          }/assets/img_item/CorsairK55RGBPRO.webp`;
+          }/assets/img_item/`+ element.name_image;
           resultsName.innerText = element.name;
           resultsDesc.innerText = element.description;
           resultsLink.href = `./${getPage()[0]}detail.php?id=${element.id}`;
