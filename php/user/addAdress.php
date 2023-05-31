@@ -52,10 +52,10 @@ if (!isset($_SESSION['user'])) {
             // unset($_SESSION['message']);
 
             if (isset($_POST['submit'])) {
-                $numero = trim(htmlspecialchars($_POST['numero']));
-                $name = trim(htmlspecialchars($_POST['name']));
-                $postcode = trim(htmlspecialchars($_POST['postcode']));
-                $city = strtoupper(trim(htmlspecialchars($_POST['city'])));
+                $numero = trim(h($_POST['numero']));
+                $name = trim(h($_POST['name']));
+                $postcode = trim(h($_POST['postcode']));
+                $city = strtoupper(trim(h($_POST['city'])));
 
                 $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city);
                 $adress->addAdress($bdd);

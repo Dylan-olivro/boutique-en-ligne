@@ -1,6 +1,7 @@
 <?php
 require_once('./class/user.php');
 // ! AJOUTER UN BOUTON VERS LE PANIER
+// ! VERFIER L'HISTORIQUE DE COMMANDE
 
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');

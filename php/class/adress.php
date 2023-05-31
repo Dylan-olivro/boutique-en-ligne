@@ -20,9 +20,18 @@ class Adress
     }
     public function addAdress($bdd)
     {
-        $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city)  VALUES(?,?,?,?,?)');
-        $addAdress->execute([$this->id_user, $this->numero, $this->name, $this->postcode, $this->city]);
-        header('Location: ../profil.php');
+        if (isEmpty($this->numero)) {
+        } elseif (isEmpty($this->name)) {
+        } elseif (isEmpty($this->postcode)) {
+        } elseif (isEmpty($this->city)) {
+        } elseif (!isNumber($this->numero)) {
+        } elseif (!isStreet($this->numero)) {
+        } elseif (!isPostcode($this->postcode)) {
+        } else {
+            $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city)  VALUES(?,?,?,?,?)');
+            $addAdress->execute([$this->id_user, $this->numero, $this->name, $this->postcode, $this->city]);
+            header('Location: ../profil.php');
+        }
     }
     public function deleteAdress($bdd)
     {
@@ -30,12 +39,14 @@ class Adress
         $deleteAdress->execute([$this->id, $this->id_user]);
         header('Location: ../profil.php');
     }
+
     public function updateAdress($bdd)
     {
         $updateAdress = $bdd->prepare('UPDATE adress SET numero = ?, name = ?, postcode = ?, city = ? WHERE id = ? AND id_user = ?');
         $updateAdress->execute([$this->numero, $this->name, $this->postcode, $this->city, $this->id, $this->id_user]);
         header('Location: admin.php');
     }
+
     public function returnAdressById($bdd)
     {
         $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE id = ?');
@@ -43,6 +54,7 @@ class Adress
         $result = $returnAdress->fetch(PDO::FETCH_OBJ);
         return $result;
     }
+
     public function returnAdressByUser($bdd)
     {
         $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE id_user = ?');

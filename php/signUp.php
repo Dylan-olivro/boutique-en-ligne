@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/user/signUpJS.js" defer></script>
+    <!-- <script src="../js/user/signUpJS.js" defer></script> -->
 
 </head>
 
