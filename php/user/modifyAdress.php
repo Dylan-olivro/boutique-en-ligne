@@ -39,26 +39,26 @@ $userAdress = $adress->returnAdressById($bdd);
     <main>
         <form action="" method="post" id="formUpdateAdress">
             <label for="numero">Numero</label>
-            <input type="number" name="numero" id="numero" value="<?= $userAdress->numero ?>">
+            <input type="number" name="numero" id="numero" value="<?= $userAdress->numero ?>" required autofocus>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="<?= $userAdress->name ?>">
+            <input type="text" name="name" id="name" value="<?= $userAdress->name ?>" required>
             <label for="postcode">Postcode</label>
-            <input type="number" name="postcode" id="postcode" value="<?= $userAdress->postcode ?>">
+            <input type="number" name="postcode" id="postcode" value="<?= $userAdress->postcode ?>" required>
             <label for="city">City</label>
-            <input type="text" name="city" id="city" value="<?= $userAdress->city ?>">
+            <input type="text" name="city" id="city" value="<?= $userAdress->city ?>" required>
             <input type="submit" name="submit" class="input" value="Modifier">
             <p id="message"></p>
 
             <?php
             if (isset($_POST['submit'])) {
-                $numero = trim(htmlspecialchars($_POST['numero']));
-                $name = trim(htmlspecialchars($_POST['name']));
-                $postcode = trim(htmlspecialchars($_POST['postcode']));
-                $city = strtoupper(trim(htmlspecialchars($_POST['city'])));
+                $numero = trim(h($_POST['numero']));
+                $name = trim(h($_POST['name']));
+                $postcode = trim(h($_POST['postcode']));
+                $city = strtoupper(trim(h($_POST['city'])));
 
                 $adress = new Adress($userAdress->id, $_SESSION['user']->id, $numero, $name, $postcode, $city);
                 $adress->updateAdress($bdd);
-                header('Location: ../profil.php');
+                // header('Location: ../profil.php');
             }
             ?>
         </form>

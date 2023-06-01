@@ -37,13 +37,13 @@ if (!isset($_SESSION['user'])) {
     <main>
         <form action="" method="post" id="formUpdateAdress">
             <label for="numero">Numero</label>
-            <input type="number" name="numero" id="numero">
+            <input type="number" name="numero" id="numero" required autofocus>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name">
+            <input type="text" name="name" id="name" required>
             <label for="postcode">Postcode</label>
-            <input type="number" name="postcode" id="postcode">
+            <input type="number" name="postcode" id="postcode" required>
             <label for="city">City</label>
-            <input type="text" name="city" id="city">
+            <input type="text" name="city" id="city" required>
             <input type="submit" name="submit" class="input">
             <p id="message"></p>
 
@@ -52,10 +52,10 @@ if (!isset($_SESSION['user'])) {
             // unset($_SESSION['message']);
 
             if (isset($_POST['submit'])) {
-                $numero = trim(htmlspecialchars($_POST['numero']));
-                $name = trim(htmlspecialchars($_POST['name']));
-                $postcode = trim(htmlspecialchars($_POST['postcode']));
-                $city = strtoupper(trim(htmlspecialchars($_POST['city'])));
+                $numero = trim(h($_POST['numero']));
+                $name = trim(h($_POST['name']));
+                $postcode = trim(h($_POST['postcode']));
+                $city = strtoupper(trim(h($_POST['city'])));
 
                 $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city);
                 $adress->addAdress($bdd);

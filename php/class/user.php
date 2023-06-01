@@ -4,7 +4,7 @@ session_start();
 ob_start('ob_gzhandler');
 // ! REGLER LE PROBLEME DU MESSAGE EN SESSION QUI RESTE SI ON CHANGE DE PAGE !
 // ! DEMANDER SI REQUIRED EST NESSECAIRE VU QUE CA EMPECHE D'AFFICHER LES MESSAGE D'ERREUR !
-// ! FILTER L'EMAIL EN PHP
+
 // RECUPERER L'URL POUR SAVOIR SI C'EST L'INDEX OU LES AUTRES PAGES
 function getURL()
 {
@@ -29,6 +29,8 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
     require_once('./php/class/image.php');
     require_once('./php/class/item.php');
     require_once('./php/class/category.php');
+    require_once('./php/class/cart.php');
+    require_once('./php/class/command.php');
 } else {
     if (getURL()[1][2] === 'user') {
         require_once('../include/bdd.php');
@@ -37,6 +39,8 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
         require_once('../class/image.php');
         require_once('../class/item.php');
         require_once('../class/category.php');
+        require_once('../class/cart.php');
+        require_once('../class/command.php');
     } else {
         require_once('./include/bdd.php');
         require_once('./include/function.php');
@@ -44,6 +48,8 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
         require_once('./class/image.php');
         require_once('./class/item.php');
         require_once('./class/category.php');
+        require_once('./class/cart.php');
+        require_once('./class/command.php');
     }
 }
 
@@ -84,10 +90,17 @@ class User
         $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
 
         if (isEmpty($this->email)) {
-        } elseif (isEmpty($this->password)) {
-        } elseif (isEmpty($confirm_password)) {
         } elseif (isEmpty($this->firstname)) {
         } elseif (isEmpty($this->lastname)) {
+        } elseif (isEmpty($this->password)) {
+        } elseif (isEmpty($confirm_password)) {
+        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        } elseif (!isName($this->firstname)) {
+        } elseif (!isName($this->lastname)) {
+        } elseif (isToBig($this->firstname)) {
+        } elseif (isToSmall($this->firstname)) {
+        } elseif (isToBig($this->lastname)) {
+        } elseif (isToSmall($this->lastname)) {
         } elseif (!isSame($this->password, $confirm_password)) {
         } elseif ($recupUser->rowCount() > 0) {
             $_SESSION['message'] = 'Email déjà utilisé';
@@ -107,6 +120,7 @@ class User
 
         if (isEmpty($this->email)) {
         } elseif (isEmpty($this->password)) {
+        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
         } elseif ($request->rowCount() > 0) {
 
             $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
@@ -146,9 +160,16 @@ class User
         $insertUser = $bdd->prepare("UPDATE users SET email = ?, firstname = ?, lastname = ?, password = ? WHERE id = ? ");
 
         if (isEmpty($this->email)) {
-        } elseif (isEmpty($this->password)) {
         } elseif (isEmpty($this->firstname)) {
         } elseif (isEmpty($this->lastname)) {
+        } elseif (isEmpty($this->password)) {
+        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        } elseif (!isName($this->firstname)) {
+        } elseif (!isName($this->lastname)) {
+        } elseif (isToBig($this->firstname)) {
+        } elseif (isToSmall($this->firstname)) {
+        } elseif (isToBig($this->lastname)) {
+        } elseif (isToSmall($this->lastname)) {
         } elseif ($recupUser->rowCount() > 0) {
             $_SESSION['message'] = 'Email déjà utilisé';
             //? VOIR SI ON PEUT S'EN PASSER
