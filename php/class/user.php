@@ -29,6 +29,8 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
     require_once('./php/class/image.php');
     require_once('./php/class/item.php');
     require_once('./php/class/category.php');
+    require_once('./php/class/cart.php');
+    require_once('./php/class/command.php');
 } else {
     if (getURL()[1][2] === 'user') {
         require_once('../include/bdd.php');
@@ -37,6 +39,8 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
         require_once('../class/image.php');
         require_once('../class/item.php');
         require_once('../class/category.php');
+        require_once('../class/cart.php');
+        require_once('../class/command.php');
     } else {
         require_once('./include/bdd.php');
         require_once('./include/function.php');
@@ -44,6 +48,8 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
         require_once('./class/image.php');
         require_once('./class/item.php');
         require_once('./class/category.php');
+        require_once('./class/cart.php');
+        require_once('./class/command.php');
     }
 }
 

@@ -5,16 +5,20 @@ require_once('./class/user.php');
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
+$cart = new Cart(null, $_SESSION['user']->id, null);
+$result = $cart->returnCart($bdd);
 
-$returnCart = $bdd->prepare("SELECT * from cart INNER JOIN items ON cart.id_item = items.id WHERE id_user = ?");
-$returnCart->execute([$_SESSION['user']->id]);
-$result = $returnCart->fetchAll(PDO::FETCH_OBJ);
+// $returnCart = $bdd->prepare("SELECT * from cart INNER JOIN items ON cart.id_item = items.id WHERE id_user = ?");
+// $returnCart->execute([$_SESSION['user']->id]);
+// $result = $returnCart->fetchAll(PDO::FETCH_OBJ);
 var_dump($result);
 
 if (isset($_POST['valider'])) {
     $date = date("Y-m-d H:i:s");
-    $insertCommand = $bdd->prepare('INSERT INTO command (id_user,date) VALUES (?,?)');
-    $insertCommand->execute([$_SESSION['user']->id, $date]);
+    $command = new Command(null, $_SESSION['user']->id, $date, null);
+    $command->addCommand($bdd);
+    // $insertCommand = $bdd->prepare('INSERT INTO command (id_user,date) VALUES (?,?)');
+    // $insertCommand->execute([$_SESSION['user']->id, $date]);
 
     $id = $bdd->lastInsertId();
 
@@ -27,18 +31,24 @@ if (isset($_POST['valider'])) {
     }
     $total = array_sum($prices);
 
-    $insertCommand = $bdd->prepare('UPDATE command SET total = ? WHERE id = ? ');
-    $insertCommand->execute([$total, $id]);
+    $command = new Command($id, $_SESSION['user']->id, $date, $total);
+    $command->updateCommand($bdd);
+    // $insertCommand = $bdd->prepare('UPDATE command SET total = ? WHERE id = ? ');
+    // $insertCommand->execute([$total, $id]);
 
-    $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
-    $deletePanier->execute([$_SESSION['user']->id]);
-    header('Location: cart.php');
+    // $cart = new Cart(null, $_SESSION['user']->id, null);
+    $cart->deleteCart($bdd);
+    // $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
+    // $deletePanier->execute([$_SESSION['user']->id]);
+    // header('Location: cart.php');
 }
 
 if (isset($_POST['vider'])) {
-    $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
-    $deletePanier->execute([$_SESSION['user']->id]);
-    header('Location: cart.php');
+    // $cart = new Cart(null, $_SESSION['user']->id, null);
+    $cart->deleteCart($bdd);
+    // $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
+    // $deletePanier->execute([$_SESSION['user']->id]);
+    // header('Location: cart.php');
 }
 ?>
 
