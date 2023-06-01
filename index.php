@@ -30,7 +30,11 @@ require_once('./php/class/user.php');
     <?php require_once('./php/include/header.php') ?>
 
     <?php
-
+    $cart = new Cart($_SESSION['user']->id, null, null);
+    $result = $cart->returnCart($bdd);
+    $result2 = $cart->test($bdd);
+    var_dump($result);
+    var_dump($result2);
     // if (isset($_POST['submit'])) {
     //     $nom = $_POST['name'];
     //     $regex = '/^[A-Z][\p{L}-]*$/';
