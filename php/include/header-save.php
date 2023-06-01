@@ -19,7 +19,7 @@ function includeHeaderSave($index, $href)
                 <a href="<?= $href ?>profil.php">Profil</a>
                 <a href="<?= $href ?>detail.php">detail</a>
                 <a href="<?= $href ?>itemFilter.php">filterItem</a>
-                <a href="<?= $href ?>cart.php">Cart</a>
+                <a href="<?= $href ?>cartPage.php">Cart</a>
                 <?php if ($_SESSION['user']->role !== 0) { ?>
                     <a href="<?= $href ?>admin.php">admin</a>
                 <?php } ?>
