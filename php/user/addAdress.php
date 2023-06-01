@@ -37,13 +37,13 @@ if (!isset($_SESSION['user'])) {
     <main>
         <form action="" method="post" id="formUpdateAdress">
             <label for="numero">Numero</label>
-            <input type="number" name="numero" id="numero">
+            <input type="number" name="numero" id="numero" required autofocus>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name">
+            <input type="text" name="name" id="name" required>
             <label for="postcode">Postcode</label>
-            <input type="number" name="postcode" id="postcode">
+            <input type="number" name="postcode" id="postcode" required>
             <label for="city">City</label>
-            <input type="text" name="city" id="city">
+            <input type="text" name="city" id="city" required>
             <input type="submit" name="submit" class="input">
             <p id="message"></p>
 

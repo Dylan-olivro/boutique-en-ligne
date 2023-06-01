@@ -91,8 +91,8 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
         ?>
         <div>
             <?php
-            $returnCommand2 = $bdd->prepare('SELECT * FROM command ');
-            $returnCommand2->execute();
+            $returnCommand2 = $bdd->prepare('SELECT * FROM command WHERE id_user  = ?');
+            $returnCommand2->execute([$_SESSION['user']->id]);
             $result2 = $returnCommand2->fetchAll(PDO::FETCH_OBJ);
 
             foreach ($result2 as $key2) {

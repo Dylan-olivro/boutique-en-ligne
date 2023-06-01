@@ -42,9 +42,18 @@ class Adress
 
     public function updateAdress($bdd)
     {
-        $updateAdress = $bdd->prepare('UPDATE adress SET numero = ?, name = ?, postcode = ?, city = ? WHERE id = ? AND id_user = ?');
-        $updateAdress->execute([$this->numero, $this->name, $this->postcode, $this->city, $this->id, $this->id_user]);
-        header('Location: admin.php');
+        if (isEmpty($this->numero)) {
+        } elseif (isEmpty($this->name)) {
+        } elseif (isEmpty($this->postcode)) {
+        } elseif (isEmpty($this->city)) {
+        } elseif (!isNumber($this->numero)) {
+        } elseif (!isStreet($this->numero)) {
+        } elseif (!isPostcode($this->postcode)) {
+        } else {
+            $updateAdress = $bdd->prepare('UPDATE adress SET numero = ?, name = ?, postcode = ?, city = ? WHERE id = ? AND id_user = ?');
+            $updateAdress->execute([$this->numero, $this->name, $this->postcode, $this->city, $this->id, $this->id_user]);
+            header('Location: ../profil.php');
+        }
     }
 
     public function returnAdressById($bdd)

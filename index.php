@@ -31,21 +31,21 @@ require_once('./php/class/user.php');
 
     <?php
 
-    if (isset($_POST['submit'])) {
-        $nom = $_POST['name'];
-        $regex = '/^[A-Z][\p{L}-]*$/';
-        if (!isName($nom)) {
-            var_dump('FAIL');
-        } else {
-            var_dump('SUCCES');
-        }
-    }
+    // if (isset($_POST['submit'])) {
+    //     $nom = $_POST['name'];
+    //     $regex = '/^[A-Z][\p{L}-]*$/';
+    //     if (!isName($nom)) {
+    //         var_dump('FAIL');
+    //     } else {
+    //         var_dump('SUCCES');
+    //     }
+    // }
     ?>
 
-    <form action="" method="post">
+    <!-- <form action="" method="post">
         <input type="text" name="name">
         <input type="submit" name="submit">
-    </form>
+    </form> -->
     <?php require_once('./php/include/header-save.php') ?>
 </body>
 
