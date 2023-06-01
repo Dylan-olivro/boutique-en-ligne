@@ -55,7 +55,7 @@ $result = $image->returnImagesByID($bdd);
         <section id="container">
             <div id="item">
                 <div id="imageItem">
-                    <img src="../assets/img_item/<?= $result[0]->name ?>" alt="">
+                    <img src="../assets/img_item/<?= $result[0]->name_image ?>" alt="">
                 </div>
                 <div id="detailItem">
                     <p><?= hd($resultItem->name) ?></p>
