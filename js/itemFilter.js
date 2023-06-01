@@ -18,25 +18,61 @@ function fetchItems(url) {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       data.forEach((element) => {
-        console.log(element);
-        let div1 = document.createElement("div");
-        let div2 = document.createElement("div");
-        let div3 = document.createElement("div");
-        let div4 = document.createElement("div");
+        // console.log(element);
+        let divImg = document.createElement("div");
+        let divNameDesc = document.createElement("div");
+        let divImgNameDesc = document.createElement("div");
+        let divPrice = document.createElement("div");
+        let divGlobal = document.createElement("div");
         let li = document.createElement("li");
         let itemImg = document.createElement("img");
         let itemName = document.createElement("p");
         let itemDesc = document.createElement("p");
         let itemLink = document.createElement("a");
         let itemPrice = document.createElement("p");
+        let itemStock = document.createElement("p");
 
-        itemImg.className = "resultsImg";
+        itemName.className = "itemName";
+        itemDesc.className = "itemDesc";
+        divImg.className = "divImg";
+        itemImg.className = "itemImg";
+        divNameDesc.className = "divNameDesc";
+        divImgNameDesc.className = "divImgNameDesc";
+        divPrice.className = "divPrice";
+        divGlobal.className = "divGlobal";
+        itemPrice.className = "itemPrice";
+        itemStock.className = "itemStock";
 
         itemImg.src = `../assets/img_item/` + element.name_image;
+        itemLink.href = `./${getPage()[1]}detail.php?id=${element.id}`;
 
-        li.append(itemImg, element.name, element.description, element.price);
+        itemName.innerText = element.name;
+        itemDesc.innerText = element.description;
+        itemPrice.innerText = element.price + " €";
+
+        if(element.stock == 0){
+          itemStock.innerText = "BIENTÔT DE RETOUR";
+          itemStock.style.color = "red";
+          console.log("EPUISE");
+        }else if(element.stock <= 5){
+          itemStock.innerText = "STOCK LIMITE (restant : " + element.stock + ")";
+          itemStock.style.color = "orange";
+          console.log("LIMITE");
+        }else{
+          itemStock.innerText = "EN STOCK";
+          itemStock.style.color = "green";
+          console.log("STOCK");
+          // console.log(element.stock);
+        }
+
+        divImg.append(itemImg);
+        divNameDesc.append(itemName, itemDesc);
+        divPrice.append(itemPrice, itemStock);
+        itemLink.append(divImg, divNameDesc, divPrice);
+        divGlobal.append(itemLink);
+        li.append(divGlobal);
         allItems.append(li);
       });
     });
