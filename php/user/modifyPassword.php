@@ -37,9 +37,9 @@ if (!isset($_SESSION['user'])) {
     <main>
         <form action="" method="post" id="formUpdatePassword">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password" required>
             <label for="new_password">New Password</label>
-            <input type="password" name="new_password" id="new_password">
+            <input type="password" name="new_password" id="new_password" required>
             <input type="submit" name="submit" class="input">
             <p id="message"></p>
 

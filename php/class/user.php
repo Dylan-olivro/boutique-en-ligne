@@ -4,7 +4,7 @@ session_start();
 ob_start('ob_gzhandler');
 // ! REGLER LE PROBLEME DU MESSAGE EN SESSION QUI RESTE SI ON CHANGE DE PAGE !
 // ! DEMANDER SI REQUIRED EST NESSECAIRE VU QUE CA EMPECHE D'AFFICHER LES MESSAGE D'ERREUR !
-// ! FILTER L'EMAIL EN PHP
+
 // RECUPERER L'URL POUR SAVOIR SI C'EST L'INDEX OU LES AUTRES PAGES
 function getURL()
 {
@@ -84,10 +84,17 @@ class User
         $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
 
         if (isEmpty($this->email)) {
-        } elseif (isEmpty($this->password)) {
-        } elseif (isEmpty($confirm_password)) {
         } elseif (isEmpty($this->firstname)) {
         } elseif (isEmpty($this->lastname)) {
+        } elseif (isEmpty($this->password)) {
+        } elseif (isEmpty($confirm_password)) {
+        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        } elseif (!isName($this->firstname)) {
+        } elseif (!isName($this->lastname)) {
+        } elseif (isToBig($this->firstname)) {
+        } elseif (isToSmall($this->firstname)) {
+        } elseif (isToBig($this->lastname)) {
+        } elseif (isToSmall($this->lastname)) {
         } elseif (!isSame($this->password, $confirm_password)) {
         } elseif ($recupUser->rowCount() > 0) {
             $_SESSION['message'] = 'Email déjà utilisé';
@@ -107,6 +114,7 @@ class User
 
         if (isEmpty($this->email)) {
         } elseif (isEmpty($this->password)) {
+        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
         } elseif ($request->rowCount() > 0) {
 
             $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
@@ -146,9 +154,16 @@ class User
         $insertUser = $bdd->prepare("UPDATE users SET email = ?, firstname = ?, lastname = ?, password = ? WHERE id = ? ");
 
         if (isEmpty($this->email)) {
-        } elseif (isEmpty($this->password)) {
         } elseif (isEmpty($this->firstname)) {
         } elseif (isEmpty($this->lastname)) {
+        } elseif (isEmpty($this->password)) {
+        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        } elseif (!isName($this->firstname)) {
+        } elseif (!isName($this->lastname)) {
+        } elseif (isToBig($this->firstname)) {
+        } elseif (isToSmall($this->firstname)) {
+        } elseif (isToBig($this->lastname)) {
+        } elseif (isToSmall($this->lastname)) {
         } elseif ($recupUser->rowCount() > 0) {
             $_SESSION['message'] = 'Email déjà utilisé';
             //? VOIR SI ON PEUT S'EN PASSER

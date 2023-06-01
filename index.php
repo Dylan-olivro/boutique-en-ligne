@@ -2,18 +2,6 @@
 require_once('./php/class/user.php');
 
 // TODO: Revoir toutes les verif des formulaires en html, php et js
-// * AMELIORATION DU HEADER AVEC UNE FONCTION
-// * AJOUTS DES ADRESS AVEC BOUTON MODIFIER ET SUPPRIMER
-// * TOUS LES require DANS LE FICHIER USER
-// * CORRECTION DU ob_start()
-// * AJOUT D'UN BOUTON POUR CACHER OU AFFICHER LE MOT DE PASSE
-// * AJOUTS DES IMAGES
-// * AJOUT DE LA PAGE PANIER
-// * AMELIORATION DES FUNCTIONS
-// * CORRECTION DES htmlspecialchar POUR LA DATABASE
-// * AJOUT DE intval() POUR CERTAINE DONNEE
-// * DATABASE UPDATE
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,18 +30,22 @@ require_once('./php/class/user.php');
     <?php require_once('./php/include/header.php') ?>
 
     <?php
-    // var_dump($_SESSION);
-    // $recupArticle = $bdd->prepare('SELECT * FROM items');
-    // $recupArticle->execute();
-    // $result = $recupArticle->fetchAll(PDO::FETCH_ASSOC);
 
-    // var_dump($result);
-    // foreach ($result as $key) {
-    //     var_dump($key);
-    //     # code...
-    //     echo '<img src=".' . $key['image'] . '" alt="">';
+    // if (isset($_POST['submit'])) {
+    //     $nom = $_POST['name'];
+    //     $regex = '/^[A-Z][\p{L}-]*$/';
+    //     if (!isName($nom)) {
+    //         var_dump('FAIL');
+    //     } else {
+    //         var_dump('SUCCES');
+    //     }
     // }
     ?>
+
+    <!-- <form action="" method="post">
+        <input type="text" name="name">
+        <input type="submit" name="submit">
+    </form> -->
     <?php require_once('./php/include/header-save.php') ?>
 </body>
 
