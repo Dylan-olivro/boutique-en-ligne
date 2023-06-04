@@ -1,6 +1,5 @@
 <?php
 require_once('./class/user.php');
-
 if (isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
@@ -27,6 +26,7 @@ if (isset($_POST['submit'])) {
     <!-- CSS -->
     <!-- <link rel="stylesheet" href="./css/common.css"> -->
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/signUp.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -37,36 +37,44 @@ if (isset($_POST['submit'])) {
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <!-- <script src="../js/user/signUpJS.js" defer></script> -->
+    <script src="../js/user/signUpJS.js" defer></script>
 
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <form action="" method="post" id="signup">
-            <label for="email">Email</label>
-            <input type="" id="email" name="email" required autofocus>
-            <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname" required>
-            <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname" required>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-            <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
-            <label for="confirm_password">Confirm password</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
-            <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
-            <input type="submit" name="submit" class="input">
-            <p id="message">
-                <?php
-                if (isset($_SESSION['message'])) {
-                    echo h($_SESSION['message']);
-                }
-                ?>
-            </p>
+        <section id="container">
+            <div class="form">
 
-        </form>
+                <form action="" method="post" id="signup">
+                    <label for="email">Email *</label>
+                    <input type="" id="email" name="email" class="input" required autofocus>
+                    <label for="firstname">Firstname *</label>
+                    <input type="text" id="firstname" name="firstname" class="input" required>
+                    <label for="lastname">Lastname *</label>
+                    <input type="text" id="lastname" name="lastname" class="input" required>
+                    <label for="password">Password *</label>
+                    <div class="password">
+                        <input type="password" id="password" name="password" class="input" required>
+                        <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
+                    </div>
+                    <label for="confirm_password">Confirm password *</label>
+                    <div class="password">
+                        <input type="password" id="confirm_password" name="confirm_password" class="input" required>
+                        <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
+                    </div>
+
+                    <p id="message">
+                        <?php
+                        if (isset($_SESSION['message'])) {
+                            echo h($_SESSION['message']);
+                        } ?>
+                    </p>
+                    <input type="submit" name="submit" id="submit">
+                </form>
+            </div>
+        </section>
     </main>
     <?php require_once('./include/header-save.php') ?>
 </body>

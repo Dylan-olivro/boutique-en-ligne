@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     $user->connect($bdd);
     // $user->isConnected();
 }
-var_dump($_SESSION);
+// var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +26,7 @@ var_dump($_SESSION);
     <title>Connect</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/connect.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -43,42 +44,32 @@ var_dump($_SESSION);
 <body>
     <?php require_once('./include/header.php'); ?>
     <main>
-        <form action="" method="post" id="formLogin">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" placeholder="Email" required autofocus>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
-            <input type="submit" name="submit" class="input">
-            <p id="message">
-                <?php
-                if(isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
-                }
-                ?>
-            </p>
-        </form>
+        <section id="container">
+            <div class="form">
+
+                <form action="" method="post" id="formLogin">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="Email" class="input" required autofocus>
+                    <label for="password">Password</label>
+                    <div class="password">
+                        <input type="password" id="password" name="password" class="input" placeholder="Password" required>
+                        <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
+                    </div>
+                    <p id="message">
+                        <?php
+                        // REGELR LE CSS 
+                        if (isset($_SESSION['message'])) {
+                            echo $_SESSION['message'];
+                        }
+                        ?>
+                    </p>
+                    <input type="submit" name="submit" id="submit">
+                </form>
+            </div>
+        </section>
     </main>
     <?php require_once('./include/header-save.php') ?>
 
 </body>
-<style>
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .input {
-        color: #f1b16a;
-        padding: 5px;
-        background-color: #121a2e;
-        margin-top: 10px;
-    }
-
-    label {
-        font-size: 1.5rem;
-
-    }
-</style>
 
 </html>
