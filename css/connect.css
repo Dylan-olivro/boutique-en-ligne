@@ -1,0 +1,68 @@
+/* MAIN OU BODY A VOIR */
+main {
+  max-width: 1920px;
+  margin: auto !important;
+}
+#container {
+  background-color: darkcyan;
+  display: flex;
+  justify-content: center;
+}
+.form {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid red;
+}
+#formLogin {
+  background-color: #005078;
+  border-radius: 10px;
+  border: 1px solid yellow;
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  /* align-items: center; */
+  padding: 2% 2% !important;
+  margin: 5% 0 !important;
+}
+#formLogin > * {
+  width: 100%;
+  border-radius: 10px;
+  outline: none;
+  height: 35px;
+}
+.password {
+  display: flex;
+}
+#password {
+  width: 87%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
+  border-color: #000;
+  outline: none;
+}
+#showPassword {
+  border-color: #000;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 13%;
+  /* border: none; */
+}
+.input {
+  padding: 2% !important;
+}
+label {
+  color: white;
+  display: flex !important;
+  align-items: end;
+  font-style: italic;
+}
+#message {
+  text-align: center;
+  color: darkgoldenrod;
+}
+#submit {
+  width: 30%;
+  margin: 1% auto !important;
+}
