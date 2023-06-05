@@ -1,5 +1,4 @@
 <?php
-
 class Cart
 {
     public $id;

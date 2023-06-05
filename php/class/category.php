@@ -1,5 +1,4 @@
 <?php
-
 class Category
 {
     public $id;
@@ -47,7 +46,7 @@ class Category
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -57,7 +56,7 @@ class Category
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -67,7 +66,7 @@ class Category
 
     /**
      * Get the value of name
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -77,7 +76,7 @@ class Category
      * Set the value of name
      *
      * @return  self
-     */ 
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -87,7 +86,7 @@ class Category
 
     /**
      * Get the value of id_parent
-     */ 
+     */
     public function getId_parent()
     {
         return $this->id_parent;
@@ -97,7 +96,7 @@ class Category
      * Set the value of id_parent
      *
      * @return  self
-     */ 
+     */
     public function setId_parent($id_parent)
     {
         $this->id_parent = $id_parent;
