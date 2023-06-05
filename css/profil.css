@@ -101,7 +101,9 @@ label {
   padding-bottom: 10px !important;
 }
 .allCommand {
+  overflow-y: scroll;
   width: 60%;
+  height: 50rem;
 }
 img {
   width: 100px;

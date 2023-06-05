@@ -65,7 +65,7 @@ $result = $image->returnImagesByID($bdd);
                     </div>
 
                     <div id="price_cart">
-                        <p><?= hd($resultItem->price) ?></p>
+                        <p><?= hd($resultItem->price) ?>€</p>
                         <?php
                         if (isset($_SESSION['user'])) { ?>
                             <form action="" method="post">
