@@ -70,6 +70,10 @@ main li {
   color: red;
   transition: 0.3s;
 }
+.divGlobal .itemName {
+  color: black;
+  transition: 0.3s;
+}
 .divGlobal:hover .itemImg {
   transform: scale(1.1);
   transition: 0.5s ease-in-out;
