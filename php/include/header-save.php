@@ -17,16 +17,15 @@ function includeHeaderSave($index, $href)
             <?php
             if (isset($_SESSION['user'])) { ?>
                 <a href="<?= $href ?>profil.php">Profil</a>
-                <a href="<?= $href ?>detail.php">detail</a>
-                <a href="<?= $href ?>itemFilter.php">filterItem</a>
+                <a href="<?= $href ?>itemFilter.php">Filter</a>
                 <a href="<?= $href ?>cartPage.php">Cart</a>
                 <?php if ($_SESSION['user']->role !== 0) { ?>
-                    <a href="<?= $href ?>admin.php">admin</a>
+                    <a href="<?= $href ?>admin.php">Admin</a>
                 <?php } ?>
                 <a href="<?= $href ?>disconnect.php">Disconnect</a>
             <?php } else { ?>
-                <a href="<?= $href ?>connect.php">connect</a>
-                <a href="<?= $href ?>signUp.php">signUp</a>
+                <a href="<?= $href ?>connect.php">Connect</a>
+                <a href="<?= $href ?>signUp.php">SignUp</a>
             <?php } ?>
         </nav>
     </div>

@@ -61,6 +61,7 @@ label {
   font-style: italic;
 }
 #message {
+  width: 100%;
   text-align: center;
   color: darkgoldenrod;
 }

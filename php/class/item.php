@@ -20,20 +20,32 @@ class Item
 
     public function addItem($bdd)
     {
-        $insertItem = $bdd->prepare("INSERT INTO items (name,description,date,price,stock) VALUES(?,?,?,?,?)");
-        $insertItem->execute([$this->name, $this->description, $this->date, $this->price, $this->stock]);
+        $insertItem = $bdd->prepare("INSERT INTO items (name,description,date,price,stock) VALUES(:name,:description,:date,:price,:stock)");
+        $insertItem->execute([
+            'name' => $this->name,
+            'description' => $this->description,
+            'date' => $this->date,
+            'price' => $this->price,
+            'stock' => $this->stock
+        ]);
         // header('Location: admin.php');
     }
     public function deleteItem($bdd)
     {
-        $deleteItem = $bdd->prepare('DELETE FROM items WHERE id = ?');
-        $deleteItem->execute([$this->id]);
+        $deleteItem = $bdd->prepare('DELETE FROM items WHERE id = :id');
+        $deleteItem->execute(['id' => $this->id]);
         header('Location: admin.php');
     }
     public function editItem($bdd)
     {
-        $editItem = $bdd->prepare('UPDATE items SET name = ?, description = ?, price = ?, stock = ? WHERE id = ?');
-        $editItem->execute([$this->name, $this->description, $this->price, $this->stock, $this->id]);
+        $editItem = $bdd->prepare('UPDATE items SET name = :name, description = :description, price = :price, stock = :stock WHERE id = :id');
+        $editItem->execute([
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+            'stock' => $this->stock,
+            'id' => $this->id
+        ]);
         header('Location: admin.php');
     }
     public function returnItems($bdd)
@@ -45,8 +57,8 @@ class Item
     }
     public function returnItem($bdd)
     {
-        $returnItem = $bdd->prepare('SELECT * FROM items WHERE id = ?');
-        $returnItem->execute([$this->id]);
+        $returnItem = $bdd->prepare('SELECT * FROM items WHERE id = :id');
+        $returnItem->execute(['id' => $this->id]);
         $result = $returnItem->fetch(PDO::FETCH_OBJ);
         return $result;
     }

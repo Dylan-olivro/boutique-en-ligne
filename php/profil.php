@@ -1,12 +1,13 @@
 <?php
 require_once('./include/required.php');
 // ! AJOUTER UN BOUTON VERS LE PANIER
-// ! VERFIER L'HISTORIQUE DE COMMANDE
 
+// Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
+// Met à jour les informations de l'utilisateur
 if (isset($_POST['updateUser'])) {
     $email = trim(h($_POST['email']));
     $firstname = trim(h($_POST['firstname']));
@@ -16,7 +17,7 @@ if (isset($_POST['updateUser'])) {
     $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
     $user->update($bdd);
 }
-
+// Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
 ?>
@@ -41,7 +42,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/user/profil.js" defer></script>
+    <!-- <script src="../js/user/profil.js" defer></script> -->
 
 </head>
 
@@ -51,27 +52,30 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
         <section class="mainContainer">
             <section class="container">
                 <div class="profil">
+                    <!-- Formulaire pour MODIFIER les informations de l'utilisateur -->
                     <form action="" method="post" id="formProfil">
                         <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="<?= hd($_SESSION['user']->email) ?>" class="input" required autofocus>
+                        <input type="text" id="email" name="email" value="<?= hd($_SESSION['user']->email) ?>" class="input" autofocus>
                         <label for="firstname">Firstname</label>
-                        <input type="text" id="firstname" name="firstname" value="<?= hd($_SESSION['user']->firstname) ?>" class="input" required>
+                        <input type="text" id="firstname" name="firstname" value="<?= hd($_SESSION['user']->firstname) ?>" class="input">
                         <label for="lastname">Lastname</label>
-                        <input type="text" id="lastname" name="lastname" value="<?= hd($_SESSION['user']->lastname) ?>" class="input" required>
+                        <input type="text" id="lastname" name="lastname" value="<?= hd($_SESSION['user']->lastname) ?>" class="input">
                         <label for="password">Password</label>
                         <div class="password">
-                            <input type="password" name="password" class="input" id="password" required>
+                            <input type="password" name="password" class="input" id="password">
                             <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                         </div>
-                        <input type="submit" name="updateUser" id="submit" value="Enregistrer">
+                        <!-- les messages d'erreurs -->
                         <p id="message">
                             <?php if (isset($user)) {
                                 echo $user->update($bdd);
                             } ?>
                         </p>
+                        <input type="submit" name="updateUser" id="submit" value="Enregistrer">
                         <a href="./user/modifyPassword.php">Changer de mot de passe</a>
                     </form>
                 </div>
+                <!-- Affichage des adresses -->
                 <div class="allAdress">
                     <a href="./user/addAdress.php">Ajouter une adresse</a>
                     <?php
@@ -92,6 +96,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                             </div>
                         </div>
                     <?php
+                        // Delete l'adresse selectionné
                         if (isset($_POST['deleteAdress' . $userAdress->id])) {
                             $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
                             $adress->deleteAdress($bdd);
@@ -103,22 +108,27 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
             </section>
         </section>
 
+        <!-- Historique des commandes -->
         <section class="containerCommand">
             <div class="allCommand">
                 <?php
-                $returnCommand2 = $bdd->prepare('SELECT * FROM command WHERE id_user  = ? ORDER BY date DESC');
-                $returnCommand2->execute([$_SESSION['user']->id]);
+                // Récupère les commandes de l'utilisateur
+                $returnCommand2 = $bdd->prepare('SELECT * FROM command WHERE id_user  = :id_user ORDER BY date DESC');
+                $returnCommand2->execute(['id_user' => $_SESSION['user']->id]);
                 $result2 = $returnCommand2->fetchAll(PDO::FETCH_OBJ);
 
                 foreach ($result2 as $key2) { ?>
 
                     <div>
-
                         <?php
-                        $returnCommand = $bdd->prepare('SELECT * FROM command INNER JOIN liaison_cart_command ON command.id = liaison_cart_command.id_command INNER JOIN items ON liaison_cart_command.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = ? AND command.id = ? AND main = 1');
-                        $returnCommand->execute([$_SESSION['user']->id, $key2->id]);
+                        // Récupère les produits de la commande de l'utilisateur avec les images.
+                        $returnCommand = $bdd->prepare('SELECT * FROM command INNER JOIN liaison_cart_command ON command.id = liaison_cart_command.id_command INNER JOIN items ON liaison_cart_command.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = :id_user AND command.id = :command_id AND main = 1');
+                        $returnCommand->execute([
+                            'id_user' => $_SESSION['user']->id,
+                            'command_id' => $key2->id
+                        ]);
                         $result = $returnCommand->fetchAll(PDO::FETCH_OBJ); ?>
-
+                        <!-- Affichage des commandes -->
                         <div class="infoCommand">
                             <div>
                                 <p>COMMANDE ÉFFECTUÉE LE</p>
@@ -132,10 +142,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                                 <p>N° DE COMMANDE</p>
                             </div>
                         </div>
-                        <?php
-                        foreach ($result as $key) {
-                            // var_dump($key);
-                        ?>
+                        <?php foreach ($result as $key) { ?>
                             <div class="command">
                                 <img src="../assets/img_item/<?= $key->name_image ?>" alt="">
                                 <div>
@@ -144,9 +151,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                                     <a href="./detail.php?id=<?= $key->id_item ?>"><button>Acheter a nouveau</button></a>
                                 </div>
                             </div>
-                        <?php
-                        }
-                        ?>
+                        <?php } ?>
                     </div>
                 <?php
                 }
@@ -156,23 +161,5 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
     </main>
     <?php require_once('./include/header-save.php') ?>
 </body>
-<style>
-    /* form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .input {
-        color: #f1b16a;
-        padding: 5px;
-        background-color: #121a2e;
-        margin-top: 10px;
-    }
-
-    label {
-        font-size: 1.5rem;
-
-    } */
-</style>
 
 </html>

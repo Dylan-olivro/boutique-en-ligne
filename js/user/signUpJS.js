@@ -12,36 +12,45 @@ const buttonShow2 = document.getElementById("showConfirmPassword");
 function isSignUp() {
   // EMAIL
   if (isEmpty(email.value)) {
-    message.innerText = "Empty email field";
+    message.innerHTML =
+      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Email est vide.';
     return false;
   } else if (!validate()) {
+    message.innerHTML =
+      "<i class=\"fa-solid fa-circle-exclamation\"></i> L'adresse mail n'est pas valide.";
     return false;
   }
   // FIRSTNAME
   else if (isEmpty(firstname.value)) {
-    message.innerText = "Empty firstname field";
+    message.innerHTML =
+      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Firstname est vide';
     return false;
   } else if (!isLetter(firstname)) {
-    message.innerText = "Champ firstname invalid";
+    // ! TROUVER UN REGEX POUR LES PRENOMS COMPOSER + ACCENTS + ENTRE 2/3 ET 30 CARACTERES
+    message.innerHTML = "Champ firstname invalid";
     return false;
   }
   // LASTNAME
   else if (isEmpty(lastname.value)) {
-    message.innerText = "Empty lastname field";
+    message.innerHTML =
+      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Lastname est vide';
     return false;
   } else if (!isLetter(lastname)) {
-    message.innerText = "Champ lastname invalid";
+    message.innerHTML = "Champ lastname invalid";
     return false;
   }
   // PASSWORD AND CONFIRM PASSWORD
   else if (isEmpty(password.value)) {
-    message.innerText = "Empty password field";
+    message.innerHTML =
+      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Password est vide';
     return false;
   } else if (isEmpty(cpassword.value)) {
-    message.innerText = "Empty confirm password field";
+    message.innerHTML =
+      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Confirm Password est vide';
     return false;
   } else if (!isSame(password.value, cpassword.value)) {
-    message.innerText = "Different password";
+    message.innerHTML =
+      '<i class="fa-solid fa-circle-exclamation"></i> Les champs password sont différents.';
     return false;
   } else {
     return true;

@@ -1,9 +1,12 @@
 <?php
 require_once('./include/required.php');
+
+// Empêche les utilisateurs déjà connecté de revenir sur cette page
 if (isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
+// L'insertion de l'utilisateur dans la base de donnée
 if (isset($_POST['submit'])) {
     $email = trim(h($_POST['email']));
     $firstname = trim(h($_POST['firstname']));
@@ -24,7 +27,6 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <!-- CSS -->
-    <!-- <link rel="stylesheet" href="./css/common.css"> -->
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/signUp.css">
     <!-- BOOTSTRAP -->
@@ -46,25 +48,26 @@ if (isset($_POST['submit'])) {
     <main>
         <section id="container">
             <div class="form">
-
+                <!-- Formulaire pour AJOUTER un utilisateur -->
                 <form action="" method="post" id="signup">
                     <label for="email">Email *</label>
-                    <input type="" id="email" name="email" class="input" required autofocus>
+                    <input type="" id="email" name="email" class="input" autofocus>
                     <label for="firstname">Firstname *</label>
-                    <input type="text" id="firstname" name="firstname" class="input" required>
+                    <input type="text" id="firstname" name="firstname" class="input">
                     <label for="lastname">Lastname *</label>
-                    <input type="text" id="lastname" name="lastname" class="input" required>
+                    <input type="text" id="lastname" name="lastname" class="input">
                     <label for="password">Password *</label>
                     <div class="password">
-                        <input type="password" id="password" name="password" class="input" required>
+                        <input type="password" id="password" name="password" class="input">
                         <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
                     <label for="confirm_password">Confirm password *</label>
                     <div class="password">
-                        <input type="password" id="confirm_password" name="confirm_password" class="input" required>
+                        <input type="password" id="confirm_password" name="confirm_password" class="input">
                         <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
 
+                    <!-- les messages d'erreurs -->
                     <p id="message">
                         <?php
                         if (isset($user)) {
@@ -78,23 +81,5 @@ if (isset($_POST['submit'])) {
     </main>
     <?php require_once('./include/header-save.php') ?>
 </body>
-<style>
-    /* form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .input {
-        color: #f1b16a;
-        padding: 5px;
-        background-color: #121a2e;
-        margin-top: 10px;
-    }
-
-    label {
-        font-size: 1.5rem;
-
-    } */
-</style>
 
 </html>

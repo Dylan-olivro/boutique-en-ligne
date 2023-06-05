@@ -3,10 +3,13 @@ require_once('./include/required.php');
 // ! OBLIGER DE RENTRER DES CHIFFRES DANS LES CHAMPS NUMBER ET PAS e OU -  
 // ! VERIFIER QUE LES CHAMPS priceItem, StockItem et categoryItem MARCHE ENCORE AVEC intval()
 // ! NE PAS OUBLIER DE CHANGER LES VALUES DES INPUT
+
+// Empêche les utilisateurs qui ne sont pas ADMINISTRATEUR ou MODERATEUR de venir sur cette page
 if ($_SESSION['user']->role == 0) {
     header('Location: ../index.php');
 }
-// AJOUT DES ITEMS
+
+// Insert un produit avec une catégorie et une image
 if (isset($_POST['buttonAddItem'])) {
     $nameItem = trim(h($_POST['nameItem']));
     $descriptionItem = trim(h($_POST['descriptionItem']));
@@ -14,28 +17,33 @@ if (isset($_POST['buttonAddItem'])) {
     $priceItem = trim(h(intval($_POST['priceItem'])));
     $stockItem = trim(h(intval($_POST['stockItem'])));
     $categoryItem = trim(h(intval($_POST['categoryItem'])));
-    $mainImage = trim(h(intval($_POST['mainImage'])));
+    // $mainImage = trim(h(intval($_POST['mainImage'])));
 
     $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
     $category = new Category(null, null, $categoryItem);
     $item->addItem($bdd);
     $category->liaisonItemCategory($bdd);
     if (isset($_FILES['file'])) {
+        // Récupère l'ID du dernier produit ajouter
+        $returnLastID = $bdd->prepare("SELECT id FROM items ORDER BY items.id DESC");
+        $returnLastID->execute();
+        $resultID =  $returnLastID->fetch(PDO::FETCH_OBJ);
+
         $file = $_FILES['file'];
-        $image = new Image(null, null, $file, $mainImage);
+        $image = new Image(null, $resultID->id, $file, 1);
         $image->addImage($bdd);
     }
     header('Location: admin.php');
 }
 
-// SUPPRIMER DES ITEMS
+// Supprime un produit choisi en fonction de son ID
 if (isset($_POST['buttonDeleteItem'])) {
     $itemID = trim(intval($_POST['itemID']));
     $item = new Item($itemID, null, null, null, null, null, null);
     $item->deleteItem($bdd);
 }
 
-// AJOUTER UNE CATEGORIE
+// Insert une catégorie Parent/Enfant
 if (isset($_POST['buttonAddCategory'])) {
     $nameCategory = trim(h($_POST['nameCategory']));
     $idParent = trim(h(intval($_POST['idParent'])));
@@ -44,7 +52,7 @@ if (isset($_POST['buttonAddCategory'])) {
     $category->addCategory($bdd);
 }
 
-// SUPPRIMER UNE CATEGORIE
+// Supprime une catégorie Parent/Enfant
 if (isset($_POST['buttonDeleteCategory'])) {
     $idCategory = trim(h(intval($_POST['idCategory'])));;
 
@@ -52,7 +60,7 @@ if (isset($_POST['buttonDeleteCategory'])) {
     $category->deleteCategory($bdd);
 }
 
-// MODIFIER UNE CATEGORIE
+// Permet de modifier le nom d'une catégorie
 if (isset($_POST['buttonUpdateCategory'])) {
     $updateIdCategory = trim(h(intval($_POST['updateIdCategory'])));
     $updateNameCategory = trim(h($_POST['updateNameCategory']));
@@ -61,15 +69,18 @@ if (isset($_POST['buttonUpdateCategory'])) {
     $category->updateCategory($bdd);
 }
 
+// Permet d'ajouter d'autres images à un produit
 if (isset($_POST['insertImage'])) {
     if (isset($_FILES['imageSecondary'])) {
         $file = $_FILES['imageSecondary'];
         $itemID = $_POST['imageID'];
         $image = new Image(null, $itemID, $file, 0);
-        $image->addImageSecondary($bdd);
+        $image->addImage($bdd);
         header('Location: admin.php');
     }
 }
+
+// fonction pour récupérer l'ID d'un produit
 function getEditItemID()
 {
     if (isset($_GET['editItemID'])) {
@@ -115,7 +126,7 @@ function getEditItemID()
             <!-- SECTION POUR LES ITEMS -->
             <h2>ITEMS</h2>
             <div id="divItem">
-
+                <!-- Formulaire pour AJOUTER un produit -->
                 <div id="addItem">
                     <h3>Ajouter un Produit</h3>
                     <form action="" method="post" id="formAddItem" enctype="multipart/form-data">
@@ -138,16 +149,13 @@ function getEditItemID()
                         <label for="file">Image</label>
                         <input type="file" id="file" name="file">
 
-                        <label for="mainImage">mainImage</label>
-                        <input type="number" id="mainImage" name="mainImage" value="1">
-
                         <input type="submit" name="buttonAddItem" value="Ajouter">
                     </form>
                 </div>
 
                 <div id="deleteItem">
                     <h3>Supprimer un item</h3>
-
+                    <!-- Formulaire pour SUPPRIMER un produit -->
                     <form action="" method="post" id="formDeleteItem">
                         <label for="itemID">ID de l'item</label>
                         <input type="number" name="itemID" id="itemID">
@@ -157,6 +165,7 @@ function getEditItemID()
 
                 <div id="editItem">
                     <h3>Modifier un item</h3>
+                    <!-- Formulaire pour MODIFIER un produit -->
                     <form action="" method="get" id="formEditItem">
                         <label for="editItemID">ID item</label>
                         <input type="number" name="editItemID" id="editItemID" value="<?= hd(getEditItemID()); ?>">
@@ -169,6 +178,7 @@ function getEditItemID()
                         $infoItem = $item->returnItem($bdd);
                     ?>
                         <h3>Update Item</h3>
+                        <!-- Affichage du produit à modifier -->
                         <form action="" method="post" id="formUpdateItem">
                             <label for="updateNameItem">Name</label>
                             <input type="text" id="updateNameItem" name="updateNameItem" value="<?= hd($infoItem->name) ?>">
@@ -185,6 +195,7 @@ function getEditItemID()
                             <input type="submit" name="updateItem" value="Update">
                         </form>
                     <?php
+                        // Mise à jour des informations du produit
                         if (isset($_POST['updateItem'])) {
                             $updateNameItem = trim(h($_POST['updateNameItem']));
                             $updateDescriptionItem = trim(h($_POST['updateDescriptionItem']));
@@ -200,6 +211,7 @@ function getEditItemID()
                 </div>
                 <div>
                     <h3>image</h3>
+                    <!-- Formulaire pour AJOUTER des images à un produit -->
                     <form action="" method="post" enctype="multipart/form-data">
                         <input type="number" name="imageID" id="imageID">
                         <input type="file" name="imageSecondary">
@@ -212,6 +224,7 @@ function getEditItemID()
             <h2>CATEGORY</h2>
             <div id="divCategory">
                 <div id="addCategory">
+                    <!-- Formulaire pour AJOUTER une catégorie -->
                     <h3>Ajouter une Categorie</h3>
                     <form action="" method="post" id="formAddCategory">
                         <label for="nameCategory">Name</label>
@@ -223,6 +236,7 @@ function getEditItemID()
                 </div>
                 <div id="deleteCategory">
                     <h3>Supprimer une Categorie</h3>
+                    <!-- Formulaire pour SUPPRIMER une catégorie -->
                     <form action="" method="post" id="formDeleteCategory">
                         <label for="idCategory">ID category</label>
                         <input type="text" name="idCategory" id="idCategory">
@@ -232,6 +246,7 @@ function getEditItemID()
 
                 <div id="updateCategory">
                     <h3>Modifier une Categorie</h3>
+                    <!-- Formulaire pour MODIFIER une catégorie -->
                     <form action="" method="post" id="formUpdateCategory">
                         <label for="updateIdCategory">ID category</label>
                         <input type="text" name="updateIdCategory" id="updateIdCategory">
@@ -249,9 +264,11 @@ function getEditItemID()
                     <h1 class="text-center m-4">All Users</h1>
                     <?php
                     if ($_SESSION['user']->role > 0) {
+                        // Récupération de tous les utilisateurs 
                         $request = $bdd->prepare("SELECT * FROM users ");
                         $request->execute();
                         $result = $request->fetchAll(PDO::FETCH_ASSOC);
+                        // Affichage des utilisateurs
                         foreach ($result as $key => $value) { ?>
 
                             <form method="post" class="d-flex flex-wrap justify-content-center" id="formUser">
@@ -268,9 +285,8 @@ function getEditItemID()
                                         }
                                         ?>
                                     </p>
-                                    <?php
-                                    if ($_SESSION['user']->role == 2) {
-                                    ?>
+                                    <?php if ($_SESSION['user']->role == 2) { ?>
+                                        <!-- Formulaire pour MODIFIER le ROLE d'un utilisateur -->
                                         <label for="<?= $value['id'] ?>">Admin</label>
                                         <input type="radio" id="<?= $value['id'] ?>" value="2" name="role">
                                         <label for="<?= $value['id'] ?>">Modo</label>
@@ -280,9 +296,10 @@ function getEditItemID()
                                         <br>
                                         <input type="submit" id="<?= $value['id'] ?>" value="Update" name="update<?= $value['id'] ?>" class="bg-black rounded text-white mt-2">
                                 </div>
-                    <?php }
+                    <?php
+                                    }
+                                    // Mise à jour du ROLE d'un utilisateur
                                     if (isset($_POST['update' . $value['id']])) {
-
                                         $accept = $bdd->prepare("UPDATE users SET role = ? WHERE id = ? ");
                                         $accept->execute([intval($_POST['role']), $value['id']]);
                                         header('Location: ./admin.php');
@@ -296,7 +313,7 @@ function getEditItemID()
                     <h2 class="mt-4 mb-4">Moderator & Administrator</h2>
                     <div>
 
-                        <!-- Affichage Administrateur -->
+                        <!-- Affichage des Administrateur -->
                         <h4>Admin</h4>
                         <?php
                         foreach ($result as $key => $value) {
@@ -307,7 +324,7 @@ function getEditItemID()
                         }
                         ?>
 
-                        <!-- Affichage modérateur -->
+                        <!-- Affichage des modérateur -->
                         <h4>Moderator</h4>
                         <?php
                         foreach ($result as $key => $value) {
