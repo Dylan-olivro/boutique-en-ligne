@@ -33,7 +33,7 @@ function isNumber($a)
 }
 function isStreet($a)
 {
-    return preg_match("~^[0-9]{4}$~", $a) ? true : false;
+    return preg_match("~^[0-9]{1,4}$~", $a) ? true : false;
 }
 
 function isToBig($a)

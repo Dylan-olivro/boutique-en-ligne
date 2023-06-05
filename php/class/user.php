@@ -103,7 +103,9 @@ class User
         } elseif (isToSmall($this->lastname)) {
         } elseif (!isSame($this->password, $confirm_password)) {
         } elseif ($recupUser->rowCount() > 0) {
-            $_SESSION['message'] = 'Email déjà utilisé';
+            // $_SESSION['message'] = 'Email déjà utilisé';
+            $error = 'Email déjà utilisé';
+            return $error;
         } else {
             unset($_SESSION['message']);
             $insertUser->execute([$this->email, $this->lastname, $this->firstname, password_hash($this->password, PASSWORD_DEFAULT)]);
@@ -137,14 +139,20 @@ class User
                     $this->role = intval($result->role);
 
                     $_SESSION['user'] = $this;
-                    unset($_SESSION['message']);
+                    // unset($_SESSION['message']);
                     header('Location: ../index.php');
+                } else {
+                    $error = 'Mauvais mot de passe';
+                    return $error;
+                    // $_SESSION['message'] = 'Mauvais mot de passe';
+                    // header('Location: connect.php');
                 }
             }
         } else {
-            $_SESSION['message'] = 'utilisateurs inconnu';
-            //? VOIR SI ON PEUT S'EN PASSER
-            header('Location: connect.php');
+            $error = 'Utilisateurs inconnu';
+            return $error;
+            // $_SESSION['message'] = 'utilisateurs inconnu';
+            // header('Location: connect.php');
         }
     }
 
@@ -171,13 +179,17 @@ class User
         } elseif (isToBig($this->lastname)) {
         } elseif (isToSmall($this->lastname)) {
         } elseif ($recupUser->rowCount() > 0) {
-            $_SESSION['message'] = 'Email déjà utilisé';
-            //? VOIR SI ON PEUT S'EN PASSER
-            header('Location:./profil.php');
+            $error = 'Email déjà utilisé';
+            return $error;
+            // $_SESSION['message'] = 'Email déjà utilisé';
+
+            // header('Location:./profil.php');
         } else {
             if ($this->password != password_verify($this->password, $res->password)) {
-                $_SESSION['message'] = 'Ce n\'est pas le bon mot de passe';
-                //? VOIR SI ON PEUT S'EN PASSER
+
+                $error = 'Ce n\'est pas le bon mot de passe';
+                return $error;
+                // $_SESSION['message'] = 'Ce n\'est pas le bon mot de passe';
                 header('Location:./profil.php');
             } else {
                 unset($_SESSION['message']);
