@@ -115,7 +115,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <div>
 
                         <?php
-                        $returnCommand = $bdd->prepare('SELECT * FROM command INNER JOIN liaison_cart_command ON command.id = liaison_cart_command.id_command INNER JOIN items ON liaison_cart_command.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = ? AND command.id = ?');
+                        $returnCommand = $bdd->prepare('SELECT * FROM command INNER JOIN liaison_cart_command ON command.id = liaison_cart_command.id_command INNER JOIN items ON liaison_cart_command.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = ? AND command.id = ? AND main = 1');
                         $returnCommand->execute([$_SESSION['user']->id, $key2->id]);
                         $result = $returnCommand->fetchAll(PDO::FETCH_OBJ); ?>
 
@@ -133,7 +133,9 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                             </div>
                         </div>
                         <?php
-                        foreach ($result as $key) { ?>
+                        foreach ($result as $key) {
+                            // var_dump($key);
+                        ?>
                             <div class="command">
                                 <img src="../assets/img_item/<?= $key->name_image ?>" alt="">
                                 <div>
