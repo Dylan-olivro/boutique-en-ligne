@@ -13,27 +13,24 @@ class Cart
     }
     public function deleteCart($bdd)
     {
-        $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
-        $deletePanier->execute([$this->id_user]);
+        $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = :id_user');
+        $deletePanier->execute(['id_user' => $this->id_user]);
         header('Location: cartPage.php');
     }
     public function returnCart($bdd)
     {
-        $returnCart = $bdd->prepare("SELECT * from cart INNER JOIN items ON cart.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = ? AND main = 1");
-        $returnCart->execute([$this->id_user]);
+        $returnCart = $bdd->prepare("SELECT * from cart INNER JOIN items ON cart.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = :id_user AND main = 1");
+        $returnCart->execute(['id_user' => $this->id_user]);
         $result = $returnCart->fetchAll(PDO::FETCH_OBJ);
         return $result;
-        // var_dump($result);
     }
     public function deleteItem($bdd)
     {
-        $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ? AND id_item = ?');
-        $deletePanier->execute([$this->id_user, $this->id_item]);
+        $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = :id_user AND id_item = :id_item');
+        $deletePanier->execute([
+            'id_user' => $this->id_user,
+            'id_item' => $this->id_item
+        ]);
         header('Location: cartPage.php');
     }
-    // public function test($bdd)
-    // {
-    //     $result = $this->returnCart($bdd);
-    //     return $result;
-    // }
 }

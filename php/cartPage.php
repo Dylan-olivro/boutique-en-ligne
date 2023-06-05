@@ -2,23 +2,19 @@
 require_once('./include/required.php');
 // ! FAIRE UNE CLASSE CART
 
+// Empêche les utilisateurs qui ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
+// Récupère le panier de l'utilisateur
 $cart = new Cart(null, $_SESSION['user']->id, null);
 $result = $cart->returnCart($bdd);
 
-// $returnCart = $bdd->prepare("SELECT * from cart INNER JOIN items ON cart.id_item = items.id WHERE id_user = ?");
-// $returnCart->execute([$_SESSION['user']->id]);
-// $result = $returnCart->fetchAll(PDO::FETCH_OBJ);
-// var_dump($result);
-
+// Valide le panier de l'utilisateur, créer une commande et vide le panier
 if (isset($_POST['valider'])) {
     $date = date("Y-m-d H:i:s");
     $command = new Command(null, $_SESSION['user']->id, $date, null);
     $command->addCommand($bdd);
-    // $insertCommand = $bdd->prepare('INSERT INTO command (id_user,date) VALUES (?,?)');
-    // $insertCommand->execute([$_SESSION['user']->id, $date]);
 
     $id = $bdd->lastInsertId();
 
@@ -26,29 +22,22 @@ if (isset($_POST['valider'])) {
     foreach ($result as $key) {
         array_push($prices, $key->price);
 
-        $insertLiaison = $bdd->prepare('INSERT INTO liaison_cart_command (id_command,id_item) VALUES (?,?)');
-        $insertLiaison->execute([$id, $key->id_item]);
+        $insertLiaison = $bdd->prepare('INSERT INTO liaison_cart_command (id_command,id_item) VALUES (:id_command,:id_item)');
+        $insertLiaison->execute([
+            'id_command' => $id,
+            'id_item' => $key->id_item
+        ]);
     }
     $total = array_sum($prices);
 
     $command = new Command($id, $_SESSION['user']->id, $date, $total);
     $command->updateCommand($bdd);
-    // $insertCommand = $bdd->prepare('UPDATE command SET total = ? WHERE id = ? ');
-    // $insertCommand->execute([$total, $id]);
-
-    // $cart = new Cart(null, $_SESSION['user']->id, null);
     $cart->deleteCart($bdd);
-    // $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
-    // $deletePanier->execute([$_SESSION['user']->id]);
-    // header('Location: cart.php');
 }
 
+// Permet de vider le panier 
 if (isset($_POST['vider'])) {
-    // $cart = new Cart(null, $_SESSION['user']->id, null);
     $cart->deleteCart($bdd);
-    // $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
-    // $deletePanier->execute([$_SESSION['user']->id]);
-    // header('Location: cart.php');
 }
 ?>
 
@@ -73,7 +62,6 @@ if (isset($_POST['vider'])) {
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <!-- <script src="../js/user/connectJS.js" defer></script> -->
 
 </head>
 
@@ -92,6 +80,7 @@ if (isset($_POST['vider'])) {
 
             <div class="cart">
                 <?php
+                // Affichage du panier
                 foreach ($result as $item) { ?>
                     <div class="cartDetail">
                         <img src="../assets/img_item/<?= $item->name_image ?>" alt="">
@@ -105,12 +94,8 @@ if (isset($_POST['vider'])) {
                     </div>
                 <?php
                     if (isset($_POST['delete' . $item->id_item])) {
-                        // ! AJOUTER UN ID_item DANS L'INSTANCE
                         $cart2 = new Cart(null, $_SESSION['user']->id, $item->id_item);
                         $cart2->deleteItem($bdd);
-                        // $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
-                        // $deletePanier->execute([$_SESSION['user']->id]);
-                        // header('Location: cart.php');
                     }
                 }
                 ?>

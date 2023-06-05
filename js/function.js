@@ -1,9 +1,25 @@
-function isEmpty($a) {
-  return $a == "" ? true : false;
+function isEmpty(a) {
+  return a == "" ? true : false;
 }
-function isSame($a, $b) {
-  return $a == $b ? true : false;
+function isSame(a, b) {
+  return a == b ? true : false;
 }
+
+// function isName(a) {
+//   let regex = /[A-Za-z]{2,15}[-_ ]?[A-Za-z]{2,15}$/;
+//   if (a.value.match(regex)) {
+//     console.log(a.value);
+//     return true;
+//   }
+//   console.log(a.value);
+//   return false;
+// }
+// ! NE PAS OUBLIER D"EFFACER
+// let x = document.getElementById("a");
+// x.addEventListener("keyup", () => {
+//   console.log(isName(x));
+// });
+
 // FUNCTION POUR OBLIGER L'UTILISATEUR A METTRE QUE DES LETTRES
 function isLetter(inputtxt) {
   let letters = /^[A-Za-z]+$/;
@@ -33,7 +49,6 @@ function validate() {
   if (checkEmail(email)) {
     return true;
   } else {
-    message.innerText = "Adresse e-mail non valide";
     return false;
   }
 }

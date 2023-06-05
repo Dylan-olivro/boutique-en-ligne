@@ -15,12 +15,18 @@ class Command
     }
     public function addCommand($bdd)
     {
-        $insertCommand = $bdd->prepare('INSERT INTO command (id_user,date) VALUES (?,?)');
-        $insertCommand->execute([$this->id_user, $this->date]);
+        $insertCommand = $bdd->prepare('INSERT INTO command (id_user,date) VALUES (:id_user,:date)');
+        $insertCommand->execute([
+            'id_user' => $this->id_user,
+            'date' => $this->date
+        ]);
     }
     public function updateCommand($bdd)
     {
-        $insertCommand = $bdd->prepare('UPDATE command SET total = ? WHERE id = ? ');
-        $insertCommand->execute([$this->total, $this->id]);
+        $insertCommand = $bdd->prepare('UPDATE command SET total = :total WHERE id = :id ');
+        $insertCommand->execute([
+            'total' => $this->total,
+            'id' => $this->id
+        ]);
     }
 }

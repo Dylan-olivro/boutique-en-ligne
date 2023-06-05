@@ -1,7 +1,5 @@
 <?php
-// ! REGLER LE PROBLEME DU MESSAGE EN SESSION QUI RESTE SI ON CHANGE DE PAGE !
-// ! DEMANDER SI REQUIRED EST NESSECAIRE VU QUE CA EMPECHE D'AFFICHER LES MESSAGE D'ERREUR !
-// RECUPERER L'URL POUR SAVOIR SI C'EST L'INDEX OU LES AUTRES PAGES
+// Fonction pour récupérer l'URL de la page et gérer les redirections en fonction de la page
 function getURL()
 {
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
@@ -9,7 +7,7 @@ function getURL()
     else {
         $url = "http";
     }
-    // ASSEMBLAGE DE L'URL
+    // Assemblage de L'URL
     $url .= "://";
     $url .= $_SERVER['HTTP_HOST'];
     $url .= $_SERVER['REQUEST_URI'];
@@ -17,7 +15,7 @@ function getURL()
     $splitURL2 = explode('/', $splitURL[1]);
     return [$splitURL, $splitURL2];
 }
-// CONDITION SI ON EST SUR L'INDEX OU PAS
+// Si on se trouve sur l'index
 if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
     require_once('./php/include/bdd.php');
     require_once('./php/include/function.php');
@@ -29,6 +27,7 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
     require_once('./php/class/cart.php');
     require_once('./php/class/command.php');
 } else {
+    // Si on se trouve dans le fichier PHP puis dans un fichier USER
     if (getURL()[1][2] === 'user') {
         require_once('../include/bdd.php');
         require_once('../include/function.php');
