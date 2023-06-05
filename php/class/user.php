@@ -1,12 +1,12 @@
 <?php
 class User
 {
-    public $id;
-    public $email;
-    public $firstname;
-    public $lastname;
-    public $password;
-    public $role;
+    public int $id;
+    public string $email;
+    public string $firstname;
+    public string $lastname;
+    public string $password;
+    public int $role;
 
     public function __construct($id, $email, $firstname, $lastname, $password, $role)
     {
@@ -253,7 +253,7 @@ class User
         unset($_SESSION['user']);
     }
 
-    public function isConnected()
+    public function isConnected(): bool
     {
         if (isset($_SESSION['user']->login)) {
             return true;

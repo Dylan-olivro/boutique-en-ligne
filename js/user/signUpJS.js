@@ -36,6 +36,7 @@ function isSignUp() {
       '<i class="fa-solid fa-circle-exclamation"></i> Le champ Lastname est vide';
     return false;
   } else if (!isLetter(lastname)) {
+    // ! TROUVER UN REGEX POUR LES PRENOMS COMPOSER + ACCENTS + ENTRE 2/3 ET 30 CARACTERES
     message.innerHTML = "Champ lastname invalid";
     return false;
   }

@@ -42,7 +42,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <!-- <script src="../js/user/profil.js" defer></script> -->
+    <script src="../js/user/profil.js" defer></script>
 
 </head>
 
