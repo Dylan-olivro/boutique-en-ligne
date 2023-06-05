@@ -67,8 +67,8 @@ if (isset($_POST['submit'])) {
 
                     <p id="message">
                         <?php
-                        if (isset($_SESSION['message'])) {
-                            echo h($_SESSION['message']);
+                        if (isset($user)) {
+                            echo $user->register($bdd, $confirm_password);
                         } ?>
                     </p>
                     <input type="submit" name="submit" id="submit">

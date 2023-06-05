@@ -1,0 +1,109 @@
+main {
+  max-width: 1920px;
+  margin: auto !important;
+}
+.mainContainer {
+  display: flex;
+  justify-content: center;
+}
+.container {
+  background-color: darkcyan;
+  display: flex;
+  justify-content: space-evenly;
+  /* margin: auto !important; */
+  /* gap: 20%; */
+}
+.profil {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid red;
+}
+#formProfil {
+  background-color: #005078;
+  border-radius: 10px;
+  border: 1px solid yellow;
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  align-items: center;
+  padding: 2% 2% !important;
+  margin: 5% 0 !important;
+}
+#formProfil > * {
+  width: 60%;
+  border-radius: 10px;
+  outline: none;
+  height: 35px;
+}
+.password {
+  display: flex;
+}
+#password {
+  width: 80%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
+  border-color: #000;
+  outline: none;
+}
+#showPassword {
+  border-color: #000;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 20%;
+  /* border: none; */
+}
+.input {
+  padding: 2% !important;
+}
+label {
+  color: white;
+  display: flex !important;
+  align-items: end;
+  font-style: italic;
+}
+#message {
+  text-align: center;
+  color: darkgoldenrod;
+}
+#submit {
+  width: 30%;
+  margin: 1% auto !important;
+}
+
+.allAdress {
+  width: 40%;
+}
+.adress {
+  display: flex;
+  justify-content: space-between;
+}
+.edit_delete {
+  display: flex;
+  align-items: end;
+}
+.infoCommand {
+  display: flex;
+  background-color: #002e45;
+  color: #fff;
+  justify-content: space-between;
+}
+.command {
+  display: flex;
+}
+.containerCommand {
+  display: flex;
+  justify-content: center;
+}
+.command {
+  background-color: #005078;
+  padding-bottom: 10px !important;
+}
+.allCommand {
+  width: 60%;
+}
+img {
+  width: 100px;
+  border-radius: 20px;
+}

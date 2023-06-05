@@ -57,9 +57,9 @@ if (isset($_POST['submit'])) {
                     </div>
                     <p id="message">
                         <?php
-                        // REGELR LE CSS 
-                        if (isset($_SESSION['message'])) {
-                            echo $_SESSION['message'];
+                        // REGLER LE CSS 
+                        if (isset($user)) {
+                            echo $user->connect($bdd);
                         }
                         ?>
                     </p>
