@@ -29,4 +29,11 @@ class Command
             'id' => $this->id
         ]);
     }
+    public function deleteCommand($bdd)
+    {
+        $deleteCommand = $bdd->prepare('DELETE FROM command WHERE id = :id');
+        $deleteCommand->execute([
+            'id' => $this->id
+        ]);
+    }
 }

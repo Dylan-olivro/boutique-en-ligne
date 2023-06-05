@@ -154,7 +154,7 @@ class User
             'email' => $this->email,
             'id' => $this->id
         ]);
-        $insertUser = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id ");
+        $insertUser = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id");
 
         // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
         if (isEmpty($this->email)) {

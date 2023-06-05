@@ -47,6 +47,7 @@ if (isset($_POST['ajouter'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
+    <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <script src="../js/detail.js" defer></script>
 
@@ -72,11 +73,16 @@ if (isset($_POST['ajouter'])) {
                     <div id="price_cart">
                         <p><?= hd($resultItem->price) ?>€</p>
                         <?php
-                        if (isset($_SESSION['user'])) { ?>
-                            <form action="" method="post">
-                                <input type="submit" name="ajouter" value="Ajouter au panier">
-                            </form>
+                        if (isset($_SESSION['user'])) {
+                            if ($resultItem->stock > 0) { ?>
+                                <form action="" method="post">
+                                    <input type="submit" name="ajouter" value="Ajouter au panier">
+                                </form>
+                            <?php
+                            } else { ?>
+                                <p>STOCK EPUISEE</p>
                         <?php
+                            }
                         }
                         ?>
                     </div>
