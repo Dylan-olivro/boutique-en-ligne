@@ -1,5 +1,5 @@
 <?php
-require_once('./php/class/user.php');
+require_once('./php/include/required.php');
 
 // TODO: Revoir toutes les verif des formulaires en html, php et js
 ?>

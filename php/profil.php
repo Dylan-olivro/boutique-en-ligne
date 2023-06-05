@@ -1,5 +1,5 @@
 <?php
-require_once('./class/user.php');
+require_once('./include/required.php');
 // ! AJOUTER UN BOUTON VERS LE PANIER
 // ! VERFIER L'HISTORIQUE DE COMMANDE
 

@@ -1,5 +1,5 @@
 <?php
-require_once('./class/user.php');
+require_once('./include/required.php');
 
 // $returnCategoryParent = $bdd->prepare('SELECT * FROM category WHERE id_parent != 0');
 // $returnCategoryParent->execute();

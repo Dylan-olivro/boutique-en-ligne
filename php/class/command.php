@@ -1,5 +1,4 @@
 <?php
-
 class Command
 {
     public $id;

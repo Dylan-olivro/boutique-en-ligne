@@ -1,5 +1,5 @@
 <?php
-require_once('./class/user.php');
+require_once('./include/required.php');
 // ! OBLIGER DE RENTRER DES CHIFFRES DANS LES CHAMPS NUMBER ET PAS e OU -  
 // ! VERIFIER QUE LES CHAMPS priceItem, StockItem et categoryItem MARCHE ENCORE AVEC intval()
 // ! NE PAS OUBLIER DE CHANGER LES VALUES DES INPUT
