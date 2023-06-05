@@ -1,5 +1,5 @@
 <?php
-require_once('./class/user.php');
+require_once('./include/required.php');
 // ! FAIRE UNE CLASSE CART
 
 if (!isset($_SESSION['user'])) {
