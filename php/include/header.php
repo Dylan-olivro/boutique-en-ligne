@@ -30,7 +30,7 @@ function includeHeader($bdd, $index, $url, $image)
                     <div class="w-50" id="searchDiv">
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             <form method="get" class="d-flex w-100" role="search">
-                                <input class="form-control" id="searchBar" name="searchBar" type="search" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
+                                <input class="form-control" id="searchBar" name="searchBar" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
                                 <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
                                 <div id="searchResultsDesktopDiv">
                                     <!-- <div id="searchResultsDesktop"></div> -->
@@ -58,7 +58,7 @@ function includeHeader($bdd, $index, $url, $image)
                     <div id="searchBurgerDiv">
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             <form method="get" class="d-flex w-100" role="search">
-                                <input class="form-control" id="searchBarBurger" name="searchBarBurger" type="search" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
+                                <input class="form-control" id="searchBarBurger" name="searchBarBurger" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
                                 <div id="searchResultsBurgerDiv">
                                     <div id="searchResultsBurger"></div>
                                 </div>
