@@ -16,7 +16,7 @@ class Cart
     {
         $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
         $deletePanier->execute([$this->id_user]);
-        header('Location: cart.php');
+        header('Location: cartPage.php');
     }
     public function returnCart($bdd)
     {
@@ -25,6 +25,12 @@ class Cart
         $result = $returnCart->fetchAll(PDO::FETCH_OBJ);
         return $result;
         // var_dump($result);
+    }
+    public function deleteItem($bdd)
+    {
+        $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ? AND id_item = ?');
+        $deletePanier->execute([$this->id_user, $this->id_item]);
+        header('Location: cartPage.php');
     }
     // public function test($bdd)
     // {

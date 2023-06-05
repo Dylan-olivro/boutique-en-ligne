@@ -91,7 +91,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
         ?>
         <div>
             <?php
-            $returnCommand2 = $bdd->prepare('SELECT * FROM command WHERE id_user  = ?');
+            $returnCommand2 = $bdd->prepare('SELECT * FROM command WHERE id_user  = ? ORDER BY date DESC');
             $returnCommand2->execute([$_SESSION['user']->id]);
             $result2 = $returnCommand2->fetchAll(PDO::FETCH_OBJ);
 
@@ -100,7 +100,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 $returnCommand->execute([$_SESSION['user']->id, $key2->id]);
                 $result = $returnCommand->fetchAll(PDO::FETCH_OBJ);
                 // var_dump($result2);
-                echo "Commande " . $key2->id;
+                echo "Commande du " . $key2->date;
                 echo '<br>';
                 echo "Total " . $key2->total . "€";
                 foreach ($result as $key) { ?>

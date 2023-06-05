@@ -50,6 +50,14 @@ if (isset($_POST['vider'])) {
     // $deletePanier->execute([$_SESSION['user']->id]);
     // header('Location: cart.php');
 }
+if (isset($_POST['delete'])) {
+    // ! AJOUTER UN ID_item DANS L'INSTANCE
+    $cart2 = new Cart(null, $_SESSION['user']->id, 31);
+    $cart2->deleteItem($bdd);
+    // $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
+    // $deletePanier->execute([$_SESSION['user']->id]);
+    // header('Location: cart.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +93,10 @@ if (isset($_POST['vider'])) {
 
         <form action="" method="post">
             <input type="submit" name="valider" value="valider panier">
+        </form>
+
+        <form action="" method="post">
+            <input type="submit" name="delete" value="Supprimer un article">
         </form>
     </main>
     <?php require_once('./include/header-save.php') ?>
