@@ -109,6 +109,7 @@ function getEditItemID()
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
+    <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <!-- <script src="../js/admin.js" defer></script> -->
 
