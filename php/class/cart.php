@@ -20,7 +20,7 @@ class Cart
     }
     public function returnCart($bdd)
     {
-        $returnCart = $bdd->prepare("SELECT * from cart INNER JOIN items ON cart.id_item = items.id WHERE id_user = ?");
+        $returnCart = $bdd->prepare("SELECT * from cart INNER JOIN items ON cart.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = ? AND main = 1");
         $returnCart->execute([$this->id_user]);
         $result = $returnCart->fetchAll(PDO::FETCH_OBJ);
         return $result;

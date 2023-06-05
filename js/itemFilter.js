@@ -46,21 +46,22 @@ function fetchItems(url) {
         itemStock.className = "itemStock";
 
         itemImg.src = `../assets/img_item/` + element.name_image;
-        itemLink.href = `./${getPage()[1]}detail.php?id=${element.id}`;
+        itemLink.href = `./${getPage()[0]}detail.php?id=${element.id}`;
 
         itemName.innerText = element.name;
         itemDesc.innerText = element.description;
         itemPrice.innerText = element.price + " €";
 
-        if(element.stock == 0){
+        if (element.stock == 0) {
           itemStock.innerText = "BIENTÔT DE RETOUR";
           itemStock.style.color = "red";
           console.log("EPUISE");
-        }else if(element.stock <= 5){
-          itemStock.innerText = "STOCK LIMITE (restant : " + element.stock + ")";
+        } else if (element.stock <= 5) {
+          itemStock.innerText =
+            "STOCK LIMITE (restant : " + element.stock + ")";
           itemStock.style.color = "orange";
           console.log("LIMITE");
-        }else{
+        } else {
           itemStock.innerText = "EN STOCK";
           itemStock.style.color = "green";
           console.log("STOCK");

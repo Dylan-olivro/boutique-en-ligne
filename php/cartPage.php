@@ -11,7 +11,7 @@ $result = $cart->returnCart($bdd);
 // $returnCart = $bdd->prepare("SELECT * from cart INNER JOIN items ON cart.id_item = items.id WHERE id_user = ?");
 // $returnCart->execute([$_SESSION['user']->id]);
 // $result = $returnCart->fetchAll(PDO::FETCH_OBJ);
-var_dump($result);
+// var_dump($result);
 
 if (isset($_POST['valider'])) {
     $date = date("Y-m-d H:i:s");
@@ -50,14 +50,6 @@ if (isset($_POST['vider'])) {
     // $deletePanier->execute([$_SESSION['user']->id]);
     // header('Location: cart.php');
 }
-if (isset($_POST['delete'])) {
-    // ! AJOUTER UN ID_item DANS L'INSTANCE
-    $cart2 = new Cart(null, $_SESSION['user']->id, 31);
-    $cart2->deleteItem($bdd);
-    // $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
-    // $deletePanier->execute([$_SESSION['user']->id]);
-    // header('Location: cart.php');
-}
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +62,7 @@ if (isset($_POST['delete'])) {
     <title>Connect</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/cartPage.css">
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -95,9 +88,34 @@ if (isset($_POST['delete'])) {
             <input type="submit" name="valider" value="valider panier">
         </form>
 
-        <form action="" method="post">
-            <input type="submit" name="delete" value="Supprimer un article">
-        </form>
+        <section class="containerCart">
+
+            <div class="cart">
+                <?php
+                foreach ($result as $item) { ?>
+                    <div class="cartDetail">
+                        <img src="../assets/img_item/<?= $item->name_image ?>" alt="">
+                        <div class="cartInfo">
+                            <p><?= $item->name ?></p>
+                            <p><?= $item->price ?>€</p>
+                        </div>
+                        <form action="" method="post">
+                            <input type="submit" name="delete<?= $item->id_item ?>" value="delete">
+                        </form>
+                    </div>
+                <?php
+                    if (isset($_POST['delete' . $item->id_item])) {
+                        // ! AJOUTER UN ID_item DANS L'INSTANCE
+                        $cart2 = new Cart(null, $_SESSION['user']->id, $item->id_item);
+                        $cart2->deleteItem($bdd);
+                        // $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = ?');
+                        // $deletePanier->execute([$_SESSION['user']->id]);
+                        // header('Location: cart.php');
+                    }
+                }
+                ?>
+            </div>
+        </section>
     </main>
     <?php require_once('./include/header-save.php') ?>
 
