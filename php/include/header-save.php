@@ -25,7 +25,9 @@ function includeHeaderSave($index, $href)
                 <a href="<?= $href ?>disconnect.php">Disconnect</a>
             <?php } else { ?>
                 <a href="<?= $href ?>connect.php">Connect</a>
+                <a href="<?= $href ?>connectFetch.php">ConnectFETCH</a>
                 <a href="<?= $href ?>signUp.php">SignUp</a>
+                <a href="<?= $href ?>signUpFetch.php">SignUpFETCH</a>
             <?php } ?>
         </nav>
     </div>

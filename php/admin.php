@@ -54,7 +54,7 @@ if (isset($_POST['buttonAddCategory'])) {
 
 // Supprime une catégorie Parent/Enfant
 if (isset($_POST['buttonDeleteCategory'])) {
-    $idCategory = trim(h(intval($_POST['idCategory'])));;
+    $idCategory = trim(h(intval($_POST['idCategory'])));
 
     $category = new Category($idCategory, null, null);
     $category->deleteCategory($bdd);
