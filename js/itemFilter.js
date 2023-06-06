@@ -2,6 +2,8 @@ let allItems = document.getElementById("allItems");
 let categoryChild = document.querySelectorAll("input[type='radio']");
 let categoryParent = document.querySelectorAll(".resultParent");
 
+
+
 // * afficher ou cacher les child dans le parent correspondant au click du parent
 categoryParent.forEach((element) => {
   element.addEventListener("click", () => {
@@ -52,21 +54,8 @@ function fetchItems(url) {
         itemDesc.innerText = element.description;
         itemPrice.innerText = element.price + " €";
 
-        if (element.stock == 0) {
-          itemStock.innerText = "BIENTÔT DE RETOUR";
-          itemStock.style.color = "red";
-          console.log("EPUISE");
-        } else if (element.stock <= 5) {
-          itemStock.innerText =
-            "STOCK LIMITE (restant : " + element.stock + ")";
-          itemStock.style.color = "orange";
-          console.log("LIMITE");
-        } else {
-          itemStock.innerText = "EN STOCK";
-          itemStock.style.color = "green";
-          console.log("STOCK");
-          // console.log(element.stock);
-        }
+        // appeler fonction stock ici
+        checkStock(element.stock, itemStock);
 
         divImg.append(itemImg);
         divNameDesc.append(itemName, itemDesc);
@@ -89,3 +78,4 @@ for (let i = 0; i < categoryChild.length; i++) {
     fetchItems(`traitement_filter.php?subCategory=` + categoryChild[i].id);
   });
 }
+

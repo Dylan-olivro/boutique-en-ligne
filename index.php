@@ -37,7 +37,6 @@
 
     // * Ajout de commentaire sur tout mon code + changement des execute + ajout de condition pour les formulaires et de securité sur les pages en PHP et en JS + retirer les REQUIRED + ajout d'une petite gestion de stock a la commande + blocker la commande si le stock n'est pas disponible + ajout du header.js sur toutes les pages
 
-    // ? Passer l'affichage des Stock en fonction pour pouvoir la réutilisé dans la page détail et panier
     // ? Mettre les div de produit en lien en redirection vers la page détail
     // ? Quand les inputs sont différents de vide mettre leur border en --button-color
     // ? Ajouter nom, prenom et numéro de tél à la table adress puis à la class adress
