@@ -117,6 +117,8 @@ function getEditItemID()
 
 <body>
     <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
+
     <main>
         <!-- <div id="nav">
             <p id="titleUser">User</p>
@@ -341,7 +343,6 @@ function getEditItemID()
 
         </section>
     </main>
-    <?php require_once('./include/header-save.php') ?>
 </body>
 <style>
     /* onclick="return confirm(`Voulez vous vraiment supprimer votre compte ?`)">Supprimer le compte */

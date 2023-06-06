@@ -46,25 +46,26 @@ if (isset($_POST['submit'])) {
 
 <body>
     <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
     <main>
         <section id="container">
             <div class="form">
                 <!-- Formulaire pour AJOUTER un utilisateur -->
                 <form action="" method="post" id="signup">
                     <label for="email">Email *</label>
-                    <input type="" id="email" name="email" class="input" autofocus>
+                    <input type="" id="email" name="email" class="input" placeholder="Email" autofocus>
                     <label for="firstname">Firstname *</label>
-                    <input type="text" id="firstname" name="firstname" class="input">
+                    <input type="text" id="firstname" name="firstname" class="input" placeholder="Firstname">
                     <label for="lastname">Lastname *</label>
-                    <input type="text" id="lastname" name="lastname" class="input">
+                    <input type="text" id="lastname" name="lastname" class="input" placeholder="Lastname">
                     <label for="password">Password *</label>
                     <div class="password">
-                        <input type="password" id="password" name="password" class="input">
+                        <input type="password" id="password" name="password" class="input" placeholder="Password">
                         <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
                     <label for="confirm_password">Confirm password *</label>
                     <div class="password">
-                        <input type="password" id="confirm_password" name="confirm_password" class="input">
+                        <input type="password" id="confirm_password" name="confirm_password" class="input" placeholder="Confirm Password">
                         <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
 
@@ -80,7 +81,6 @@ if (isset($_POST['submit'])) {
             </div>
         </section>
     </main>
-    <?php require_once('./include/header-save.php') ?>
 </body>
 
 </html>

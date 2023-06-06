@@ -20,22 +20,22 @@ class Adress
     public function addAdress($bdd)
     {
         if (isEmpty($this->numero)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Numero est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
             return $error;
         } elseif (isEmpty($this->name)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Name est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
             return $error;
         } elseif (isEmpty($this->postcode)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Postcode est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
             return $error;
         } elseif (isEmpty($this->city)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ City est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
             return $error;
         } elseif (!isStreet($this->numero)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Numero est invalide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
             return $error;
         } elseif (!isPostcode($this->postcode)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Postcode est invalide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
             return $error;
         } else {
             $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city)  VALUES(:id_user,:numero,:name,:postcode,:city)');
@@ -62,22 +62,22 @@ class Adress
     public function updateAdress($bdd)
     {
         if (isEmpty($this->numero)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Numero est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
             return $error;
         } elseif (isEmpty($this->name)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Name est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
             return $error;
         } elseif (isEmpty($this->postcode)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Postcode est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
             return $error;
         } elseif (isEmpty($this->city)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ City est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
             return $error;
         } elseif (!isStreet($this->numero)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Numero est invalide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
             return $error;
         } elseif (!isPostcode($this->postcode)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Postcode est invalide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
             return $error;
         } else {
             $updateAdress = $bdd->prepare('UPDATE adress SET numero = :numero, name = :name, postcode = :postcode, city = :city WHERE id = :id AND id_user = :id_user');

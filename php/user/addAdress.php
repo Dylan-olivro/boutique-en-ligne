@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <?php require_once('../include/header.php'); ?>
+    <?php require_once('../include/header-save.php') ?>
 
     <main>
         <!-- Formulaire pour AJOUTER une adresse à l'utilisateur -->
@@ -62,7 +63,6 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" class="input">
         </form>
     </main>
-    <?php require_once('../include/header-save.php') ?>
 </body>
 <style>
     form {

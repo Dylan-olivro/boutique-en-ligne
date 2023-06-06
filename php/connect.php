@@ -44,6 +44,8 @@ if (isset($_POST['submit'])) {
 
 <body>
     <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
+
     <main>
         <section id="container">
             <div class="form">
@@ -70,7 +72,6 @@ if (isset($_POST['submit'])) {
             </div>
         </section>
     </main>
-    <?php require_once('./include/header-save.php') ?>
 
 </body>
 
