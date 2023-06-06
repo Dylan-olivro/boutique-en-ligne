@@ -119,6 +119,12 @@ label {
 #addAdress {
   color: #fff;
   text-decoration: none;
+  width: 100%;
+}
+.link {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 .allAdress {
   padding: 1% 0 !important;
@@ -156,7 +162,17 @@ label {
 .button i {
   padding: 10px !important;
 }
+
 /* AFFICHAGE HISTORIQUE DES COMMANDES */
+.containerCommand {
+  display: flex;
+  justify-content: space-evenly;
+  /* margin: auto !important; */
+  /* gap: 20%; */
+  border: 1px solid red;
+  width: 100%;
+  padding: 2% 0 !important;
+}
 .infoCommand {
   display: flex;
   background-color: #002e45;
@@ -165,10 +181,6 @@ label {
 }
 .command {
   display: flex;
-}
-.containerCommand {
-  display: flex;
-  justify-content: center;
 }
 .command {
   background-color: #005078;
