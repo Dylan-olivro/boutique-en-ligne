@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
             <input type="text" name="city" id="city">
             <p id="message">
                 <?php if (isset($adress)) {
-                    echo $adress->addAdress($bdd);
+                    var_dump($adress->addAdress($bdd));
                 } ?>
             </p>
             <input type="submit" name="submit" class="input">
