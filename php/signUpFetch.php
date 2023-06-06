@@ -6,17 +6,18 @@ if (isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
+// ? Ne s'active que si le JAVASCRIPT est désactivé
 // L'insertion de l'utilisateur dans la base de donnée
-// if (isset($_POST['submit'])) {
-//     $email = trim(h($_POST['email']));
-//     $firstname = trim(h($_POST['firstname']));
-//     $lastname = trim(h($_POST['lastname']));
-//     $password = trim($_POST['password']);
-//     $confirm_password = trim($_POST['confirm_password']);
+if (isset($_POST['submit'])) {
+    $email = trim(h($_POST['email']));
+    $firstname = trim(h($_POST['firstname']));
+    $lastname = trim(h($_POST['lastname']));
+    $password = trim($_POST['password']);
+    $confirm_password = trim($_POST['confirm_password']);
 
-//     $user = new User(null, $email, $firstname, $lastname, $password, null);
-//     $user->register($bdd, $confirm_password);
-// }
+    $user = new User(null, $email, $firstname, $lastname, $password, null);
+    $user->register($bdd, $confirm_password);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +52,7 @@ if (isset($_SESSION['user'])) {
         <section id="container">
             <div class="form">
                 <!-- Formulaire pour AJOUTER un utilisateur -->
-                <form id="signup">
+                <form id="signup" method="POST">
                     <label for="email">Email *</label>
                     <input type="" id="email" name="email" class="input" placeholder="Email" autofocus>
                     <label for="firstname">Firstname *</label>
@@ -68,7 +69,7 @@ if (isset($_SESSION['user'])) {
                         <input type="password" id="confirm_password" name="confirm_password" class="input" placeholder="Confirm Password">
                         <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
-                    <p id="message" style="display:none"></p>
+                    <p id="message"></p>
                     <input type="submit" name="submit" id="submit">
                 </form>
             </div>

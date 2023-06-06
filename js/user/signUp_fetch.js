@@ -20,10 +20,10 @@ formEl.addEventListener("submit", (event) => {
     .then((data) => {
       message.style.color = "";
       if (data.erreur) {
-        message.style.display = "flex";
+        // message.style.display = "flex";
         message.innerHTML = data.erreur;
       } else {
-        message.style.display = "flex";
+        // message.style.display = "flex";
         message.style.color = "green";
         message.innerHTML = data.succes;
         formEl.reset();

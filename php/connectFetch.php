@@ -2,10 +2,11 @@
 require_once('./include/required.php');
 
 // Empêche les utilisateurs déjà connecté de revenir sur cette page
-if (isset($_SESSION['user'])) {
-    header('Location:../index.php');
-}
+// if (isset($_SESSION['user'])) {
+//     header('Location:../index.php');
+// }
 
+var_dump($_SESSION);
 // Récupère les informations de l'utilisateur dans la base de données et les compare aux informations rentrées dans le formulaire
 if (isset($_POST['submit'])) {
     $email = trim(h($_POST['email']));
@@ -50,7 +51,7 @@ if (isset($_POST['submit'])) {
         <section id="container">
             <div class="form">
                 <!-- Formulaire pour CONNECTER un utilisateur -->
-                <form action="" method="post" id="formLogin">
+                <form method="post" id="formLogin">
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email" placeholder="Email" class="input" autofocus>
                     <label for="password">Password</label>
@@ -59,14 +60,7 @@ if (isset($_POST['submit'])) {
                         <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
                     <!-- Affichage des erreurs -->
-                    <p id="message">
-                        <?php
-                        // REGLER LE CSS 
-                        if (isset($user)) {
-                            echo $user->connect($bdd);
-                        }
-                        ?>
-                    </p>
+                    <p id="message"></p>
                     <input type="submit" name="submit" id="submit">
                 </form>
             </div>

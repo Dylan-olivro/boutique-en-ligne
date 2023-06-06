@@ -30,7 +30,7 @@
 
     <?php
 
-
+    // ? Besoin d'actualiser pour afficher la bonne Nav Bar après s'être connecté
 
 
     // ! TRAVAILLER LE CSS SUR DU 1920/1080
