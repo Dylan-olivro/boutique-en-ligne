@@ -1,4 +1,20 @@
 :root {
+  --background-color: #111b33;
+  --section-color: #1d273d;
+  --div-color: #232b41;
+  --nav-color: #2f374c;
+  --border-color: #444b5d;
+
+  --input-color: #343d51;
+  --button-color: #0091ee;
+  --text-input-color: #90949b;
+
+  --price-color: #f75b5b;
+  --stock-color: #38b76e;
+  --stockLimite-color: #ea8013;
+
+  /* ORANGE : #ffa938 */
+  /* VIOLET : #9456b2 */
   --main-color: #005078;
   --second-color: #007cb8;
 }

@@ -55,6 +55,8 @@ if (isset($_POST['ajouter'])) {
 
 <body>
     <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
+
     <main>
 
         <section id="container">
@@ -91,7 +93,6 @@ if (isset($_POST['ajouter'])) {
         </section>
 
     </main>
-    <?php require_once('./include/header-save.php') ?>
 </body>
 <style>
 

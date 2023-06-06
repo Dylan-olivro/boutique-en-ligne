@@ -49,9 +49,11 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
 
 <body>
     <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
+
     <main>
-        <section class="mainContainer">
-            <section class="container">
+        <section id="container">
+            <section class="containerProfil">
                 <div class="profil">
                     <!-- Formulaire pour MODIFIER les informations de l'utilisateur -->
                     <form action="" method="post" id="formProfil">
@@ -73,94 +75,102 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                             } ?>
                         </p>
                         <input type="submit" name="updateUser" id="submit" value="Enregistrer">
-                        <a href="./user/modifyPassword.php">Changer de mot de passe</a>
+                        <a href="./user/modifyPassword.php" id="updatePassword">Changer de mot de passe</a>
                     </form>
                 </div>
                 <!-- Affichage des adresses -->
-                <div class="allAdress">
-                    <a href="./user/addAdress.php">Ajouter une adresse</a>
+                <div class="sectionAdress">
+                    <div class="addAdress">
+                        <a href="./user/addAdress.php" id="addAdress">Ajouter une adresse</a>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <div class="allAdress">
+
+                        <?php
+                        foreach ($allUserAdress as $userAdress) { ?>
+                            <div class="adress">
+                                <div class="infoAdress">
+                                    <p class="name"><?= hd($_SESSION['user']->firstname) . " " . hd($_SESSION['user']->lastname) ?></p>
+                                    <p><?= hd($userAdress->numero) . " " . hd($userAdress->name) ?></p>
+                                    <p><?= hd($userAdress->city) . ", " . hd($userAdress->postcode) ?></p>
+                                    <p>France</p>
+                                    <div>
+                                        <p>N° de télephone:</p>
+                                        <p>00 00 00 00 00</p>
+                                    </div>
+                                </div>
+                                <div class="edit_delete">
+                                    <a href="./user/modifyAdress.php?id=<?= $userAdress->id ?>"><button class="button"><i class="fa-solid fa-pencil"></i></button></a>
+                                    <form action="" method="post">
+                                        <button type="submit" name="deleteAdress<?= $userAdress->id ?>" class="button"><i class="fa-solid fa-trash-can"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        <?php
+                            // Delete l'adresse selectionné
+                            if (isset($_POST['deleteAdress' . $userAdress->id])) {
+                                $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
+                                $adress->deleteAdress($bdd);
+                                header('Location: profil.php');
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Historique des commandes -->
+            <section class="containerCommand">
+                <div class="allCommand">
                     <?php
-                    foreach ($allUserAdress as $userAdress) { ?>
-                        <div style="border: 1px solid; margin-bottom:10px !important" class="adress">
-                            <div class="infoAdress">
-                                <p><?= hd($_SESSION['user']->firstname) . " " . hd($_SESSION['user']->lastname) ?></p>
-                                <p><?= hd($userAdress->numero) . " " . hd($userAdress->name) ?></p>
-                                <p><?= hd($userAdress->city) . ", " . hd($userAdress->postcode) ?></p>
-                                <p>France</p>
-                                <p>Numéro de télephone: 00 00 00 00 00</p>
+                    // Récupère les commandes de l'utilisateur
+                    $returnCommand2 = $bdd->prepare('SELECT * FROM command WHERE id_user  = :id_user ORDER BY date DESC');
+                    $returnCommand2->execute(['id_user' => $_SESSION['user']->id]);
+                    $result2 = $returnCommand2->fetchAll(PDO::FETCH_OBJ);
+
+                    foreach ($result2 as $key2) { ?>
+
+                        <div>
+                            <?php
+                            // Récupère les produits de la commande de l'utilisateur avec les images.
+                            $returnCommand = $bdd->prepare('SELECT * FROM command INNER JOIN liaison_cart_command ON command.id = liaison_cart_command.id_command INNER JOIN items ON liaison_cart_command.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = :id_user AND command.id = :command_id AND main = 1');
+                            $returnCommand->execute([
+                                'id_user' => $_SESSION['user']->id,
+                                'command_id' => $key2->id
+                            ]);
+                            $result = $returnCommand->fetchAll(PDO::FETCH_OBJ); ?>
+                            <!-- Affichage des commandes -->
+                            <div class="infoCommand">
+                                <div>
+                                    <p>COMMANDE ÉFFECTUÉE LE</p>
+                                    <p><?= $key2->date ?></p>
+                                </div>
+                                <div>
+                                    <p>TOTAL</p>
+                                    <p><?= $key2->total ?>€</p>
+                                </div>
+                                <div>
+                                    <p>N° DE COMMANDE</p>
+                                </div>
                             </div>
-                            <div class="edit_delete">
-                                <a href="./user/modifyAdress.php?id=<?= $userAdress->id ?>"><button><i class="fa-solid fa-pencil"></i></button></a>
-                                <form action="" method="post">
-                                    <button type="submit" name="deleteAdress<?= $userAdress->id ?>"><i class="fa-solid fa-trash-can"></i></button>
-                                </form>
-                            </div>
+                            <?php foreach ($result as $key) { ?>
+                                <div class="command">
+                                    <img src="../assets/img_item/<?= $key->name_image ?>" alt="">
+                                    <div>
+                                        <p><?= hd($key->name) ?></p>
+                                        <p><?= hd($key->price) ?></p>
+                                        <a href="./detail.php?id=<?= $key->id_item ?>"><button>Acheter a nouveau</button></a>
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </div>
                     <?php
-                        // Delete l'adresse selectionné
-                        if (isset($_POST['deleteAdress' . $userAdress->id])) {
-                            $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
-                            $adress->deleteAdress($bdd);
-                            header('Location: profil.php');
-                        }
                     }
                     ?>
                 </div>
             </section>
         </section>
-
-        <!-- Historique des commandes -->
-        <section class="containerCommand">
-            <div class="allCommand">
-                <?php
-                // Récupère les commandes de l'utilisateur
-                $returnCommand2 = $bdd->prepare('SELECT * FROM command WHERE id_user  = :id_user ORDER BY date DESC');
-                $returnCommand2->execute(['id_user' => $_SESSION['user']->id]);
-                $result2 = $returnCommand2->fetchAll(PDO::FETCH_OBJ);
-
-                foreach ($result2 as $key2) { ?>
-
-                    <div>
-                        <?php
-                        // Récupère les produits de la commande de l'utilisateur avec les images.
-                        $returnCommand = $bdd->prepare('SELECT * FROM command INNER JOIN liaison_cart_command ON command.id = liaison_cart_command.id_command INNER JOIN items ON liaison_cart_command.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = :id_user AND command.id = :command_id AND main = 1');
-                        $returnCommand->execute([
-                            'id_user' => $_SESSION['user']->id,
-                            'command_id' => $key2->id
-                        ]);
-                        $result = $returnCommand->fetchAll(PDO::FETCH_OBJ); ?>
-                        <!-- Affichage des commandes -->
-                        <div class="infoCommand">
-                            <div>
-                                <p>COMMANDE ÉFFECTUÉE LE</p>
-                                <p><?= $key2->date ?></p>
-                            </div>
-                            <div>
-                                <p>TOTAL</p>
-                                <p><?= $key2->total ?>€</p>
-                            </div>
-                            <div>
-                                <p>N° DE COMMANDE</p>
-                            </div>
-                        </div>
-                        <?php foreach ($result as $key) { ?>
-                            <div class="command">
-                                <img src="../assets/img_item/<?= $key->name_image ?>" alt="">
-                                <div>
-                                    <p><?= hd($key->name) ?></p>
-                                    <p><?= hd($key->price) ?></p>
-                                    <a href="./detail.php?id=<?= $key->id_item ?>"><button>Acheter a nouveau</button></a>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                <?php
-                }
-                ?>
-            </div>
-        </section>
     </main>
-    <?php require_once('./include/header-save.php') ?>
 </body>
 
 </html>

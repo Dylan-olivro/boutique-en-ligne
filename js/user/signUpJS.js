@@ -13,17 +13,17 @@ function isSignUp() {
   // EMAIL
   if (isEmpty(email.value)) {
     message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Email est vide.';
+      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
     return false;
   } else if (!validate()) {
     message.innerHTML =
-      "<i class=\"fa-solid fa-circle-exclamation\"></i> L'adresse mail n'est pas valide.";
+      "<i class=\"fa-solid fa-circle-exclamation\"></i>&nbspL'adresse mail n'est pas valide.";
     return false;
   }
   // FIRSTNAME
   else if (isEmpty(firstname.value)) {
     message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Firstname est vide';
+      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
     return false;
   } else if (!isLetter(firstname)) {
     // ! TROUVER UN REGEX POUR LES PRENOMS COMPOSER + ACCENTS + ENTRE 2/3 ET 30 CARACTERES
@@ -33,7 +33,7 @@ function isSignUp() {
   // LASTNAME
   else if (isEmpty(lastname.value)) {
     message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Lastname est vide';
+      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
     return false;
   } else if (!isLetter(lastname)) {
     // ! TROUVER UN REGEX POUR LES PRENOMS COMPOSER + ACCENTS + ENTRE 2/3 ET 30 CARACTERES
@@ -43,15 +43,15 @@ function isSignUp() {
   // PASSWORD AND CONFIRM PASSWORD
   else if (isEmpty(password.value)) {
     message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Password est vide';
+      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
     return false;
   } else if (isEmpty(cpassword.value)) {
     message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i> Le champ Confirm Password est vide';
+      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Confirm Password est vide';
     return false;
   } else if (!isSame(password.value, cpassword.value)) {
     message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i> Les champs password sont différents.';
+      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes champs password sont différents.';
     return false;
   } else {
     return true;

@@ -24,23 +24,27 @@
 
 <body>
     <?php require_once('./php/include/header.php') ?>
-
+    <?php require_once('./php/include/header-save.php') ?>
     <!-- Test de regex pour le prenom (Besoin de LETTRES, avec ACCENT, pas de CHIFFRES, possibilité d'ajouter un ' - ' ou un ESPACE pour faire des prénom composé, pas de CARACTERES SPECIAUX) -->
     <input type="text" name="a" id="a">
 
     <?php
+    // ! TRAVAILLER LE CSS SUR DU 1920/1080
+
     // * Ajout de commentaire sur tout mon code + changement des execute + ajout de condition pour les formulaires et de securité sur les pages en PHP et en JS + retirer les REQUIRED + ajout d'une petite gestion de stock a la commande + blocker la commande si le stock n'est pas disponible + ajout du header.js sur toutes les pages
 
     // ? Passer l'affichage des Stock en fonction pour pouvoir la réutilisé dans la page détail et panier
     // ? Mettre les div de produit en lien en redirection vers la page détail
+    // ? Quand les inputs sont différents de vide mettre leur border en --button-color
+    // ? Ajouter nom, prenom à la table adress puis à la class adress
 
-    // ! DEMANDER SI REQUIRED EST NESSECAIRE VU QUE CA EMPECHE D'AFFICHER LES MESSAGE D'ERREUR !
+    // ! Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
+    // ! Trouver un regex pour le nom et prenom et faire les message d'erreurs
     // ! Dans le fichier user.php, à la méthode updatePassword faire un SELECT que sur le password et pas sur *
     // ! Le message d'erreur s'affiche par default pour le formulaire de modification d'adresse
     // ! PASSER LE MESSAGE DE STOCK EPUISEE SUR LE DETAIL EN --> JAVASCRIPT
     // ! Probleme si on ajoute 2 fois le même produit au panier et qu'on click sur supprimer, ça supprime les 2 (voir avec des data-id et uniqId() ou faire un systeme de quantité)
     ?>
-    <?php require_once('./php/include/header-save.php') ?>
 </body>
 
 </html>

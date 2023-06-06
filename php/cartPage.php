@@ -87,6 +87,8 @@ if (isset($_POST['vider'])) {
 
 <body>
     <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
+
     <main>
         <form action="" method="post">
             <input type="submit" name="vider" value="Vider le panier">
@@ -132,7 +134,6 @@ if (isset($_POST['vider'])) {
             </div>
         </section>
     </main>
-    <?php require_once('./include/header-save.php') ?>
 
 </body>
 <style>

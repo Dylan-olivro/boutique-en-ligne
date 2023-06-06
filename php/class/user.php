@@ -1,12 +1,12 @@
 <?php
 class User
 {
-    public int $id;
-    public string $email;
-    public string $firstname;
-    public string $lastname;
-    public string $password;
-    public int $role;
+    public $id;
+    public $email;
+    public $firstname;
+    public $lastname;
+    public $password;
+    public $role;
 
     public function __construct($id, $email, $firstname, $lastname, $password, $role)
     {
@@ -37,46 +37,46 @@ class User
 
         // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
         if (isEmpty($this->email)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Email est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
             return $error;
         } elseif (isEmpty($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Firstname est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
             return $error;
         } elseif (isEmpty($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Lastname est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
             return $error;
         } elseif (isEmpty($this->password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Password est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
             return $error;
         } elseif (isEmpty($confirm_password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Confirm Password est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Confirm Password est vide';
             return $error;
         } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> L\'adresse mail n\'est pas valide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
             return $error;
         } elseif (!isName($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le firstname n\'est pas valide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
             return $error;
         } elseif (!isName($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le lastname n\'est pas valide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
             return $error;
         } elseif (isToBig($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le firstname doit faire moins de 30 caractères.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
             return $error;
         } elseif (isToSmall($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le firstname doit faire plus de 2 caractères.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
             return $error;
         } elseif (isToBig($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le lastname doit faire moins de 30 caractères.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
             return $error;
         } elseif (isToSmall($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le lastname doit faire plus de 2 caractères.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
             return $error;
         } elseif (!isSame($this->password, $confirm_password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Les champs password sont différents.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes champs password sont différents.';
             return $error;
         } elseif ($recupUser->rowCount() > 0) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Cette email est déjà utilisé';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
             return $error;
         } else {
             // Insert du nouveau utilisateur
@@ -100,13 +100,13 @@ class User
 
         // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
         if (isEmpty($this->email)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Email est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
             return $error;
         } elseif (isEmpty($this->password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Password est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
             return $error;
         } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> L\'adresse mail n\'est pas valide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
             return $error;
         } elseif ($request->rowCount() > 0) {
 
@@ -131,12 +131,12 @@ class User
                     $_SESSION['user'] = $this;
                     header('Location: ../index.php');
                 } else {
-                    $error = '<i class="fa-solid fa-circle-exclamation"></i> Le mot de passe est incorrect.';
+                    $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe mot de passe est incorrect.';
                     return $error;
                 }
             }
         } else {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Cette email n\'existe pas.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email n\'existe pas.';
             return $error;
         }
     }
@@ -154,49 +154,49 @@ class User
             'email' => $this->email,
             'id' => $this->id
         ]);
-        $insertUser = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id");
+        $insertUser = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id ");
 
         // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
         if (isEmpty($this->email)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Email est vide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
             return $error;
         } elseif (isEmpty($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Firstname est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
             return $error;
         } elseif (isEmpty($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Lastname est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
             return $error;
         } elseif (isEmpty($this->password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Password est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
             return $error;
         } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> L\'adresse mail n\'est pas valide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
             return $error;
         } elseif (!isName($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le firstname n\'est pas valide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
             return $error;
         } elseif (!isName($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le lastname n\'est pas valide.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
             return $error;
         } elseif (isToBig($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le firstname doit faire moins de 30 caractères.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
             return $error;
         } elseif (isToSmall($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le firstname doit faire plus de 2 caractères.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
             return $error;
         } elseif (isToBig($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le lastname doit faire moins de 30 caractères.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
             return $error;
         } elseif (isToSmall($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le lastname doit faire plus de 2 caractères.';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
             return $error;
         } elseif ($recupUser->rowCount() > 0) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Cette email est déjà utilisé';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
             return $error;
         } else {
             // Vérification du mot de passe 
             if ($this->password != password_verify($this->password, $res->password)) {
-                $error = '<i class="fa-solid fa-circle-exclamation"></i> Ce n\'est pas le bon mot de passe';
+                $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
                 return $error;
             } else {
                 // Mise à jour des informations de l'utilisateur
@@ -225,18 +225,18 @@ class User
         $insertUser = $bdd->prepare("UPDATE users SET password = :password WHERE id = :id ");
         // La sécurité empêche que les champs soient VIDES
         if (isEmpty($old_password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ Password est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
             return $error;
         } elseif (isEmpty($this->password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Le champ New Password est vide';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ New Password est vide';
             return $error;
         }
         // Vérification du mot de passe 
         elseif ($old_password == $this->password) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Les mots de passe sont identiques';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes mots de passe sont identiques';
             return $error;
         } elseif ($old_password != password_verify($old_password, $res->password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i> Ce n\'est pas le bon mot de passe';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
             return $error;
         } else {
             // Mise à jour du mot de passe
