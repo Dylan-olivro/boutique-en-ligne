@@ -1,8 +1,8 @@
 <?php
-require_once('./class/user.php');
+require_once('./include/required.php');
 
-$image = new Image(null, null, null);
-$image->returnImages($bdd);
+$image = new Image(null, null, null, null);
+// $image->returnImages($bdd);
 // var_dump($image->returnImages($bdd));
 ?>
 
@@ -25,6 +25,7 @@ $image->returnImages($bdd);
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
+    <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <!-- <script src="../js/detail.js" defer></script> -->
 
@@ -43,7 +44,7 @@ $image->returnImages($bdd);
             if (isset($_POST['submit'])) {
                 if (isset($_FILES['file'])) {
                     $file = $_FILES['file']['name'];
-                    $image = new Image(null, 4, $file);
+                    $image = new Image(null, 4, $file, null);
                     $image->addImage($bdd);
                     header('Location: image.php');
                 }
@@ -54,7 +55,7 @@ $image->returnImages($bdd);
             $result = $recupImage->fetchAll(PDO::FETCH_OBJ);
             foreach ($result as $key) {
                 // var_dump($key);
-                $image = new Image($key->id, $key->id_item, $key->name);
+                $image = new Image($key->id, $key->id_item, $key->name, null);
                 // $image->addImage($bdd);
             ?>
                 <div>

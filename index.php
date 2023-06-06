@@ -1,8 +1,4 @@
-<?php
-require_once('./php/class/user.php');
-
-// TODO: Revoir toutes les verif des formulaires en html, php et js
-?>
+<?php require_once('./php/include/required.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,79 +24,46 @@ require_once('./php/class/user.php');
 
 <body>
     <?php require_once('./php/include/header.php') ?>
+    <?php require_once('./php/include/header-save.php') ?>
+    <!-- Test de regex pour le prenom (Besoin de LETTRES, avec ACCENT, pas de CHIFFRES, possibilité d'ajouter un ' - ' ou un ESPACE pour faire des prénom composé, pas de CARACTERES SPECIAUX) -->
+    <input type="text" name="a" id="a">
 
     <?php
-    // $cart = new Cart($_SESSION['user']->id, null, null);
-    // $result = $cart->returnCart($bdd);
-    // $result2 = $cart->test($bdd);
-    // var_dump($result);
-    // var_dump($result2);
-    // if (isset($_POST['submit'])) {
-    //     $nom = $_POST['name'];
-    //     $regex = '/^[A-Z][\p{L}-]*$/';
-    //     if (!isName($nom)) {
-    //         var_dump('FAIL');
-    //     } else {
-    //         var_dump('SUCCES');
-    //     }
-    // }
-    ?>
+    // ! TRAVAILLER LE CSS SUR DU 1920/1080
 
-    <!-- <form action="" method="post">
-        <input type="text" name="name">
-        <input type="submit" name="submit">
-    </form> -->
-    <?php require_once('./php/include/header-save.php') ?>
+    // * Ajout de commentaire sur tout mon code + changement des execute + ajout de condition pour les formulaires et de securité sur les pages en PHP et en JS + retirer les REQUIRED + ajout d'une petite gestion de stock a la commande + blocker la commande si le stock n'est pas disponible + ajout du header.js sur toutes les pages
+
+    // ? Passer l'affichage des Stock en fonction pour pouvoir la réutilisé dans la page détail et panier
+    // ? Mettre les div de produit en lien en redirection vers la page détail
+    // ? Quand les inputs sont différents de vide mettre leur border en --button-color
+    // ? Ajouter nom, prenom à la table adress puis à la class adress
+
+    // ! Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
+    // ! Trouver un regex pour le nom et prenom et faire les message d'erreurs
+    // ! Dans le fichier user.php, à la méthode updatePassword faire un SELECT que sur le password et pas sur *
+    // ! Le message d'erreur s'affiche par default pour le formulaire de modification d'adresse
+    // ! PASSER LE MESSAGE DE STOCK EPUISEE SUR LE DETAIL EN --> JAVASCRIPT
+    // ! Probleme si on ajoute 2 fois le même produit au panier et qu'on click sur supprimer, ça supprime les 2 (voir avec des data-id et uniqId() ou faire un systeme de quantité)
+    // ! BLOQUER les adresses à 6 max
+    // ! Ajouter le css concernant le main sur toutes les pages
+    ?>
 </body>
 
 </html>
 
 <?php
-// TODO: FAIRE LA MAQUETTE
 
-// TODO: FAIRE LE MCD DE LA BASE DE DONNEE
-
-// TODO: FAIRE LA BASE DE DONNEE
-
-// * FAIRE LE HEADER
-// TODO: + FAIRE BARRE DE RECHERCHE AVEC AUTOCOMPLETION
-
-// * FAIRE LA PAGE D'ACCUEIL
-// TODO: + GESTION DES PROMOTIONS
-// TODO: + GESTION DES TAGS PRODUITS
-
-// TODO: FAIRE LA PAGE DETAIL
-
-// * FAIRE LA PAGE INSCRIPTION
-// * + INSCRIPTION
-
-// * FAIRE LA PAGE CONNECTION
-// * + CONNECTION
-
-// * FAIRE LA PAGE PROFIL
-// TODO: + FAIRE L'HISTORIQUE DE COMMANDE, ET CONSULTATION DE PANIER
-
-// * FAIRE LA PAGE ADMIN
-// * + AJOUT DES ITEMS PAR L'ADMIN
-// * + SUPPRESSION DES ITEMS PAR L'ADMIN
-// * + MODIFICATION DES ITEMS PAR L'ADMIN
-// TODO: + GERER LES STOCK PAR L'ADMIN
-// * + AJOUT DES CATEGORIES PAR L'ADMIN
-// * + SUPPRESSION DES CATEGORIES PAR L'ADMIN
-// * + MODIFICATION DES CATEGORIES PAR L'ADMIN
-// * + MODIFICATION DES ROLES DES USERS
-
-// TODO: FAIRE LA PAGE ALL ITEMS
-// TODO: + 
-
-// * FAIRE LE PANIER
-// TODO: + VALIDATION DU PANIER
-// TODO: + SYSTEME DE PAYEMENT
-// TODO: + GENERER UN NUMERO DE COMMANDE/ FACTURE
-// TODO: + GESTION DE LA TVA
-
-// TODO: AJOUT DU SYSTEME DE COMMENTAIRE
-// TODO: + AVIS UTILISATEUR
-// TODO: + RATING SUR LES PRODUITS
-// TODO: + GESTION DES COMMENTAIRES PAR ADMIN
+// TODO: FAIRE toutes les verif en html, php et js pour les formulaires des pages admin, cartPage, profil, addAdress, modifyAdress, modifyPassword 
+// TODO: FAIRE la maquette
+// TODO: FAIRE le MCD
+// TODO: FAIRE la gestions des promotions
+// TODO: FAIRE la gestion des tags produits
+// TODO: FAIRE la gestion des stocks
+// TODO: FAIRE un système de payement fonctionnel
+// TODO: FAIRE une génération de numéro de commande
+// TODO: FAIRE le calcul de la TVA
+// TODO: FAIRE un systéme de commentaire
+// TODO: FAIRE les avis d'utilisateurs
+// TODO: FAIRE le rating d'un produit
+// TODO: FAIRE une gestion des commentaires par l'Administrateur
 ?>

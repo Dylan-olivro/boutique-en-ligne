@@ -1,0 +1,16 @@
+img {
+  width: 100px;
+}
+.containerCart {
+  display: flex;
+  justify-content: center;
+  background-color: var(--second-color);
+}
+
+.cart {
+  /* display: flex; */
+  background-color: var(--main-color);
+}
+.cartDetail {
+  display: flex;
+}

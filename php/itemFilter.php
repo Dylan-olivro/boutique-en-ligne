@@ -1,5 +1,5 @@
 <?php
-require_once('./class/user.php');
+require_once('./include/required.php');
 
 // $returnCategoryParent = $bdd->prepare('SELECT * FROM category WHERE id_parent != 0');
 // $returnCategoryParent->execute();
@@ -26,12 +26,15 @@ require_once('./class/user.php');
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
+    <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <script src="../js/itemFilter.js" defer></script>
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
+
     <main>
         <div id="container">
             <form action="" method="get">

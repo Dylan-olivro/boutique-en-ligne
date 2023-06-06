@@ -1,9 +1,12 @@
 <?php
-require_once('./class/user.php');
+require_once('./include/required.php');
+
+// Empêche les utilisateurs déjà connecté de revenir sur cette page
 if (isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
+// L'insertion de l'utilisateur dans la base de donnée
 if (isset($_POST['submit'])) {
     $email = trim(h($_POST['email']));
     $firstname = trim(h($_POST['firstname']));
@@ -24,7 +27,6 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <!-- CSS -->
-    <!-- <link rel="stylesheet" href="./css/common.css"> -->
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/signUp.css">
     <!-- BOOTSTRAP -->
@@ -36,6 +38,7 @@ if (isset($_POST['submit'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
+    <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <script src="../js/user/signUpJS.js" defer></script>
 
@@ -43,32 +46,34 @@ if (isset($_POST['submit'])) {
 
 <body>
     <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
     <main>
         <section id="container">
             <div class="form">
-
+                <!-- Formulaire pour AJOUTER un utilisateur -->
                 <form action="" method="post" id="signup">
                     <label for="email">Email *</label>
-                    <input type="" id="email" name="email" class="input" required autofocus>
+                    <input type="" id="email" name="email" class="input" placeholder="Email" autofocus>
                     <label for="firstname">Firstname *</label>
-                    <input type="text" id="firstname" name="firstname" class="input" required>
+                    <input type="text" id="firstname" name="firstname" class="input" placeholder="Firstname">
                     <label for="lastname">Lastname *</label>
-                    <input type="text" id="lastname" name="lastname" class="input" required>
+                    <input type="text" id="lastname" name="lastname" class="input" placeholder="Lastname">
                     <label for="password">Password *</label>
                     <div class="password">
-                        <input type="password" id="password" name="password" class="input" required>
+                        <input type="password" id="password" name="password" class="input" placeholder="Password">
                         <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
                     <label for="confirm_password">Confirm password *</label>
                     <div class="password">
-                        <input type="password" id="confirm_password" name="confirm_password" class="input" required>
+                        <input type="password" id="confirm_password" name="confirm_password" class="input" placeholder="Confirm Password">
                         <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
 
+                    <!-- les messages d'erreurs -->
                     <p id="message">
                         <?php
-                        if (isset($_SESSION['message'])) {
-                            echo h($_SESSION['message']);
+                        if (isset($user)) {
+                            echo $user->register($bdd, $confirm_password);
                         } ?>
                     </p>
                     <input type="submit" name="submit" id="submit">
@@ -76,25 +81,6 @@ if (isset($_POST['submit'])) {
             </div>
         </section>
     </main>
-    <?php require_once('./include/header-save.php') ?>
 </body>
-<style>
-    /* form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .input {
-        color: #f1b16a;
-        padding: 5px;
-        background-color: #121a2e;
-        margin-top: 10px;
-    }
-
-    label {
-        font-size: 1.5rem;
-
-    } */
-</style>
 
 </html>

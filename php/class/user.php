@@ -1,59 +1,4 @@
 <?php
-session_start();
-// ob_start();
-ob_start('ob_gzhandler');
-// ! REGLER LE PROBLEME DU MESSAGE EN SESSION QUI RESTE SI ON CHANGE DE PAGE !
-// ! DEMANDER SI REQUIRED EST NESSECAIRE VU QUE CA EMPECHE D'AFFICHER LES MESSAGE D'ERREUR !
-
-// RECUPERER L'URL POUR SAVOIR SI C'EST L'INDEX OU LES AUTRES PAGES
-function getURL()
-{
-    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-        $url = "https";
-    else {
-        $url = "http";
-    }
-    // ASSEMBLAGE DE L'URL
-    $url .= "://";
-    $url .= $_SERVER['HTTP_HOST'];
-    $url .= $_SERVER['REQUEST_URI'];
-    $splitURL = explode('boutique-en-ligne', $url);
-    $splitURL2 = explode('/', $splitURL[1]);
-    return [$splitURL, $splitURL2];
-}
-// CONDITION SI ON EST SUR L'INDEX OU PAS
-if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
-    require_once('./php/include/bdd.php');
-    require_once('./php/include/function.php');
-    require_once('./php/class/adress.php');
-    require_once('./php/class/image.php');
-    require_once('./php/class/item.php');
-    require_once('./php/class/category.php');
-    require_once('./php/class/cart.php');
-    require_once('./php/class/command.php');
-} else {
-    if (getURL()[1][2] === 'user') {
-        require_once('../include/bdd.php');
-        require_once('../include/function.php');
-        require_once('../class/adress.php');
-        require_once('../class/image.php');
-        require_once('../class/item.php');
-        require_once('../class/category.php');
-        require_once('../class/cart.php');
-        require_once('../class/command.php');
-    } else {
-        require_once('./include/bdd.php');
-        require_once('./include/function.php');
-        require_once('./class/adress.php');
-        require_once('./class/image.php');
-        require_once('./class/item.php');
-        require_once('./class/category.php');
-        require_once('./class/cart.php');
-        require_once('./class/command.php');
-    }
-}
-
-
 class User
 {
     public $id;
@@ -85,28 +30,62 @@ class User
 
     public function register($bdd, $confirm_password)
     {
-        $recupUser = $bdd->prepare("SELECT email FROM users WHERE email = ?");
-        $recupUser->execute([$this->email]);
-        $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(?,?,?,?)");
+        // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà
+        $recupUser = $bdd->prepare("SELECT email FROM users WHERE email = :email");
+        $recupUser->execute(['email' => $this->email]);
+        $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(:email,:lastname,:firstname,:password)");
 
+        // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
         if (isEmpty($this->email)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
+            return $error;
         } elseif (isEmpty($this->firstname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
+            return $error;
         } elseif (isEmpty($this->lastname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
+            return $error;
         } elseif (isEmpty($this->password)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
+            return $error;
         } elseif (isEmpty($confirm_password)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Confirm Password est vide';
+            return $error;
         } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
+            return $error;
         } elseif (!isName($this->firstname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
+            return $error;
         } elseif (!isName($this->lastname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
+            return $error;
         } elseif (isToBig($this->firstname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
+            return $error;
         } elseif (isToSmall($this->firstname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
+            return $error;
         } elseif (isToBig($this->lastname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
+            return $error;
         } elseif (isToSmall($this->lastname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
+            return $error;
         } elseif (!isSame($this->password, $confirm_password)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes champs password sont différents.';
+            return $error;
         } elseif ($recupUser->rowCount() > 0) {
-            $_SESSION['message'] = 'Email déjà utilisé';
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
+            return $error;
         } else {
-            unset($_SESSION['message']);
-            $insertUser->execute([$this->email, $this->lastname, $this->firstname, password_hash($this->password, PASSWORD_DEFAULT)]);
+            // Insert du nouveau utilisateur
+            $insertUser->execute([
+                'email' => $this->email,
+                'lastname' => $this->lastname,
+                'firstname' => $this->firstname,
+                'password' => password_hash($this->password, PASSWORD_DEFAULT)
+            ]);
             header('Location: ./connect.php');
         }
     }
@@ -114,20 +93,33 @@ class User
 
     public function connect($bdd)
     {
-        $request = $bdd->prepare("SELECT * FROM users WHERE email = ?");
-        $request->execute([$this->email]);
+        // Récupération des utilisateurs pour vérifier si l'adresse mail existe
+        $request = $bdd->prepare("SELECT * FROM users WHERE email = :email");
+        $request->execute(['email' => $this->email]);
         $res = $request->fetch(PDO::FETCH_OBJ);
 
+        // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
         if (isEmpty($this->email)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
+            return $error;
         } elseif (isEmpty($this->password)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
+            return $error;
         } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
+            return $error;
         } elseif ($request->rowCount() > 0) {
 
-            $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-            $recupUser->execute([$this->email, $res->password]);
+            // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
+            $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
+            $recupUser->execute([
+                'email' => $this->email,
+                'password' => $res->password
+            ]);
             $result = $recupUser->fetch(PDO::FETCH_OBJ);
 
             if ($result) {
+                // Vérification du mot de passe 
                 if (password_verify($this->password, $result->password)) {
                     $this->id = intval($result->id);
                     $this->email = $result->email;
@@ -137,51 +129,84 @@ class User
                     $this->role = intval($result->role);
 
                     $_SESSION['user'] = $this;
-                    unset($_SESSION['message']);
                     header('Location: ../index.php');
+                } else {
+                    $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe mot de passe est incorrect.';
+                    return $error;
                 }
             }
         } else {
-            $_SESSION['message'] = 'utilisateurs inconnu';
-            //? VOIR SI ON PEUT S'EN PASSER
-            header('Location: connect.php');
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email n\'existe pas.';
+            return $error;
         }
     }
 
     public function update($bdd)
     {
-
-        $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
-        $request->execute([$this->id]);
+        // Récupération des informations de l'utilisateur
+        $request = $bdd->prepare("SELECT * FROM users WHERE id = :id");
+        $request->execute(['id' => $this->id]);
         $res = $request->fetch(PDO::FETCH_OBJ);
 
-        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND id != ?");
-        $recupUser->execute([$this->email, $this->id]);
-        $insertUser = $bdd->prepare("UPDATE users SET email = ?, firstname = ?, lastname = ?, password = ? WHERE id = ? ");
+        //Récupère les utilisateurs pour voir si la nouvelle adresse mail de l'utilisateur est déjà utilisé
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND id != :id");
+        $recupUser->execute([
+            'email' => $this->email,
+            'id' => $this->id
+        ]);
+        $insertUser = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id ");
 
+        // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
         if (isEmpty($this->email)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
+            return $error;
         } elseif (isEmpty($this->firstname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
+            return $error;
         } elseif (isEmpty($this->lastname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
+            return $error;
         } elseif (isEmpty($this->password)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
+            return $error;
         } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
+            return $error;
         } elseif (!isName($this->firstname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
+            return $error;
         } elseif (!isName($this->lastname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
+            return $error;
         } elseif (isToBig($this->firstname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
+            return $error;
         } elseif (isToSmall($this->firstname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
+            return $error;
         } elseif (isToBig($this->lastname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
+            return $error;
         } elseif (isToSmall($this->lastname)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
+            return $error;
         } elseif ($recupUser->rowCount() > 0) {
-            $_SESSION['message'] = 'Email déjà utilisé';
-            //? VOIR SI ON PEUT S'EN PASSER
-            header('Location:./profil.php');
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
+            return $error;
         } else {
+            // Vérification du mot de passe 
             if ($this->password != password_verify($this->password, $res->password)) {
-                $_SESSION['message'] = 'Ce n\'est pas le bon mot de passe';
-                //? VOIR SI ON PEUT S'EN PASSER
-                header('Location:./profil.php');
+                $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
+                return $error;
             } else {
-                unset($_SESSION['message']);
-                $insertUser->execute([$this->email, $this->firstname, $this->lastname, $res->password, $this->id]);
+                // Mise à jour des informations de l'utilisateur
+                $insertUser->execute([
+                    'email' => $this->email,
+                    'firstname' => $this->firstname,
+                    'lastname' => $this->lastname,
+                    'password' => $res->password,
+                    'id' => $this->id
+                ]);
                 $_SESSION['user']->email = $this->email;
                 $_SESSION['user']->firstname = $this->firstname;
                 $_SESSION['user']->lastname = $this->lastname;
@@ -193,19 +218,32 @@ class User
 
     public function updatePassword($bdd, $old_password)
     {
-        $request = $bdd->prepare("SELECT * FROM users WHERE id = ?");
-        $request->execute([$this->id]);
+        // Récupartion des informations de l'utilisateurs
+        $request = $bdd->prepare("SELECT * FROM users WHERE id = :id");
+        $request->execute(['id' => $this->id]);
         $res = $request->fetch(PDO::FETCH_OBJ);
-        $insertUser = $bdd->prepare("UPDATE users SET password = ? WHERE id = ? ");
-
+        $insertUser = $bdd->prepare("UPDATE users SET password = :password WHERE id = :id ");
+        // La sécurité empêche que les champs soient VIDES
         if (isEmpty($old_password)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
+            return $error;
         } elseif (isEmpty($this->password)) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ New Password est vide';
+            return $error;
+        }
+        // Vérification du mot de passe 
+        elseif ($old_password == $this->password) {
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes mots de passe sont identiques';
+            return $error;
         } elseif ($old_password != password_verify($old_password, $res->password)) {
-            $_SESSION['message'] = 'Ce n\'est pas le bon mot de passe';
-            header('Location:./modifyPassword.php');
+            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
+            return $error;
         } else {
-            unset($_SESSION['message']);
-            $insertUser->execute([$this->password, $this->id]);
+            // Mise à jour du mot de passe
+            $insertUser->execute([
+                'password' => password_hash($this->password, PASSWORD_DEFAULT),
+                'id' => $this->id
+            ]);
             $_SESSION['user']->password = $this->password;
             header('Location:../profil.php');
         }
@@ -215,13 +253,11 @@ class User
         unset($_SESSION['user']);
     }
 
-    public function isConnected()
+    public function isConnected(): bool
     {
         if (isset($_SESSION['user']->login)) {
-            // echo 'Connected';
             return true;
         } else {
-            // echo 'Disconnected';
             return false;
         }
     }
