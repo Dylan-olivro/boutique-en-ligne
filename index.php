@@ -44,6 +44,8 @@
     // ! Le message d'erreur s'affiche par default pour le formulaire de modification d'adresse
     // ! PASSER LE MESSAGE DE STOCK EPUISEE SUR LE DETAIL EN --> JAVASCRIPT
     // ! Probleme si on ajoute 2 fois le même produit au panier et qu'on click sur supprimer, ça supprime les 2 (voir avec des data-id et uniqId() ou faire un systeme de quantité)
+    // ! BLOQUER les adresses à 6 max
+    // ! Ajouter le css concernant le main sur toutes les pages
     ?>
 </body>
 
