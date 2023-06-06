@@ -20,6 +20,7 @@ if (isset($_POST['updateUser'])) {
 // Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
+var_dump(count($allUserAdress));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,8 +82,12 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 <!-- Affichage des adresses -->
                 <div class="sectionAdress">
                     <div class="addAdress">
-                        <a href="./user/addAdress.php" id="addAdress">Ajouter une adresse</a>
-                        <i class="fa-solid fa-chevron-right"></i>
+                        <a href="./user/addAdress.php" id="addAdress">
+                            <div class="link">
+                                <span>Ajouter une adresse</span>
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+                        </a>
                     </div>
                     <div class="allAdress">
 

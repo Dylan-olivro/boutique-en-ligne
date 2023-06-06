@@ -29,13 +29,17 @@
     <input type="text" name="a" id="a">
 
     <?php
+
+
+
+
     // ! TRAVAILLER LE CSS SUR DU 1920/1080
 
     // * Ajout de commentaire sur tout mon code + changement des execute + ajout de condition pour les formulaires et de securité sur les pages en PHP et en JS + retirer les REQUIRED + ajout d'une petite gestion de stock a la commande + blocker la commande si le stock n'est pas disponible + ajout du header.js sur toutes les pages
 
     // ? Mettre les div de produit en lien en redirection vers la page détail
     // ? Quand les inputs sont différents de vide mettre leur border en --button-color
-    // ? Ajouter nom, prenom à la table adress puis à la class adress
+    // ? Ajouter nom, prenom et numéro de tél à la table adress puis à la class adress
 
     // ! Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
     // ! Trouver un regex pour le nom et prenom et faire les message d'erreurs
@@ -45,6 +49,7 @@
     // ! Probleme si on ajoute 2 fois le même produit au panier et qu'on click sur supprimer, ça supprime les 2 (voir avec des data-id et uniqId() ou faire un systeme de quantité)
     // ! BLOQUER les adresses à 6 max
     // ! Ajouter le css concernant le main sur toutes les pages
+    // ! Ajouter une adresse, ce fait en double
     ?>
 </body>
 
