@@ -1,24 +1,30 @@
 <?php
-require_once('./class/user.php');
-
+require_once('./include/required.php');
 // ! VERIFIER AVEC PLESK POUR LES ACCENTS
 
-if (isset($_POST['ajouter'])) {
-    $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(?,?)');
-    $insertIntoPanier->execute([$_SESSION['user']->id, trim(intval($_GET['id']))]);
-    header('Location: detail.php?id=' . $_GET['id']);
-}
 
-
-$recupItem = $bdd->prepare("SELECT * FROM items WHERE id = ?");
-$recupItem->execute([$_GET['id']]);
+// Récupération du produit
+$recupItem = $bdd->prepare("SELECT * FROM items WHERE id = :id");
+$recupItem->execute(['id' => $_GET['id']]);
 $resultItem = $recupItem->fetch(PDO::FETCH_OBJ);
-// var_dump($resultItem);
 
+// Empêche d'aller sur la page si il n'y a aucun produit de selectionner 
+if (!$resultItem) {
+    header('Location: ../index.php');
+}
+// Récupération des images du produit
 $image = new Image(null, $_GET['id'], null, null);
 $result = $image->returnImagesByID($bdd);
-// var_dump($result);
 
+// Insert le produit de la page dans le panier
+if (isset($_POST['ajouter'])) {
+    $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(:id_user,:id_item)');
+    $insertIntoPanier->execute([
+        'id_user' => $_SESSION['user']->id,
+        'id_item' => trim(intval($_GET['id']))
+    ]);
+    header('Location: detail.php?id=' . $_GET['id']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,18 +47,20 @@ $result = $image->returnImagesByID($bdd);
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../js/function.js" defer></script>
+    <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <script src="../js/detail.js" defer></script>
 
 </head>
 
 <body>
-    <?php require_once('./include/header.php');
-    // var_dump($resultItem->image);
-    ?>
+    <?php require_once('./include/header.php'); ?>
+    <?php require_once('./include/header-save.php') ?>
+
     <main>
 
         <section id="container">
+            <!-- Affichage du produit -->
             <div id="item">
                 <div id="imageItem">
                     <img src="../assets/img_item/<?= $result[0]->name_image ?>" alt="">
@@ -65,13 +73,18 @@ $result = $image->returnImagesByID($bdd);
                     </div>
 
                     <div id="price_cart">
-                        <p><?= hd($resultItem->price) ?></p>
+                        <p><?= hd($resultItem->price) ?>€</p>
                         <?php
-                        if (isset($_SESSION['user'])) { ?>
-                            <form action="" method="post">
-                                <input type="submit" name="ajouter" value="Ajouter au panier">
-                            </form>
+                        if (isset($_SESSION['user'])) {
+                            if ($resultItem->stock > 0) { ?>
+                                <form action="" method="post">
+                                    <input type="submit" name="ajouter" value="Ajouter au panier">
+                                </form>
+                            <?php
+                            } else { ?>
+                                <p>STOCK EPUISEE</p>
                         <?php
+                            }
                         }
                         ?>
                     </div>
@@ -80,7 +93,6 @@ $result = $image->returnImagesByID($bdd);
         </section>
 
     </main>
-    <?php require_once('./include/header-save.php') ?>
 </body>
 <style>
 

@@ -1,10 +1,19 @@
 <?php
-require_once('../class/user.php');
+require_once('../include/required.php');
 
+// Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
 }
 
+// Mise à jour du mot de passe
+if (isset($_POST['submit'])) {
+    $old_password = $_POST['password'];
+    $new_password = $_POST['new_password'];
+
+    $user = new User($_SESSION['user']->id, null, null, null, $new_password, null);
+    $user->updatePassword($bdd, $old_password);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,36 +34,32 @@ if (!isset($_SESSION['user'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../../js/function.js" defer></script>
+    <script src="../../js/header.js" defer></script>
     <script src="../../js/autocompletion.js" defer></script>
-    <script src="../../js/user/modifyPassword.js" defer></script>
-
+    <!-- <script src="../../js/user/modifyPassword.js" defer></script> -->
 
 </head>
 
 <body>
     <?php require_once('../include/header.php'); ?>
+    <?php require_once('../include/header-save.php') ?>
 
     <main>
+        <!-- Formulaire pour MODIFIER le mot de passe de l'utilisateur -->
         <form action="" method="post" id="formUpdatePassword">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password" autofocus>
             <label for="new_password">New Password</label>
-            <input type="password" name="new_password" id="new_password" required>
+            <input type="password" name="new_password" id="new_password">
+            <p id="message">
+                <?php
+                if (isset($user)) {
+                    echo $user->updatePassword($bdd, $old_password);
+                } ?>
+            </p>
             <input type="submit" name="submit" class="input">
-            <p id="message"></p>
-
-            <?php
-            if (isset($_POST['submit'])) {
-                $old_password = $_POST['password'];
-                $new_password = $_POST['new_password'];
-
-                $user = new User($_SESSION['user']->id, null, null, null, password_hash($new_password, PASSWORD_DEFAULT), null);
-                $user->updatePassword($bdd, $old_password);
-            }
-            ?>
         </form>
     </main>
-    <?php require_once('../include/header-save.php') ?>
 </body>
 <style>
     form {

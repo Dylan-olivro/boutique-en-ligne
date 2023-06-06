@@ -1,10 +1,19 @@
-<?php
-require_once('../class/user.php');
+<?php require_once('../include/required.php');
 
+// Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
 }
+// Insert une adresse
+if (isset($_POST['submit'])) {
+    $numero = trim(h($_POST['numero']));
+    $name = trim(h($_POST['name']));
+    $postcode = trim(h($_POST['postcode']));
+    $city = strtoupper(trim(h($_POST['city'])));
 
+    $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city);
+    $adress->addAdress($bdd);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,45 +34,35 @@ if (!isset($_SESSION['user'])) {
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../../js/function.js" defer></script>
+    <script src="../../js/header.js" defer></script>
     <script src="../../js/autocompletion.js" defer></script>
     <!-- <script src="../js/user/modifyPassword.js" defer></script> -->
-
 
 </head>
 
 <body>
     <?php require_once('../include/header.php'); ?>
+    <?php require_once('../include/header-save.php') ?>
 
     <main>
+        <!-- Formulaire pour AJOUTER une adresse à l'utilisateur -->
         <form action="" method="post" id="formUpdateAdress">
             <label for="numero">Numero</label>
-            <input type="number" name="numero" id="numero" required autofocus>
+            <input type="number" name="numero" id="numero" autofocus>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" required>
+            <input type="text" name="name" id="name">
             <label for="postcode">Postcode</label>
-            <input type="number" name="postcode" id="postcode" required>
+            <input type="number" name="postcode" id="postcode">
             <label for="city">City</label>
-            <input type="text" name="city" id="city" required>
+            <input type="text" name="city" id="city">
+            <p id="message">
+                <?php if (isset($adress)) {
+                    var_dump($adress->addAdress($bdd));
+                } ?>
+            </p>
             <input type="submit" name="submit" class="input">
-            <p id="message"></p>
-
-            <?php
-            // var_dump($_SESSION);
-            // unset($_SESSION['message']);
-
-            if (isset($_POST['submit'])) {
-                $numero = trim(h($_POST['numero']));
-                $name = trim(h($_POST['name']));
-                $postcode = trim(h($_POST['postcode']));
-                $city = strtoupper(trim(h($_POST['city'])));
-
-                $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city);
-                $adress->addAdress($bdd);
-            }
-            ?>
         </form>
     </main>
-    <?php require_once('../include/header-save.php') ?>
 </body>
 <style>
     form {

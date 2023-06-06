@@ -1,9 +1,30 @@
+:root {
+  --background-color: #111b33;
+  --section-color: #1d273d;
+  --div-color: #232b41;
+  --nav-color: #2f374c;
+  --border-color: #444b5d;
+
+  --input-color: #343d51;
+  --button-color: #0091ee;
+  --text-input-color: #90949b;
+
+  --price-color: #f75b5b;
+  --stock-color: #38b76e;
+  --stockLimite-color: #ea8013;
+
+  /* ORANGE : #ffa938 */
+  /* VIOLET : #9456b2 */
+  --main-color: #005078;
+  --second-color: #007cb8;
+}
+
 main * {
   margin: 0 !important;
   padding: 0 !important;
 }
 #navbarBurger {
-  background-color: #005078;
+  background-color: var(--main-color);
   width: 100%;
   /* display: flex; */
   justify-content: center;
@@ -76,7 +97,10 @@ main * {
 
 #darkMode {
   cursor: pointer;
-  zoom: 0.4;
+  width: 25px;
+
+  /* ! N'UTILISE PAS ZOOM  !!!!!!!!!!!!!!!!! CHARLES  !!!!!!!!!!!!!!!!!!!!*/
+  /* zoom: 0.4; */
   /* content: url(../assets/img_darkMode/moon.png); */
 }
 

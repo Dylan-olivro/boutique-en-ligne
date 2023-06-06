@@ -1,12 +1,31 @@
-<?php
-require_once('../class/user.php');
+<?php require_once('../include/required.php');
 
+// Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
 }
 
-$adress = new Adress($_GET['id'], null, null, null, null, null);
-$userAdress = $adress->returnAdressById($bdd);
+// Récupération de l'adresse à modifier
+if (isset($_GET['id'])) {
+    $adress = new Adress($_GET['id'], null, null, null, null, null);
+    $userAdress = $adress->returnAdressById($bdd);
+
+    // Empêche d'aller sur la page si il n'y a aucun ID selectionner dans le lien ou si l'ID ne correspond pas à une adresse de l'utilisateur
+    if (!$userAdress) {
+        header('Location: ../profil.php');
+    }
+}
+
+// Mise à jour de l'adresse sélectionner
+if (isset($_POST['submit'])) {
+    $numero = trim(h($_POST['numero']));
+    $name = trim(h($_POST['name']));
+    $postcode = trim(h($_POST['postcode']));
+    $city = strtoupper(trim(h($_POST['city'])));
+
+    $adress = new Adress($userAdress->id, $_SESSION['user']->id, $numero, $name, $postcode, $city);
+    $adress->updateAdress($bdd);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,43 +46,34 @@ $userAdress = $adress->returnAdressById($bdd);
     <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
     <!-- JAVASCRIPT -->
     <script src="../../js/function.js" defer></script>
+    <script src="../../js/header.js" defer></script>
     <script src="../../js/autocompletion.js" defer></script>
-    <!-- <script src="../js/user/modifyPassword.js" defer></script> -->
-
 
 </head>
 
 <body>
     <?php require_once('../include/header.php'); ?>
+    <?php require_once('../include/header-save.php') ?>
 
     <main>
+        <!-- Formulaire pour MODIFIER l'adresse de l'utilisateur -->
         <form action="" method="post" id="formUpdateAdress">
             <label for="numero">Numero</label>
-            <input type="number" name="numero" id="numero" value="<?= $userAdress->numero ?>" required autofocus>
+            <input type="number" name="numero" id="numero" value="<?= $userAdress->numero ?>" autofocus>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="<?= $userAdress->name ?>" required>
+            <input type="text" name="name" id="name" value="<?= $userAdress->name ?>">
             <label for="postcode">Postcode</label>
-            <input type="number" name="postcode" id="postcode" value="<?= $userAdress->postcode ?>" required>
+            <input type="number" name="postcode" id="postcode" value="<?= $userAdress->postcode ?>">
             <label for="city">City</label>
-            <input type="text" name="city" id="city" value="<?= $userAdress->city ?>" required>
+            <input type="text" name="city" id="city" value="<?= $userAdress->city ?>">
+            <p id="message">
+                <?php if (isset($adress)) {
+                    echo $adress->updateAdress($bdd);
+                } ?>
+            </p>
             <input type="submit" name="submit" class="input" value="Modifier">
-            <p id="message"></p>
-
-            <?php
-            if (isset($_POST['submit'])) {
-                $numero = trim(h($_POST['numero']));
-                $name = trim(h($_POST['name']));
-                $postcode = trim(h($_POST['postcode']));
-                $city = strtoupper(trim(h($_POST['city'])));
-
-                $adress = new Adress($userAdress->id, $_SESSION['user']->id, $numero, $name, $postcode, $city);
-                $adress->updateAdress($bdd);
-                // header('Location: ../profil.php');
-            }
-            ?>
         </form>
     </main>
-    <?php require_once('../include/header-save.php') ?>
 </body>
 <style>
     form {
