@@ -18,13 +18,28 @@ if (isset($_GET['id'])) {
 
 // Mise à jour de l'adresse sélectionner
 if (isset($_POST['submit'])) {
-    $numero = trim(h($_POST['numero']));
-    $name = trim(h($_POST['name']));
-    $postcode = trim(h($_POST['postcode']));
-    $city = strtoupper(trim(h($_POST['city'])));
+    $numero = $_POST['numero'];
+    $name = $_POST['name'];
+    $postcode = $_POST['postcode'];
+    $city = $_POST['city'];
 
-    $adress = new Adress($userAdress->id, $_SESSION['user']->id, $numero, $name, $postcode, $city);
-    $adress->updateAdress($bdd);
+    if (empty($numero)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
+    } elseif (empty($name)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
+    } elseif (empty($postcode)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
+    } elseif (empty($city)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
+    } elseif (!isStreet($numero)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
+    } elseif (!isPostcode($postcode)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
+    } else {
+        $adress = new Adress($userAdress->id, $_SESSION['user']->id, $numero, $name, $postcode, $city);
+        $adress->updateAdress($bdd);
+        header('Location: ../profil.php');
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -67,8 +82,8 @@ if (isset($_POST['submit'])) {
             <label for="city">City</label>
             <input type="text" name="city" id="city" value="<?= $userAdress->city ?>">
             <p id="message">
-                <?php if (isset($adress)) {
-                    echo $adress->updateAdress($bdd);
+                <?php if (isset($error)) {
+                    echo $error;
                 } ?>
             </p>
             <input type="submit" name="submit" class="input" value="Modifier">

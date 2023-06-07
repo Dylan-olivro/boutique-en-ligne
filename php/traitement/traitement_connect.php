@@ -1,8 +1,8 @@
 <?php
-require_once('./class/user.php');
+require_once('../class/user.php');
 session_start();
-require_once('./include/bdd.php');
-require_once('.//include/function.php');
+require_once('../include/bdd.php');
+require_once('..//include/function.php');
 
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -10,18 +10,17 @@ if (isset($data)) {
     $email = $data['email'];
     $password = $data['password'];
 
-    $request = $bdd->prepare("SELECT * FROM users WHERE email = :email");
-    $request->execute(['email' => $email]);
-    $res = $request->fetch(PDO::FETCH_OBJ);
+    $user = new User(null, $email, null, null, $password, null);
 
     // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
-    if (isEmpty($email)) {
+    if (empty($email)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
-    } elseif (isEmpty($password)) {
+    } elseif (empty($password)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
-    } elseif ($request->rowCount() > 0) {
+    } elseif ($user->isExist($bdd)) {
+        $res = $user->returnUser($bdd);
         // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
         $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
         $recupUser->execute([

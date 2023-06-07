@@ -20,7 +20,7 @@ if (isset($_POST['updateUser'])) {
 // Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
-var_dump(count($allUserAdress));
+// var_dump(count($allUserAdress));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,11 +59,11 @@ var_dump(count($allUserAdress));
                     <!-- Formulaire pour MODIFIER les informations de l'utilisateur -->
                     <form action="" method="post" id="formProfil">
                         <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="<?= hd($_SESSION['user']->email) ?>" class="input" autofocus>
+                        <input type="text" id="email" name="email" value="<?= h($_SESSION['user']->email) ?>" class="input" autofocus>
                         <label for="firstname">Firstname</label>
-                        <input type="text" id="firstname" name="firstname" value="<?= hd($_SESSION['user']->firstname) ?>" class="input">
+                        <input type="text" id="firstname" name="firstname" value="<?= h($_SESSION['user']->firstname) ?>" class="input">
                         <label for="lastname">Lastname</label>
-                        <input type="text" id="lastname" name="lastname" value="<?= hd($_SESSION['user']->lastname) ?>" class="input">
+                        <input type="text" id="lastname" name="lastname" value="<?= h($_SESSION['user']->lastname) ?>" class="input">
                         <label for="password">Password</label>
                         <div class="password">
                             <input type="password" name="password" class="input" id="password">
@@ -95,9 +95,9 @@ var_dump(count($allUserAdress));
                         foreach ($allUserAdress as $userAdress) { ?>
                             <div class="adress">
                                 <div class="infoAdress">
-                                    <p class="name"><?= hd($_SESSION['user']->firstname) . " " . hd($_SESSION['user']->lastname) ?></p>
-                                    <p><?= hd($userAdress->numero) . " " . hd($userAdress->name) ?></p>
-                                    <p><?= hd($userAdress->city) . ", " . hd($userAdress->postcode) ?></p>
+                                    <p class="name"><?= htmlspecialchars($_SESSION['user']->firstname) . " " . htmlspecialchars($_SESSION['user']->lastname) ?></p>
+                                    <p><?= htmlspecialchars($userAdress->numero) . " " . htmlspecialchars($userAdress->name) ?></p>
+                                    <p><?= htmlspecialchars($userAdress->city) . ", " . htmlspecialchars($userAdress->postcode) ?></p>
                                     <p>France</p>
                                     <div>
                                         <p>N° de télephone:</p>

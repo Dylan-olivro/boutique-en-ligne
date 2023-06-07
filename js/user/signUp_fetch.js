@@ -7,7 +7,7 @@ formEl.addEventListener("submit", (event) => {
   const formData = new FormData(formEl);
   const data = Object.fromEntries(formData);
 
-  fetch("traitement_signup.php", {
+  fetch("traitement/traitement_signup.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",

@@ -28,69 +28,61 @@ class User
         return $this->role;
     }
 
-    public function register($bdd, $confirm_password)
+    public static function isAName($a)
+    {
+        return preg_match("#^(\pL+[- ']?)*\pL$#ui", $a) ? true : false;
+    }
+
+    public static function isToBig($a)
+    {
+        return mb_strlen($a) > 30 ? true : false;
+    }
+
+    public static function isToSmall($a)
+    {
+        return mb_strlen($a) < 2 ? true : false;
+    }
+    public static function isSame($a, $b)
+    {
+        return $a == $b ? true : false;
+    }
+
+    public function isExist($bdd): bool
     {
         // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà
         $recupUser = $bdd->prepare("SELECT email FROM users WHERE email = :email");
         $recupUser->execute(['email' => $this->email]);
-        $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(:email,:lastname,:firstname,:password)");
 
-        // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
-        if (isEmpty($this->email)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
-            return $error;
-        } elseif (isEmpty($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
-            return $error;
-        } elseif (isEmpty($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
-            return $error;
-        } elseif (isEmpty($this->password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
-            return $error;
-        } elseif (isEmpty($confirm_password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Confirm Password est vide';
-            return $error;
-        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
-            return $error;
-        } elseif (!isName($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
-            return $error;
-        } elseif (!isName($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
-            return $error;
-        } elseif (isToBig($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
-            return $error;
-        } elseif (isToSmall($this->firstname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
-            return $error;
-        } elseif (isToBig($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
-            return $error;
-        } elseif (isToSmall($this->lastname)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
-            return $error;
-        } elseif (!isSame($this->password, $confirm_password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes champs password sont différents.';
-            return $error;
-        } elseif ($recupUser->rowCount() > 0) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
-            return $error;
+        if ($recupUser->rowCount() > 0) {
+            return true;
         } else {
-            // Insert du nouveau utilisateur
-            $insertUser->execute([
-                'email' => $this->email,
-                'lastname' => $this->lastname,
-                'firstname' => $this->firstname,
-                'password' => password_hash($this->password, PASSWORD_DEFAULT)
-            ]);
-            header('Location: ./connect.php');
+            return false;
         }
     }
 
+    public function register($bdd)
+    {
+        $email = trim($this->email);
+        $lastname = trim($this->lastname);
+        $firstname = trim($this->firstname);
+        $password = password_hash(trim($this->password), PASSWORD_DEFAULT);
+        // Insert du nouveau utilisateur
+        $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(:email,:lastname,:firstname,:password)");
+        $insertUser->execute([
+            'email' => $email,
+            'lastname' => $lastname,
+            'firstname' => $firstname,
+            'password' => $password
+        ]);
+    }
 
+    public function returnUser($bdd)
+    {
+        $request = $bdd->prepare("SELECT * FROM users WHERE email = :email");
+        $request->execute(['email' => $this->email]);
+        $res = $request->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
     public function connect($bdd)
     {
         // Récupération des utilisateurs pour vérifier si l'adresse mail existe
@@ -98,17 +90,7 @@ class User
         $request->execute(['email' => $this->email]);
         $res = $request->fetch(PDO::FETCH_OBJ);
 
-        // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
-        if (isEmpty($this->email)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
-            return $error;
-        } elseif (isEmpty($this->password)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
-            return $error;
-        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
-            return $error;
-        } elseif ($request->rowCount() > 0) {
+        if ($request->rowCount() > 0) {
 
             // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
             $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");

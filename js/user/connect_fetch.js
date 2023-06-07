@@ -7,7 +7,7 @@ formEl.addEventListener("submit", (event) => {
   const formData = new FormData(formEl);
   const data = Object.fromEntries(formData);
 
-  fetch("traitement_connect.php", {
+  fetch("traitement/traitement_connect.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
@@ -24,6 +24,7 @@ formEl.addEventListener("submit", (event) => {
         //   // message.style.display = "flex";
         message.innerHTML = data.erreur;
       } else {
+        window.location.href = "http://localhost/boutique-en-ligne/index.php";
         //   // message.style.display = "flex";
         message.style.color = "green";
         message.innerHTML = data.succes;
