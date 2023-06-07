@@ -8,16 +8,16 @@ if (isset($_SESSION['user'])) {
 
 // ? Ne s'active que si le JAVASCRIPT est désactivé
 // L'insertion de l'utilisateur dans la base de donnée
-if (isset($_POST['submit'])) {
-    $email = trim(h($_POST['email']));
-    $firstname = trim(h($_POST['firstname']));
-    $lastname = trim(h($_POST['lastname']));
-    $password = trim($_POST['password']);
-    $confirm_password = trim($_POST['confirm_password']);
+// if (isset($_POST['submit'])) {
+//     $email = trim(h($_POST['email']));
+//     $firstname = trim(h($_POST['firstname']));
+//     $lastname = trim(h($_POST['lastname']));
+//     $password = trim($_POST['password']);
+//     $confirm_password = trim($_POST['confirm_password']);
 
-    $user = new User(null, $email, $firstname, $lastname, $password, null);
-    $user->register($bdd, $confirm_password);
-}
+//     $user = new User(null, $email, $firstname, $lastname, $password, null);
+//     $user->register($bdd, $confirm_password);
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -11,12 +11,12 @@ if ($_SESSION['user']->role == 0) {
 
 // Insert un produit avec une catégorie et une image
 if (isset($_POST['buttonAddItem'])) {
-    $nameItem = trim(h($_POST['nameItem']));
-    $descriptionItem = trim(h($_POST['descriptionItem']));
+    $nameItem = trim($_POST['nameItem']);
+    $descriptionItem = trim($_POST['descriptionItem']);
     $date = date("Y-m-d H:i:s");
-    $priceItem = trim(h(intval($_POST['priceItem'])));
-    $stockItem = trim(h(intval($_POST['stockItem'])));
-    $categoryItem = trim(h(intval($_POST['categoryItem'])));
+    $priceItem = trim(intval($_POST['priceItem']));
+    $stockItem = trim(intval($_POST['stockItem']));
+    $categoryItem = trim(intval($_POST['categoryItem']));
     // $mainImage = trim(h(intval($_POST['mainImage'])));
 
     $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
@@ -41,12 +41,13 @@ if (isset($_POST['buttonDeleteItem'])) {
     $itemID = trim(intval($_POST['itemID']));
     $item = new Item($itemID, null, null, null, null, null, null);
     $item->deleteItem($bdd);
+    header('Location: cartPage.php');
 }
 
 // Insert une catégorie Parent/Enfant
 if (isset($_POST['buttonAddCategory'])) {
-    $nameCategory = trim(h($_POST['nameCategory']));
-    $idParent = trim(h(intval($_POST['idParent'])));
+    $nameCategory = trim($_POST['nameCategory']);
+    $idParent = trim(intval($_POST['idParent']));
 
     $category = new Category(null, $nameCategory, $idParent);
     $category->addCategory($bdd);
@@ -54,7 +55,7 @@ if (isset($_POST['buttonAddCategory'])) {
 
 // Supprime une catégorie Parent/Enfant
 if (isset($_POST['buttonDeleteCategory'])) {
-    $idCategory = trim(h(intval($_POST['idCategory'])));
+    $idCategory = trim(intval($_POST['idCategory']));
 
     $category = new Category($idCategory, null, null);
     $category->deleteCategory($bdd);
@@ -62,8 +63,8 @@ if (isset($_POST['buttonDeleteCategory'])) {
 
 // Permet de modifier le nom d'une catégorie
 if (isset($_POST['buttonUpdateCategory'])) {
-    $updateIdCategory = trim(h(intval($_POST['updateIdCategory'])));
-    $updateNameCategory = trim(h($_POST['updateNameCategory']));
+    $updateIdCategory = trim(intval($_POST['updateIdCategory']));
+    $updateNameCategory = trim($_POST['updateNameCategory']);
 
     $category = new Category($updateIdCategory, $updateNameCategory, null);
     $category->updateCategory($bdd);
@@ -84,7 +85,7 @@ if (isset($_POST['insertImage'])) {
 function getEditItemID()
 {
     if (isset($_GET['editItemID'])) {
-        $id = trim(h(intval($_GET['editItemID'])));
+        $id = trim(intval($_GET['editItemID']));
         return $id;
     }
 }
@@ -171,12 +172,12 @@ function getEditItemID()
                     <!-- Formulaire pour MODIFIER un produit -->
                     <form action="" method="get" id="formEditItem">
                         <label for="editItemID">ID item</label>
-                        <input type="number" name="editItemID" id="editItemID" value="<?= hd(getEditItemID()); ?>">
+                        <input type="number" name="editItemID" id="editItemID" value="<?= htmlspecialchars(getEditItemID()); ?>">
                         <input type="submit" name="editItem" value="Modifier">
                     </form>
                     <?php
                     if (isset($_GET['editItemID'])) {
-                        $editItemID = trim(h(intval($_GET['editItemID'])));
+                        $editItemID = trim(intval($_GET['editItemID']));
                         $item = new Item($editItemID, null, null, null, null, null);
                         $infoItem = $item->returnItem($bdd);
                     ?>
@@ -184,27 +185,27 @@ function getEditItemID()
                         <!-- Affichage du produit à modifier -->
                         <form action="" method="post" id="formUpdateItem">
                             <label for="updateNameItem">Name</label>
-                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= hd($infoItem->name) ?>">
+                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= htmlspecialchars($infoItem->name) ?>">
 
                             <label for="updateDescriptionItem">Description</label>
-                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= hd($infoItem->description) ?>">
+                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= htmlspecialchars($infoItem->description) ?>">
 
                             <label for="updatePriceItem">Price</label>
-                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= hd($infoItem->price) ?>">
+                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= htmlspecialchars($infoItem->price) ?>">
 
                             <label for="updateSotckItem">Stock</label>
-                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= hd($infoItem->stock) ?>">
+                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= htmlspecialchars($infoItem->stock) ?>">
 
                             <input type="submit" name="updateItem" value="Update">
                         </form>
                     <?php
                         // Mise à jour des informations du produit
                         if (isset($_POST['updateItem'])) {
-                            $updateNameItem = trim(h($_POST['updateNameItem']));
-                            $updateDescriptionItem = trim(h($_POST['updateDescriptionItem']));
-                            $updatePriceItem = trim(h(intval($_POST['updatePriceItem'])));
-                            $updateSotckItem = trim(h(intval($_POST['updateSotckItem'])));
-                            $updateImageItem = trim(h($_POST['updateImageItem']));
+                            $updateNameItem = trim($_POST['updateNameItem']);
+                            $updateDescriptionItem = trim($_POST['updateDescriptionItem']);
+                            $updatePriceItem = trim(intval($_POST['updatePriceItem']));
+                            $updateSotckItem = trim(intval($_POST['updateSotckItem']));
+                            $updateImageItem = trim($_POST['updateImageItem']);
 
                             $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
                             $item->editItem($bdd);
@@ -276,8 +277,8 @@ function getEditItemID()
 
                             <form method="post" class="d-flex flex-wrap justify-content-center" id="formUser">
                                 <div class="w-25 border rounded text-center m-2 pb-2 bg-primary-subtle">
-                                    <p class="m-1">Email : <?= hd($value['email']) ?></p>
-                                    <p class="m-1">User : <?= hd($value['firstname']) ?></p>
+                                    <p class="m-1">Email : <?= htmlspecialchars($value['email']) ?></p>
+                                    <p class="m-1">User : <?= htmlspecialchars($value['firstname']) ?></p>
                                     <p class="m-1">Role :
                                         <?php if ($value['role'] == 2) {
                                             echo 'Administrator';
@@ -321,7 +322,7 @@ function getEditItemID()
                         <?php
                         foreach ($result as $key => $value) {
                             if ($value['role'] == 2) : ?>
-                                <p class="text-warning fw-bold fs-5"><?= hd($value['firstname']) ?>, <?= hd($value['email']) ?>.</p>
+                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['firstname']) ?>, <?= htmlspecialchars($value['email']) ?>.</p>
                         <?php
                             endif;
                         }
@@ -332,7 +333,7 @@ function getEditItemID()
                         <?php
                         foreach ($result as $key => $value) {
                             if ($value['role'] == 1) : ?>
-                                <p class="text-warning fw-bold fs-5"><?= hd($value['firstname']) ?>, <?= hd($value['email']) ?>.</p>
+                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['firstname']) ?>, <?= htmlspecialchars($value['email']) ?>.</p>
                         <?php
                             endif;
                         }

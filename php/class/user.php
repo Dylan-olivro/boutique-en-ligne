@@ -125,6 +125,11 @@ class User
 
     public function update($bdd)
     {
+
+        $email = trim($this->email);
+        $lastname = trim($this->lastname);
+        $firstname = trim($this->firstname);
+        $password = trim($this->password);
         // Récupération des informations de l'utilisateur
         $request = $bdd->prepare("SELECT * FROM users WHERE id = :id");
         $request->execute(['id' => $this->id]);
@@ -133,43 +138,43 @@ class User
         //Récupère les utilisateurs pour voir si la nouvelle adresse mail de l'utilisateur est déjà utilisé
         $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND id != :id");
         $recupUser->execute([
-            'email' => $this->email,
+            'email' => $email,
             'id' => $this->id
         ]);
         $insertUser = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id ");
 
         // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
-        if (isEmpty($this->email)) {
+        if (isEmpty($email)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
             return $error;
-        } elseif (isEmpty($this->firstname)) {
+        } elseif (isEmpty($firstname)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
             return $error;
-        } elseif (isEmpty($this->lastname)) {
+        } elseif (isEmpty($lastname)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
             return $error;
-        } elseif (isEmpty($this->password)) {
+        } elseif (isEmpty($password)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
             return $error;
-        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
             return $error;
-        } elseif (!isName($this->firstname)) {
+        } elseif (!isName($firstname)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
             return $error;
-        } elseif (!isName($this->lastname)) {
+        } elseif (!isName($lastname)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
             return $error;
-        } elseif (isToBig($this->firstname)) {
+        } elseif (isToBig($firstname)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
             return $error;
-        } elseif (isToSmall($this->firstname)) {
+        } elseif (isToSmall($firstname)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
             return $error;
-        } elseif (isToBig($this->lastname)) {
+        } elseif (isToBig($lastname)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
             return $error;
-        } elseif (isToSmall($this->lastname)) {
+        } elseif (isToSmall($lastname)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
             return $error;
         } elseif ($recupUser->rowCount() > 0) {
@@ -177,23 +182,22 @@ class User
             return $error;
         } else {
             // Vérification du mot de passe 
-            if ($this->password != password_verify($this->password, $res->password)) {
+            if ($password != password_verify($password, $res->password)) {
                 $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
                 return $error;
             } else {
                 // Mise à jour des informations de l'utilisateur
                 $insertUser->execute([
-                    'email' => $this->email,
-                    'firstname' => $this->firstname,
-                    'lastname' => $this->lastname,
+                    'email' => $email,
+                    'firstname' => $firstname,
+                    'lastname' => $lastname,
                     'password' => $res->password,
                     'id' => $this->id
                 ]);
-                $_SESSION['user']->email = $this->email;
-                $_SESSION['user']->firstname = $this->firstname;
-                $_SESSION['user']->lastname = $this->lastname;
-                $_SESSION['user']->password = $this->password;
-                header('Location:./profil.php');
+                $_SESSION['user']->email = $email;
+                $_SESSION['user']->firstname = $firstname;
+                $_SESSION['user']->lastname = $lastname;
+                $_SESSION['user']->password = $password;
             }
         }
     }

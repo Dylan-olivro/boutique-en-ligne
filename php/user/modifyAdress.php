@@ -74,13 +74,13 @@ if (isset($_POST['submit'])) {
         <!-- Formulaire pour MODIFIER l'adresse de l'utilisateur -->
         <form action="" method="post" id="formUpdateAdress">
             <label for="numero">Numero</label>
-            <input type="number" name="numero" id="numero" value="<?= $userAdress->numero ?>" autofocus>
+            <input type="number" name="numero" id="numero" value="<?= htmlspecialchars($userAdress->numero) ?>" autofocus>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="<?= $userAdress->name ?>">
+            <input type="text" name="name" id="name" value="<?= htmlspecialchars($userAdress->name) ?>">
             <label for="postcode">Postcode</label>
-            <input type="number" name="postcode" id="postcode" value="<?= $userAdress->postcode ?>">
+            <input type="number" name="postcode" id="postcode" value="<?= htmlspecialchars($userAdress->postcode) ?>">
             <label for="city">City</label>
-            <input type="text" name="city" id="city" value="<?= $userAdress->city ?>">
+            <input type="text" name="city" id="city" value="<?= htmlspecialchars($userAdress->city) ?>">
             <p id="message">
                 <?php if (isset($error)) {
                     echo $error;

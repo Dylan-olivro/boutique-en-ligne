@@ -42,7 +42,6 @@ class Adress
             'id' => $this->id,
             'id_user' => $this->id_user
         ]);
-        header('Location: ../profil.php');
     }
 
     public function updateAdress($bdd)

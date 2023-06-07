@@ -31,6 +31,5 @@ class Cart
             'id_user' => $this->id_user,
             'id_item' => $this->id_item
         ]);
-        header('Location: cartPage.php');
     }
 }

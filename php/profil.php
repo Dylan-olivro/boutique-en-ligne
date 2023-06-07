@@ -9,13 +9,14 @@ if (!isset($_SESSION['user'])) {
 
 // Met à jour les informations de l'utilisateur
 if (isset($_POST['updateUser'])) {
-    $email = trim(h($_POST['email']));
-    $firstname = trim(h($_POST['firstname']));
-    $lastname = trim(h($_POST['lastname']));
-    $password = trim($_POST['password']);
+    $email = $_POST['email'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $password = $_POST['password'];
 
     $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
     $user->update($bdd);
+    header('Location:./profil.php');
 }
 // Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
@@ -59,11 +60,11 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <!-- Formulaire pour MODIFIER les informations de l'utilisateur -->
                     <form action="" method="post" id="formProfil">
                         <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="<?= h($_SESSION['user']->email) ?>" class="input" autofocus>
+                        <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->email) ?>" class="input" autofocus>
                         <label for="firstname">Firstname</label>
-                        <input type="text" id="firstname" name="firstname" value="<?= h($_SESSION['user']->firstname) ?>" class="input">
+                        <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($_SESSION['user']->firstname) ?>" class="input">
                         <label for="lastname">Lastname</label>
-                        <input type="text" id="lastname" name="lastname" value="<?= h($_SESSION['user']->lastname) ?>" class="input">
+                        <input type="text" id="lastname" name="lastname" value="<?= htmlspecialchars($_SESSION['user']->lastname) ?>" class="input">
                         <label for="password">Password</label>
                         <div class="password">
                             <input type="password" name="password" class="input" id="password">
@@ -116,7 +117,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                             if (isset($_POST['deleteAdress' . $userAdress->id])) {
                                 $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
                                 $adress->deleteAdress($bdd);
-                                header('Location: profil.php');
+                                header('Location: ../profil.php');
                             }
                         }
                         ?>
@@ -162,8 +163,8 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                                 <div class="command">
                                     <img src="../assets/img_item/<?= $key->name_image ?>" alt="">
                                     <div>
-                                        <p><?= hd($key->name) ?></p>
-                                        <p><?= hd($key->price) ?></p>
+                                        <p><?= htmlspecialchars($key->name) ?></p>
+                                        <p><?= htmlspecialchars($key->price) ?></p>
                                         <a href="./detail.php?id=<?= $key->id_item ?>"><button>Acheter a nouveau</button></a>
                                     </div>
                                 </div>
