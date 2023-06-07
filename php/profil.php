@@ -6,18 +6,18 @@ require_once('./include/required.php');
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
-
+// var_dump($_SESSION);
 // Met à jour les informations de l'utilisateur
-if (isset($_POST['updateUser'])) {
-    $email = $_POST['email'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $password = $_POST['password'];
+// if (isset($_POST['updateUser'])) {
+//     $email = $_POST['email'];
+//     $firstname = $_POST['firstname'];
+//     $lastname = $_POST['lastname'];
+//     $password = $_POST['password'];
 
-    $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
-    $user->update($bdd);
-    header('Location:./profil.php');
-}
+//     $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
+//     $user->update($bdd);
+//     header('Location:./profil.php');
+// }
 // Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
@@ -45,7 +45,8 @@ var_dump(count($allUserAdress));
     <script src="../js/function.js" defer></script>
     <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/user/profil.js" defer></script>
+    <!-- <script src="../js/user/profil.js" defer></script> -->
+    <script src="../js/user/profil_fetch.js" defer></script>
 
 </head>
 
@@ -59,6 +60,7 @@ var_dump(count($allUserAdress));
                 <div class="profil">
                     <!-- Formulaire pour MODIFIER les informations de l'utilisateur -->
                     <form action="" method="post" id="formProfil">
+                        <h3>Modifier ces infos personnelles</h3>
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->email) ?>" class="input" autofocus>
                         <label for="firstname">Firstname</label>
@@ -82,6 +84,7 @@ var_dump(count($allUserAdress));
                 </div>
                 <!-- Affichage des adresses -->
                 <div class="sectionAdress">
+                    <h3>Adresses enregistrées</h3>
                     <div class="addAdress">
                         <?php if (count($allUserAdress) < 6) { ?>
                             <a href="./user/addAdress.php" id="addAdress">

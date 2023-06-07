@@ -1,7 +1,7 @@
 const email = document.querySelector("#email");
-const password = document.querySelector("#password");
 const message = document.querySelector("#message");
 const formLogin = document.querySelector("#formLogin");
+const password = document.querySelector("#password");
 const buttonShow = document.getElementById("showPassword");
 
 function isLogin() {

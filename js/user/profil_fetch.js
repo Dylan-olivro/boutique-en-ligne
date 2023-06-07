@@ -1,11 +1,9 @@
-const formEl = document.querySelector("#signup");
+const formEl = document.querySelector("#formProfil");
 const message = document.querySelector("#message");
 
-let cpassword = document.querySelector("#confirm_password");
 let password = document.querySelector("#password");
 
 const buttonShow = document.getElementById("showPassword");
-const buttonShow2 = document.getElementById("showConfirmPassword");
 
 formEl.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -13,7 +11,7 @@ formEl.addEventListener("submit", (event) => {
   const formData = new FormData(formEl);
   const data = Object.fromEntries(formData);
 
-  fetch("traitement/traitement_signup.php", {
+  fetch("traitement/traitement_profil.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
@@ -39,4 +37,3 @@ formEl.addEventListener("submit", (event) => {
 });
 
 showPassword(buttonShow, password);
-showPassword(buttonShow2, cpassword);

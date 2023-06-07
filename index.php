@@ -29,9 +29,9 @@
     <input type="text" name="a" id="a">
 
     <?php
-
+    // ? FAIRE UNEZ LIMITE DE 5 COMMANDES AFFICHÉ PUIS UN LIEN VERS UNE PAGE AVES TOUTES LES COMMANDES
     // ? Besoin d'actualiser pour afficher la bonne Nav Bar après s'être connecté
-
+    // ! FAIRE UNE REDIRECTION POUŔLA CONNCETOIN ET LA MODIFICATION DE PROFIL
     // ! MODIFIER LA REDIRECTION DANS LE FICHIER CONNECTFETCH.JS 
     // ! TRAVAILLER LE CSS SUR DU 1920/1080
 

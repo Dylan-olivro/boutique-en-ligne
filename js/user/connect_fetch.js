@@ -1,6 +1,9 @@
 const formEl = document.querySelector("#formLogin");
 const message = document.querySelector("#message");
 
+const password = document.querySelector("#password");
+const buttonShow = document.getElementById("showPassword");
+
 formEl.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -33,3 +36,5 @@ formEl.addEventListener("submit", (event) => {
     })
     .catch((error) => console.log(error));
 });
+
+showPassword(buttonShow, password);
