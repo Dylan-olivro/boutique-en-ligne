@@ -20,7 +20,7 @@ if (isset($data)) {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
     } elseif ($user->isExist($bdd)) {
-        $res = $user->returnUser($bdd);
+        $res = $user->returnUserByEmail($bdd);
         // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
         $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
         $recupUser->execute([

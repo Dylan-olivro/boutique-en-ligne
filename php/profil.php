@@ -6,18 +6,18 @@ require_once('./include/required.php');
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
-
+// var_dump($_SESSION);
 // Met à jour les informations de l'utilisateur
-if (isset($_POST['updateUser'])) {
-    $email = $_POST['email'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $password = $_POST['password'];
+// if (isset($_POST['updateUser'])) {
+//     $email = $_POST['email'];
+//     $firstname = $_POST['firstname'];
+//     $lastname = $_POST['lastname'];
+//     $password = $_POST['password'];
 
-    $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
-    $user->update($bdd);
-    header('Location:./profil.php');
-}
+//     $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
+//     $user->update($bdd);
+//     header('Location:./profil.php');
+// }
 // Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
@@ -45,7 +45,8 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
     <script src="../js/function.js" defer></script>
     <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/user/profil.js" defer></script>
+    <!-- <script src="../js/user/profil.js" defer></script> -->
+    <script src="../js/user/profil_fetch.js" defer></script>
 
 </head>
 
@@ -59,6 +60,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 <div class="profil">
                     <!-- Formulaire pour MODIFIER les informations de l'utilisateur -->
                     <form action="" method="post" id="formProfil">
+                        <h3>Modifier ces infos personnelles</h3>
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->email) ?>" class="input" autofocus>
                         <label for="firstname">Firstname</label>
@@ -72,9 +74,11 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                         </div>
                         <!-- les messages d'erreurs -->
                         <p id="message">
-                            <?php if (isset($user)) {
-                                echo $user->update($bdd);
-                            } ?>
+                            <?php
+                            // if (isset($user)) {
+                            //     echo $user->update($bdd);
+                            // }
+                            ?>
                         </p>
                         <input type="submit" name="updateUser" id="submit" value="Enregistrer">
                         <a href="./user/modifyPassword.php" id="updatePassword">Changer de mot de passe</a>
@@ -82,13 +86,20 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 </div>
                 <!-- Affichage des adresses -->
                 <div class="sectionAdress">
+                    <h3>Adresses enregistrées</h3>
                     <div class="addAdress">
-                        <a href="./user/addAdress.php" id="addAdress">
+                        <?php if (count($allUserAdress) < 6) { ?>
+                            <a href="./user/addAdress.php" id="addAdress">
+                                <div class="link">
+                                    <span>Ajouter une adresse</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                            </a>
+                        <?php } else { ?>
                             <div class="link">
-                                <span>Ajouter une adresse</span>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>Nombres d'adresses maximum</span>
                             </div>
-                        </a>
+                        <?php } ?>
                     </div>
                     <div class="allAdress">
 
@@ -117,7 +128,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                             if (isset($_POST['deleteAdress' . $userAdress->id])) {
                                 $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
                                 $adress->deleteAdress($bdd);
-                                header('Location: ../profil.php');
+                                header('Location: profil.php');
                             }
                         }
                         ?>
@@ -149,11 +160,11 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                             <div class="infoCommand">
                                 <div>
                                     <p>COMMANDE ÉFFECTUÉE LE</p>
-                                    <p><?= $key2->date ?></p>
+                                    <p><?= htmlspecialchars($key2->date) ?></p>
                                 </div>
                                 <div>
                                     <p>TOTAL</p>
-                                    <p><?= $key2->total ?>€</p>
+                                    <p><?= htmlspecialchars($key2->total) ?>€</p>
                                 </div>
                                 <div>
                                     <p>N° DE COMMANDE</p>

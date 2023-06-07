@@ -29,10 +29,10 @@
     <input type="text" name="a" id="a">
 
     <?php
-
+    // ? FAIRE UNEZ LIMITE DE 5 COMMANDES AFFICHÉ PUIS UN LIEN VERS UNE PAGE AVES TOUTES LES COMMANDES
     // ? Besoin d'actualiser pour afficher la bonne Nav Bar après s'être connecté
-
-
+    // ! FAIRE UNE REDIRECTION POUŔLA CONNCETOIN ET LA MODIFICATION DE PROFIL
+    // ! MODIFIER LA REDIRECTION DANS LE FICHIER CONNECTFETCH.JS 
     // ! TRAVAILLER LE CSS SUR DU 1920/1080
 
     // * Ajout de commentaire sur tout mon code + changement des execute + ajout de condition pour les formulaires et de securité sur les pages en PHP et en JS + retirer les REQUIRED + ajout d'une petite gestion de stock a la commande + blocker la commande si le stock n'est pas disponible + ajout du header.js sur toutes les pages

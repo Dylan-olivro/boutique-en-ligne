@@ -4,6 +4,12 @@
 if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
 }
+
+$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
+$allUserAdress = $adress->returnAdressByUser($bdd);
+var_dump(count($allUserAdress));
+
+
 // Insert une adresse
 if (isset($_POST['submit'])) {
     $numero = $_POST['numero'];
@@ -23,6 +29,8 @@ if (isset($_POST['submit'])) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
     } elseif (!isPostcode($postcode)) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
+    } elseif (count($allUserAdress) >= 6) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspNombres maximum d\'adresse atteint (6).';
     } else {
         $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city);
         $adress->addAdress($bdd);
