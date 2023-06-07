@@ -21,7 +21,7 @@ if (isset($_POST['updateUser'])) {
 // Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
-// var_dump(count($allUserAdress));
+var_dump(count($allUserAdress));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,12 +83,18 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 <!-- Affichage des adresses -->
                 <div class="sectionAdress">
                     <div class="addAdress">
-                        <a href="./user/addAdress.php" id="addAdress">
+                        <?php if (count($allUserAdress) < 6) { ?>
+                            <a href="./user/addAdress.php" id="addAdress">
+                                <div class="link">
+                                    <span>Ajouter une adresse</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                            </a>
+                        <?php } else { ?>
                             <div class="link">
-                                <span>Ajouter une adresse</span>
-                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>Nombres d'adresses maximum</span>
                             </div>
-                        </a>
+                        <?php } ?>
                     </div>
                     <div class="allAdress">
 
@@ -117,7 +123,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                             if (isset($_POST['deleteAdress' . $userAdress->id])) {
                                 $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
                                 $adress->deleteAdress($bdd);
-                                header('Location: ../profil.php');
+                                header('Location: profil.php');
                             }
                         }
                         ?>
