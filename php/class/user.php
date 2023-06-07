@@ -18,7 +18,7 @@ class User
         $this->role = $role;
     }
 
-
+    // * STATIC FUNCTION -------------------------------------------------------------
     public static function isAName($a): bool
     {
         return preg_match("#^(\pL+[- ']?)*\pL$#ui", $a) ? true : false;
@@ -38,35 +38,7 @@ class User
         return $a == $b ? true : false;
     }
 
-    public function isExist($bdd): bool
-    {
-        // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà
-        $recupUser = $bdd->prepare("SELECT email FROM users WHERE email = :email");
-        $recupUser->execute(['email' => $this->email]);
-
-        if ($recupUser->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function isExistExceptCurrentEmail($bdd): bool
-    {
-        // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà
-        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND id != :id");
-        $recupUser->execute([
-            'email' => $this->email,
-            'id' => $this->id
-        ]);
-
-        if ($recupUser->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    // * MAIN FUNCTION -------------------------------------------------------------
     public function register($bdd)
     {
         $email = trim($this->email);
@@ -82,25 +54,6 @@ class User
             'password' => $password
         ]);
     }
-
-    public function returnUserByEmail($bdd)
-    {
-        $request = $bdd->prepare("SELECT * FROM users WHERE email = :email");
-        $request->execute(['email' => $this->email]);
-        $res = $request->fetch(PDO::FETCH_OBJ);
-        return $res;
-    }
-
-
-    public function returnUserById($bdd)
-    {
-        $request = $bdd->prepare("SELECT * FROM users WHERE id = :id");
-        $request->execute(['id' => $this->id]);
-        $res = $request->fetch(PDO::FETCH_OBJ);
-        return $res;
-    }
-
-
 
     public function connect($bdd)
     {
@@ -196,9 +149,56 @@ class User
             header('Location:../profil.php');
         }
     }
+
     public function disconnect()
     {
         unset($_SESSION['user']);
+    }
+
+    // * SECONDARY FUNCTION -------------------------------------------------------------
+    public function isExist($bdd): bool
+    {
+        // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà
+        $recupUser = $bdd->prepare("SELECT email FROM users WHERE email = :email");
+        $recupUser->execute(['email' => $this->email]);
+
+        if ($recupUser->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isExistExceptCurrentEmail($bdd): bool
+    {
+        // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà sauf celle qui est utilisé
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND id != :id");
+        $recupUser->execute([
+            'email' => $this->email,
+            'id' => $this->id
+        ]);
+
+        if ($recupUser->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function returnUserByEmail($bdd)
+    {
+        $request = $bdd->prepare("SELECT * FROM users WHERE email = :email");
+        $request->execute(['email' => $this->email]);
+        $res = $request->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public function returnUserById($bdd)
+    {
+        $request = $bdd->prepare("SELECT * FROM users WHERE id = :id");
+        $request->execute(['id' => $this->id]);
+        $res = $request->fetch(PDO::FETCH_OBJ);
+        return $res;
     }
 
     public function isConnected(): bool
@@ -219,6 +219,8 @@ class User
         return $this->password;
         return $this->role;
     }
+
+    // * GETTER AND SETTER
     /**
      * Get the value of id
      */

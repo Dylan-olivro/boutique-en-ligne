@@ -21,7 +21,7 @@ if (!isset($_SESSION['user'])) {
 // Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
-var_dump(count($allUserAdress));
+// var_dump(count($allUserAdress));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,9 +74,11 @@ var_dump(count($allUserAdress));
                         </div>
                         <!-- les messages d'erreurs -->
                         <p id="message">
-                            <?php if (isset($user)) {
-                                echo $user->update($bdd);
-                            } ?>
+                            <?php
+                            // if (isset($user)) {
+                            //     echo $user->update($bdd);
+                            // }
+                            ?>
                         </p>
                         <input type="submit" name="updateUser" id="submit" value="Enregistrer">
                         <a href="./user/modifyPassword.php" id="updatePassword">Changer de mot de passe</a>
@@ -158,11 +160,11 @@ var_dump(count($allUserAdress));
                             <div class="infoCommand">
                                 <div>
                                     <p>COMMANDE ÉFFECTUÉE LE</p>
-                                    <p><?= $key2->date ?></p>
+                                    <p><?= htmlspecialchars($key2->date) ?></p>
                                 </div>
                                 <div>
                                     <p>TOTAL</p>
-                                    <p><?= $key2->total ?>€</p>
+                                    <p><?= htmlspecialchars($key2->total) ?>€</p>
                                 </div>
                                 <div>
                                     <p>N° DE COMMANDE</p>
