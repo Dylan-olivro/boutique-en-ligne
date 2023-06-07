@@ -8,13 +8,13 @@ require_once('./include/required.php');
 
 var_dump($_SESSION);
 // Récupère les informations de l'utilisateur dans la base de données et les compare aux informations rentrées dans le formulaire
-if (isset($_POST['submit'])) {
-    $email = trim(h($_POST['email']));
-    $password = trim($_POST['password']);
+// if (isset($_POST['submit'])) {
+//     $email = trim(h($_POST['email']));
+//     $password = trim($_POST['password']);
 
-    $user = new User(null, $email, null, null, $password, null);
-    $user->connect($bdd);
-}
+//     $user = new User(null, $email, null, null, $password, null);
+//     $user->connect($bdd);
+// }
 ?>
 
 <!DOCTYPE html>

@@ -66,14 +66,14 @@ if (isset($_POST['ajouter'])) {
                     <img src="../assets/img_item/<?= $result[0]->name_image ?>" alt="">
                 </div>
                 <div id="detailItem">
-                    <p><?= hd($resultItem->name) ?></p>
+                    <p><?= htmlspecialchars($resultItem->name) ?></p>
 
                     <div id="description">Description :
                         <p><?= htmlspecialchars_decode($resultItem->description) ?></p>
                     </div>
 
                     <div id="price_cart">
-                        <p><?= hd($resultItem->price) ?>€</p>
+                        <p><?= htmlspecialchars($resultItem->price) ?>€</p>
                         <?php
                         if (isset($_SESSION['user'])) {
                             if ($resultItem->stock > 0) { ?>

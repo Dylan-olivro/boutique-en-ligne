@@ -28,7 +28,6 @@ class Item
             'price' => $this->price,
             'stock' => $this->stock
         ]);
-        // header('Location: admin.php');
     }
     public function deleteItem($bdd)
     {
