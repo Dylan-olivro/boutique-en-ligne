@@ -106,7 +106,7 @@ if (isset($_POST['vider'])) {
             <select name="adress" id="">
                 <?php
                 foreach ($res as $key) {
-                    $orderAdress = sprintf('%d %s, %d %s', htmlspecialchars($key->numero), htmlspecialchars($key->name), htmlspecialchars($key->postcode), htmlspecialchars($key->city));
+                    $orderAdress = sprintf('%d %s, %d %s', htmlspecialchars($key->adress_numero), htmlspecialchars($key->adress_name), htmlspecialchars($key->adress_postcode), htmlspecialchars($key->adress_city));
                 ?>
                     <option value="<?= $orderAdress ?>">
                         <?= $orderAdress ?>

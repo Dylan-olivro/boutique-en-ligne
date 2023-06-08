@@ -2,26 +2,26 @@
 class Adress
 {
     public $id;
-    public $id_user;
+    public $user_id;
     public $numero;
     public $name;
     public $postcode;
     public $city;
     public $telephone;
-    public $prenom;
-    public $nom;
+    public $firstname;
+    public $lastname;
 
-    public function __construct($id, $id_user, $numero, $name, $postcode, $city, $telephone, $prenom, $nom)
+    public function __construct($id, $user_id, $numero, $name, $postcode, $city, $telephone, $firstname, $lastname)
     {
         $this->id = $id;
-        $this->id_user = $id_user;
+        $this->user_id = $user_id;
         $this->numero = $numero;
         $this->name = $name;
         $this->postcode = $postcode;
         $this->city = $city;
         $this->telephone = $telephone;
-        $this->prenom = $prenom;
-        $this->nom = $nom;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
     }
 
     public static function formatTelephoneAccept($a): bool
@@ -31,54 +31,54 @@ class Adress
 
     public function addAdress($bdd)
     {
-        $id_user = intval($this->id_user);
+        $user_id = intval($this->user_id);
         $numero = intval(trim($this->numero));
         $name = trim($this->name);
         $postcode = trim($this->postcode);
         $city = strtoupper(trim($this->city));
         $telephone = trim($this->telephone);
-        $prenom = ucfirst(trim($this->prenom));
-        $nom = ucfirst(trim($this->nom));
+        $firstname = ucfirst(trim($this->firstname));
+        $lastname = ucfirst(trim($this->lastname));
 
-        $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city,telephone,prenom,nom)  VALUES(:id_user,:numero,:name,:postcode,:city,:telephone,:prenom,:nom)');
+        $addAdress = $bdd->prepare('INSERT INTO adress (user_id,adress_numero,adress_name,adress_postcode,adress_city,adress_telephone,adress_firstname,adress_lastname)  VALUES(:user_id,:adress_numero,:adress_name,:adress_postcode,:adress_city,:adress_telephone,:adress_firstname,:adress_lastname)');
         $addAdress->execute([
-            'id_user' => $id_user,
-            'numero' => $numero,
-            'name' => $name,
-            'postcode' => $postcode,
-            'city' => $city,
-            'telephone' => $telephone,
-            'prenom' => $prenom,
-            'nom' => $nom
+            'user_id' => $user_id,
+            'adress_numero' => $numero,
+            'adress_name' => $name,
+            'adress_postcode' => $postcode,
+            'adress_city' => $city,
+            'adress_telephone' => $telephone,
+            'adress_firstname' => $firstname,
+            'adress_lastname' => $lastname
         ]);
         // header('Location: ../profil.php');
     }
     public function deleteAdress($bdd)
     {
-        $deleteAdress = $bdd->prepare('DELETE FROM adress WHERE id = :id AND id_user = :id_user');
+        $deleteAdress = $bdd->prepare('DELETE FROM adress WHERE adress_id = :adress_id AND user_id = :user_id');
         $deleteAdress->execute([
-            'id' => $this->id,
-            'id_user' => $this->id_user
+            'adress_id' => $this->id,
+            'user_id' => $this->user_id
         ]);
     }
 
     public function updateAdress($bdd)
     {
 
-        $id_user = intval($this->id_user);
+        $user_id = intval($this->user_id);
         $numero = intval(trim($this->numero));
         $name = trim($this->name);
         $postcode = trim($this->postcode);
         $city = strtoupper(trim($this->city));
 
-        $updateAdress = $bdd->prepare('UPDATE adress SET numero = :numero, name = :name, postcode = :postcode, city = :city WHERE id = :id AND id_user = :id_user');
+        $updateAdress = $bdd->prepare('UPDATE adress SET adress_numero = :adress_numero, adress_name = :adress_name, adress_postcode = :adress_postcode, adress_city = :adress_city WHERE adress_id = :adress_id AND user_id = :user_id');
         $updateAdress->execute([
-            'numero' => $numero,
-            'name' => $name,
-            'postcode' => $postcode,
-            'city' => $city,
-            'id' => $this->id,
-            'id_user' => $id_user
+            'adress_numero' => $numero,
+            'adress_name' => $name,
+            'adress_postcode' => $postcode,
+            'adress_city' => $city,
+            'adress_id' => $this->id,
+            'user_id' => $user_id
         ]);
         // header('Location: ../profil.php');
 
@@ -86,10 +86,10 @@ class Adress
 
     public function returnAdressById($bdd)
     {
-        $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE id = :id AND id_user = :id_user');
+        $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE adress_id = :adress_id AND user_id = :user_id');
         $returnAdress->execute([
-            'id' => $this->id,
-            'id_user' => $_SESSION['user']->user_id
+            'adress_id' => $this->id,
+            'user_id' => $_SESSION['user']->user_id
         ]);
         $result = $returnAdress->fetch(PDO::FETCH_OBJ);
         return $result;
@@ -97,8 +97,8 @@ class Adress
 
     public function returnAdressByUser($bdd)
     {
-        $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE id_user = :id_user');
-        $returnAdress->execute(['id_user' => $this->id_user]);
+        $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE user_id = :user_id');
+        $returnAdress->execute(['user_id' => $this->user_id]);
         $result = $returnAdress->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
@@ -133,21 +133,21 @@ class Adress
     }
 
     /**
-     * Get the value of id_user
+     * Get the value of user_id
      */
     public function getId_user()
     {
-        return $this->id_user;
+        return $this->user_id;
     }
 
     /**
-     * Set the value of id_user
+     * Set the value of user_id
      *
      * @return  self
      */
-    public function setId_user($id_user)
+    public function setId_user($user_id)
     {
-        $this->id_user = $id_user;
+        $this->user_id = $user_id;
 
         return $this;
     }

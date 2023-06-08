@@ -42,10 +42,10 @@ if (isset($_POST['updateUser'])) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
     } else {
         $res = $user->returnUserById($bdd);
-        if ($password != password_verify($password, $res->password)) {
+        if ($password != password_verify($password, $res->user_password)) {
             $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
         } else {
-            $user->update($bdd, $res->password);
+            $user->update($bdd, $res->user_password);
             header('Location: profil.php');
         }
     }
@@ -141,26 +141,26 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                         ?>
                             <div class="adress">
                                 <div class="infoAdress">
-                                    <p class="name"><?= htmlspecialchars($userAdress->nom) . " " . htmlspecialchars($userAdress->prenom) ?></p>
-                                    <p><?= htmlspecialchars($userAdress->numero) . " " . htmlspecialchars($userAdress->name) ?></p>
-                                    <p><?= htmlspecialchars($userAdress->city) . ", " . htmlspecialchars($userAdress->postcode) ?></p>
+                                    <p class="name"><?= htmlspecialchars($userAdress->adress_lastname) . " " . htmlspecialchars($userAdress->adress_firstname) ?></p>
+                                    <p><?= htmlspecialchars($userAdress->adress_numero) . " " . htmlspecialchars($userAdress->adress_name) ?></p>
+                                    <p><?= htmlspecialchars($userAdress->adress_city) . ", " . htmlspecialchars($userAdress->adress_postcode) ?></p>
                                     <p>France</p>
                                     <div>
                                         <p>N° de télephone:</p>
-                                        <p><?= htmlspecialchars($userAdress->telephone) ?></p>
+                                        <p><?= htmlspecialchars($userAdress->adress_telephone) ?></p>
                                     </div>
                                 </div>
                                 <div class="edit_delete">
-                                    <a href="./user/modifyAdress.php?id=<?= $userAdress->id ?>"><button class="button"><i class="fa-solid fa-pencil"></i></button></a>
+                                    <a href="./user/modifyAdress.php?id=<?= $userAdress->adress_id ?>"><button class="button"><i class="fa-solid fa-pencil"></i></button></a>
                                     <form action="" method="post">
-                                        <button type="submit" name="deleteAdress<?= $userAdress->id ?>" class="button"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="submit" name="deleteAdress<?= $userAdress->adress_id ?>" class="button"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
                                 </div>
                             </div>
                         <?php
                             // Delete l'adresse selectionné
-                            if (isset($_POST['deleteAdress' . $userAdress->id])) {
-                                $adress = new Adress($userAdress->id, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+                            if (isset($_POST['deleteAdress' . $userAdress->adress_id])) {
+                                $adress = new Adress($userAdress->adress_id, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
                                 $adress->deleteAdress($bdd);
                                 header('Location: profil.php');
                             }
