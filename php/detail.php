@@ -4,17 +4,17 @@ require_once('./include/required.php');
 
 
 // Récupération du produit
-$recupItem = $bdd->prepare("SELECT * FROM products WHERE product_id = :product_id");
-$recupItem->execute(['product_id' => $_GET['id']]);
-$resultItem = $recupItem->fetch(PDO::FETCH_OBJ);
+$returnProduct = $bdd->prepare("SELECT * FROM products WHERE product_id = :product_id");
+$returnProduct->execute(['product_id' => $_GET['id']]);
+$result = $returnProduct->fetch(PDO::FETCH_OBJ);
 
 // Empêche d'aller sur la page si il n'y a aucun produit de selectionner 
-if (!$resultItem) {
+if (!$result) {
     header('Location: ../index.php');
 }
 // Récupération des images du produit
 $image = new Image(null, $_GET['id'], null, null);
-$result = $image->returnImagesByID($bdd);
+$result_images = $image->returnImagesByID($bdd);
 
 // Insert le produit de la page dans le panier
 if (isset($_POST['ajouter'])) {
@@ -63,20 +63,20 @@ if (isset($_POST['ajouter'])) {
             <!-- Affichage du produit -->
             <div id="item">
                 <div id="imageItem">
-                    <img src="../assets/img_item/<?= $result[0]->image_name ?>" alt="">
+                    <img src="../assets/img_item/<?= $result_images[0]->image_name ?>" alt="">
                 </div>
                 <div id="detailItem">
-                    <p><?= htmlspecialchars($resultItem->product_name) ?></p>
+                    <p><?= htmlspecialchars($result->product_name) ?></p>
 
                     <div id="description">Description :
-                        <p><?= htmlspecialchars_decode($resultItem->product_description) ?></p>
+                        <p><?= htmlspecialchars_decode($result->product_description) ?></p>
                     </div>
 
                     <div id="price_cart">
-                        <p><?= htmlspecialchars($resultItem->product_price) ?>€</p>
+                        <p><?= htmlspecialchars($result->product_price) ?>€</p>
                         <?php
                         if (isset($_SESSION['user'])) {
-                            if ($resultItem->product_stock > 0) { ?>
+                            if ($result->product_stock > 0) { ?>
                                 <form action="" method="post">
                                     <input type="submit" name="ajouter" value="Ajouter au panier">
                                 </form>

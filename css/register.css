@@ -20,7 +20,7 @@ main {
   display: flex;
   justify-content: center;
 }
-#signup {
+#registerForm {
   background-color: var(--div-color);
   border-radius: 10px;
   border: 1px solid var(--border-color);
@@ -31,7 +31,7 @@ main {
   padding: 2% 2% !important;
   margin: 5% 0 !important;
 }
-#signup > * {
+#registerForm > * {
   width: 60%;
   border-radius: 10px;
   outline: none;

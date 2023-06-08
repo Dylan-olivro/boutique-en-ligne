@@ -1,6 +1,5 @@
 <?php
 require_once('./include/required.php');
-// ! FAIRE UNE CLASSE CART
 
 // var_dump(uniqid());
 // Empêche les utilisateurs qui ne sont pas connecté de venir sur cette page
@@ -9,57 +8,57 @@ if (!isset($_SESSION['user'])) {
 }
 // Récupère le panier de l'utilisateur
 $cart = new Cart(null, $_SESSION['user']->user_id, null);
-$result = $cart->returnCart($bdd);
+$result_cart = $cart->returnCart($bdd);
 
 // Récupère les stock dans un tableau
 $stock = [];
-foreach ($result as $item) {
-    array_push($stock, $item->product_stock);
+foreach ($result_cart as $product) {
+    array_push($stock, $product->product_stock);
 }
 
-$adress = new Address(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
-$res = $adress->returnAdressByUser($bdd);
+$address = new Address(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+$allUserAddresses = $address->returnAddressesByUser($bdd);
 
 // Valide le panier de l'utilisateur, créer une commande et vide le panier
 if (isset($_POST['valider'])) {
-    if (!empty($result)) {
+    if (!empty($result_cart)) {
         if (!in_array(0, $stock)) {
 
             $date = date("Y-m-d H:i:s");
-            $command = new Order(null, $_SESSION['user']->user_id, $date, null, null);
-            $command->addCommand($bdd);
+            $order = new Order(null, $_SESSION['user']->user_id, $date, null, null);
+            $order->addOrder($bdd);
 
-            $id = $bdd->lastInsertId();
+            $lastInsertId = $bdd->lastInsertId();
 
             $prices = [];
-            foreach ($result as $key) {
+            foreach ($result_cart as $cartProduct) {
 
-                array_push($prices, $key->product_price);
+                array_push($prices, $cartProduct->product_price);
 
                 $updateStock = $bdd->prepare('UPDATE products SET product_stock = :product_stock WHERE product_id = :product_id');
                 $updateStock->execute([
-                    'product_stock' => $key->product_stock - 1,
-                    'product_id' => $key->product_id
+                    'product_stock' => $cartProduct->product_stock - 1,
+                    'product_id' => $cartProduct->product_id
                 ]);
 
                 $insertLiaison = $bdd->prepare('INSERT INTO liaison_product_order (order_id,product_id) VALUES (:order_id,:product_id)');
                 $insertLiaison->execute([
-                    'order_id' => $id,
-                    'product_id' => $key->product_id
+                    'order_id' => $lastInsertId,
+                    'product_id' => $cartProduct->product_id
                 ]);
             }
             $total = array_sum($prices);
 
-            $command = new Order($id, $_SESSION['user']->user_id, $date, $total, $_POST['adress']);
+            $order = new Order($lastInsertId, $_SESSION['user']->user_id, $date, $total, $_POST['adress']);
 
-            $command->updateCommand($bdd);
+            $order->updateOrder($bdd);
             $cart->deleteCart($bdd);
             header('Location: cartPage.php');
         } else {
-            $errorStockMessage = 'Un article dans votre panier a son stock epuisée';
+            $ORDER_ERROR = 'Un article dans votre panier a son stock epuisée';
         }
     } else {
-        $errorStockMessage = 'Panier vide';
+        $ORDER_ERROR = 'Panier vide';
     }
 }
 
@@ -107,11 +106,11 @@ if (isset($_POST['vider'])) {
         <form action="" method="post">
             <select name="adress" id="">
                 <?php
-                foreach ($res as $key) {
-                    $orderAdress = sprintf('%d %s, %d %s', htmlspecialchars($key->address_numero), htmlspecialchars($key->address_name), htmlspecialchars($key->address_postcode), htmlspecialchars($key->address_city));
+                foreach ($allUserAddresses as $userAddress) {
+                    $orderAddress = sprintf('%d %s, %d %s', htmlspecialchars($userAddress->address_numero), htmlspecialchars($userAddress->address_name), htmlspecialchars($userAddress->address_postcode), htmlspecialchars($userAddress->address_city));
                 ?>
-                    <option value="<?= $orderAdress ?>">
-                        <?= $orderAdress ?>
+                    <option value="<?= $orderAddress ?>">
+                        <?= $orderAddress ?>
                     </option>
                 <?php
                 }
@@ -122,8 +121,8 @@ if (isset($_POST['vider'])) {
 
         <p>
             <?php
-            if (isset($errorStockMessage)) {
-                echo $errorStockMessage;
+            if (isset($ORDER_ERROR)) {
+                echo $ORDER_ERROR;
             }
             ?>
         </p>
@@ -133,24 +132,24 @@ if (isset($_POST['vider'])) {
 
                 <?php
                 // Affichage du panier
-                foreach ($result as $item) { ?>
-                    <a href="./detail.php?id=<?= $item->product_id ?>">
+                foreach ($result_cart as $product) { ?>
+                    <a href="./detail.php?id=<?= $product->product_id ?>">
                         <div class="cartDetail">
-                            <img src="../assets/img_item/<?= $item->image_name ?>" alt="">
+                            <img src="../assets/img_item/<?= $product->image_name ?>" alt="">
                             <div class="cartInfo">
-                                <p><?= htmlspecialchars($item->product_name) ?></p>
-                                <p><?= htmlspecialchars($item->product_price) ?>€</p>
-                                <p><?= htmlspecialchars($item->product_stock) ?> en Stock</p>
+                                <p><?= htmlspecialchars($product->product_name) ?></p>
+                                <p><?= htmlspecialchars($product->product_price) ?>€</p>
+                                <p><?= htmlspecialchars($product->product_stock) ?> en Stock</p>
                             </div>
                             <form action="" method="post">
-                                <input type="submit" name="delete<?= $item->product_id ?>" value="delete">
+                                <input type="submit" name="delete<?= $product->product_id ?>" value="delete">
                             </form>
                         </div>
                     </a>
                 <?php
-                    if (isset($_POST['delete' . $item->product_id])) {
-                        $cart2 = new Cart(null, $_SESSION['user']->user_id, $item->product_id);
-                        $cart2->deleteItem($bdd);
+                    if (isset($_POST['delete' . $product->product_id])) {
+                        $cart2 = new Cart(null, $_SESSION['user']->user_id, $product->product_id);
+                        $cart2->deleteProduct($bdd);
                         header('Location: cartPage.php');
                     }
                 }

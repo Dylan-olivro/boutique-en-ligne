@@ -21,7 +21,7 @@ if (isset($_POST['buttonAddItem'])) {
 
     $product = new Product(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
     $category = new Category(null, null, $categoryItem);
-    $product->addItem($bdd);
+    $product->addProduct($bdd);
     $category->liaisonItemCategory($bdd);
     if (isset($_FILES['file'])) {
         // Récupère l'ID du dernier produit ajouter
@@ -40,7 +40,7 @@ if (isset($_POST['buttonAddItem'])) {
 if (isset($_POST['buttonDeleteItem'])) {
     $itemID = trim(intval($_POST['itemID']));
     $product = new Product($itemID, null, null, null, null, null, null);
-    $product->deleteItem($bdd);
+    $product->deleteProduct($bdd);
     header('Location: admin.php');
 }
 
@@ -179,7 +179,7 @@ function getEditItemID()
                     if (isset($_GET['editItemID'])) {
                         $editItemID = trim(intval($_GET['editItemID']));
                         $product = new Product($editItemID, null, null, null, null, null);
-                        $infoItem = $product->returnItem($bdd);
+                        $infoItem = $product->returnProduct($bdd);
                     ?>
                         <h3>Update Product</h3>
                         <!-- Affichage du produit à modifier -->
@@ -208,7 +208,7 @@ function getEditItemID()
                             $updateImageItem = trim($_POST['updateImageItem']);
 
                             $product = new Product($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
-                            $product->editItem($bdd);
+                            $product->editProduct($bdd);
                         }
                     }
                     ?>
