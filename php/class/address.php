@@ -1,5 +1,5 @@
 <?php
-class Adress
+class Address
 {
     public $id;
     public $user_id;
@@ -40,24 +40,24 @@ class Adress
         $firstname = ucfirst(trim($this->firstname));
         $lastname = ucfirst(trim($this->lastname));
 
-        $addAdress = $bdd->prepare('INSERT INTO adress (user_id,adress_numero,adress_name,adress_postcode,adress_city,adress_telephone,adress_firstname,adress_lastname)  VALUES(:user_id,:adress_numero,:adress_name,:adress_postcode,:adress_city,:adress_telephone,:adress_firstname,:adress_lastname)');
+        $addAdress = $bdd->prepare('INSERT INTO addresses (user_id, address_numero, address_name, address_postcode, address_city, address_telephone, address_firstname, address_lastname)  VALUES(:user_id, :address_numero, :address_name, :address_postcode, :address_city, :address_telephone, :address_firstname, :address_lastname)');
         $addAdress->execute([
             'user_id' => $user_id,
-            'adress_numero' => $numero,
-            'adress_name' => $name,
-            'adress_postcode' => $postcode,
-            'adress_city' => $city,
-            'adress_telephone' => $telephone,
-            'adress_firstname' => $firstname,
-            'adress_lastname' => $lastname
+            'address_numero' => $numero,
+            'address_name' => $name,
+            'address_postcode' => $postcode,
+            'address_city' => $city,
+            'address_telephone' => $telephone,
+            'address_firstname' => $firstname,
+            'address_lastname' => $lastname
         ]);
         // header('Location: ../profil.php');
     }
     public function deleteAdress($bdd)
     {
-        $deleteAdress = $bdd->prepare('DELETE FROM adress WHERE adress_id = :adress_id AND user_id = :user_id');
+        $deleteAdress = $bdd->prepare('DELETE FROM addresses WHERE address_id = :address_id AND user_id = :user_id');
         $deleteAdress->execute([
-            'adress_id' => $this->id,
+            'address_id' => $this->id,
             'user_id' => $this->user_id
         ]);
     }
@@ -70,14 +70,20 @@ class Adress
         $name = trim($this->name);
         $postcode = trim($this->postcode);
         $city = strtoupper(trim($this->city));
+        $telephone = trim($this->telephone);
+        $firstname = ucfirst(trim($this->city));
+        $lastname = ucfirst(trim($this->lastname));
 
-        $updateAdress = $bdd->prepare('UPDATE adress SET adress_numero = :adress_numero, adress_name = :adress_name, adress_postcode = :adress_postcode, adress_city = :adress_city WHERE adress_id = :adress_id AND user_id = :user_id');
+        $updateAdress = $bdd->prepare('UPDATE addresses SET address_numero = :address_numero, address_name = :address_name, address_postcode = :address_postcode, address_city = :address_city, address_telephone = :address_telephone, address_firstname = :address_firstname, address_lastname = :address_lastname WHERE address_id = :address_id AND user_id = :user_id');
         $updateAdress->execute([
-            'adress_numero' => $numero,
-            'adress_name' => $name,
-            'adress_postcode' => $postcode,
-            'adress_city' => $city,
-            'adress_id' => $this->id,
+            'address_numero' => $numero,
+            'address_name' => $name,
+            'address_postcode' => $postcode,
+            'address_city' => $city,
+            'address_telephone' => $telephone,
+            'address_firstname' => $firstname,
+            'address_lastname' => $lastname,
+            'address_id' => $this->id,
             'user_id' => $user_id
         ]);
         // header('Location: ../profil.php');
@@ -86,9 +92,9 @@ class Adress
 
     public function returnAdressById($bdd)
     {
-        $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE adress_id = :adress_id AND user_id = :user_id');
+        $returnAdress = $bdd->prepare('SELECT * FROM addresses WHERE address_id = :address_id AND user_id = :user_id');
         $returnAdress->execute([
-            'adress_id' => $this->id,
+            'address_id' => $this->id,
             'user_id' => $_SESSION['user']->user_id
         ]);
         $result = $returnAdress->fetch(PDO::FETCH_OBJ);
@@ -97,7 +103,7 @@ class Adress
 
     public function returnAdressByUser($bdd)
     {
-        $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE user_id = :user_id');
+        $returnAdress = $bdd->prepare('SELECT * FROM addresses WHERE user_id = :user_id');
         $returnAdress->execute(['user_id' => $this->user_id]);
         $result = $returnAdress->fetchAll(PDO::FETCH_OBJ);
         return $result;

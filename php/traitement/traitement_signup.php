@@ -32,7 +32,7 @@ if (isset($data)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
     } elseif (User::isToBig($firstname)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
-    } elseif (User::isToBig($firstname)) {
+    } elseif (User::isToSmall($firstname)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
     } elseif (User::isToBig($lastname)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';

@@ -2,14 +2,14 @@
 class Image
 {
     public $id;
-    public $id_item;
+    public $product_id;
     public $name;
     public $main;
 
-    public function __construct($id, $id_item, $name, $main)
+    public function __construct($id, $product_id, $name, $main)
     {
         $this->id = $id;
-        $this->id_item = $id_item;
+        $this->product_id = $product_id;
         $this->name = $name;
         $this->main = $main;
     }
@@ -30,11 +30,11 @@ class Image
         if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
             move_uploaded_file($tmpName, '../assets/img_item/' . $file);
 
-            $insertImage = $bdd->prepare('INSERT INTO image (id_item, name_image, main) VALUES (:id_item,:name_image,:main)');
+            $insertImage = $bdd->prepare('INSERT INTO images (product_id, image_name, image_main) VALUES (:product_id,:image_name,:image_main)');
             $insertImage->execute([
-                'id_item' => $this->id_item,
-                'name_image' => $file,
-                'main' => $this->main
+                'product_id' => $this->product_id,
+                'image_name' => $file,
+                'image_main' => $this->main
             ]);
         } else {
             echo "Mauvaise extension ou taille trop grande, Une erreur est survenue";
@@ -44,14 +44,14 @@ class Image
     public function deleteImage($bdd)
     {
         unlink('../assets/img_item/' . $this->name);
-        $deleteImage = $bdd->prepare('DELETE FROM image WHERE name_image = :name_image');
-        $deleteImage->execute(['name_image' => $this->name]);
+        $deleteImage = $bdd->prepare('DELETE FROM images WHERE image_name = :image_name');
+        $deleteImage->execute(['image_name' => $this->name]);
     }
 
     public function returnImagesByID($bdd)
     {
-        $recupImage = $bdd->prepare('SELECT * FROM image WHERE id_item = :id_item');
-        $recupImage->execute(['id_item' => $this->id_item]);
+        $recupImage = $bdd->prepare('SELECT * FROM images WHERE product_id = :product_id');
+        $recupImage->execute(['product_id' => $this->product_id]);
         $result = $recupImage->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }

@@ -20,34 +20,34 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
     require_once('./php/include/bdd.php');
     require_once('./php/include/function.php');
     require_once('./php/class/user.php');
-    require_once('./php/class/adress.php');
+    require_once('./php/class/address.php');
     require_once('./php/class/image.php');
-    require_once('./php/class/item.php');
+    require_once('./php/class/product.php');
     require_once('./php/class/category.php');
     require_once('./php/class/cart.php');
-    require_once('./php/class/command.php');
+    require_once('./php/class/order.php');
 } else {
     // Si on se trouve dans le fichier PHP puis dans un fichier USER
     if (getURL()[1][2] === 'user') {
         require_once('../include/bdd.php');
         require_once('../include/function.php');
         require_once('../class/user.php');
-        require_once('../class/adress.php');
+        require_once('../class/address.php');
         require_once('../class/image.php');
-        require_once('../class/item.php');
+        require_once('../class/product.php');
         require_once('../class/category.php');
         require_once('../class/cart.php');
-        require_once('../class/command.php');
+        require_once('../class/order.php');
     } else {
         require_once('./include/bdd.php');
         require_once('./include/function.php');
         require_once('./class/user.php');
-        require_once('./class/adress.php');
+        require_once('./class/address.php');
         require_once('./class/image.php');
-        require_once('./class/item.php');
+        require_once('./class/product.php');
         require_once('./class/category.php');
         require_once('./class/cart.php');
-        require_once('./class/command.php');
+        require_once('./class/order.php');
     }
 }
 

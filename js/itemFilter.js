@@ -22,7 +22,7 @@ function fetchItems(url) {
     .then((data) => {
       // console.log(data);
       data.forEach((element) => {
-        // console.log(element);
+        console.log(element);
         let divImg = document.createElement("div");
         let divNameDesc = document.createElement("div");
         let divImgNameDesc = document.createElement("div");
@@ -47,15 +47,15 @@ function fetchItems(url) {
         itemPrice.className = "itemPrice";
         itemStock.className = "itemStock";
 
-        itemImg.src = `../assets/img_item/` + element.name_image;
-        itemLink.href = `./${getPage()[0]}detail.php?id=${element.id}`;
+        itemImg.src = `../assets/img_item/` + element.image_name;
+        itemLink.href = `./${getPage()[0]}detail.php?id=${element.product_id}`;
 
-        itemName.innerText = element.name;
-        itemDesc.innerText = element.description;
-        itemPrice.innerText = element.price + " €";
+        itemName.innerText = element.product_name;
+        itemDesc.innerText = element.product_description;
+        itemPrice.innerText = element.product_price + " €";
 
         // appeler fonction stock ici
-        checkStock(element.stock, itemStock);
+        checkStock(element.product_stock, itemStock);
 
         divImg.append(itemImg);
         divNameDesc.append(itemName, itemDesc);

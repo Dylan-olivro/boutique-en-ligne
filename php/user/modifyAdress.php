@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
 
 // Récupération de l'adresse à modifier
 if (isset($_GET['id'])) {
-    $adress = new Adress($_GET['id'], null, null, null, null, null);
+    $adress = new Address($_GET['id'], null, null, null, null, null, null, null, null);
     $userAdress = $adress->returnAdressById($bdd);
 
     // Empêche d'aller sur la page si il n'y a aucun ID selectionner dans le lien ou si l'ID ne correspond pas à une adresse de l'utilisateur
@@ -22,6 +22,9 @@ if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $postcode = $_POST['postcode'];
     $city = $_POST['city'];
+    $telephone = $_POST['telephone'];
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
 
     if (empty($numero)) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
@@ -35,8 +38,22 @@ if (isset($_POST['submit'])) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
     } elseif (!isPostcode($postcode)) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
+    } elseif (!Address::formatTelephoneAccept($telephone)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe numéro de téléphone est invalide.';
+    } elseif (User::isToBig($nom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire moins de 30 caractères.';
+    } elseif (User::isToBig($prenom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire moins de 30 caractères.';
+    } elseif (User::isToSmall($nom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire plus de 2 caractères.';
+    } elseif (User::isToSmall($prenom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire plus de 2 caractères.';
+    } elseif (!User::isAName($nom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom n\'est pas valide.';
+    } elseif (!User::isAName($prenom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe pr&nom n\'est pas valide.';
     } else {
-        $adress = new Adress($userAdress->id, $_SESSION['user']->user_id, $numero, $name, $postcode, $city);
+        $adress = new Address($userAdress->address_id, $_SESSION['user']->user_id, $numero, $name, $postcode, $city, $telephone, $prenom, $nom);
         $adress->updateAdress($bdd);
         header('Location: ../profil.php');
     }
@@ -74,13 +91,19 @@ if (isset($_POST['submit'])) {
         <!-- Formulaire pour MODIFIER l'adresse de l'utilisateur -->
         <form action="" method="post" id="formUpdateAdress">
             <label for="numero">Numero</label>
-            <input type="number" name="numero" id="numero" value="<?= htmlspecialchars($userAdress->adress_numero) ?>" autofocus>
+            <input type="number" name="numero" id="numero" value="<?= htmlspecialchars($userAdress->address_numero) ?>" autofocus>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="<?= htmlspecialchars($userAdress->adress_name) ?>">
+            <input type="text" name="name" id="name" value="<?= htmlspecialchars($userAdress->address_name) ?>">
             <label for="postcode">Postcode</label>
-            <input type="number" name="postcode" id="postcode" value="<?= htmlspecialchars($userAdress->adress_postcode) ?>">
+            <input type="number" name="postcode" id="postcode" value="<?= htmlspecialchars($userAdress->address_postcode) ?>">
             <label for="city">City</label>
-            <input type="text" name="city" id="city" value="<?= htmlspecialchars($userAdress->adress_city) ?>">
+            <input type="text" name="city" id="city" value="<?= htmlspecialchars($userAdress->address_city) ?>">
+            <label for="telephone">Téléphone</label>
+            <input type="text" name="telephone" id="telephone" value="<?= htmlspecialchars($userAdress->address_telephone) ?>">
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" id="nom" value="<?= htmlspecialchars($userAdress->address_lastname) ?>">
+            <label for="prenom">Prénom</label>
+            <input type="text" name="prenom" id="prenom" value="<?= htmlspecialchars($userAdress->address_firstname) ?>">
             <p id="message">
                 <?php if (isset($error)) {
                     echo $error;

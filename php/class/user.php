@@ -136,7 +136,7 @@ class User
         elseif ($old_password == $this->password) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes mots de passe sont identiques';
             return $error;
-        } elseif ($old_password != password_verify($old_password, $res->password)) {
+        } elseif ($old_password != password_verify($old_password, $res->user_password)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
             return $error;
         } else {

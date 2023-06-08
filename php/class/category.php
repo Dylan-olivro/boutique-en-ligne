@@ -31,13 +31,13 @@ class Category
     }
     public function liaisonItemCategory($bdd)
     {
-        $returnItem = $bdd->prepare('SELECT * FROM items ORDER BY items.id DESC');
+        $returnItem = $bdd->prepare('SELECT * FROM products ORDER BY products.product_id DESC');
         $returnItem->execute();
         $result = $returnItem->fetch(PDO::FETCH_OBJ);
 
         $insertLiaison = $bdd->prepare('INSERT INTO liaison_items_category (id_item,id_category) VALUES(:id_item,:id_category)');
         $insertLiaison->execute([
-            'id_item' => $result->id,
+            'id_item' => $result->product_id,
             'id_category' => $this->id_parent
         ]);
         // header('Location: admin.php');

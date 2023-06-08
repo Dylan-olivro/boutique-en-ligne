@@ -19,18 +19,18 @@ if (isset($_POST['buttonAddItem'])) {
     $categoryItem = trim(intval($_POST['categoryItem']));
     // $mainImage = trim(h(intval($_POST['mainImage'])));
 
-    $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
+    $product = new Product(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
     $category = new Category(null, null, $categoryItem);
-    $item->addItem($bdd);
+    $product->addItem($bdd);
     $category->liaisonItemCategory($bdd);
     if (isset($_FILES['file'])) {
         // Récupère l'ID du dernier produit ajouter
-        $returnLastID = $bdd->prepare("SELECT id FROM items ORDER BY items.id DESC");
+        $returnLastID = $bdd->prepare("SELECT product_id FROM products ORDER BY products.product_id DESC");
         $returnLastID->execute();
         $resultID =  $returnLastID->fetch(PDO::FETCH_OBJ);
 
         $file = $_FILES['file'];
-        $image = new Image(null, $resultID->id, $file, 1);
+        $image = new Image(null, $resultID->product_id, $file, 1);
         $image->addImage($bdd);
     }
     header('Location: admin.php');
@@ -39,9 +39,9 @@ if (isset($_POST['buttonAddItem'])) {
 // Supprime un produit choisi en fonction de son ID
 if (isset($_POST['buttonDeleteItem'])) {
     $itemID = trim(intval($_POST['itemID']));
-    $item = new Item($itemID, null, null, null, null, null, null);
-    $item->deleteItem($bdd);
-    header('Location: cartPage.php');
+    $product = new Product($itemID, null, null, null, null, null, null);
+    $product->deleteItem($bdd);
+    header('Location: admin.php');
 }
 
 // Insert une catégorie Parent/Enfant
@@ -123,7 +123,7 @@ function getEditItemID()
     <main>
         <!-- <div id="nav">
             <p id="titleUser">User</p>
-            <p id="titleItem">Item</p>
+            <p id="titleItem">Product</p>
             <p id="titleCategory">Category</p>
         </div> -->
         <section id="container">
@@ -158,43 +158,43 @@ function getEditItemID()
                 </div>
 
                 <div id="deleteItem">
-                    <h3>Supprimer un item</h3>
+                    <h3>Supprimer un Product</h3>
                     <!-- Formulaire pour SUPPRIMER un produit -->
                     <form action="" method="post" id="formDeleteItem">
-                        <label for="itemID">ID de l'item</label>
+                        <label for="itemID">ID du Product</label>
                         <input type="number" name="itemID" id="itemID">
                         <input type="submit" name="buttonDeleteItem" value="Supprimer">
                     </form>
                 </div>
 
                 <div id="editItem">
-                    <h3>Modifier un item</h3>
+                    <h3>Modifier un Product</h3>
                     <!-- Formulaire pour MODIFIER un produit -->
                     <form action="" method="get" id="formEditItem">
-                        <label for="editItemID">ID item</label>
+                        <label for="editItemID">ID Product</label>
                         <input type="number" name="editItemID" id="editItemID" value="<?= htmlspecialchars(getEditItemID()); ?>">
                         <input type="submit" name="editItem" value="Modifier">
                     </form>
                     <?php
                     if (isset($_GET['editItemID'])) {
                         $editItemID = trim(intval($_GET['editItemID']));
-                        $item = new Item($editItemID, null, null, null, null, null);
-                        $infoItem = $item->returnItem($bdd);
+                        $product = new Product($editItemID, null, null, null, null, null);
+                        $infoItem = $product->returnItem($bdd);
                     ?>
-                        <h3>Update Item</h3>
+                        <h3>Update Product</h3>
                         <!-- Affichage du produit à modifier -->
                         <form action="" method="post" id="formUpdateItem">
                             <label for="updateNameItem">Name</label>
-                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= htmlspecialchars($infoItem->name) ?>">
+                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= htmlspecialchars($infoItem->product_name) ?>">
 
                             <label for="updateDescriptionItem">Description</label>
-                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= htmlspecialchars($infoItem->description) ?>">
+                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= htmlspecialchars($infoItem->product_description) ?>">
 
                             <label for="updatePriceItem">Price</label>
-                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= htmlspecialchars($infoItem->price) ?>">
+                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= htmlspecialchars($infoItem->product_price) ?>">
 
                             <label for="updateSotckItem">Stock</label>
-                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= htmlspecialchars($infoItem->stock) ?>">
+                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= htmlspecialchars($infoItem->product_stock) ?>">
 
                             <input type="submit" name="updateItem" value="Update">
                         </form>
@@ -207,8 +207,8 @@ function getEditItemID()
                             $updateSotckItem = trim(intval($_POST['updateSotckItem']));
                             $updateImageItem = trim($_POST['updateImageItem']);
 
-                            $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
-                            $item->editItem($bdd);
+                            $product = new Product($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
+                            $product->editItem($bdd);
                         }
                     }
                     ?>

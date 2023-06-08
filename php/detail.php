@@ -4,8 +4,8 @@ require_once('./include/required.php');
 
 
 // Récupération du produit
-$recupItem = $bdd->prepare("SELECT * FROM items WHERE id = :id");
-$recupItem->execute(['id' => $_GET['id']]);
+$recupItem = $bdd->prepare("SELECT * FROM products WHERE product_id = :product_id");
+$recupItem->execute(['product_id' => $_GET['id']]);
 $resultItem = $recupItem->fetch(PDO::FETCH_OBJ);
 
 // Empêche d'aller sur la page si il n'y a aucun produit de selectionner 
@@ -18,10 +18,10 @@ $result = $image->returnImagesByID($bdd);
 
 // Insert le produit de la page dans le panier
 if (isset($_POST['ajouter'])) {
-    $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(:id_user,:id_item)');
+    $insertIntoPanier = $bdd->prepare('INSERT INTO carts (user_id,product_id) VALUES(:user_id,:product_id)');
     $insertIntoPanier->execute([
-        'id_user' => $_SESSION['user']->user_id,
-        'id_item' => trim(intval($_GET['id']))
+        'user_id' => $_SESSION['user']->user_id,
+        'product_id' => trim(intval($_GET['id']))
     ]);
     header('Location: detail.php?id=' . $_GET['id']);
 }
@@ -63,20 +63,20 @@ if (isset($_POST['ajouter'])) {
             <!-- Affichage du produit -->
             <div id="item">
                 <div id="imageItem">
-                    <img src="../assets/img_item/<?= $result[0]->name_image ?>" alt="">
+                    <img src="../assets/img_item/<?= $result[0]->image_name ?>" alt="">
                 </div>
                 <div id="detailItem">
-                    <p><?= htmlspecialchars($resultItem->name) ?></p>
+                    <p><?= htmlspecialchars($resultItem->product_name) ?></p>
 
                     <div id="description">Description :
-                        <p><?= htmlspecialchars_decode($resultItem->description) ?></p>
+                        <p><?= htmlspecialchars_decode($resultItem->product_description) ?></p>
                     </div>
 
                     <div id="price_cart">
-                        <p><?= htmlspecialchars($resultItem->price) ?>€</p>
+                        <p><?= htmlspecialchars($resultItem->product_price) ?>€</p>
                         <?php
                         if (isset($_SESSION['user'])) {
-                            if ($resultItem->stock > 0) { ?>
+                            if ($resultItem->product_stock > 0) { ?>
                                 <form action="" method="post">
                                     <input type="submit" name="ajouter" value="Ajouter au panier">
                                 </form>
