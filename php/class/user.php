@@ -46,8 +46,8 @@ class User
         $firstname = trim($this->firstname);
         $password = password_hash(trim($this->password), PASSWORD_DEFAULT);
         // Insert du nouveau utilisateur
-        $insertUser = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(:email,:lastname,:firstname,:password)");
-        $insertUser->execute([
+        $request = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(:email,:lastname,:firstname,:password)");
+        $request->execute([
             'email' => $email,
             'lastname' => $lastname,
             'firstname' => $firstname,
@@ -102,8 +102,8 @@ class User
         $firstname = trim($this->firstname);
         $password = trim($this->password);
 
-        $insertUser = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id ");
-        $insertUser->execute([
+        $request = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id ");
+        $request->execute([
             'email' => $email,
             'firstname' => $firstname,
             'lastname' => $lastname,
@@ -159,10 +159,10 @@ class User
     public function isExist($bdd): bool
     {
         // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà
-        $recupUser = $bdd->prepare("SELECT email FROM users WHERE email = :email");
-        $recupUser->execute(['email' => $this->email]);
+        $request = $bdd->prepare("SELECT email FROM users WHERE email = :email");
+        $request->execute(['email' => $this->email]);
 
-        if ($recupUser->rowCount() > 0) {
+        if ($request->rowCount() > 0) {
             return true;
         } else {
             return false;
@@ -172,13 +172,13 @@ class User
     public function isExistExceptCurrentEmail($bdd): bool
     {
         // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà sauf celle qui est utilisé
-        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND id != :id");
-        $recupUser->execute([
+        $request = $bdd->prepare("SELECT * FROM users WHERE email = :email AND id != :id");
+        $request->execute([
             'email' => $this->email,
             'id' => $this->id
         ]);
 
-        if ($recupUser->rowCount() > 0) {
+        if ($request->rowCount() > 0) {
             return true;
         } else {
             return false;
@@ -189,16 +189,27 @@ class User
     {
         $request = $bdd->prepare("SELECT * FROM users WHERE email = :email");
         $request->execute(['email' => $this->email]);
-        $res = $request->fetch(PDO::FETCH_OBJ);
-        return $res;
+        $result = $request->fetch(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function returnUserByEmailAndPassword($bdd, $bdd_password)
+    {
+        // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
+        $recupUser->execute([
+            'email' => $this->email,
+            'password' => $bdd_password
+        ]);
+        $result = $recupUser->fetch(PDO::FETCH_OBJ);
+        return $result;
     }
 
     public function returnUserById($bdd)
     {
         $request = $bdd->prepare("SELECT * FROM users WHERE id = :id");
         $request->execute(['id' => $this->id]);
-        $res = $request->fetch(PDO::FETCH_OBJ);
-        return $res;
+        $result = $request->fetch(PDO::FETCH_OBJ);
+        return $result;
     }
 
     public function isConnected(): bool
