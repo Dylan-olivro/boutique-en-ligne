@@ -14,7 +14,7 @@ if (isset($_POST['updateUser'])) {
     $lastname = $_POST['lastname'];
     $password = $_POST['password'];
 
-    $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
+    $user = new User($_SESSION['user']->user_id, $email, $firstname, $lastname, $password, $_SESSION['user']->user_role);
 
     if (empty($email)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
@@ -52,7 +52,7 @@ if (isset($_POST['updateUser'])) {
 }
 
 // Récuperation des adresses de l'utilisateur
-$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null, null, null, null);
+$adress = new Adress(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
 ?>
 <!DOCTYPE html>
@@ -94,11 +94,11 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <form action="" method="post" id="formProfil">
                         <h3>Modifier ces infos personnelles</h3>
                         <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->email) ?>" class="input" autofocus>
+                        <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->user_email) ?>" class="input" autofocus>
                         <label for="firstname">Firstname</label>
-                        <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($_SESSION['user']->firstname) ?>" class="input">
+                        <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($_SESSION['user']->user_firstname) ?>" class="input">
                         <label for="lastname">Lastname</label>
-                        <input type="text" id="lastname" name="lastname" value="<?= htmlspecialchars($_SESSION['user']->lastname) ?>" class="input">
+                        <input type="text" id="lastname" name="lastname" value="<?= htmlspecialchars($_SESSION['user']->user_lastname) ?>" class="input">
                         <label for="password">Password</label>
                         <div class="password">
                             <input type="password" name="password" class="input" id="password">
@@ -160,7 +160,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                         <?php
                             // Delete l'adresse selectionné
                             if (isset($_POST['deleteAdress' . $userAdress->id])) {
-                                $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null, null, null, null);
+                                $adress = new Adress($userAdress->id, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
                                 $adress->deleteAdress($bdd);
                                 header('Location: profil.php');
                             }
@@ -176,7 +176,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <h3>Historique des commandes</h3>
                     <?php
                     // Récupère les commandes de l'utilisateur
-                    $command = new Command(null, $_SESSION['user']->id, null, null, null);
+                    $command = new Command(null, $_SESSION['user']->user_id, null, null, null);
                     $result = $command->returnComandByUser($bdd);
 
                     foreach ($result as $order) { ?>

@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
     } elseif (!isPostcode($postcode)) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
     } else {
-        $adress = new Adress($userAdress->id, $_SESSION['user']->id, $numero, $name, $postcode, $city);
+        $adress = new Adress($userAdress->id, $_SESSION['user']->user_id, $numero, $name, $postcode, $city);
         $adress->updateAdress($bdd);
         header('Location: ../profil.php');
     }

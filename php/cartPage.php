@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 // Récupère le panier de l'utilisateur
-$cart = new Cart(null, $_SESSION['user']->id, null);
+$cart = new Cart(null, $_SESSION['user']->user_id, null);
 $result = $cart->returnCart($bdd);
 
 // Récupère les stock dans un tableau
@@ -17,7 +17,7 @@ foreach ($result as $item) {
     array_push($stock, $item->stock);
 }
 
-$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null, null, null, null);
+$adress = new Adress(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
 $res = $adress->returnAdressByUser($bdd);
 
 // Valide le panier de l'utilisateur, créer une commande et vide le panier
@@ -26,7 +26,7 @@ if (isset($_POST['valider'])) {
         if (!in_array(0, $stock)) {
 
             $date = date("Y-m-d H:i:s");
-            $command = new Command(null, $_SESSION['user']->id, $date, null, null);
+            $command = new Command(null, $_SESSION['user']->user_id, $date, null, null);
             $command->addCommand($bdd);
 
             $id = $bdd->lastInsertId();
@@ -50,7 +50,7 @@ if (isset($_POST['valider'])) {
             }
             $total = array_sum($prices);
 
-            $command = new Command($id, $_SESSION['user']->id, $date, $total, $_POST['adress']);
+            $command = new Command($id, $_SESSION['user']->user_id, $date, $total, $_POST['adress']);
 
             $command->updateCommand($bdd);
             $cart->deleteCart($bdd);
@@ -147,7 +147,7 @@ if (isset($_POST['vider'])) {
                     </a>
                 <?php
                     if (isset($_POST['delete' . $item->id_item])) {
-                        $cart2 = new Cart(null, $_SESSION['user']->id, $item->id_item);
+                        $cart2 = new Cart(null, $_SESSION['user']->user_id, $item->id_item);
                         $cart2->deleteItem($bdd);
                     }
                 }

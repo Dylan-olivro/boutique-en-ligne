@@ -20,7 +20,7 @@ $result = $image->returnImagesByID($bdd);
 if (isset($_POST['ajouter'])) {
     $insertIntoPanier = $bdd->prepare('INSERT INTO cart (id_user,id_item) VALUES(:id_user,:id_item)');
     $insertIntoPanier->execute([
-        'id_user' => $_SESSION['user']->id,
+        'id_user' => $_SESSION['user']->user_id,
         'id_item' => trim(intval($_GET['id']))
     ]);
     header('Location: detail.php?id=' . $_GET['id']);

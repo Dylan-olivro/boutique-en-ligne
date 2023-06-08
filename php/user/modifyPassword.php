@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     $old_password = $_POST['password'];
     $new_password = $_POST['new_password'];
 
-    $user = new User($_SESSION['user']->id, null, null, null, $new_password, null);
+    $user = new User($_SESSION['user']->user_id, null, null, null, $new_password, null);
     $user->updatePassword($bdd, $old_password);
 }
 ?>

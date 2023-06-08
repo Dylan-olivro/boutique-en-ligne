@@ -5,7 +5,7 @@ require_once('./include/required.php');
 // ! NE PAS OUBLIER DE CHANGER LES VALUES DES INPUT
 
 // Empêche les utilisateurs qui ne sont pas ADMINISTRATEUR ou MODERATEUR de venir sur cette page
-if ($_SESSION['user']->role == 0) {
+if ($_SESSION['user']->user_role == 0) {
     header('Location: ../index.php');
 }
 
@@ -267,7 +267,7 @@ function getEditItemID()
                 <div class="w-75">
                     <h1 class="text-center m-4">All Users</h1>
                     <?php
-                    if ($_SESSION['user']->role > 0) {
+                    if ($_SESSION['user']->user_role > 0) {
                         // Récupération de tous les utilisateurs 
                         $request = $bdd->prepare("SELECT * FROM users ");
                         $request->execute();
@@ -277,35 +277,35 @@ function getEditItemID()
 
                             <form method="post" class="d-flex flex-wrap justify-content-center" id="formUser">
                                 <div class="w-25 border rounded text-center m-2 pb-2 bg-primary-subtle">
-                                    <p class="m-1">Email : <?= htmlspecialchars($value['email']) ?></p>
-                                    <p class="m-1">User : <?= htmlspecialchars($value['firstname']) ?></p>
+                                    <p class="m-1">Email : <?= htmlspecialchars($value['user_email']) ?></p>
+                                    <p class="m-1">User : <?= htmlspecialchars($value['user_firstname']) ?></p>
                                     <p class="m-1">Role :
-                                        <?php if ($value['role'] == 2) {
+                                        <?php if ($value['user_role'] == 2) {
                                             echo 'Administrator';
-                                        } else if ($value['role'] == 1) {
+                                        } else if ($value['user_role'] == 1) {
                                             echo 'Moderator';
                                         } else {
                                             echo 'Aucun';
                                         }
                                         ?>
                                     </p>
-                                    <?php if ($_SESSION['user']->role == 2) { ?>
+                                    <?php if ($_SESSION['user']->user_role == 2) { ?>
                                         <!-- Formulaire pour MODIFIER le ROLE d'un utilisateur -->
-                                        <label for="<?= $value['id'] ?>">Admin</label>
-                                        <input type="radio" id="<?= $value['id'] ?>" value="2" name="role">
-                                        <label for="<?= $value['id'] ?>">Modo</label>
-                                        <input type="radio" id="<?= $value['id'] ?>" value='1' name="role">
-                                        <label for="<?= $value['id'] ?>">Aucun</label>
-                                        <input type="radio" id="<?= $value['id'] ?>" value="0" name="role">
+                                        <label for="<?= $value['user_id'] ?>">Admin</label>
+                                        <input type="radio" id="<?= $value['user_id'] ?>" value="2" name="role">
+                                        <label for="<?= $value['user_id'] ?>">Modo</label>
+                                        <input type="radio" id="<?= $value['user_id'] ?>" value='1' name="role">
+                                        <label for="<?= $value['user_id'] ?>">Aucun</label>
+                                        <input type="radio" id="<?= $value['user_id'] ?>" value="0" name="role">
                                         <br>
-                                        <input type="submit" id="<?= $value['id'] ?>" value="Update" name="update<?= $value['id'] ?>" class="bg-black rounded text-white mt-2">
+                                        <input type="submit" id="<?= $value['user_id'] ?>" value="Update" name="update<?= $value['user_id'] ?>" class="bg-black rounded text-white mt-2">
                                 </div>
                     <?php
                                     }
                                     // Mise à jour du ROLE d'un utilisateur
-                                    if (isset($_POST['update' . $value['id']])) {
-                                        $accept = $bdd->prepare("UPDATE users SET role = ? WHERE id = ? ");
-                                        $accept->execute([intval($_POST['role']), $value['id']]);
+                                    if (isset($_POST['update' . $value['user_id']])) {
+                                        $accept = $bdd->prepare("UPDATE users SET user_role = ? WHERE user_id = ? ");
+                                        $accept->execute([intval($_POST['role']), $value['user_id']]);
                                         header('Location: ./admin.php');
                                     }
                                 }
@@ -321,8 +321,8 @@ function getEditItemID()
                         <h4>Admin</h4>
                         <?php
                         foreach ($result as $key => $value) {
-                            if ($value['role'] == 2) : ?>
-                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['firstname']) ?>, <?= htmlspecialchars($value['email']) ?>.</p>
+                            if ($value['user_role'] == 2) : ?>
+                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['user_firstname']) ?>, <?= htmlspecialchars($value['user_email']) ?>.</p>
                         <?php
                             endif;
                         }
@@ -332,8 +332,8 @@ function getEditItemID()
                         <h4>Moderator</h4>
                         <?php
                         foreach ($result as $key => $value) {
-                            if ($value['role'] == 1) : ?>
-                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['firstname']) ?>, <?= htmlspecialchars($value['email']) ?>.</p>
+                            if ($value['user_role'] == 1) : ?>
+                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['user_firstname']) ?>, <?= htmlspecialchars($value['user_email']) ?>.</p>
                         <?php
                             endif;
                         }

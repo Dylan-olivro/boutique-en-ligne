@@ -89,7 +89,7 @@ class Adress
         $returnAdress = $bdd->prepare('SELECT * FROM adress WHERE id = :id AND id_user = :id_user');
         $returnAdress->execute([
             'id' => $this->id,
-            'id_user' => $_SESSION['user']->id
+            'id_user' => $_SESSION['user']->user_id
         ]);
         $result = $returnAdress->fetch(PDO::FETCH_OBJ);
         return $result;
