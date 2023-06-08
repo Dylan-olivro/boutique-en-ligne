@@ -26,10 +26,10 @@ if (isset($_POST['submit'])) {
     } elseif ($user->isExist($bdd)) {
         $res = $user->returnUserByEmail($bdd);
         // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
-        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE user_email = :user_email AND user_password = :user_password");
         $recupUser->execute([
-            'email' => $email,
-            'password' => $res->password
+            'user_email' => $email,
+            'user_password' => $res->password
         ]);
         $result = $recupUser->fetch(PDO::FETCH_OBJ);
 

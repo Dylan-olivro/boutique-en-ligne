@@ -5,7 +5,7 @@ require_once('./include/required.php');
 // ! NE PAS OUBLIER DE CHANGER LES VALUES DES INPUT
 
 // Empêche les utilisateurs qui ne sont pas ADMINISTRATEUR ou MODERATEUR de venir sur cette page
-if ($_SESSION['user']->role == 0) {
+if ($_SESSION['user']->user_role == 0) {
     header('Location: ../index.php');
 }
 
@@ -19,18 +19,18 @@ if (isset($_POST['buttonAddItem'])) {
     $categoryItem = trim(intval($_POST['categoryItem']));
     // $mainImage = trim(h(intval($_POST['mainImage'])));
 
-    $item = new Item(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
+    $product = new Product(null, $nameItem, $descriptionItem, $date, $priceItem, $stockItem);
     $category = new Category(null, null, $categoryItem);
-    $item->addItem($bdd);
+    $product->addItem($bdd);
     $category->liaisonItemCategory($bdd);
     if (isset($_FILES['file'])) {
         // Récupère l'ID du dernier produit ajouter
-        $returnLastID = $bdd->prepare("SELECT id FROM items ORDER BY items.id DESC");
+        $returnLastID = $bdd->prepare("SELECT product_id FROM products ORDER BY products.product_id DESC");
         $returnLastID->execute();
         $resultID =  $returnLastID->fetch(PDO::FETCH_OBJ);
 
         $file = $_FILES['file'];
-        $image = new Image(null, $resultID->id, $file, 1);
+        $image = new Image(null, $resultID->product_id, $file, 1);
         $image->addImage($bdd);
     }
     header('Location: admin.php');
@@ -39,9 +39,9 @@ if (isset($_POST['buttonAddItem'])) {
 // Supprime un produit choisi en fonction de son ID
 if (isset($_POST['buttonDeleteItem'])) {
     $itemID = trim(intval($_POST['itemID']));
-    $item = new Item($itemID, null, null, null, null, null, null);
-    $item->deleteItem($bdd);
-    header('Location: cartPage.php');
+    $product = new Product($itemID, null, null, null, null, null, null);
+    $product->deleteItem($bdd);
+    header('Location: admin.php');
 }
 
 // Insert une catégorie Parent/Enfant
@@ -123,7 +123,7 @@ function getEditItemID()
     <main>
         <!-- <div id="nav">
             <p id="titleUser">User</p>
-            <p id="titleItem">Item</p>
+            <p id="titleItem">Product</p>
             <p id="titleCategory">Category</p>
         </div> -->
         <section id="container">
@@ -158,43 +158,43 @@ function getEditItemID()
                 </div>
 
                 <div id="deleteItem">
-                    <h3>Supprimer un item</h3>
+                    <h3>Supprimer un Product</h3>
                     <!-- Formulaire pour SUPPRIMER un produit -->
                     <form action="" method="post" id="formDeleteItem">
-                        <label for="itemID">ID de l'item</label>
+                        <label for="itemID">ID du Product</label>
                         <input type="number" name="itemID" id="itemID">
                         <input type="submit" name="buttonDeleteItem" value="Supprimer">
                     </form>
                 </div>
 
                 <div id="editItem">
-                    <h3>Modifier un item</h3>
+                    <h3>Modifier un Product</h3>
                     <!-- Formulaire pour MODIFIER un produit -->
                     <form action="" method="get" id="formEditItem">
-                        <label for="editItemID">ID item</label>
+                        <label for="editItemID">ID Product</label>
                         <input type="number" name="editItemID" id="editItemID" value="<?= htmlspecialchars(getEditItemID()); ?>">
                         <input type="submit" name="editItem" value="Modifier">
                     </form>
                     <?php
                     if (isset($_GET['editItemID'])) {
                         $editItemID = trim(intval($_GET['editItemID']));
-                        $item = new Item($editItemID, null, null, null, null, null);
-                        $infoItem = $item->returnItem($bdd);
+                        $product = new Product($editItemID, null, null, null, null, null);
+                        $infoItem = $product->returnItem($bdd);
                     ?>
-                        <h3>Update Item</h3>
+                        <h3>Update Product</h3>
                         <!-- Affichage du produit à modifier -->
                         <form action="" method="post" id="formUpdateItem">
                             <label for="updateNameItem">Name</label>
-                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= htmlspecialchars($infoItem->name) ?>">
+                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= htmlspecialchars($infoItem->product_name) ?>">
 
                             <label for="updateDescriptionItem">Description</label>
-                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= htmlspecialchars($infoItem->description) ?>">
+                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= htmlspecialchars($infoItem->product_description) ?>">
 
                             <label for="updatePriceItem">Price</label>
-                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= htmlspecialchars($infoItem->price) ?>">
+                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= htmlspecialchars($infoItem->product_price) ?>">
 
                             <label for="updateSotckItem">Stock</label>
-                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= htmlspecialchars($infoItem->stock) ?>">
+                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= htmlspecialchars($infoItem->product_stock) ?>">
 
                             <input type="submit" name="updateItem" value="Update">
                         </form>
@@ -207,8 +207,8 @@ function getEditItemID()
                             $updateSotckItem = trim(intval($_POST['updateSotckItem']));
                             $updateImageItem = trim($_POST['updateImageItem']);
 
-                            $item = new Item($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
-                            $item->editItem($bdd);
+                            $product = new Product($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
+                            $product->editItem($bdd);
                         }
                     }
                     ?>
@@ -267,7 +267,7 @@ function getEditItemID()
                 <div class="w-75">
                     <h1 class="text-center m-4">All Users</h1>
                     <?php
-                    if ($_SESSION['user']->role > 0) {
+                    if ($_SESSION['user']->user_role > 0) {
                         // Récupération de tous les utilisateurs 
                         $request = $bdd->prepare("SELECT * FROM users ");
                         $request->execute();
@@ -277,35 +277,35 @@ function getEditItemID()
 
                             <form method="post" class="d-flex flex-wrap justify-content-center" id="formUser">
                                 <div class="w-25 border rounded text-center m-2 pb-2 bg-primary-subtle">
-                                    <p class="m-1">Email : <?= htmlspecialchars($value['email']) ?></p>
-                                    <p class="m-1">User : <?= htmlspecialchars($value['firstname']) ?></p>
+                                    <p class="m-1">Email : <?= htmlspecialchars($value['user_email']) ?></p>
+                                    <p class="m-1">User : <?= htmlspecialchars($value['user_firstname']) ?></p>
                                     <p class="m-1">Role :
-                                        <?php if ($value['role'] == 2) {
+                                        <?php if ($value['user_role'] == 2) {
                                             echo 'Administrator';
-                                        } else if ($value['role'] == 1) {
+                                        } else if ($value['user_role'] == 1) {
                                             echo 'Moderator';
                                         } else {
                                             echo 'Aucun';
                                         }
                                         ?>
                                     </p>
-                                    <?php if ($_SESSION['user']->role == 2) { ?>
+                                    <?php if ($_SESSION['user']->user_role == 2) { ?>
                                         <!-- Formulaire pour MODIFIER le ROLE d'un utilisateur -->
-                                        <label for="<?= $value['id'] ?>">Admin</label>
-                                        <input type="radio" id="<?= $value['id'] ?>" value="2" name="role">
-                                        <label for="<?= $value['id'] ?>">Modo</label>
-                                        <input type="radio" id="<?= $value['id'] ?>" value='1' name="role">
-                                        <label for="<?= $value['id'] ?>">Aucun</label>
-                                        <input type="radio" id="<?= $value['id'] ?>" value="0" name="role">
+                                        <label for="<?= $value['user_id'] ?>">Admin</label>
+                                        <input type="radio" id="<?= $value['user_id'] ?>" value="2" name="role">
+                                        <label for="<?= $value['user_id'] ?>">Modo</label>
+                                        <input type="radio" id="<?= $value['user_id'] ?>" value='1' name="role">
+                                        <label for="<?= $value['user_id'] ?>">Aucun</label>
+                                        <input type="radio" id="<?= $value['user_id'] ?>" value="0" name="role">
                                         <br>
-                                        <input type="submit" id="<?= $value['id'] ?>" value="Update" name="update<?= $value['id'] ?>" class="bg-black rounded text-white mt-2">
+                                        <input type="submit" id="<?= $value['user_id'] ?>" value="Update" name="update<?= $value['user_id'] ?>" class="bg-black rounded text-white mt-2">
                                 </div>
                     <?php
                                     }
                                     // Mise à jour du ROLE d'un utilisateur
-                                    if (isset($_POST['update' . $value['id']])) {
-                                        $accept = $bdd->prepare("UPDATE users SET role = ? WHERE id = ? ");
-                                        $accept->execute([intval($_POST['role']), $value['id']]);
+                                    if (isset($_POST['update' . $value['user_id']])) {
+                                        $accept = $bdd->prepare("UPDATE users SET user_role = ? WHERE user_id = ? ");
+                                        $accept->execute([intval($_POST['role']), $value['user_id']]);
                                         header('Location: ./admin.php');
                                     }
                                 }
@@ -321,8 +321,8 @@ function getEditItemID()
                         <h4>Admin</h4>
                         <?php
                         foreach ($result as $key => $value) {
-                            if ($value['role'] == 2) : ?>
-                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['firstname']) ?>, <?= htmlspecialchars($value['email']) ?>.</p>
+                            if ($value['user_role'] == 2) : ?>
+                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['user_firstname']) ?>, <?= htmlspecialchars($value['user_email']) ?>.</p>
                         <?php
                             endif;
                         }
@@ -332,8 +332,8 @@ function getEditItemID()
                         <h4>Moderator</h4>
                         <?php
                         foreach ($result as $key => $value) {
-                            if ($value['role'] == 1) : ?>
-                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['firstname']) ?>, <?= htmlspecialchars($value['email']) ?>.</p>
+                            if ($value['user_role'] == 1) : ?>
+                                <p class="text-warning fw-bold fs-5"><?= htmlspecialchars($value['user_firstname']) ?>, <?= htmlspecialchars($value['user_email']) ?>.</p>
                         <?php
                             endif;
                         }

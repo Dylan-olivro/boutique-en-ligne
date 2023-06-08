@@ -46,29 +46,29 @@ class User
         $firstname = trim($this->firstname);
         $password = password_hash(trim($this->password), PASSWORD_DEFAULT);
         // Insert du nouveau utilisateur
-        $request = $bdd->prepare("INSERT INTO users (email,lastname,firstname,password) VALUES(:email,:lastname,:firstname,:password)");
+        $request = $bdd->prepare("INSERT INTO users (user_email,user_lastname,user_firstname,user_password) VALUES(:user_email,:user_lastname,:user_firstname,:user_password)");
         $request->execute([
-            'email' => $email,
-            'lastname' => $lastname,
-            'firstname' => $firstname,
-            'password' => $password
+            'user_email' => $email,
+            'user_lastname' => $lastname,
+            'user_firstname' => $firstname,
+            'user_password' => $password
         ]);
     }
 
     public function connect($bdd)
     {
         // Récupération des utilisateurs pour vérifier si l'adresse mail existe
-        $request = $bdd->prepare("SELECT * FROM users WHERE email = :email");
-        $request->execute(['email' => $this->email]);
+        $request = $bdd->prepare("SELECT * FROM users WHERE user_email = :user_email");
+        $request->execute(['user_email' => $this->email]);
         $res = $request->fetch(PDO::FETCH_OBJ);
 
         if ($request->rowCount() > 0) {
 
             // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
-            $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
+            $recupUser = $bdd->prepare("SELECT * FROM users WHERE user_email = :user_email AND user_password = :user_password");
             $recupUser->execute([
-                'email' => $this->email,
-                'password' => $res->password
+                'user_email' => $this->email,
+                'user_password' => $res->password
             ]);
             $result = $recupUser->fetch(PDO::FETCH_OBJ);
 
@@ -102,28 +102,28 @@ class User
         $firstname = trim($this->firstname);
         $password = trim($this->password);
 
-        $request = $bdd->prepare("UPDATE users SET email = :email, firstname = :firstname, lastname = :lastname, password = :password WHERE id = :id ");
+        $request = $bdd->prepare("UPDATE users SET user_email = :user_email, user_firstname = :user_firstname, user_lastname = :user_lastname, user_password = :user_password WHERE user_id = :user_id ");
         $request->execute([
-            'email' => $email,
-            'firstname' => $firstname,
-            'lastname' => $lastname,
-            'password' => $password_bdd,
-            'id' => $this->id
+            'user_email' => $email,
+            'user_firstname' => $firstname,
+            'user_lastname' => $lastname,
+            'user_password' => $password_bdd,
+            'user_id' => $this->id
         ]);
 
-        $_SESSION['user']->email = $email;
-        $_SESSION['user']->firstname = $firstname;
-        $_SESSION['user']->lastname = $lastname;
-        $_SESSION['user']->password = $password;
+        $_SESSION['user']->user_email = $email;
+        $_SESSION['user']->user_firstname = $firstname;
+        $_SESSION['user']->user_lastname = $lastname;
+        $_SESSION['user']->user_password = $password;
     }
 
     public function updatePassword($bdd, $old_password)
     {
         // Récupartion des informations de l'utilisateurs
-        $request = $bdd->prepare("SELECT * FROM users WHERE id = :id");
-        $request->execute(['id' => $this->id]);
+        $request = $bdd->prepare("SELECT * FROM users WHERE user_id = :user_id");
+        $request->execute(['user_id' => $this->id]);
         $res = $request->fetch(PDO::FETCH_OBJ);
-        $insertUser = $bdd->prepare("UPDATE users SET password = :password WHERE id = :id ");
+        $insertUser = $bdd->prepare("UPDATE users SET user_password = :user_password WHERE user_id = :user_id ");
         // La sécurité empêche que les champs soient VIDES
         if (isEmpty($old_password)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
@@ -136,16 +136,16 @@ class User
         elseif ($old_password == $this->password) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes mots de passe sont identiques';
             return $error;
-        } elseif ($old_password != password_verify($old_password, $res->password)) {
+        } elseif ($old_password != password_verify($old_password, $res->user_password)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
             return $error;
         } else {
             // Mise à jour du mot de passe
             $insertUser->execute([
-                'password' => password_hash($this->password, PASSWORD_DEFAULT),
-                'id' => $this->id
+                'user_password' => password_hash($this->password, PASSWORD_DEFAULT),
+                'user_id' => $this->id
             ]);
-            $_SESSION['user']->password = $this->password;
+            $_SESSION['user']->user_password = $this->password;
             header('Location:../profil.php');
         }
     }
@@ -159,8 +159,8 @@ class User
     public function isExist($bdd): bool
     {
         // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà
-        $request = $bdd->prepare("SELECT email FROM users WHERE email = :email");
-        $request->execute(['email' => $this->email]);
+        $request = $bdd->prepare("SELECT user_email FROM users WHERE user_email = :user_email");
+        $request->execute(['user_email' => $this->email]);
 
         if ($request->rowCount() > 0) {
             return true;
@@ -172,10 +172,10 @@ class User
     public function isExistExceptCurrentEmail($bdd): bool
     {
         // Récupération des utilisateurs pour vérifier si l'adresse mail existe déjà sauf celle qui est utilisé
-        $request = $bdd->prepare("SELECT * FROM users WHERE email = :email AND id != :id");
+        $request = $bdd->prepare("SELECT * FROM users WHERE user_email = :user_email AND user_id != :user_id");
         $request->execute([
-            'email' => $this->email,
-            'id' => $this->id
+            'user_email' => $this->email,
+            'user_id' => $this->id
         ]);
 
         if ($request->rowCount() > 0) {
@@ -187,18 +187,18 @@ class User
 
     public function returnUserByEmail($bdd)
     {
-        $request = $bdd->prepare("SELECT * FROM users WHERE email = :email");
-        $request->execute(['email' => $this->email]);
+        $request = $bdd->prepare("SELECT * FROM users WHERE user_email = :user_email");
+        $request->execute(['user_email' => $this->email]);
         $result = $request->fetch(PDO::FETCH_OBJ);
         return $result;
     }
     public function returnUserByEmailAndPassword($bdd, $bdd_password)
     {
         // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
-        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE user_email = :user_email AND user_password = :user_password");
         $recupUser->execute([
-            'email' => $this->email,
-            'password' => $bdd_password
+            'user_email' => $this->email,
+            'user_password' => $bdd_password
         ]);
         $result = $recupUser->fetch(PDO::FETCH_OBJ);
         return $result;
@@ -206,15 +206,15 @@ class User
 
     public function returnUserById($bdd)
     {
-        $request = $bdd->prepare("SELECT * FROM users WHERE id = :id");
-        $request->execute(['id' => $this->id]);
+        $request = $bdd->prepare("SELECT * FROM users WHERE user_id = :user_id");
+        $request->execute(['user_id' => $this->id]);
         $result = $request->fetch(PDO::FETCH_OBJ);
         return $result;
     }
 
     public function isConnected(): bool
     {
-        if (isset($_SESSION['user']->login)) {
+        if (isset($_SESSION['user']->user_login)) {
             return true;
         } else {
             return false;

@@ -5,7 +5,7 @@ if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
 }
 
-$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null, null, null, null);
+$adress = new Address(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
 
 
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
     } elseif (!isPostcode($postcode)) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
-    } elseif (!Adress::formatTelephoneAccept($telephone)) {
+    } elseif (!Address::formatTelephoneAccept($telephone)) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe numéro de téléphone est invalide.';
     } elseif (User::isToBig($nom)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire moins de 30 caractères.';
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspNombres maximum d\'adresse atteint (6).';
     } else {
 
-        $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city, null, $prenom, $nom);
+        $adress = new Address(null, $_SESSION['user']->user_id, $numero, $name, $postcode, $city, null, $prenom, $nom);
         $tel = $adress->returnFormatTel($telephone);
         $adress->setTelephone($tel);
         $adress->addAdress($bdd);

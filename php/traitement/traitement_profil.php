@@ -12,7 +12,7 @@ if (isset($data)) {
     $lastname = $data['lastname'];
     $password = $data['password'];
 
-    $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
+    $user = new User($_SESSION['user']->user_id, $email, $firstname, $lastname, $password, $_SESSION['user']->user_role);
 
     if (empty($email)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
@@ -41,7 +41,7 @@ if (isset($data)) {
     } else {
         $res = $user->returnUserById($bdd);
         // var_dump($res);
-        if ($password != password_verify($password, $res->password)) {
+        if ($password != password_verify($password, $res->user_password)) {
             $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
         } else {
             $user->update($bdd, $res->password);
