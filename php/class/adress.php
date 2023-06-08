@@ -19,35 +19,21 @@ class Adress
     }
     public function addAdress($bdd)
     {
-        if (isEmpty($this->numero)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
-            return $error;
-        } elseif (isEmpty($this->name)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
-            return $error;
-        } elseif (isEmpty($this->postcode)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
-            return $error;
-        } elseif (isEmpty($this->city)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
-            return $error;
-        } elseif (!isStreet($this->numero)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
-            return $error;
-        } elseif (!isPostcode($this->postcode)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
-            return $error;
-        } else {
-            $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city)  VALUES(:id_user,:numero,:name,:postcode,:city)');
-            $addAdress->execute([
-                'id_user' => $this->id_user,
-                'numero' => $this->numero,
-                'name' => $this->name,
-                'postcode' => $this->postcode,
-                'city' => $this->city
-            ]);
-            header('Location: ../profil.php');
-        }
+        $id_user = intval($this->id_user);
+        $numero = intval(trim($this->numero));
+        $name = trim($this->name);
+        $postcode = trim($this->postcode);
+        $city = strtoupper(trim($this->city));
+
+        $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city)  VALUES(:id_user,:numero,:name,:postcode,:city)');
+        $addAdress->execute([
+            'id_user' => $id_user,
+            'numero' => $numero,
+            'name' => $name,
+            'postcode' => $postcode,
+            'city' => $city
+        ]);
+        // header('Location: ../profil.php');
     }
     public function deleteAdress($bdd)
     {
@@ -56,41 +42,28 @@ class Adress
             'id' => $this->id,
             'id_user' => $this->id_user
         ]);
-        header('Location: ../profil.php');
     }
 
     public function updateAdress($bdd)
     {
-        if (isEmpty($this->numero)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
-            return $error;
-        } elseif (isEmpty($this->name)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
-            return $error;
-        } elseif (isEmpty($this->postcode)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
-            return $error;
-        } elseif (isEmpty($this->city)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
-            return $error;
-        } elseif (!isStreet($this->numero)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
-            return $error;
-        } elseif (!isPostcode($this->postcode)) {
-            $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
-            return $error;
-        } else {
-            $updateAdress = $bdd->prepare('UPDATE adress SET numero = :numero, name = :name, postcode = :postcode, city = :city WHERE id = :id AND id_user = :id_user');
-            $updateAdress->execute([
-                'numero' => $this->numero,
-                'name' => $this->name,
-                'postcode' => $this->postcode,
-                'city' => $this->city,
-                'id' => $this->id,
-                'id_user' => $this->id_user
-            ]);
-            header('Location: ../profil.php');
-        }
+
+        $id_user = intval($this->id_user);
+        $numero = intval(trim($this->numero));
+        $name = trim($this->name);
+        $postcode = trim($this->postcode);
+        $city = strtoupper(trim($this->city));
+
+        $updateAdress = $bdd->prepare('UPDATE adress SET numero = :numero, name = :name, postcode = :postcode, city = :city WHERE id = :id AND id_user = :id_user');
+        $updateAdress->execute([
+            'numero' => $numero,
+            'name' => $name,
+            'postcode' => $postcode,
+            'city' => $city,
+            'id' => $this->id,
+            'id_user' => $id_user
+        ]);
+        // header('Location: ../profil.php');
+
     }
 
     public function returnAdressById($bdd)

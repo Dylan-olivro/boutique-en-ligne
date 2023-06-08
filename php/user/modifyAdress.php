@@ -18,13 +18,28 @@ if (isset($_GET['id'])) {
 
 // Mise à jour de l'adresse sélectionner
 if (isset($_POST['submit'])) {
-    $numero = trim(h($_POST['numero']));
-    $name = trim(h($_POST['name']));
-    $postcode = trim(h($_POST['postcode']));
-    $city = strtoupper(trim(h($_POST['city'])));
+    $numero = $_POST['numero'];
+    $name = $_POST['name'];
+    $postcode = $_POST['postcode'];
+    $city = $_POST['city'];
 
-    $adress = new Adress($userAdress->id, $_SESSION['user']->id, $numero, $name, $postcode, $city);
-    $adress->updateAdress($bdd);
+    if (empty($numero)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
+    } elseif (empty($name)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
+    } elseif (empty($postcode)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
+    } elseif (empty($city)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
+    } elseif (!isStreet($numero)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
+    } elseif (!isPostcode($postcode)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
+    } else {
+        $adress = new Adress($userAdress->id, $_SESSION['user']->id, $numero, $name, $postcode, $city);
+        $adress->updateAdress($bdd);
+        header('Location: ../profil.php');
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -59,16 +74,16 @@ if (isset($_POST['submit'])) {
         <!-- Formulaire pour MODIFIER l'adresse de l'utilisateur -->
         <form action="" method="post" id="formUpdateAdress">
             <label for="numero">Numero</label>
-            <input type="number" name="numero" id="numero" value="<?= $userAdress->numero ?>" autofocus>
+            <input type="number" name="numero" id="numero" value="<?= htmlspecialchars($userAdress->numero) ?>" autofocus>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="<?= $userAdress->name ?>">
+            <input type="text" name="name" id="name" value="<?= htmlspecialchars($userAdress->name) ?>">
             <label for="postcode">Postcode</label>
-            <input type="number" name="postcode" id="postcode" value="<?= $userAdress->postcode ?>">
+            <input type="number" name="postcode" id="postcode" value="<?= htmlspecialchars($userAdress->postcode) ?>">
             <label for="city">City</label>
-            <input type="text" name="city" id="city" value="<?= $userAdress->city ?>">
+            <input type="text" name="city" id="city" value="<?= htmlspecialchars($userAdress->city) ?>">
             <p id="message">
-                <?php if (isset($adress)) {
-                    echo $adress->updateAdress($bdd);
+                <?php if (isset($error)) {
+                    echo $error;
                 } ?>
             </p>
             <input type="submit" name="submit" class="input" value="Modifier">

@@ -115,9 +115,9 @@ if (isset($_POST['vider'])) {
                         <div class="cartDetail">
                             <img src="../assets/img_item/<?= $item->name_image ?>" alt="">
                             <div class="cartInfo">
-                                <p><?= $item->name ?></p>
-                                <p><?= $item->price ?>€</p>
-                                <p><?= $item->stock ?> en Stock</p>
+                                <p><?= htmlspecialchars($item->name) ?></p>
+                                <p><?= htmlspecialchars($item->price) ?>€</p>
+                                <p><?= htmlspecialchars($item->stock) ?> en Stock</p>
                             </div>
                             <form action="" method="post">
                                 <input type="submit" name="delete<?= $item->id_item ?>" value="delete">

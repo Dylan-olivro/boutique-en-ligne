@@ -99,3 +99,9 @@ function checkStock(stock, message) {
     console.log("STOCK");
   }
 }
+function getURL() {
+  let url = window.location.href;
+  let url2 = url.split("boutique-en-ligne")[0];
+  let url3 = `${url2}boutique-en-ligne/`;
+  return url3;
+}

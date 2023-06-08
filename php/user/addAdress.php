@@ -4,15 +4,38 @@
 if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
 }
+
+$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
+$allUserAdress = $adress->returnAdressByUser($bdd);
+var_dump(count($allUserAdress));
+
+
 // Insert une adresse
 if (isset($_POST['submit'])) {
-    $numero = trim(h($_POST['numero']));
-    $name = trim(h($_POST['name']));
-    $postcode = trim(h($_POST['postcode']));
-    $city = strtoupper(trim(h($_POST['city'])));
+    $numero = $_POST['numero'];
+    $name = $_POST['name'];
+    $postcode = $_POST['postcode'];
+    $city = $_POST['city'];
 
-    $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city);
-    $adress->addAdress($bdd);
+    if (empty($numero)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
+    } elseif (empty($name)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
+    } elseif (empty($postcode)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
+    } elseif (empty($city)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
+    } elseif (!isStreet($numero)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
+    } elseif (!isPostcode($postcode)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
+    } elseif (count($allUserAdress) >= 6) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspNombres maximum d\'adresse atteint (6).';
+    } else {
+        $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city);
+        $adress->addAdress($bdd);
+        header('Location: ../profil.php');
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -56,8 +79,8 @@ if (isset($_POST['submit'])) {
             <label for="city">City</label>
             <input type="text" name="city" id="city">
             <p id="message">
-                <?php if (isset($adress)) {
-                    var_dump($adress->addAdress($bdd));
+                <?php if (isset($error)) {
+                    echo $error;
                 } ?>
             </p>
             <input type="submit" name="submit" class="input">

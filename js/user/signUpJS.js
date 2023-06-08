@@ -1,10 +1,10 @@
 let email = document.querySelector("#email");
 let lastname = document.querySelector("#lastname");
 let firstname = document.querySelector("#firstname");
-let password = document.querySelector("#password");
 let cpassword = document.querySelector("#confirm_password");
 let formSignUp = document.querySelector("#signup");
 let message = document.querySelector("#message");
+let password = document.querySelector("#password");
 const buttonShow = document.getElementById("showPassword");
 const buttonShow2 = document.getElementById("showConfirmPassword");
 
