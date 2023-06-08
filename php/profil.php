@@ -198,6 +198,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                 </div>
                                 <div>
                                     <p>NUMERO DE COMMANDE :</p>
+                                    <p></p>
                                 </div>
                             </div>
                             <?php foreach ($product as $infoProduct) { ?>
