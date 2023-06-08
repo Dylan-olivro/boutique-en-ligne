@@ -80,3 +80,10 @@ label {
   width: 30%;
   margin: 1% auto !important;
 }
+.demande {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}

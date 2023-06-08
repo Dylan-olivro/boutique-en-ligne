@@ -86,3 +86,10 @@ label {
 /* #showPassword:active {
   border-color: var(--button-color);
 } */
+.demande {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}

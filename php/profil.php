@@ -6,22 +6,54 @@ require_once('./include/required.php');
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
-// var_dump($_SESSION);
-// Met à jour les informations de l'utilisateur
-// if (isset($_POST['updateUser'])) {
-//     $email = $_POST['email'];
-//     $firstname = $_POST['firstname'];
-//     $lastname = $_POST['lastname'];
-//     $password = $_POST['password'];
 
-//     $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
-//     $user->update($bdd);
-//     header('Location:./profil.php');
-// }
+// Met à jour les informations de l'utilisateur
+if (isset($_POST['updateUser'])) {
+    $email = $_POST['email'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $password = $_POST['password'];
+
+    $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
+
+    if (empty($email)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
+    } elseif (empty($firstname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
+    } elseif (empty($lastname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
+    } elseif (empty($password)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
+    } elseif (!User::isAName($firstname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
+    } elseif (!User::isAName($lastname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
+    } elseif (User::isToBig($firstname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
+    } elseif (User::isToBig($firstname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
+    } elseif (User::isToBig($lastname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
+    } elseif (User::isToSmall($lastname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
+    } elseif ($user->isExistExceptCurrentEmail($bdd)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
+    } else {
+        $res = $user->returnUserById($bdd);
+        if ($password != password_verify($password, $res->password)) {
+            $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
+        } else {
+            $user->update($bdd, $res->password);
+            header('Location: profil.php');
+        }
+    }
+}
+
 // Récuperation des adresses de l'utilisateur
 $adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
-// var_dump(count($allUserAdress));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,12 +104,12 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                             <input type="password" name="password" class="input" id="password">
                             <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                         </div>
-                        <!-- les messages d'erreurs -->
+                        <!-- Affichage des erreurs -->
                         <p id="message">
                             <?php
-                            // if (isset($user)) {
-                            //     echo $user->update($bdd);
-                            // }
+                            if (isset($message['erreur'])) {
+                                echo $message['erreur'];
+                            }
                             ?>
                         </p>
                         <input type="submit" name="updateUser" id="submit" value="Enregistrer">
@@ -139,44 +171,42 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
             <!-- Historique des commandes -->
             <section class="containerCommand">
                 <div class="allCommand">
+                    <h3>Historique des commandes</h3>
                     <?php
                     // Récupère les commandes de l'utilisateur
-                    $returnCommand2 = $bdd->prepare('SELECT * FROM command WHERE id_user  = :id_user ORDER BY date DESC');
-                    $returnCommand2->execute(['id_user' => $_SESSION['user']->id]);
-                    $result2 = $returnCommand2->fetchAll(PDO::FETCH_OBJ);
+                    $command = new Command(null, $_SESSION['user']->id, null, null);
+                    $result = $command->returnComandByUser($bdd);
 
-                    foreach ($result2 as $key2) { ?>
-
+                    foreach ($result as $order) { ?>
                         <div>
                             <?php
+                            $command->setId($order->id);
                             // Récupère les produits de la commande de l'utilisateur avec les images.
-                            $returnCommand = $bdd->prepare('SELECT * FROM command INNER JOIN liaison_cart_command ON command.id = liaison_cart_command.id_command INNER JOIN items ON liaison_cart_command.id_item = items.id INNER JOIN image ON items.id = image.id_item WHERE id_user = :id_user AND command.id = :command_id AND main = 1');
-                            $returnCommand->execute([
-                                'id_user' => $_SESSION['user']->id,
-                                'command_id' => $key2->id
-                            ]);
-                            $result = $returnCommand->fetchAll(PDO::FETCH_OBJ); ?>
+                            $product = $command->returnContentCommand($bdd);
+                            ?>
                             <!-- Affichage des commandes -->
                             <div class="infoCommand">
                                 <div>
-                                    <p>COMMANDE ÉFFECTUÉE LE</p>
-                                    <p><?= htmlspecialchars($key2->date) ?></p>
+                                    <p>COMMANDE EFFECTUEE LE :</p>
+                                    <p><?= htmlspecialchars($order->date) ?></p>
                                 </div>
                                 <div>
-                                    <p>TOTAL</p>
-                                    <p><?= htmlspecialchars($key2->total) ?>€</p>
+                                    <p>TOTAL :</p>
+                                    <p><?= htmlspecialchars($order->total) ?>€</p>
                                 </div>
                                 <div>
-                                    <p>N° DE COMMANDE</p>
+                                    <p>NUMERO DE COMMANDE :</p>
                                 </div>
                             </div>
-                            <?php foreach ($result as $key) { ?>
+                            <?php foreach ($product as $key) { ?>
                                 <div class="command">
                                     <img src="../assets/img_item/<?= $key->name_image ?>" alt="">
-                                    <div>
-                                        <p><?= htmlspecialchars($key->name) ?></p>
-                                        <p><?= htmlspecialchars($key->price) ?></p>
-                                        <a href="./detail.php?id=<?= $key->id_item ?>"><button>Acheter a nouveau</button></a>
+                                    <div class="infoProduct">
+                                        <div>
+                                            <p class="titleProduct"><?= htmlspecialchars($key->name) ?></p>
+                                            <p class="price"><?= htmlspecialchars($key->price) ?>€</p>
+                                        </div>
+                                        <a href="./detail.php?id=<?= $key->id_item ?>"><button>Acheter à nouveau</button></a>
                                     </div>
                                 </div>
                             <?php } ?>
@@ -184,6 +214,14 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <?php
                     }
                     ?>
+                    <div class="showCommands">
+                        <a href="">
+                            <div class="showCommandsText">
+                                <span>Voir toutes vos commandes</span>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </section>
         </section>
