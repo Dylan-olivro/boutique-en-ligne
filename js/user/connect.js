@@ -27,7 +27,7 @@ formEl.addEventListener("submit", (event) => {
         //   // message.style.display = "flex";
         message.innerHTML = data.erreur;
       } else {
-        window.location.href = `${getURL()}php/connectFetch.php`;
+        window.location.href = `${getURL()}index.php`;
         //   // message.style.display = "flex";
         message.style.color = "green";
         message.innerHTML = data.succes;

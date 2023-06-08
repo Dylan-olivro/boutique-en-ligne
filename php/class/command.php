@@ -5,13 +5,15 @@ class Command
     public $id_user;
     public $date;
     public $total;
+    public $adresse;
 
-    public function __construct($id, $id_user, $date, $total)
+    public function __construct($id, $id_user, $date, $total, $adresse)
     {
         $this->id = $id;
         $this->id_user = $id_user;
         $this->date = $date;
         $this->total = $total;
+        $this->adresse = $adresse;
     }
 
     public function addCommand($bdd)
@@ -25,9 +27,10 @@ class Command
 
     public function updateCommand($bdd)
     {
-        $request = $bdd->prepare('UPDATE command SET total = :total WHERE id = :id ');
+        $request = $bdd->prepare('UPDATE command SET total = :total , adresse = :adresse WHERE id = :id ');
         $request->execute([
             'total' => $this->total,
+            'adresse' => $this->adresse,
             'id' => $this->id
         ]);
     }

@@ -2,6 +2,7 @@
 require_once('./include/required.php');
 // ! FAIRE UNE CLASSE CART
 
+// var_dump(uniqid());
 // Empêche les utilisateurs qui ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
@@ -9,7 +10,6 @@ if (!isset($_SESSION['user'])) {
 // Récupère le panier de l'utilisateur
 $cart = new Cart(null, $_SESSION['user']->id, null);
 $result = $cart->returnCart($bdd);
-var_dump($result);
 
 // Récupère les stock dans un tableau
 $stock = [];
@@ -17,40 +17,48 @@ foreach ($result as $item) {
     array_push($stock, $item->stock);
 }
 
+$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null, null, null, null);
+$res = $adress->returnAdressByUser($bdd);
+
 // Valide le panier de l'utilisateur, créer une commande et vide le panier
 if (isset($_POST['valider'])) {
-    if (!in_array(0, $stock)) {
+    if (!empty($result)) {
+        if (!in_array(0, $stock)) {
 
-        $date = date("Y-m-d H:i:s");
-        $command = new Command(null, $_SESSION['user']->id, $date, null);
-        $command->addCommand($bdd);
+            $date = date("Y-m-d H:i:s");
+            $command = new Command(null, $_SESSION['user']->id, $date, null, null);
+            $command->addCommand($bdd);
 
-        $id = $bdd->lastInsertId();
+            $id = $bdd->lastInsertId();
 
-        $prices = [];
-        foreach ($result as $key) {
+            $prices = [];
+            foreach ($result as $key) {
 
-            array_push($prices, $key->price);
+                array_push($prices, $key->price);
 
-            $updateStock = $bdd->prepare('UPDATE items SET stock = :stock WHERE id = :id');
-            $updateStock->execute([
-                'stock' => $key->stock - 1,
-                'id' => $key->id_item
-            ]);
+                $updateStock = $bdd->prepare('UPDATE items SET stock = :stock WHERE id = :id');
+                $updateStock->execute([
+                    'stock' => $key->stock - 1,
+                    'id' => $key->id_item
+                ]);
 
-            $insertLiaison = $bdd->prepare('INSERT INTO liaison_cart_command (id_command,id_item) VALUES (:id_command,:id_item)');
-            $insertLiaison->execute([
-                'id_command' => $id,
-                'id_item' => $key->id_item
-            ]);
+                $insertLiaison = $bdd->prepare('INSERT INTO liaison_cart_command (id_command,id_item) VALUES (:id_command,:id_item)');
+                $insertLiaison->execute([
+                    'id_command' => $id,
+                    'id_item' => $key->id_item
+                ]);
+            }
+            $total = array_sum($prices);
+
+            $command = new Command($id, $_SESSION['user']->id, $date, $total, $_POST['adress']);
+
+            $command->updateCommand($bdd);
+            $cart->deleteCart($bdd);
+        } else {
+            $errorStockMessage = 'Un article dans votre panier a son stock epuisée';
         }
-        $total = array_sum($prices);
-        $command = new Command($id, $_SESSION['user']->id, $date, $total);
-        $command->updateCommand($bdd);
-        $cart->deleteCart($bdd);
     } else {
-
-        $errorStockMessage = 'Un article dans votre panier a son stock epuisée';
+        $errorStockMessage = 'Panier vide';
     }
 }
 
@@ -95,6 +103,18 @@ if (isset($_POST['vider'])) {
         </form>
 
         <form action="" method="post">
+            <select name="adress" id="">
+                <?php
+                foreach ($res as $key) {
+                    $orderAdress = sprintf('%d %s, %d %s', htmlspecialchars($key->numero), htmlspecialchars($key->name), htmlspecialchars($key->postcode), htmlspecialchars($key->city));
+                ?>
+                    <option value="<?= $orderAdress ?>">
+                        <?= $orderAdress ?>
+                    </option>
+                <?php
+                }
+                ?>
+            </select>
             <input type="submit" name="valider" value="valider panier">
         </form>
 
@@ -108,6 +128,7 @@ if (isset($_POST['vider'])) {
         <section class="containerCart">
 
             <div class="cart">
+
                 <?php
                 // Affichage du panier
                 foreach ($result as $item) { ?>

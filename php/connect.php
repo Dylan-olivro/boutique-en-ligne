@@ -6,13 +6,45 @@ if (isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
+var_dump($_SESSION);
+
+// * Ne s'active que si le JAVASCRIPT est désactivé
 // Récupère les informations de l'utilisateur dans la base de données et les compare aux informations rentrées dans le formulaire
 if (isset($_POST['submit'])) {
-    $email = trim(h($_POST['email']));
-    $password = trim($_POST['password']);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
     $user = new User(null, $email, null, null, $password, null);
-    $user->connect($bdd);
+
+    // La sécurité empêche que les champs soient VIDES et correspondent à ce que nous voulons.
+    if (empty($email)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
+    } elseif (empty($password)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
+    } elseif ($user->isExist($bdd)) {
+        $res = $user->returnUserByEmail($bdd);
+        // Récupération de l'email et du mot de passe de l'utilisateurs pour vérifier si ils correspondes avec ce qu'il a rentrer dans le formulaire
+        $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
+        $recupUser->execute([
+            'email' => $email,
+            'password' => $res->password
+        ]);
+        $result = $recupUser->fetch(PDO::FETCH_OBJ);
+
+        if ($result) {
+            // Vérification du mot de passe 
+            if (password_verify($password, $result->password)) {
+                $_SESSION['user'] = $result;
+                header('Location: ../index.php');
+            } else {
+                $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe mot de passe est incorrect.';
+            }
+        }
+    } else {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email n\'existe pas.';
+    }
 }
 ?>
 
@@ -38,7 +70,7 @@ if (isset($_POST['submit'])) {
     <script src="../js/function.js" defer></script>
     <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/user/connectJS.js" defer></script>
+    <script src="../js/user/connect.js" defer></script>
 
 </head>
 
@@ -50,7 +82,7 @@ if (isset($_POST['submit'])) {
         <section id="container">
             <div class="form">
                 <!-- Formulaire pour CONNECTER un utilisateur -->
-                <form action="" method="post" id="formLogin">
+                <form method="post" id="formLogin">
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email" placeholder="Email" class="input" autofocus>
                     <label for="password">Password</label>
@@ -61,13 +93,13 @@ if (isset($_POST['submit'])) {
                     <!-- Affichage des erreurs -->
                     <p id="message">
                         <?php
-                        // REGLER LE CSS 
-                        if (isset($user)) {
-                            echo $user->connect($bdd);
+                        if (isset($message['erreur'])) {
+                            echo $message['erreur'];
                         }
                         ?>
                     </p>
                     <input type="submit" name="submit" id="submit">
+                    <p class="demande">Vous n'avez pas de compte ?<a href="./signUp.php">&nbspS'inscrire</a></p>
                 </form>
             </div>
         </section>

@@ -5,9 +5,8 @@ if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
 }
 
-$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
+$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
-var_dump(count($allUserAdress));
 
 
 // Insert une adresse
@@ -16,6 +15,9 @@ if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $postcode = $_POST['postcode'];
     $city = $_POST['city'];
+    $telephone = $_POST['telephone'];
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
 
     if (empty($numero)) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
@@ -29,10 +31,27 @@ if (isset($_POST['submit'])) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
     } elseif (!isPostcode($postcode)) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
+    } elseif (!Adress::formatTelephoneAccept($telephone)) {
+        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe numéro de téléphone est invalide.';
+    } elseif (User::isToBig($nom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire moins de 30 caractères.';
+    } elseif (User::isToBig($prenom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire moins de 30 caractères.';
+    } elseif (User::isToSmall($nom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire plus de 2 caractères.';
+    } elseif (User::isToSmall($prenom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire plus de 2 caractères.';
+    } elseif (!User::isAName($nom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom n\'est pas valide.';
+    } elseif (!User::isAName($prenom)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe pr&nom n\'est pas valide.';
     } elseif (count($allUserAdress) >= 6) {
         $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspNombres maximum d\'adresse atteint (6).';
     } else {
-        $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city);
+
+        $adress = new Adress(null, $_SESSION['user']->id, $numero, $name, $postcode, $city, null, $prenom, $nom);
+        $tel = $adress->returnFormatTel($telephone);
+        $adress->setTelephone($tel);
         $adress->addAdress($bdd);
         header('Location: ../profil.php');
     }
@@ -78,6 +97,12 @@ if (isset($_POST['submit'])) {
             <input type="number" name="postcode" id="postcode">
             <label for="city">City</label>
             <input type="text" name="city" id="city">
+            <label for="telephone">Téléphone</label>
+            <input type="text" name="telephone" id="telephone">
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" id="nom">
+            <label for="prenom">Prénom</label>
+            <input type="text" name="prenom" id="prenom">
             <p id="message">
                 <?php if (isset($error)) {
                     echo $error;

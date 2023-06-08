@@ -52,7 +52,7 @@ if (isset($_POST['updateUser'])) {
 }
 
 // Récuperation des adresses de l'utilisateur
-$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
+$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null, null, null, null);
 $allUserAdress = $adress->returnAdressByUser($bdd);
 ?>
 <!DOCTYPE html>
@@ -78,7 +78,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
     <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <!-- <script src="../js/user/profil.js" defer></script> -->
-    <script src="../js/user/profil_fetch.js" defer></script>
+    <script src="../js/user/profil.js" defer></script>
 
 </head>
 
@@ -136,16 +136,18 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <div class="allAdress">
 
                         <?php
-                        foreach ($allUserAdress as $userAdress) { ?>
+                        foreach ($allUserAdress as $userAdress) {
+                            // var_dump($allUserAdress);
+                        ?>
                             <div class="adress">
                                 <div class="infoAdress">
-                                    <p class="name"><?= htmlspecialchars($_SESSION['user']->firstname) . " " . htmlspecialchars($_SESSION['user']->lastname) ?></p>
+                                    <p class="name"><?= htmlspecialchars($userAdress->nom) . " " . htmlspecialchars($userAdress->prenom) ?></p>
                                     <p><?= htmlspecialchars($userAdress->numero) . " " . htmlspecialchars($userAdress->name) ?></p>
                                     <p><?= htmlspecialchars($userAdress->city) . ", " . htmlspecialchars($userAdress->postcode) ?></p>
                                     <p>France</p>
                                     <div>
                                         <p>N° de télephone:</p>
-                                        <p>00 00 00 00 00</p>
+                                        <p><?= htmlspecialchars($userAdress->telephone) ?></p>
                                     </div>
                                 </div>
                                 <div class="edit_delete">
@@ -158,7 +160,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                         <?php
                             // Delete l'adresse selectionné
                             if (isset($_POST['deleteAdress' . $userAdress->id])) {
-                                $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
+                                $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null, null, null, null);
                                 $adress->deleteAdress($bdd);
                                 header('Location: profil.php');
                             }
@@ -174,7 +176,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <h3>Historique des commandes</h3>
                     <?php
                     // Récupère les commandes de l'utilisateur
-                    $command = new Command(null, $_SESSION['user']->id, null, null);
+                    $command = new Command(null, $_SESSION['user']->id, null, null, null);
                     $result = $command->returnComandByUser($bdd);
 
                     foreach ($result as $order) { ?>

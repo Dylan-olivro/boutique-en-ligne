@@ -7,8 +7,11 @@ class Adress
     public $name;
     public $postcode;
     public $city;
+    public $telephone;
+    public $prenom;
+    public $nom;
 
-    public function __construct($id, $id_user, $numero, $name, $postcode, $city)
+    public function __construct($id, $id_user, $numero, $name, $postcode, $city, $telephone, $prenom, $nom)
     {
         $this->id = $id;
         $this->id_user = $id_user;
@@ -16,7 +19,16 @@ class Adress
         $this->name = $name;
         $this->postcode = $postcode;
         $this->city = $city;
+        $this->telephone = $telephone;
+        $this->prenom = $prenom;
+        $this->nom = $nom;
     }
+
+    public static function formatTelephoneAccept($a): bool
+    {
+        return preg_match("/^(\+33|0)[1-9]([- .]?[0-9]{2}){4}$/", $a) ? true : false;
+    }
+
     public function addAdress($bdd)
     {
         $id_user = intval($this->id_user);
@@ -24,14 +36,20 @@ class Adress
         $name = trim($this->name);
         $postcode = trim($this->postcode);
         $city = strtoupper(trim($this->city));
+        $telephone = trim($this->telephone);
+        $prenom = ucfirst(trim($this->prenom));
+        $nom = ucfirst(trim($this->nom));
 
-        $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city)  VALUES(:id_user,:numero,:name,:postcode,:city)');
+        $addAdress = $bdd->prepare('INSERT INTO adress (id_user,numero,name,postcode,city,telephone,prenom,nom)  VALUES(:id_user,:numero,:name,:postcode,:city,:telephone,:prenom,:nom)');
         $addAdress->execute([
             'id_user' => $id_user,
             'numero' => $numero,
             'name' => $name,
             'postcode' => $postcode,
-            'city' => $city
+            'city' => $city,
+            'telephone' => $telephone,
+            'prenom' => $prenom,
+            'nom' => $nom
         ]);
         // header('Location: ../profil.php');
     }
@@ -84,6 +102,15 @@ class Adress
         $result = $returnAdress->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
+
+    public function returnFormatTel($numTel)
+    {
+        $formateNum = preg_replace('/[^0-9]/', '', $numTel); // Supprimer tous les caractères non numériques
+        $formateNum = chunk_split($formateNum, 2, ' '); // Insérer un espace tous les 2 chiffres
+        $formateNum = trim($formateNum); // Supprimer les espaces en début et fin de chaîne
+        return $formateNum;
+    }
+
 
     /**
      * Get the value of id
@@ -201,6 +228,26 @@ class Adress
     public function setCity($city)
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of telephone
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * Set the value of telephone
+     *
+     * @return  self
+     */
+    public function setTelephone($telephone)
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }

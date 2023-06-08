@@ -15,7 +15,7 @@ class Cart
     {
         $deletePanier = $bdd->prepare('DELETE FROM cart WHERE id_user = :id_user');
         $deletePanier->execute(['id_user' => $this->id_user]);
-        header('Location: cartPage.php');
+        // header('Location: cartPage.php');
     }
     public function returnCart($bdd)
     {

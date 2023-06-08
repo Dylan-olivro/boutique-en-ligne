@@ -6,16 +6,51 @@ if (isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
+// * Ne s'active que si le JAVASCRIPT est désactivé
 // L'insertion de l'utilisateur dans la base de donnée
 if (isset($_POST['submit'])) {
-    $email = trim(h($_POST['email']));
-    $firstname = trim(h($_POST['firstname']));
-    $lastname = trim(h($_POST['lastname']));
-    $password = trim($_POST['password']);
-    $confirm_password = trim($_POST['confirm_password']);
+    $email = $_POST['email'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
     $user = new User(null, $email, $firstname, $lastname, $password, null);
-    $user->register($bdd, $confirm_password);
+
+    if (empty($email)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
+    } elseif (empty($firstname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
+    } elseif (empty($lastname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
+    } elseif (empty($password)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
+    } elseif (empty($confirm_password)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Confirm Password est vide';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
+    } elseif (!User::isAName($firstname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
+    } elseif (!User::isAName($lastname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
+    } elseif (User::isToBig($firstname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
+    } elseif (User::isToBig($firstname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
+    } elseif (User::isToBig($lastname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
+    } elseif (User::isToSmall($lastname)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
+    } elseif (!User::isSame($password, $confirm_password)) {
+        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLes champs password sont différents.';
+    } else {
+        if ($user->isExist($bdd)) {
+            $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
+        } else {
+            $user->register($bdd);
+            header('Location: ./connectFetch.php');
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -40,7 +75,7 @@ if (isset($_POST['submit'])) {
     <script src="../js/function.js" defer></script>
     <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
-    <script src="../js/user/signUpJS.js" defer></script>
+    <script src="../js/user/signUp.js" defer></script>
 
 </head>
 
@@ -51,7 +86,7 @@ if (isset($_POST['submit'])) {
         <section id="container">
             <div class="form">
                 <!-- Formulaire pour AJOUTER un utilisateur -->
-                <form action="" method="post" id="signup">
+                <form id="signup" method="POST">
                     <label for="email">Email *</label>
                     <input type="" id="email" name="email" class="input" placeholder="Email" autofocus>
                     <label for="firstname">Firstname *</label>
@@ -68,15 +103,16 @@ if (isset($_POST['submit'])) {
                         <input type="password" id="confirm_password" name="confirm_password" class="input" placeholder="Confirm Password">
                         <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
-
-                    <!-- les messages d'erreurs -->
+                    <!-- Affichage des erreurs -->
                     <p id="message">
                         <?php
-                        if (isset($user)) {
-                            echo $user->register($bdd, $confirm_password);
-                        } ?>
+                        if (isset($message['erreur'])) {
+                            echo $message['erreur'];
+                        }
+                        ?>
                     </p>
                     <input type="submit" name="submit" id="submit">
+                    <p class="demande">Vous avez déjà un compte ?<a href="./connect.php">&nbspConnexion</a></p>
                 </form>
             </div>
         </section>

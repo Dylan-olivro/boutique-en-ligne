@@ -26,9 +26,23 @@
     <?php require_once('./php/include/header.php') ?>
     <?php require_once('./php/include/header-save.php') ?>
     <!-- Test de regex pour le prenom (Besoin de LETTRES, avec ACCENT, pas de CHIFFRES, possibilité d'ajouter un ' - ' ou un ESPACE pour faire des prénom composé, pas de CARACTERES SPECIAUX) -->
-    <input type="text" name="a" id="a">
+    <form action="" method="post">
+        <input type="text" name="a" id="a">
+        <input type="submit" name="b" id="a">
+    </form>
 
     <?php
+    if (isset($_POST['b'])) {
+        if (preg_match("/^(\+33|0)[1-9]([- .]?[0-9]{2}){4}$/", $_POST['a'])) {
+            // if (preg_match("(0|\+33)[1-9]( *[0-9]{2}){4}", $_POST['a'])) {
+            echo "true";
+        } else {
+            echo 'false';
+        }
+    }
+    return preg_match("#^(\pL+[- ']?)*\pL$#ui", $a) ? true : false;
+
+
     // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
     // ? FAIRE UNEZ LIMITE DE 5 COMMANDES AFFICHÉ PUIS UN LIEN VERS UNE PAGE AVES TOUTES LES COMMANDES
     // ? Besoin d'actualiser pour afficher la bonne Nav Bar après s'être connecté
