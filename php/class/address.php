@@ -29,7 +29,7 @@ class Address
         return preg_match("/^(\+33|0)[1-9]([- .]?[0-9]{2}){4}$/", $a) ? true : false;
     }
 
-    public function addAdress($bdd)
+    public function addAddress($bdd)
     {
         $user_id = intval($this->user_id);
         $numero = intval(trim($this->numero));
@@ -40,8 +40,8 @@ class Address
         $firstname = ucfirst(trim($this->firstname));
         $lastname = ucfirst(trim($this->lastname));
 
-        $addAdress = $bdd->prepare('INSERT INTO addresses (user_id, address_numero, address_name, address_postcode, address_city, address_telephone, address_firstname, address_lastname)  VALUES(:user_id, :address_numero, :address_name, :address_postcode, :address_city, :address_telephone, :address_firstname, :address_lastname)');
-        $addAdress->execute([
+        $addAddress = $bdd->prepare('INSERT INTO addresses (user_id, address_numero, address_name, address_postcode, address_city, address_telephone, address_firstname, address_lastname)  VALUES(:user_id, :address_numero, :address_name, :address_postcode, :address_city, :address_telephone, :address_firstname, :address_lastname)');
+        $addAddress->execute([
             'user_id' => $user_id,
             'address_numero' => $numero,
             'address_name' => $name,
@@ -53,7 +53,7 @@ class Address
         ]);
         // header('Location: ../profil.php');
     }
-    public function deleteAdress($bdd)
+    public function deleteAddress($bdd)
     {
         $deleteAdress = $bdd->prepare('DELETE FROM addresses WHERE address_id = :address_id AND user_id = :user_id');
         $deleteAdress->execute([
@@ -62,7 +62,7 @@ class Address
         ]);
     }
 
-    public function updateAdress($bdd)
+    public function updateAddress($bdd)
     {
 
         $user_id = intval($this->user_id);
@@ -90,7 +90,7 @@ class Address
 
     }
 
-    public function returnAdressById($bdd)
+    public function returnAddressesById($bdd)
     {
         $returnAdress = $bdd->prepare('SELECT * FROM addresses WHERE address_id = :address_id AND user_id = :user_id');
         $returnAdress->execute([
@@ -101,7 +101,7 @@ class Address
         return $result;
     }
 
-    public function returnAdressByUser($bdd)
+    public function returnAddressesByUser($bdd)
     {
         $returnAdress = $bdd->prepare('SELECT * FROM addresses WHERE user_id = :user_id');
         $returnAdress->execute(['user_id' => $this->user_id]);
@@ -254,6 +254,46 @@ class Address
     public function setTelephone($telephone)
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of firstname
+     */ 
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set the value of firstname
+     *
+     * @return  self
+     */ 
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of lastname
+     */ 
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set the value of lastname
+     *
+     * @return  self
+     */ 
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
 
         return $this;
     }

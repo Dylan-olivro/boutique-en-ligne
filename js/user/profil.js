@@ -23,13 +23,13 @@ formEl.addEventListener("submit", (event) => {
     })
     .then((data) => {
       message.style.color = "";
-      if (data.erreur) {
+      if (data.UPDATE_ERROR) {
         // message.style.display = "flex";
-        message.innerHTML = data.erreur;
+        message.innerHTML = data.UPDATE_ERROR;
       } else {
         // message.style.display = "flex";
         message.style.color = "green";
-        message.innerHTML = data.succes;
+        message.innerHTML = data.UPDATE_SUCCES;
         formEl.reset();
       }
     })

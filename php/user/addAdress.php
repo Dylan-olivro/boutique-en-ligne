@@ -5,8 +5,8 @@ if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
 }
 
-$adress = new Address(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
-$allUserAdress = $adress->returnAdressByUser($bdd);
+$address = new Address(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+$allUserAddresses = $address->returnAddressesByUser($bdd);
 
 
 // Insert une adresse
@@ -20,19 +20,19 @@ if (isset($_POST['submit'])) {
     $prenom = $_POST['prenom'];
 
     if (empty($numero)) {
-        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est vide.';
     } elseif (empty($name)) {
-        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
     } elseif (empty($postcode)) {
-        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est vide.';
     } elseif (empty($city)) {
-        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ City est vide.';
     } elseif (!isStreet($numero)) {
-        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Numero est invalide.';
     } elseif (!isPostcode($postcode)) {
-        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Postcode est invalide.';
     } elseif (!Address::formatTelephoneAccept($telephone)) {
-        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe numéro de téléphone est invalide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe numéro de téléphone est invalide.';
     } elseif (User::isToBig($nom)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire moins de 30 caractères.';
     } elseif (User::isToBig($prenom)) {
@@ -45,14 +45,14 @@ if (isset($_POST['submit'])) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom n\'est pas valide.';
     } elseif (!User::isAName($prenom)) {
         $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe pr&nom n\'est pas valide.';
-    } elseif (count($allUserAdress) >= 6) {
-        $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspNombres maximum d\'adresse atteint (6).';
+    } elseif (count($allUserAddresses) >= 6) {
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspNombres maximum d\'adresse atteint (6).';
     } else {
 
-        $adress = new Address(null, $_SESSION['user']->user_id, $numero, $name, $postcode, $city, null, $prenom, $nom);
-        $tel = $adress->returnFormatTel($telephone);
-        $adress->setTelephone($tel);
-        $adress->addAdress($bdd);
+        $address = new Address(null, $_SESSION['user']->user_id, $numero, $name, $postcode, $city, null, $prenom, $nom);
+        $tel = $address->returnFormatTel($telephone);
+        $address->setTelephone($tel);
+        $address->addAddress($bdd);
         header('Location: ../profil.php');
     }
 }
@@ -89,13 +89,13 @@ if (isset($_POST['submit'])) {
     <main>
         <!-- Formulaire pour AJOUTER une adresse à l'utilisateur -->
         <form action="" method="post" id="formUpdateAdress">
-            <label for="numero">Numero</label>
+            <label for="numero">Numéro</label>
             <input type="number" name="numero" id="numero" autofocus>
-            <label for="name">Name</label>
+            <label for="name">Adresse</label>
             <input type="text" name="name" id="name">
-            <label for="postcode">Postcode</label>
+            <label for="postcode">Code Postal</label>
             <input type="number" name="postcode" id="postcode">
-            <label for="city">City</label>
+            <label for="city">Ville</label>
             <input type="text" name="city" id="city">
             <label for="telephone">Téléphone</label>
             <input type="text" name="telephone" id="telephone">
@@ -104,11 +104,11 @@ if (isset($_POST['submit'])) {
             <label for="prenom">Prénom</label>
             <input type="text" name="prenom" id="prenom">
             <p id="message">
-                <?php if (isset($error)) {
-                    echo $error;
+                <?php if (isset($INSERT_ADDRESS_ERROR)) {
+                    echo $INSERT_ADDRESS_ERROR;
                 } ?>
             </p>
-            <input type="submit" name="submit" class="input">
+            <input type="submit" name="submit" class="input" value="Valider">
         </form>
     </main>
 </body>

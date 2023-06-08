@@ -18,10 +18,10 @@ class Product
         $this->stock = $stock;
     }
 
-    public function addItem($bdd)
+    public function addProduct($bdd)
     {
-        $insertItem = $bdd->prepare("INSERT INTO products (product_name, product_description, product_date, product_price, product_stock) VALUES(:product_name,:product_description,:product_date,:product_price,:product_stock)");
-        $insertItem->execute([
+        $insertProduct = $bdd->prepare("INSERT INTO products (product_name, product_description, product_date, product_price, product_stock) VALUES(:product_name,:product_description,:product_date,:product_price,:product_stock)");
+        $insertProduct->execute([
             'product_name' => $this->name,
             'product_description' => $this->description,
             'product_date' => $this->date,
@@ -29,16 +29,16 @@ class Product
             'product_stock' => $this->stock
         ]);
     }
-    public function deleteItem($bdd)
+    public function deleteProduct($bdd)
     {
-        $deleteItem = $bdd->prepare('DELETE FROM products WHERE product_id = :product_id');
-        $deleteItem->execute(['product_id' => $this->id]);
+        $deleteProduct = $bdd->prepare('DELETE FROM products WHERE product_id = :product_id');
+        $deleteProduct->execute(['product_id' => $this->id]);
         header('Location: admin.php');
     }
-    public function editItem($bdd)
+    public function editProduct($bdd)
     {
-        $editItem = $bdd->prepare('UPDATE products SET product_name = :product_name, product_description = :product_description, product_price = :product_price, product_stock = :product_stock WHERE product_id = :product_id');
-        $editItem->execute([
+        $editProduct = $bdd->prepare('UPDATE products SET product_name = :product_name, product_description = :product_description, product_price = :product_price, product_stock = :product_stock WHERE product_id = :product_id');
+        $editProduct->execute([
             'product_name' => $this->name,
             'product_description' => $this->description,
             'product_price' => $this->price,
@@ -47,18 +47,18 @@ class Product
         ]);
         header('Location: admin.php');
     }
-    public function returnItems($bdd)
+    public function returnProducts($bdd)
     {
-        $returnItems = $bdd->prepare('SELECT * FROM products INNER JOIN liaison_items_category ON products.product_id = liaison_items_category.id_item');
-        $returnItems->execute();
-        $result = $returnItems->fetchAll(PDO::FETCH_OBJ);
+        $returnProducts = $bdd->prepare('SELECT * FROM products INNER JOIN liaison_items_category ON products.product_id = liaison_items_category.id_item');
+        $returnProducts->execute();
+        $result = $returnProducts->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
-    public function returnItem($bdd)
+    public function returnProduct($bdd)
     {
-        $returnItem = $bdd->prepare('SELECT * FROM products WHERE product_id = :product_id');
-        $returnItem->execute(['product_id' => $this->id]);
-        $result = $returnItem->fetch(PDO::FETCH_OBJ);
+        $returnProduct = $bdd->prepare('SELECT * FROM products WHERE product_id = :product_id');
+        $returnProduct->execute(['product_id' => $this->id]);
+        $result = $returnProduct->fetch(PDO::FETCH_OBJ);
         return $result;
     }
 
