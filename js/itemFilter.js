@@ -19,7 +19,9 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
     );
     childElement[0].classList.toggle("categoryChildDivBlock");
     allItems.innerHTML = "";
-    fetchItems(`traitement_filter.php?categoryParent=` + categoryParentRadio[i].id);
+    fetchItems(
+      `traitement_filter.php?categoryParent=` + categoryParentRadio[i].id
+    );
   });
 }
 
@@ -98,10 +100,22 @@ if (urlGetId != null) {
   fetchItems(`traitement_filter.php`);
 }
 
-// * générer les enfants dans le parent correspondant
+// * générer les contenu de la catégorie enfant sélectionnée
 for (let i = 0; i < categoryChild.length; i++) {
   subCategoryName[i].addEventListener("click", () => {
     allItems.innerHTML = "";
+    categoryChild[i].checked = true;
+    let urlGetSplitCategorie = urlGet.split("?");
+    let urlGetCategorie = urlGetSplitCategorie[0];
+
+    //* permet de changer l'url pour rester cohérent avec l'id de la subcategory choisie
+    history.pushState(
+      {},
+      "",
+      urlGetCategorie + "?subCategory=" + categoryChild[i].id
+    );
+    // window.history.pushState({urlPath:'/page1'},"",'/page1')
+
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
     fetchItems(`traitement_filter.php?subCategory=` + categoryChild[i].id);
     // console.log(categoryChild[i].id);
