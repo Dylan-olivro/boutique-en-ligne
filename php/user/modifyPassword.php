@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     $old_password = $_POST['password'];
     $new_password = $_POST['new_password'];
 
-    $user = new User($_SESSION['user']->id, null, null, null, $new_password, null);
+    $user = new User($_SESSION['user']->user_id, null, null, null, $new_password, null);
     $user->updatePassword($bdd, $old_password);
 }
 ?>
@@ -47,10 +47,10 @@ if (isset($_POST['submit'])) {
     <main>
         <!-- Formulaire pour MODIFIER le mot de passe de l'utilisateur -->
         <form action="" method="post" id="formUpdatePassword">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" autofocus>
-            <label for="new_password">New Password</label>
-            <input type="password" name="new_password" id="new_password">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" id="password" placeholder="Mot de passe" autofocus>
+            <label for="new_password">Nouveau Mot de passe</label>
+            <input type="password" name="new_password" id="new_password" placeholder="Nouveau Mot de passe">
             <p id="message">
                 <?php
                 if (isset($user)) {

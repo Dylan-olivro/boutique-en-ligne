@@ -1,4 +1,4 @@
-const formEl = document.querySelector("#signup");
+const formEl = document.querySelector("#registerForm");
 const message = document.querySelector("#message");
 
 let cpassword = document.querySelector("#confirm_password");
@@ -13,7 +13,7 @@ formEl.addEventListener("submit", (event) => {
   const formData = new FormData(formEl);
   const data = Object.fromEntries(formData);
 
-  fetch("traitement/traitement_signup.php", {
+  fetch("traitement/traitement_register.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
@@ -25,14 +25,14 @@ formEl.addEventListener("submit", (event) => {
     })
     .then((data) => {
       message.style.color = "";
-      if (data.erreur) {
+      if (data.REGISTER_ERROR) {
         // message.style.display = "flex";
-        message.innerHTML = data.erreur;
+        message.innerHTML = data.REGISTER_ERROR;
       } else {
-        window.location.href = `${getURL()}php/connectFetch.php`;
+        window.location.href = `${getURL()}php/connect.php`;
         // message.style.display = "flex";
         message.style.color = "green";
-        message.innerHTML = data.succes;
+        message.innerHTML = data.REGISTER_SUCCES;
         formEl.reset();
       }
     })

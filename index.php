@@ -26,8 +26,10 @@
     <?php require_once('./php/include/header.php') ?>
     <?php require_once('./php/include/header-save.php') ?>
     <!-- Test de regex pour le prenom (Besoin de LETTRES, avec ACCENT, pas de CHIFFRES, possibilité d'ajouter un ' - ' ou un ESPACE pour faire des prénom composé, pas de CARACTERES SPECIAUX) -->
-    <input type="text" name="a" id="a">
-
+    <form action="" method="post">
+        <input type="text" name="a" id="a">
+        <input type="submit" name="b" id="a">
+    </form>
     <?php
     // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
     // ? FAIRE UNEZ LIMITE DE 5 COMMANDES AFFICHÉ PUIS UN LIEN VERS UNE PAGE AVES TOUTES LES COMMANDES

@@ -1,56 +1,39 @@
-let email = document.querySelector("#email");
-let firstname = document.querySelector("#firstname");
-let lastname = document.querySelector("#lastname");
+const formEl = document.querySelector("#formProfil");
+const message = document.querySelector("#message");
+
 let password = document.querySelector("#password");
-let message = document.querySelector("#message");
-let formProfil = document.querySelector("#formProfil");
+
 const buttonShow = document.getElementById("showPassword");
 
-function updateUser() {
-  // EMAIL
-  if (isEmpty(email.value)) {
-    message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
-    return false;
-  } else if (!validate()) {
-    message.innerHTML =
-      "<i class=\"fa-solid fa-circle-exclamation\"></i>&nbspL'adresse mail n'est pas valide.";
-    return false;
-  }
-  // FIRSTNAME
-  else if (isEmpty(firstname.value)) {
-    message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
-    return false;
-  } else if (!isLetter(firstname)) {
-    // ! TROUVER UN REGEX POUR LES PRENOMS COMPOSER + ACCENTS + ENTRE 2/3 ET 30 CARACTERES
-    message.innerHTML = "Champ firstname invalid";
-    return false;
-  }
-  // LASTNAME
-  else if (isEmpty(lastname.value)) {
-    message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
-    return false;
-  } else if (!isLetter(lastname)) {
-    // ! TROUVER UN REGEX POUR LES PRENOMS COMPOSER + ACCENTS + ENTRE 2/3 ET 30 CARACTERES
-    message.innerHTML = "Champ lastname invalid";
-    return false;
-  }
-  // PASSWORD
-  else if (isEmpty(password.value)) {
-    message.innerHTML =
-      '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
-    return false;
-  } else {
-    return true;
-  }
-}
+formEl.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-formProfil.addEventListener("submit", (e) => {
-  if (!updateUser()) {
-    e.preventDefault();
-  }
+  const formData = new FormData(formEl);
+  const data = Object.fromEntries(formData);
+
+  fetch("traitement/traitement_profil.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      message.style.color = "";
+      if (data.UPDATE_ERROR) {
+        // message.style.display = "flex";
+        message.innerHTML = data.UPDATE_ERROR;
+      } else {
+        // message.style.display = "flex";
+        message.style.color = "green";
+        message.innerHTML = data.UPDATE_SUCCES;
+        formEl.reset();
+      }
+    })
+    .catch((error) => console.log(error));
 });
 
 showPassword(buttonShow, password);

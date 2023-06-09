@@ -6,7 +6,7 @@ let searchResultsDesktopDiv = document.getElementById(
 // let searchResults = document.getElementById("searchResultsDesktop"); //la div des résultats
 
 // if (searchResultsInput) {
-  searchResultsInput.addEventListener("keyup", () => {
+searchResultsInput.addEventListener("keyup", () => {
   // console.log(searchResultsInput.value);
   searchResultsDesktopDiv.innerHTML = "";
   if (searchResultsInput.value == "") {
@@ -23,11 +23,12 @@ let searchResultsDesktopDiv = document.getElementById(
       .then((data) => {
         console.log(data);
         if (data.length == 0) {
-           let noResult = document.createElement("p");
-           noResult.innerText = "Aucun résultat trouvé";
-           searchResultsDesktopDiv.append(noResult);
-         }
+          let noResult = document.createElement("p");
+          noResult.innerText = "Aucun résultat trouvé";
+          searchResultsDesktopDiv.append(noResult);
+        }
         data.forEach((element) => {
+          // console.log(element);
           // console.log(searchResultsInput);
           // console.log(element.name);
           let resultsDiv = document.createElement("div");
@@ -48,12 +49,11 @@ let searchResultsDesktopDiv = document.getElementById(
           resultsDesc.className = "resultsDesc";
           resultsLink.className = "resultsLink";
 
-          resultsImg.src = `.${
-            getPage()[1]
-          }/assets/img_item/`+ element.name_image;
-          resultsName.innerText = element.name;
-          resultsDesc.innerText = element.description;
-          resultsLink.href = `./${getPage()[0]}detail.php?id=${element.id}`;
+          resultsImg.src =
+            `.${getPage()[1]}/assets/img_item/` + element.image_name;
+          resultsName.innerText = element.product_name;
+          resultsDesc.innerText = element.product_description;
+          resultsLink.href = `./${getPage()[0]}detail.php?id=${element.product_id}`;
           // console.log("hello");
 
           // for(i=0; i < 5 ; i++){

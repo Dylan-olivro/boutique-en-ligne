@@ -14,46 +14,46 @@ if (isset($_POST['updateUser'])) {
     $lastname = $_POST['lastname'];
     $password = $_POST['password'];
 
-    $user = new User($_SESSION['user']->id, $email, $firstname, $lastname, $password, $_SESSION['user']->role);
+    $user = new User($_SESSION['user']->user_id, $email, $firstname, $lastname, $password, $_SESSION['user']->user_role);
 
     if (empty($email)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Email est vide.';
     } elseif (empty($firstname)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Firstname est vide';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Prénom est vide';
     } elseif (empty($lastname)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Lastname est vide';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Nom est vide';
     } elseif (empty($password)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Mot de Passe est vide';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
     } elseif (!User::isAName($firstname)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname n\'est pas valide.';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom n\'est pas valide.';
     } elseif (!User::isAName($lastname)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom n\'est pas valide.';
     } elseif (User::isToBig($firstname)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
-    } elseif (User::isToBig($firstname)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire moins de 30 caractères.';
+    } elseif (User::isToSmall($firstname)) {
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire plus de 2 caractères.';
     } elseif (User::isToBig($lastname)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire moins de 30 caractères.';
     } elseif (User::isToSmall($lastname)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire plus de 2 caractères.';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire plus de 2 caractères.';
     } elseif ($user->isExistExceptCurrentEmail($bdd)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
+        $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
     } else {
         $res = $user->returnUserById($bdd);
-        if ($password != password_verify($password, $res->password)) {
-            $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
+        if ($password != password_verify($password, $res->user_password)) {
+            $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
         } else {
-            $user->update($bdd, $res->password);
+            $user->update($bdd, $res->user_password);
             header('Location: profil.php');
         }
     }
 }
 
 // Récuperation des adresses de l'utilisateur
-$adress = new Adress(null, $_SESSION['user']->id, null, null, null, null);
-$allUserAdress = $adress->returnAdressByUser($bdd);
+$address = new Address(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+$allUserAdresses = $address->returnAddressesByUser($bdd);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,13 +78,13 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
     <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
     <!-- <script src="../js/user/profil.js" defer></script> -->
-    <script src="../js/user/profil_fetch.js" defer></script>
+    <script src="../js/user/profil.js" defer></script>
 
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
-    <?php require_once('./include/header-save.php') ?>
+    <?php require_once('./include/header-save.php'); ?>
 
     <main>
         <section id="container">
@@ -94,21 +94,21 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <form action="" method="post" id="formProfil">
                         <h3>Modifier ces infos personnelles</h3>
                         <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->email) ?>" class="input" autofocus>
-                        <label for="firstname">Firstname</label>
-                        <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($_SESSION['user']->firstname) ?>" class="input">
-                        <label for="lastname">Lastname</label>
-                        <input type="text" id="lastname" name="lastname" value="<?= htmlspecialchars($_SESSION['user']->lastname) ?>" class="input">
-                        <label for="password">Password</label>
+                        <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->user_email) ?>" class="input" autofocus>
+                        <label for="firstname">Prénom</label>
+                        <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($_SESSION['user']->user_firstname) ?>" class="input">
+                        <label for="lastname">Nom</label>
+                        <input type="text" id="lastname" name="lastname" value="<?= htmlspecialchars($_SESSION['user']->user_lastname) ?>" class="input">
+                        <label for="password">Mot de passe</label>
                         <div class="password">
-                            <input type="password" name="password" class="input" id="password">
+                            <input type="password" name="password" class="input" id="password" placeholder="Mot de passe">
                             <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                         </div>
                         <!-- Affichage des erreurs -->
                         <p id="message">
                             <?php
-                            if (isset($message['erreur'])) {
-                                echo $message['erreur'];
+                            if (isset($message['UPDATE_ERROR'])) {
+                                echo $message['UPDATE_ERROR'];
                             }
                             ?>
                         </p>
@@ -120,7 +120,7 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                 <div class="sectionAdress">
                     <h3>Adresses enregistrées</h3>
                     <div class="addAdress">
-                        <?php if (count($allUserAdress) < 6) { ?>
+                        <?php if (count($allUserAdresses) < 6) { ?>
                             <a href="./user/addAdress.php" id="addAdress">
                                 <div class="link">
                                     <span>Ajouter une adresse</span>
@@ -136,30 +136,32 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <div class="allAdress">
 
                         <?php
-                        foreach ($allUserAdress as $userAdress) { ?>
+                        foreach ($allUserAdresses as $userAdress) {
+                            // var_dump($allUserAdresses);
+                        ?>
                             <div class="adress">
                                 <div class="infoAdress">
-                                    <p class="name"><?= htmlspecialchars($_SESSION['user']->firstname) . " " . htmlspecialchars($_SESSION['user']->lastname) ?></p>
-                                    <p><?= htmlspecialchars($userAdress->numero) . " " . htmlspecialchars($userAdress->name) ?></p>
-                                    <p><?= htmlspecialchars($userAdress->city) . ", " . htmlspecialchars($userAdress->postcode) ?></p>
+                                    <p class="name"><?= htmlspecialchars($userAdress->address_lastname) . " " . htmlspecialchars($userAdress->address_firstname) ?></p>
+                                    <p><?= htmlspecialchars($userAdress->address_numero) . " " . htmlspecialchars($userAdress->address_name) ?></p>
+                                    <p><?= htmlspecialchars($userAdress->address_city) . ", " . htmlspecialchars($userAdress->address_postcode) ?></p>
                                     <p>France</p>
                                     <div>
                                         <p>N° de télephone:</p>
-                                        <p>00 00 00 00 00</p>
+                                        <p><?= htmlspecialchars($userAdress->address_telephone) ?></p>
                                     </div>
                                 </div>
                                 <div class="edit_delete">
-                                    <a href="./user/modifyAdress.php?id=<?= $userAdress->id ?>"><button class="button"><i class="fa-solid fa-pencil"></i></button></a>
+                                    <a href="./user/modifyAdress.php?id=<?= $userAdress->address_id ?>"><button class="button"><i class="fa-solid fa-pencil"></i></button></a>
                                     <form action="" method="post">
-                                        <button type="submit" name="deleteAdress<?= $userAdress->id ?>" class="button"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="submit" name="deleteAdress<?= $userAdress->address_id ?>" class="button"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
                                 </div>
                             </div>
                         <?php
                             // Delete l'adresse selectionné
-                            if (isset($_POST['deleteAdress' . $userAdress->id])) {
-                                $adress = new Adress($userAdress->id, $_SESSION['user']->id, null, null, null, null);
-                                $adress->deleteAdress($bdd);
+                            if (isset($_POST['deleteAdress' . $userAdress->address_id])) {
+                                $address = new Address($userAdress->address_id, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+                                $address->deleteAddress($bdd);
                                 header('Location: profil.php');
                             }
                         }
@@ -174,39 +176,39 @@ $allUserAdress = $adress->returnAdressByUser($bdd);
                     <h3>Historique des commandes</h3>
                     <?php
                     // Récupère les commandes de l'utilisateur
-                    $command = new Command(null, $_SESSION['user']->id, null, null);
-                    $result = $command->returnComandByUser($bdd);
+                    $order = new Order(null, $_SESSION['user']->user_id, null, null, null);
+                    $allUserOrders = $order->returnOrdersByUser($bdd);
 
-                    foreach ($result as $order) { ?>
+                    foreach ($allUserOrders as $userOrder) { ?>
                         <div>
                             <?php
-                            $command->setId($order->id);
+                            $order->setId($userOrder->order_id);
                             // Récupère les produits de la commande de l'utilisateur avec les images.
-                            $product = $command->returnContentCommand($bdd);
+                            $product = $order->returnContentOrder($bdd);
                             ?>
                             <!-- Affichage des commandes -->
                             <div class="infoCommand">
                                 <div>
                                     <p>COMMANDE EFFECTUEE LE :</p>
-                                    <p><?= htmlspecialchars($order->date) ?></p>
+                                    <p><?= htmlspecialchars($userOrder->order_date) ?></p>
                                 </div>
                                 <div>
                                     <p>TOTAL :</p>
-                                    <p><?= htmlspecialchars($order->total) ?>€</p>
+                                    <p><?= htmlspecialchars($userOrder->order_total) ?>€</p>
                                 </div>
                                 <div>
                                     <p>NUMERO DE COMMANDE :</p>
                                 </div>
                             </div>
-                            <?php foreach ($product as $key) { ?>
+                            <?php foreach ($product as $infoProduct) { ?>
                                 <div class="command">
-                                    <img src="../assets/img_item/<?= $key->name_image ?>" alt="">
+                                    <img src="../assets/img_item/<?= $infoProduct->image_name ?>" alt="">
                                     <div class="infoProduct">
                                         <div>
-                                            <p class="titleProduct"><?= htmlspecialchars($key->name) ?></p>
-                                            <p class="price"><?= htmlspecialchars($key->price) ?>€</p>
+                                            <p class="titleProduct"><?= htmlspecialchars($infoProduct->product_name) ?></p>
+                                            <p class="price"><?= htmlspecialchars($infoProduct->product_price) ?>€</p>
                                         </div>
-                                        <a href="./detail.php?id=<?= $key->id_item ?>"><button>Acheter à nouveau</button></a>
+                                        <a href="./detail.php?id=<?= $infoProduct->product_id ?>"><button>Acheter à nouveau</button></a>
                                     </div>
                                 </div>
                             <?php } ?>
