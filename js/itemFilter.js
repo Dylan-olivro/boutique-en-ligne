@@ -1,6 +1,8 @@
 let allItems = document.getElementById("allItems");
-let categoryChild = document.querySelectorAll("input[type='radio']");
+let categoryChild = document.querySelectorAll("input[name='subCategory']");
 let resultParent = document.querySelectorAll(".resultParent");
+let subCategoryName = document.querySelectorAll(".subCategoryName");
+let subCategory = document.querySelectorAll(".subCategory");
 let categoryParentRadio = document.querySelectorAll(
   "input[name='categoryParentRadio']"
 );
@@ -8,21 +10,15 @@ let categoryParentName = document.querySelectorAll(".categoryParentName");
 let urlGet = window.location.href;
 let urlGetSplit = urlGet.split("=");
 let urlGetId = urlGetSplit[1];
-console.log(categoryParentRadio);
 
 // * afficher ou cacher les child dans le parent correspondant au click du parent
-categoryParentName.forEach((element) => {
-  element.addEventListener("click", () => {
+for (let i = 0; i < categoryParentRadio.length; i++) {
+  categoryParentName[i].addEventListener("click", () => {
     let childElement = document.querySelectorAll(
-      "#categoryChildDiv" + element.getAttribute("id")
+      "#categoryChildDiv" + categoryParentName[i].getAttribute("id")
     );
     childElement[0].classList.toggle("categoryChildDivBlock");
-    // console.log(childElement);
-  });
-});
-for (let i = 0; i < categoryParentRadio.length; i++) {
-  categoryParentRadio[i].addEventListener("click", () => {
-    console.log(categoryParentRadio[i].id);
+    allItems.innerHTML = "";
     fetchItems(`traitement_filter.php?categoryParent=` + categoryParentRadio[i].id);
   });
 }
@@ -97,16 +93,15 @@ if (urlGetId != null) {
     }
   }
 } else {
-  console.log("pas d'id");
+  // console.log("pas d'id");
   //* exécution de la fonction fetchItems dès lors qu'on arrive sur la page
   fetchItems(`traitement_filter.php`);
 }
 
 // * générer les enfants dans le parent correspondant
 for (let i = 0; i < categoryChild.length; i++) {
-  categoryChild[i].addEventListener("click", () => {
+  subCategoryName[i].addEventListener("click", () => {
     allItems.innerHTML = "";
-    // console.log(`traitement_filter.php?subCategory=` + inputRadio[i].id);
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
     fetchItems(`traitement_filter.php?subCategory=` + categoryChild[i].id);
     // console.log(categoryChild[i].id);

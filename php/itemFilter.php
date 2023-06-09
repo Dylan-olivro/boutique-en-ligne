@@ -56,9 +56,9 @@ require_once('./include/required.php');
                                     $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($resultCategoryChild as $key2) {
                                     ?>
-                                        <li id="<?= $key2->name; ?>">
+                                        <li class="subCategoryName" id="<?= $key2->id; ?>">
                                             <input type="radio" name="subCategory" id="<?= $key2->id; ?>">
-                                            <?= $key2->name; ?>
+                                            <span class="" id="<?= $key2->id; ?>"><?= $key2->name; ?></span>
                                         </li>
                                     <?php
                                     }
