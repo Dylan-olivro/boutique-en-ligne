@@ -176,7 +176,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                     <h3>Historique des commandes</h3>
                     <?php
                     // Récupère les commandes de l'utilisateur
-                    $order = new Order(null, $_SESSION['user']->user_id, null, null, null);
+                    $order = new Order(null, $_SESSION['user']->user_id, null, null, null, null);
                     $allUserOrders = $order->returnOrdersByUser($bdd);
 
                     foreach ($allUserOrders as $userOrder) { ?>
@@ -198,6 +198,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                 </div>
                                 <div>
                                     <p>NUMERO DE COMMANDE :</p>
+                                    <p><?= htmlspecialchars($userOrder->order_number) ?></p>
                                 </div>
                             </div>
                             <?php foreach ($product as $infoProduct) { ?>

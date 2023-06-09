@@ -1,16 +1,101 @@
-img {
-  width: 100px;
+main {
+  max-width: 1920px;
+  margin: auto !important;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.containerCart {
+#container {
+  background-color: var(--section-color);
+  padding: 2% 2% !important;
   display: flex;
   justify-content: center;
-  background-color: var(--second-color);
+  width: 95%;
 }
-
-.cart {
-  /* display: flex; */
-  background-color: var(--main-color);
-}
-.cartDetail {
+/* ------------------------------------------------- */
+.sectionCart {
   display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  width: 70%;
+  /* justify-content: center; */
+
+  background-color: var(--div-color);
+  border: 1px solid var(--border-color);
+  /* display: flex; */
+  border-radius: 20px;
+  padding: 2% 2% !important;
+}
+.sectionCart h3 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 2% !important;
+}
+/* ------------------------------------------------- */
+
+.banniere {
+  display: flex;
+  color: #fff;
+  background-color: var(--border-color);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 1% !important;
+
+  /* width: 100%; */
+}
+.banniere > p:nth-child(1) {
+  width: 70%;
+}
+.banniere > p:nth-child(2) {
+  width: 20%;
+}
+.banniere > form {
+  width: 10%;
+}
+.banniere > * {
+  text-align: center;
+  /* border: 1px solid yellow; */
+}
+.vider {
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+}
+/* ------------------------------------------------- */
+
+.cartDetail {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1% !important;
+}
+.cartDetail > * {
+  border: 1px solid red;
+}
+.cartDetail > p {
+  width: 20%;
+}
+.cartDetail form {
+  width: 10%;
+}
+.cartProduct {
+  display: flex;
+  width: 70%;
+}
+.cartProduct img {
+  width: 100px;
+  border-radius: 20px;
+}
+.cartProduct a {
+  color: #fff;
+  width: 100%;
+}
+/* ------------------------------------------------- */
+#delete {
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
 }
