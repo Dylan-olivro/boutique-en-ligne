@@ -46,7 +46,8 @@ require_once('./include/required.php');
                         <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
                             <ul>
                                 <li class="resultParent dropdown-toggle" id="<?= $key->id; ?>">
-                                    <?= $key->name; ?>
+                                    <input type="radio" name="categoryParentRadio" id="<?= $key->id; ?>">
+                                    <span class="categoryParentName" id="<?= $key->id; ?>"><?= $key->name; ?></span>
                                 </li>
                                 <ul class="categoryChildDiv" id="categoryChildDiv<?= $key->id; ?>" data-parent-id="<?= $key->id; ?>">
                                     <?php
