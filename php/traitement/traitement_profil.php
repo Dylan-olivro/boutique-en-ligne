@@ -30,7 +30,7 @@ if (isset($data)) {
         $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname n\'est pas valide.';
     } elseif (User::isToBig($firstname)) {
         $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire moins de 30 caractères.';
-    } elseif (User::isToBig($firstname)) {
+    } elseif (User::isToSmall($firstname)) {
         $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe firstname doit faire plus de 2 caractères.';
     } elseif (User::isToBig($lastname)) {
         $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe lastname doit faire moins de 30 caractères.';
@@ -44,7 +44,7 @@ if (isset($data)) {
         if ($password != password_verify($password, $res->user_password)) {
             $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
         } else {
-            $user->update($bdd, $res->password);
+            $user->update($bdd, $res->user_password);
             $message['UPDATE_SUCCES'] = "Données enregistrées avec succès";
         }
     }
