@@ -88,15 +88,12 @@ function checkStock(stock, message) {
   if (stock == 0) {
     message.innerText = "BIENTÔT DE RETOUR";
     message.style.color = "red";
-    console.log("EPUISE");
   } else if (stock <= 5) {
     message.innerText = "STOCK LIMITE (restant : " + stock + ")";
     message.style.color = "orange";
-    console.log("LIMITE");
   } else {
     message.innerText = "EN STOCK";
     message.style.color = "green";
-    console.log("STOCK");
   }
 }
 function getURL() {

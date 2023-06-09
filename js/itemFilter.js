@@ -1,19 +1,32 @@
 let allItems = document.getElementById("allItems");
-let categoryChild = document.querySelectorAll("input[type='radio']");
-let categoryParent = document.querySelectorAll(".resultParent");
-
-
+let categoryChild = document.querySelectorAll("input[name='subCategory']");
+let resultParent = document.querySelectorAll(".resultParent");
+let subCategoryName = document.querySelectorAll(".subCategoryName");
+let subCategory = document.querySelectorAll(".subCategory");
+let categoryParentRadio = document.querySelectorAll(
+  "input[name='categoryParentRadio']"
+);
+let categoryParentName = document.querySelectorAll(".categoryParentName");
+let urlGet = window.location.href;
+let urlGetSplit = urlGet.split("=");
+let urlGetId = urlGetSplit[1];
 
 // * afficher ou cacher les child dans le parent correspondant au click du parent
-categoryParent.forEach((element) => {
-  element.addEventListener("click", () => {
+for (let i = 0; i < categoryParentRadio.length; i++) {
+  categoryParentName[i].addEventListener("click", () => {
     let childElement = document.querySelectorAll(
-      "#categoryChildDiv" + element.getAttribute("id")
+      "#categoryChildDiv" + categoryParentName[i].getAttribute("id")
     );
     childElement[0].classList.toggle("categoryChildDivBlock");
+    allItems.innerHTML = "";
+    fetchItems(`traitement_filter.php?categoryParent=` + categoryParentRadio[i].id);
   });
-});
+}
 
+/**
+ * Fonction permettant l'affichage du contenu
+ * @param url : requete visée dans la page traitement_filter.php
+ */
 function fetchItems(url) {
   fetch(url)
     .then((response) => {
@@ -22,7 +35,7 @@ function fetchItems(url) {
     .then((data) => {
       // console.log(data);
       data.forEach((element) => {
-        console.log(element);
+        // console.log(element);
         let divImg = document.createElement("div");
         let divNameDesc = document.createElement("div");
         let divImgNameDesc = document.createElement("div");
@@ -54,7 +67,7 @@ function fetchItems(url) {
         itemDesc.innerText = element.product_description;
         itemPrice.innerText = element.product_price + " €";
 
-        // appeler fonction stock ici
+        // appele la fonction qui affihce le stock
         checkStock(element.product_stock, itemStock);
 
         divImg.append(itemImg);
@@ -68,14 +81,29 @@ function fetchItems(url) {
     });
 }
 
-fetchItems(`traitement_filter.php`);
+/**
+ * Afficher les produits de la catégorie visée dans la nav
+ */
+if (urlGetId != null) {
+  //  console.log(urlGetId);
+  fetchItems(`traitement_filter.php?subCategory=` + urlGetId);
+  for (let i = 0; i < categoryChild.length; i++) {
+    if (urlGetId == categoryChild[i].id) {
+      categoryChild[i].setAttribute("checked", true);
+    }
+  }
+} else {
+  // console.log("pas d'id");
+  //* exécution de la fonction fetchItems dès lors qu'on arrive sur la page
+  fetchItems(`traitement_filter.php`);
+}
 
 // * générer les enfants dans le parent correspondant
 for (let i = 0; i < categoryChild.length; i++) {
-  categoryChild[i].addEventListener("click", () => {
+  subCategoryName[i].addEventListener("click", () => {
     allItems.innerHTML = "";
-    // console.log(`traitement_filter.php?subCategory=` + inputRadio[i].id);
+    //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
     fetchItems(`traitement_filter.php?subCategory=` + categoryChild[i].id);
+    // console.log(categoryChild[i].id);
   });
 }
-
