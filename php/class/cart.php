@@ -26,16 +26,17 @@ class Cart
     }
     public function deleteProduct($bdd)
     {
-        $deletePanier = $bdd->prepare('DELETE FROM carts WHERE user_id = :user_id AND product_id = :product_id');
+        $deletePanier = $bdd->prepare('DELETE FROM carts WHERE user_id = :user_id AND product_id = :product_id AND cart_id = :cart_id');
         $deletePanier->execute([
             'user_id' => $this->user_id,
-            'product_id' => $this->product_id
+            'product_id' => $this->product_id,
+            'cart_id' => $this->id
         ]);
     }
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -45,7 +46,7 @@ class Cart
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -55,7 +56,7 @@ class Cart
 
     /**
      * Get the value of user_id
-     */ 
+     */
     public function getUser_id()
     {
         return $this->user_id;
@@ -65,7 +66,7 @@ class Cart
      * Set the value of user_id
      *
      * @return  self
-     */ 
+     */
     public function setUser_id($user_id)
     {
         $this->user_id = $user_id;
@@ -75,7 +76,7 @@ class Cart
 
     /**
      * Get the value of product_id
-     */ 
+     */
     public function getProduct_id()
     {
         return $this->product_id;
@@ -85,7 +86,7 @@ class Cart
      * Set the value of product_id
      *
      * @return  self
-     */ 
+     */
     public function setProduct_id($product_id)
     {
         $this->product_id = $product_id;

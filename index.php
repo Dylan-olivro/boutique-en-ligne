@@ -20,9 +20,11 @@
     <script src="./js/function.js" defer></script>
     <script src="./js/header.js" defer></script>
     <script src="./js/autocompletion.js" defer></script>
+    <script src="./js/test.js" defer></script>
 </head>
 
 <body>
+
     <?php require_once('./php/include/header.php') ?>
     <?php require_once('./php/include/header-save.php') ?>
     <?php
@@ -31,11 +33,12 @@
     $request = $bdd->prepare("SELECT product_id,count(*) FROM liaison_product_order GROUP BY product_id ORDER BY count(*) DESC");
     $request->execute();
     $result = $request->fetchAll(PDO::FETCH_ASSOC);
+    // var_dump($result);
 
     // Permet de récupérer le prix HT et la TVA à partir d'un prix TTC
     function returnPriceHT(float $priceTTC)
     {
-        $tva = 19.6 / 100;
+        $tva = 20 / 100;
         $priceHT = $priceTTC / (1 + $tva);
         $roundPriceHT = number_format($priceHT, 2);
         return $roundPriceHT;
