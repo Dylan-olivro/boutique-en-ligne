@@ -46,7 +46,8 @@ require_once('./include/required.php');
                         <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
                             <ul>
                                 <li class="resultParent dropdown-toggle" id="<?= $key->id; ?>">
-                                    <?= $key->name; ?>
+                                    <input type="radio" name="categoryParentRadio" id="<?= $key->id; ?>">
+                                    <span class="categoryParentName" id="<?= $key->id; ?>"><?= $key->name; ?></span>
                                 </li>
                                 <ul class="categoryChildDiv" id="categoryChildDiv<?= $key->id; ?>" data-parent-id="<?= $key->id; ?>">
                                     <?php
@@ -55,9 +56,9 @@ require_once('./include/required.php');
                                     $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
                                     foreach ($resultCategoryChild as $key2) {
                                     ?>
-                                        <li id="<?= $key2->name; ?>">
+                                        <li class="subCategoryName" id="<?= $key2->id; ?>">
                                             <input type="radio" name="subCategory" id="<?= $key2->id; ?>">
-                                            <?= $key2->name; ?>
+                                            <span class="" id="<?= $key2->id; ?>"><?= $key2->name; ?></span>
                                         </li>
                                     <?php
                                     }

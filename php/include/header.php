@@ -83,7 +83,7 @@ function includeHeader($bdd, $index, $url, $image)
                                         $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
                                         foreach ($resultCategoryChild as $key2) {
                                         ?>
-                                            <li><a class="dropdown-item" href="#"><?= hd($key2->name); ?></a></li>
+                                            <li><a class="dropdown-item" href="<?= $url ?>itemFilter.php?subCategory=<?= $key2->id ?>"><?= hd($key2->name); ?></a></li>
                                         <?php
                                         }
                                         ?>
