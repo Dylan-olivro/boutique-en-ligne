@@ -6,14 +6,16 @@ class Order
     public $date;
     public $total;
     public $address;
+    public $number;
 
-    public function __construct($id, $user_id, $date, $total, $address)
+    public function __construct($id, $user_id, $date, $total, $address, $number)
     {
         $this->id = $id;
         $this->user_id = $user_id;
         $this->date = $date;
         $this->total = $total;
         $this->address = $address;
+        $this->number = $number;
     }
 
     public function addOrder($bdd)
@@ -27,10 +29,11 @@ class Order
 
     public function updateOrder($bdd)
     {
-        $request = $bdd->prepare('UPDATE orders SET order_total = :order_total , order_address = :order_address WHERE order_id = :order_id ');
+        $request = $bdd->prepare('UPDATE orders SET order_total = :order_total , order_address = :order_address, order_number = :order_number WHERE order_id = :order_id ');
         $request->execute([
             'order_total' => $this->total,
             'order_address' => $this->address,
+            'order_number' => $this->number,
             'order_id' => $this->id
         ]);
     }
@@ -84,7 +87,7 @@ class Order
 
     /**
      * Get the value of user_id
-     */ 
+     */
     public function getUser_id()
     {
         return $this->user_id;
@@ -94,7 +97,7 @@ class Order
      * Set the value of user_id
      *
      * @return  self
-     */ 
+     */
     public function setUser_id($user_id)
     {
         $this->user_id = $user_id;
@@ -104,7 +107,7 @@ class Order
 
     /**
      * Get the value of date
-     */ 
+     */
     public function getDate()
     {
         return $this->date;
@@ -114,7 +117,7 @@ class Order
      * Set the value of date
      *
      * @return  self
-     */ 
+     */
     public function setDate($date)
     {
         $this->date = $date;
@@ -124,7 +127,7 @@ class Order
 
     /**
      * Get the value of total
-     */ 
+     */
     public function getTotal()
     {
         return $this->total;
@@ -134,7 +137,7 @@ class Order
      * Set the value of total
      *
      * @return  self
-     */ 
+     */
     public function setTotal($total)
     {
         $this->total = $total;
@@ -144,7 +147,7 @@ class Order
 
     /**
      * Get the value of address
-     */ 
+     */
     public function getAddress()
     {
         return $this->address;
@@ -154,7 +157,7 @@ class Order
      * Set the value of address
      *
      * @return  self
-     */ 
+     */
     public function setAddress($address)
     {
         $this->address = $address;

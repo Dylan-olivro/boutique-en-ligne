@@ -20,39 +20,57 @@
     <script src="./js/function.js" defer></script>
     <script src="./js/header.js" defer></script>
     <script src="./js/autocompletion.js" defer></script>
+    <script src="./js/test.js" defer></script>
 </head>
 
 <body>
+
     <?php require_once('./php/include/header.php') ?>
     <?php require_once('./php/include/header-save.php') ?>
-    <!-- Test de regex pour le prenom (Besoin de LETTRES, avec ACCENT, pas de CHIFFRES, possibilité d'ajouter un ' - ' ou un ESPACE pour faire des prénom composé, pas de CARACTERES SPECIAUX) -->
-    <form action="" method="post">
-        <input type="text" name="a" id="a">
-        <input type="submit" name="b" id="a">
-    </form>
     <?php
+
+    // Requête qui permet de récupérer les ID des produits les plus vendus
+    $request = $bdd->prepare("SELECT product_id,count(*) FROM liaison_product_order GROUP BY product_id ORDER BY count(*) DESC");
+    $request->execute();
+    $result = $request->fetchAll(PDO::FETCH_ASSOC);
+    // var_dump($result);
+
+    // Permet de récupérer le prix HT et la TVA à partir d'un prix TTC
+    function returnPriceHT(float $priceTTC)
+    {
+        $tva = 20 / 100;
+        $priceHT = $priceTTC / (1 + $tva);
+        $roundPriceHT = number_format($priceHT, 2);
+        return $roundPriceHT;
+    }
+    function returnAmountTVA(float $priceTTC, float $priceHT)
+    {
+        $amountTVA = $priceTTC - $priceHT;
+        $roundAmountTVA = number_format($amountTVA, 2);
+        return $roundAmountTVA;
+    }
+    echo 'Prix TTC : ' . $prixTTC = 100;
+    echo '<br>';
+    echo 'Prix HT : ' . $prixHT = returnPriceHT($prixTTC);
+    echo '<br>';
+    echo 'TVA : ' . $TVA = returnAmountTVA($prixTTC, $prixHT);
+    echo '<br>';
+
+    // Permet de générer un numéro de commande
+    echo str_replace(".", "-", strtoupper(uniqid('', true)));
+
+
+
+    // * Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
+
     // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
-    // ? FAIRE UNEZ LIMITE DE 5 COMMANDES AFFICHÉ PUIS UN LIEN VERS UNE PAGE AVES TOUTES LES COMMANDES
-    // ? Besoin d'actualiser pour afficher la bonne Nav Bar après s'être connecté
-    // ! FAIRE UNE REDIRECTION POUŔLA CONNCETOIN ET LA MODIFICATION DE PROFIL
-    // ! MODIFIER LA REDIRECTION DANS LE FICHIER CONNECTFETCH.JS 
-    // ! TRAVAILLER LE CSS SUR DU 1920/1080
-
-    // * Ajout de commentaire sur tout mon code + changement des execute + ajout de condition pour les formulaires et de securité sur les pages en PHP et en JS + retirer les REQUIRED + ajout d'une petite gestion de stock a la commande + blocker la commande si le stock n'est pas disponible + ajout du header.js sur toutes les pages
-
-    // ? Mettre les div de produit en lien en redirection vers la page détail
     // ? Quand les inputs sont différents de vide mettre leur border en --button-color
-    // ? Ajouter nom, prenom et numéro de tél à la table adress puis à la class adress
+    // ? PASSER LE MESSAGE DE STOCK EPUISEE SUR LE DETAIL EN --> JAVASCRIPT
 
-    // ! Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
-    // ! Trouver un regex pour le nom et prenom et faire les message d'erreurs
-    // ! Dans le fichier user.php, à la méthode updatePassword faire un SELECT que sur le password et pas sur *
-    // ! Le message d'erreur s'affiche par default pour le formulaire de modification d'adresse
-    // ! PASSER LE MESSAGE DE STOCK EPUISEE SUR LE DETAIL EN --> JAVASCRIPT
-    // ! Probleme si on ajoute 2 fois le même produit au panier et qu'on click sur supprimer, ça supprime les 2 (voir avec des data-id et uniqId() ou faire un systeme de quantité)
-    // ! BLOQUER les adresses à 6 max
+    // ! TRAVAILLER LE CSS SUR DU 1920/1080
     // ! Ajouter le css concernant le main sur toutes les pages
-    // ! Ajouter une adresse, ce fait en double
+
+    // ! Probleme si on ajoute 2 fois le même produit au panier et qu'on click sur supprimer, ça supprime les 2 (voir avec des data-id et uniqId() ou faire un systeme de quantité)
     ?>
 </body>
 
@@ -65,7 +83,6 @@
 // TODO: FAIRE le MCD
 // TODO: FAIRE la gestions des promotions
 // TODO: FAIRE la gestion des tags produits
-// TODO: FAIRE la gestion des stocks
 // TODO: FAIRE un système de payement fonctionnel
 // TODO: FAIRE une génération de numéro de commande
 // TODO: FAIRE le calcul de la TVA

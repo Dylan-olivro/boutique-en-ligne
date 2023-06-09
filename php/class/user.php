@@ -119,6 +119,7 @@ class User
 
     public function updatePassword($bdd, $old_password)
     {
+        // ! faire un SELECT que sur le password et pas sur *
         // Récupartion des informations de l'utilisateurs
         $request = $bdd->prepare("SELECT * FROM users WHERE user_id = :user_id");
         $request->execute(['user_id' => $this->id]);
