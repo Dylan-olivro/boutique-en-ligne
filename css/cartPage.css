@@ -32,6 +32,11 @@ main {
   text-align: center;
   margin-bottom: 2% !important;
 }
+.cart {
+  background-color: var(--nav-color);
+  padding: 1% !important;
+  border-radius: 10px;
+}
 /* ------------------------------------------------- */
 
 .banniere {
@@ -79,23 +84,107 @@ main {
 }
 .cartDetail form {
   width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .cartProduct {
   display: flex;
   width: 70%;
+  padding: 1% !important;
 }
 .cartProduct img {
-  width: 100px;
+  width: 25%;
   border-radius: 20px;
+  margin-right: 2% !important;
 }
 .cartProduct a {
   color: #fff;
   width: 100%;
+  text-decoration: none;
 }
 /* ------------------------------------------------- */
+.name {
+  font-size: 1.8rem;
+}
+.cartProduct a:hover {
+  text-decoration: underline;
+}
+.stock {
+  color: #fff;
+  font-size: 1.8rem;
+}
+.price {
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
 #delete {
   color: #fff;
   background-color: transparent;
   border: none;
   text-decoration: underline;
+  font-size: 1.5rem;
+}
+/* -------------------------------------------- */
+.formOrder {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+}
+.formOrderAddress {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+.formOrderValide {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+}
+.formOrder select {
+  width: 50%;
+  padding: 1% !important;
+  background-color: transparent;
+  border-radius: 10px;
+  color: #fff;
+}
+.formOrder select option {
+  padding: 1% !important;
+  background-color: var(--nav-color);
+}
+
+.formOrder input {
+  width: 100%;
+  padding: 1% 2% !important;
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+/* --------------------------- */
+.total {
+  display: flex;
+  justify-content: center;
+  padding: 1% 0 !important;
+}
+.totalDetail {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2% 0 !important;
+  border: 1px solid var(--text-input-color);
+  border-radius: 10px;
+  background-color: var(--border-color);
+  color: #fff;
+}
+hr {
+  width: 70%;
+  border: 1px solid var(--button-color) !important;
+}
+.priceTotal {
+  /* border-top: 1px solid black; */
 }

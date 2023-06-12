@@ -14,10 +14,15 @@ fetch(`./traitement_detail.php?id=${getID()}`)
     });
   });
 
-  //! TEST POUR LA CROIX D'UN INPUT SEARCH
-const input = document.getElementById("test");
-console.log(input);
-input.addEventListener("change", () => {
-  console.log("ok");
-  console.log(input.value.length);
+//! TEST POUR LA CROIX D'UN INPUT SEARCH
+// const input = document.getElementById("test");
+// console.log(input);
+// input.addEventListener("change", () => {
+//   console.log("ok");
+//   console.log(input.value.length);
+// });
+
+let stock = document.querySelectorAll(".stock");
+stock.forEach((element) => {
+  checkStock(element.textContent, element);
 });

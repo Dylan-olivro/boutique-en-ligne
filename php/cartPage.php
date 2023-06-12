@@ -91,6 +91,7 @@ if (isset($_POST['vider'])) {
     <script src="../js/function.js" defer></script>
     <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/cart.js" defer></script>
 
 </head>
 
@@ -121,12 +122,12 @@ if (isset($_POST['vider'])) {
                                 <img src="../assets/img_item/<?= $product->image_name ?>" alt="">
                                 <div class="cartInfo">
                                     <a href="./detail.php?id=<?= $product->product_id ?>">
-                                        <p><?= htmlspecialchars($product->product_name) ?></p>
+                                        <p class="name"><?= htmlspecialchars($product->product_name) ?></p>
                                     </a>
-                                    <p><?= htmlspecialchars($product->product_stock) ?> en Stock</p>
+                                    <p class="stock"><?= htmlspecialchars($product->product_stock) ?></p>
                                 </div>
                             </div>
-                            <p><?= htmlspecialchars($product->product_price) ?>€</p>
+                            <p class="price"><?= htmlspecialchars($product->product_price) ?>€</p>
                             <form action="" method="post">
                                 <button type="submit" name="delete<?= $product->cart_id ?>" id="delete"><i class="fa-solid fa-xmark"></i></button>
                             </form>
@@ -139,23 +140,45 @@ if (isset($_POST['vider'])) {
                         }
                     }
                     ?>
+                    <div class="total">
+                        <div class="totalDetail">
+                            <?php
+                            $prices = [];
+                            foreach ($result_cart as $cartProduct) {
+                                array_push($prices, $cartProduct->product_price);
+                            }
+                            $total = array_sum($prices);
+
+
+                            ?>
+                            <p>HT : <?= returnPriceHT($total) ?>€</p>
+                            <p>TVA : <?= returnAmountTVA($total, returnPriceHT($total)) ?>€</p>
+                            <hr>
+                            <p class="priceTotal">TTC : <?= number_format($total, 2) ?>€</p>
+
+                        </div>
+                    </div>
                     <?php
                     if (!empty($result_cart)) { ?>
 
-                        <form action="" method="post">
-                            <select name="adress" id="">
-                                <?php
-                                foreach ($allUserAddresses as $userAddress) {
-                                    $orderAddress = sprintf('%d %s, %d %s', htmlspecialchars($userAddress->address_numero), htmlspecialchars($userAddress->address_name), htmlspecialchars($userAddress->address_postcode), htmlspecialchars($userAddress->address_city));
-                                ?>
-                                    <option value="<?= $orderAddress ?>">
-                                        <?= $orderAddress ?>
-                                    </option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                            <input type="submit" name="valider" value="valider panier">
+                        <form action="" method="post" class="formOrder">
+                            <div class="formOrderAddress">
+                                <select name="adress" id="">
+                                    <?php
+                                    foreach ($allUserAddresses as $userAddress) {
+                                        $orderAddress = sprintf('%d %s, %d %s', htmlspecialchars($userAddress->address_numero), htmlspecialchars($userAddress->address_name), htmlspecialchars($userAddress->address_postcode), htmlspecialchars($userAddress->address_city));
+                                    ?>
+                                        <option value="<?= $orderAddress ?>">
+                                            <?= $orderAddress ?>
+                                        </option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="formOrderValide">
+                                <input type="submit" name="valider" value="Passer la commande">
+                            </div>
                         </form>
 
                         <p>
