@@ -1,4 +1,5 @@
 let allItems = document.getElementById("allItems");
+let categoryChildDiv = document.querySelectorAll(".categoryChildDiv");
 let categoryChild = document.querySelectorAll("input[name='subCategory']");
 let resultParent = document.querySelectorAll(".resultParent");
 let subCategoryName = document.querySelectorAll(".subCategoryName");
@@ -8,8 +9,9 @@ let categoryParentRadio = document.querySelectorAll(
 );
 let categoryParentName = document.querySelectorAll(".categoryParentName");
 let urlGet = window.location.href;
-let urlGetSplit = urlGet.split("=");
-let urlGetId = urlGetSplit[1];
+let urlGetSplit = urlGet.split("?");
+console.log(urlGetSplit);
+// let urlGetId = urlGetSplit[1];
 
 // * afficher ou cacher les child dans le parent correspondant au click du parent
 for (let i = 0; i < categoryParentRadio.length; i++) {
@@ -86,12 +88,28 @@ function fetchItems(url) {
 /**
  * Afficher les produits de la catégorie visée dans la nav
  */
-if (urlGetId != null) {
-  //  console.log(urlGetId);
-  fetchItems(`traitement_filter.php?subCategory=` + urlGetId);
-  for (let i = 0; i < categoryChild.length; i++) {
-    if (urlGetId == categoryChild[i].id) {
-      categoryChild[i].setAttribute("checked", true);
+
+if (urlGetSplit.length > 1) {
+  let urlGetName = urlGetSplit[1].split("=")[0];
+  let urlGetId = urlGetSplit[1].split("=")[1];
+  if (urlGetName == "subCategory") {
+    fetchItems(`traitement_filter.php?subCategory=` + urlGetId);
+    for (let i = 0; i < categoryChild.length; i++) {
+      if (urlGetId == categoryChild[i].id) {
+        categoryChild[i].setAttribute("checked", true);
+        // for (let y = 0; y < categoryChildDiv.length; y++) {
+        //   console.log(categoryChildDiv[y]);
+        // categoryChildDiv[y].style.display = "block";
+        // }
+      }
+    }
+  } else if (urlGetName == "categoryParent") {
+    fetchItems(`traitement_filter.php?categoryParent=` + urlGetId);
+    for (let i = 0; i < categoryParentRadio.length; i++) {
+      if (urlGetId == categoryParentRadio[i].id) {
+        categoryParentRadio[i].setAttribute("checked", true);
+        categoryChildDiv[i].style.display = "block";
+      }
     }
   }
 } else {
@@ -118,6 +136,29 @@ for (let i = 0; i < categoryChild.length; i++) {
 
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
     fetchItems(`traitement_filter.php?subCategory=` + categoryChild[i].id);
+    // console.log(categoryChild[i].id);
+  });
+}
+
+for (let i = 0; i < categoryParentRadio.length; i++) {
+  categoryParentName[i].addEventListener("click", () => {
+    allItems.innerHTML = "";
+    categoryParentRadio[i].checked = true;
+    let urlGetSplitCategorie = urlGet.split("?");
+    let urlGetCategorie = urlGetSplitCategorie[0];
+
+    //* permet de changer l'url pour rester cohérent avec l'id de la subcategory choisie
+    history.pushState(
+      {},
+      "",
+      urlGetCategorie + "?categoryParent=" + categoryParentRadio[i].id
+    );
+    // window.history.pushState({urlPath:'/page1'},"",'/page1')
+
+    //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
+    fetchItems(
+      `traitement_filter.php?categoryParent=` + categoryParentRadio[i].id
+    );
     // console.log(categoryChild[i].id);
   });
 }
