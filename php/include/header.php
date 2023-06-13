@@ -21,9 +21,10 @@ function includeHeader($bdd, $index, $url, $image)
 
 ?>
     <header id="allHeader">
+        <div class="sectionNav">
         <nav class="navTop">
             <div class="logo">
-                <a href="<?= $index ?>">LOGO</a>
+                <a href="<?= $index ?>index.php">LOGO</a>
             </div>
             <div class="searchBarDiv">
                 <form action="" method="get" role="search">
@@ -36,14 +37,23 @@ function includeHeader($bdd, $index, $url, $image)
                 <span class="userIcon">
                     <i class="fa-solid fa-user"></i>
                     <div class="userLink">
-                        <a href="http://">Se Connecter</a>
-                        <a href="http://">S'inscrire</a>
-                        <a href="http://">Profil</a>
-                        <a href="http://">Admin</a>
-                        <a href="http://">Déconnexion</a>
-                        </div>
+                        <?php
+                        if (isset($_SESSION['user'])) { ?>
+                            <a href="<?= $url ?>profil.php">Profil</a>
+                            <a href="<?= $url ?>cartPage.php">Panier</a>
+                            <?php if (intval($_SESSION['user']->user_role) !== 0) { ?>
+                                <a href="<?= $url ?>admin.php">Admin</a>
+                            <?php } ?>
+                            <a href="<?= $url ?>disconnect.php">Disconnect</a>
+                        <?php } else { ?>
+                            <a href="<?= $url ?>connect.php">Connect</a>
+                            <a href="<?= $url ?>register.php">Register</a>
+                        <?php } ?>
+                    </div>
                 </span>
-                <a href="<?= $url ?>cartPage.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="<?= $url ?>cartPage.php">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
                 <span id="darkMode"><i class="fa-regular fa-moon"></i></span>
                 <!-- <span><i class="fa-regular fa-sun"></i></span> -->
                 <div class="iconBurger" onclick="burger(this)">
@@ -53,6 +63,7 @@ function includeHeader($bdd, $index, $url, $image)
                 </div>
             </div>
         </nav>
+    </div>
         <nav class="categoriesNav">
             <form method="get" class="searchBarBurgerForm" role="search">
                 <input class="" id="searchBarBurger" name="searchBarBurger" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
@@ -63,7 +74,9 @@ function includeHeader($bdd, $index, $url, $image)
 
             <div class="navCategories" id="navCategories">
                 <ul class="categoriesUl">
+                    <li class="">
                     <a href="<?= $url ?>itemFilter.php" class="">Tous les produits</a>
+                </li>
                     <?php
                     foreach ($resultCategoryParent as $key) {
                         // var_dump($key['name']);                                
