@@ -14,10 +14,18 @@ iconBurger.addEventListener("click", () => {
   categoriesNav.classList.toggle("flexClass");
 });
 
-userIcon.addEventListener("click", () => {
-  userLink.classList.toggle("blockClass"); //en JS
-  // $(".userLink").toggle(); //en jquery
+// userIcon.addEventListener("click", () => {
+//   userLink.classList.toggle("flexClass"); //en JS
+//   // $(".userLink").toggle(); //en jquery
+// });
+window.addEventListener("click", function (e) {
+  if (userIcon.contains(e.target)) {
+    userLink.style.display = "flex";
+  } else {
+    userLink.style.display = "none";
+  }
 });
+
 chevronRight.forEach((element) => {
   element.addEventListener("click", () => {
     dropdownContent.forEach((element2) => {
