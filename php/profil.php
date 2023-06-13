@@ -94,7 +94,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                     <form action="" method="post" id="formProfil">
                         <h3>Modifier ces infos personnelles</h3>
                         <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->user_email) ?>" class="input" autofocus>
+                        <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->user_email) ?>" class="input">
                         <label for="firstname">Prénom</label>
                         <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($_SESSION['user']->user_firstname) ?>" class="input">
                         <label for="lastname">Nom</label>

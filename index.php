@@ -36,28 +36,28 @@
     // var_dump($result);
 
     // Permet de récupérer le prix HT et la TVA à partir d'un prix TTC
-    function returnPriceHT(float $priceTTC)
-    {
-        $tva = 20 / 100;
-        $priceHT = $priceTTC / (1 + $tva);
-        $roundPriceHT = number_format($priceHT, 2);
-        return $roundPriceHT;
-    }
-    function returnAmountTVA(float $priceTTC, float $priceHT)
-    {
-        $amountTVA = $priceTTC - $priceHT;
-        $roundAmountTVA = number_format($amountTVA, 2);
-        return $roundAmountTVA;
-    }
-    echo 'Prix TTC : ' . $prixTTC = 100;
-    echo '<br>';
-    echo 'Prix HT : ' . $prixHT = returnPriceHT($prixTTC);
-    echo '<br>';
-    echo 'TVA : ' . $TVA = returnAmountTVA($prixTTC, $prixHT);
-    echo '<br>';
+    // function returnPriceHT(float $priceTTC)
+    // {
+    //     $tva = 20 / 100;
+    //     $priceHT = $priceTTC / (1 + $tva);
+    //     $roundPriceHT = number_format($priceHT, 2);
+    //     return $roundPriceHT;
+    // }
+    // function returnAmountTVA(float $priceTTC, float $priceHT)
+    // {
+    //     $amountTVA = $priceTTC - $priceHT;
+    //     $roundAmountTVA = number_format($amountTVA, 2);
+    //     return $roundAmountTVA;
+    // }
+    // echo 'Prix TTC : ' . $prixTTC = 100;
+    // echo '<br>';
+    // echo 'Prix HT : ' . $prixHT = returnPriceHT($prixTTC);
+    // echo '<br>';
+    // echo 'TVA : ' . $TVA = returnAmountTVA($prixTTC, $prixHT);
+    // echo '<br>';
 
-    // Permet de générer un numéro de commande
-    echo str_replace(".", "-", strtoupper(uniqid('', true)));
+    // // Permet de générer un numéro de commande
+    // echo str_replace(".", "-", strtoupper(uniqid('', true)));
 
 
 

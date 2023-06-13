@@ -6,6 +6,7 @@ main {
   flex-direction: column;
   align-items: center;
 }
+
 #container {
   background-color: var(--section-color);
   padding: 2% 2% !important;
@@ -16,9 +17,9 @@ main {
 /* ------------------------------------------------- */
 .sectionCart {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   /* align-items: center; */
-  width: 70%;
+  width: 100%;
   /* justify-content: center; */
 
   background-color: var(--div-color);
@@ -33,9 +34,13 @@ main {
   margin-bottom: 2% !important;
 }
 .cart {
+  width: 70%;
   background-color: var(--nav-color);
   padding: 1% !important;
   border-radius: 10px;
+}
+.order {
+  width: 30%;
 }
 /* ------------------------------------------------- */
 
@@ -46,6 +51,7 @@ main {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 1% !important;
+  font-size: 1.2em;
 
   /* width: 100%; */
 }
@@ -76,9 +82,7 @@ main {
   justify-content: space-between;
   padding: 1% !important;
 }
-.cartDetail > * {
-  border: 1px solid red;
-}
+
 .cartDetail > p {
   width: 20%;
 }
@@ -93,33 +97,69 @@ main {
   width: 70%;
   padding: 1% !important;
 }
-.cartProduct img {
+.cartImage {
   width: 25%;
-  border-radius: 20px;
-  margin-right: 2% !important;
+  /* margin-right: 2% !important; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cartProduct img {
+  width: 100%;
+  /* height: auto; */
+  border-radius: 10%;
 }
 .cartProduct a {
   color: #fff;
   width: 100%;
   text-decoration: none;
 }
+.cartVide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cartVide p {
+  color: #fff;
+  font-size: 2rem;
+}
+.cartVide a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  margin: 5% !important;
+}
+.cartVide a button {
+  background-color: var(--button-color);
+  border-radius: 10px;
+  padding: 1% !important;
+}
+.cartInfo {
+  margin-left: 2% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 /* ------------------------------------------------- */
 .name {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
+  /* text-overflow: ellipsis; */
+  /* width: 200px; */
 }
 .cartProduct a:hover {
   text-decoration: underline;
 }
 .stock {
   color: #fff;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 .price {
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.5em;
 }
 #delete {
   color: #fff;
@@ -131,21 +171,27 @@ main {
 /* -------------------------------------------- */
 .formOrder {
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: space-between;
 }
 .formOrderAddress {
-  width: 70%;
+  /* width: 70%; */
   display: flex;
   justify-content: center;
+  margin: 0 0 20% !important;
 }
 .formOrderValide {
-  width: 30%;
+  /* width: 30%; */
   display: flex;
   justify-content: center;
 }
+.formOrder p {
+  color: #fff;
+  text-align: center;
+  margin: 3% 0 !important;
+}
 .formOrder select {
-  width: 50%;
+  width: 90%;
   padding: 1% !important;
   background-color: transparent;
   border-radius: 10px;
@@ -157,7 +203,7 @@ main {
 }
 
 .formOrder input {
-  width: 100%;
+  width: 70%;
   padding: 1% 2% !important;
   background-color: var(--button-color);
   border: none;
@@ -171,7 +217,8 @@ main {
   padding: 1% 0 !important;
 }
 .totalDetail {
-  width: 30%;
+  width: 70%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,7 +231,4 @@ main {
 hr {
   width: 70%;
   border: 1px solid var(--button-color) !important;
-}
-.priceTotal {
-  /* border-top: 1px solid black; */
 }
