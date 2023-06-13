@@ -6,6 +6,7 @@ main {
   flex-direction: column;
   align-items: center;
 }
+
 #container {
   background-color: var(--section-color);
   padding: 2% 2% !important;
@@ -16,9 +17,9 @@ main {
 /* ------------------------------------------------- */
 .sectionCart {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   /* align-items: center; */
-  width: 70%;
+  width: 100%;
   /* justify-content: center; */
 
   background-color: var(--div-color);
@@ -32,6 +33,15 @@ main {
   text-align: center;
   margin-bottom: 2% !important;
 }
+.cart {
+  width: 70%;
+  background-color: var(--nav-color);
+  padding: 1% !important;
+  border-radius: 10px;
+}
+.order {
+  width: 30%;
+}
 /* ------------------------------------------------- */
 
 .banniere {
@@ -41,6 +51,7 @@ main {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 1% !important;
+  font-size: 1.2em;
 
   /* width: 100%; */
 }
@@ -71,31 +82,153 @@ main {
   justify-content: space-between;
   padding: 1% !important;
 }
-.cartDetail > * {
-  border: 1px solid red;
-}
+
 .cartDetail > p {
   width: 20%;
 }
 .cartDetail form {
   width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .cartProduct {
   display: flex;
   width: 70%;
+  padding: 1% !important;
+}
+.cartImage {
+  width: 25%;
+  /* margin-right: 2% !important; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .cartProduct img {
-  width: 100px;
-  border-radius: 20px;
+  width: 100%;
+  /* height: auto; */
+  border-radius: 10%;
 }
 .cartProduct a {
   color: #fff;
   width: 100%;
+  text-decoration: none;
+}
+.cartVide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cartVide p {
+  color: #fff;
+  font-size: 2rem;
+}
+.cartVide a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  margin: 5% !important;
+}
+.cartVide a button {
+  background-color: var(--button-color);
+  border-radius: 10px;
+  padding: 1% !important;
+}
+.cartInfo {
+  margin-left: 2% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 /* ------------------------------------------------- */
+.name {
+  font-size: 1.3rem;
+  /* text-overflow: ellipsis; */
+  /* width: 200px; */
+}
+.cartProduct a:hover {
+  text-decoration: underline;
+}
+.stock {
+  color: #fff;
+  font-size: 1.2rem;
+}
+.price {
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+}
 #delete {
   color: #fff;
   background-color: transparent;
   border: none;
   text-decoration: underline;
+  font-size: 1.5rem;
+}
+/* -------------------------------------------- */
+.formOrder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.formOrderAddress {
+  /* width: 70%; */
+  display: flex;
+  justify-content: center;
+  margin: 0 0 20% !important;
+}
+.formOrderValide {
+  /* width: 30%; */
+  display: flex;
+  justify-content: center;
+}
+.formOrder p {
+  color: #fff;
+  text-align: center;
+  margin: 3% 0 !important;
+}
+.formOrder select {
+  width: 90%;
+  padding: 1% !important;
+  background-color: transparent;
+  border-radius: 10px;
+  color: #fff;
+}
+.formOrder select option {
+  padding: 1% !important;
+  background-color: var(--nav-color);
+}
+
+.formOrder input {
+  width: 70%;
+  padding: 1% 2% !important;
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+/* --------------------------- */
+.total {
+  display: flex;
+  justify-content: center;
+  padding: 1% 0 !important;
+}
+.totalDetail {
+  width: 70%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2% 0 !important;
+  border: 1px solid var(--text-input-color);
+  border-radius: 10px;
+  background-color: var(--border-color);
+  color: #fff;
+}
+hr {
+  width: 70%;
+  border: 1px solid var(--button-color) !important;
 }

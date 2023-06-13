@@ -128,138 +128,150 @@ function getEditItemID()
         </div> -->
         <section id="container">
             <!-- SECTION POUR LES ITEMS -->
-            <h2>ITEMS</h2>
-            <div id="divItem">
-                <!-- Formulaire pour AJOUTER un produit -->
-                <div id="addItem">
-                    <h3>Ajouter un Produit</h3>
-                    <form action="" method="post" id="formAddItem" enctype="multipart/form-data">
+            <section class="sectionItem">
+                <h2>ITEMS</h2>
+                <div id="divItem">
+                    <!-- Formulaire pour AJOUTER un produit -->
+                    <div id="addItem">
+                        <h3>Ajouter un Produit</h3>
+                        <form action="" method="post" id="formAddItem" enctype="multipart/form-data">
 
-                        <label for="nameItem">Name</label>
-                        <input type="text" id="nameItem" name="nameItem">
+                            <label for="nameItem">Name</label>
+                            <input type="text" id="nameItem" name="nameItem">
 
-                        <label for="descriptionItem">Description</label>
-                        <input type="text" id="descriptionItem" name="descriptionItem">
+                            <label for="descriptionItem">Description</label>
+                            <input type="text" id="descriptionItem" name="descriptionItem">
 
-                        <label for="priceItem">Price</label>
-                        <input type="text" id="priceItem" name="priceItem">
+                            <label for="priceItem">Price</label>
+                            <input type="text" id="priceItem" name="priceItem">
 
-                        <label for="stockItem">Stock</label>
-                        <input type="number" id="stockItem" name="stockItem" value="500">
+                            <label for="stockItem">Stock</label>
+                            <input type="number" id="stockItem" name="stockItem" value="500">
 
-                        <label for="categoryItem">Category</label>
-                        <input type="number" id="categoryItem" name="categoryItem">
+                            <label for="categoryItem">Category</label>
+                            <input type="number" id="categoryItem" name="categoryItem">
 
-                        <label for="file">Image</label>
-                        <input type="file" id="file" name="file">
+                            <label for="file">Image</label>
+                            <input type="file" id="file" name="file">
 
-                        <input type="submit" name="buttonAddItem" value="Ajouter">
-                    </form>
-                </div>
-
-                <div id="deleteItem">
-                    <h3>Supprimer un Product</h3>
-                    <!-- Formulaire pour SUPPRIMER un produit -->
-                    <form action="" method="post" id="formDeleteItem">
-                        <label for="itemID">ID du Product</label>
-                        <input type="number" name="itemID" id="itemID">
-                        <input type="submit" name="buttonDeleteItem" value="Supprimer">
-                    </form>
-                </div>
-
-                <div id="editItem">
-                    <h3>Modifier un Product</h3>
-                    <!-- Formulaire pour MODIFIER un produit -->
-                    <form action="" method="get" id="formEditItem">
-                        <label for="editItemID">ID Product</label>
-                        <input type="number" name="editItemID" id="editItemID" value="<?= htmlspecialchars(getEditItemID()); ?>">
-                        <input type="submit" name="editItem" value="Modifier">
-                    </form>
-                    <?php
-                    if (isset($_GET['editItemID'])) {
-                        $editItemID = trim(intval($_GET['editItemID']));
-                        $product = new Product($editItemID, null, null, null, null, null);
-                        $infoItem = $product->returnProduct($bdd);
-                    ?>
-                        <h3>Update Product</h3>
-                        <!-- Affichage du produit à modifier -->
-                        <form action="" method="post" id="formUpdateItem">
-                            <label for="updateNameItem">Name</label>
-                            <input type="text" id="updateNameItem" name="updateNameItem" value="<?= htmlspecialchars($infoItem->product_name) ?>">
-
-                            <label for="updateDescriptionItem">Description</label>
-                            <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= htmlspecialchars($infoItem->product_description) ?>">
-
-                            <label for="updatePriceItem">Price</label>
-                            <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= htmlspecialchars($infoItem->product_price) ?>">
-
-                            <label for="updateSotckItem">Stock</label>
-                            <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= htmlspecialchars($infoItem->product_stock) ?>">
-
-                            <input type="submit" name="updateItem" value="Update">
+                            <input type="submit" name="buttonAddItem" value="Ajouter">
                         </form>
-                    <?php
-                        // Mise à jour des informations du produit
-                        if (isset($_POST['updateItem'])) {
-                            $updateNameItem = trim($_POST['updateNameItem']);
-                            $updateDescriptionItem = trim($_POST['updateDescriptionItem']);
-                            $updatePriceItem = trim(intval($_POST['updatePriceItem']));
-                            $updateSotckItem = trim(intval($_POST['updateSotckItem']));
-                            $updateImageItem = trim($_POST['updateImageItem']);
+                    </div>
 
-                            $product = new Product($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
-                            $product->editProduct($bdd);
+                    <div id="editItem">
+                        <h3>Modifier un Product</h3>
+                        <!-- Formulaire pour MODIFIER un produit -->
+                        <form action="" method="get" id="formEditItem">
+                            <label for="editItemID">ID Product</label>
+                            <input type="number" name="editItemID" id="editItemID" value="<?= htmlspecialchars(getEditItemID()); ?>">
+                            <input type="submit" name="editItem" value="Modifier">
+                        </form>
+                        <?php
+                        if (isset($_GET['editItemID'])) {
+                            $editItemID = trim(intval($_GET['editItemID']));
+                            $product = new Product($editItemID, null, null, null, null, null);
+                            $infoItem = $product->returnProduct($bdd);
+                            // var_dump($infoItem);
+                            if ($infoItem) {
+
+
+                        ?>
+                                <h3>Update Product</h3>
+                                <!-- Affichage du produit à modifier -->
+                                <form action="" method="post" id="formUpdateItem">
+                                    <label for="updateNameItem">Name</label>
+                                    <input type="text" id="updateNameItem" name="updateNameItem" value="<?= htmlspecialchars($infoItem->product_name) ?>">
+
+                                    <label for="updateDescriptionItem">Description</label>
+                                    <input type="text" id="updateDescriptionItem" name="updateDescriptionItem" value="<?= htmlspecialchars($infoItem->product_description) ?>">
+
+                                    <label for="updatePriceItem">Price</label>
+                                    <input type="text" id="updatePriceItem" name="updatePriceItem" value="<?= htmlspecialchars($infoItem->product_price) ?>">
+
+                                    <label for="updateSotckItem">Stock</label>
+                                    <input type="number" id="updateSotckItem" name="updateSotckItem" value="<?= htmlspecialchars($infoItem->product_stock) ?>">
+
+                                    <input type="submit" name="updateItem" value="Update">
+                                </form>
+                        <?php
+                            } else {
+                                echo "Ce produit n'existe pas";
+                            }
+                            // Mise à jour des informations du produit
+                            if (isset($_POST['updateItem'])) {
+                                $updateNameItem = trim($_POST['updateNameItem']);
+                                $updateDescriptionItem = trim($_POST['updateDescriptionItem']);
+                                $updatePriceItem = trim(intval($_POST['updatePriceItem']));
+                                $updateSotckItem = trim(intval($_POST['updateSotckItem']));
+                                $updateImageItem = trim($_POST['updateImageItem']);
+
+                                $product = new Product($editItemID, $updateNameItem, $updateDescriptionItem, null, $updatePriceItem, $updateSotckItem);
+                                $product->editProduct($bdd);
+                            }
                         }
-                    }
-                    ?>
-                </div>
-                <div>
-                    <h3>image</h3>
-                    <!-- Formulaire pour AJOUTER des images à un produit -->
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <input type="number" name="imageID" id="imageID">
-                        <input type="file" name="imageSecondary">
-                        <input type="submit" name="insertImage">
-                    </form>
-                </div>
-            </div>
+                        ?>
+                    </div>
 
+                    <div class="deleteProduct_addImg">
+                        <div id="deleteItem">
+                            <h3>Supprimer un Product</h3>
+                            <!-- Formulaire pour SUPPRIMER un produit -->
+                            <form action="" method="post" id="formDeleteItem">
+                                <label for="itemID">ID du Product</label>
+                                <input type="number" name="itemID" id="itemID">
+                                <input type="submit" name="buttonDeleteItem" value="Supprimer">
+                            </form>
+                        </div>
+                        <div>
+                            <h3>image</h3>
+                            <!-- Formulaire pour AJOUTER des images à un produit -->
+                            <form action="" method="post" enctype="multipart/form-data" class="formImg">
+                                <input type="number" name="imageID" id="imageID">
+                                <input type="file" name="imageSecondary">
+                                <input type="submit" name="insertImage">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <!-- SECTION POUR LES CATEGORIES -->
-            <h2>CATEGORY</h2>
-            <div id="divCategory">
-                <div id="addCategory">
-                    <!-- Formulaire pour AJOUTER une catégorie -->
-                    <h3>Ajouter une Categorie</h3>
-                    <form action="" method="post" id="formAddCategory">
-                        <label for="nameCategory">Name</label>
-                        <input type="text" name="nameCategory" id="nameCategory">
-                        <label for="idParent">ID parent</label>
-                        <input type="number" name="idParent" id="idParent">
-                        <input type="submit" name="buttonAddCategory" value="Ajouter">
-                    </form>
-                </div>
-                <div id="deleteCategory">
-                    <h3>Supprimer une Categorie</h3>
-                    <!-- Formulaire pour SUPPRIMER une catégorie -->
-                    <form action="" method="post" id="formDeleteCategory">
-                        <label for="idCategory">ID category</label>
-                        <input type="text" name="idCategory" id="idCategory">
-                        <input type="submit" name="buttonDeleteCategory" value="Supprimer">
-                    </form>
-                </div>
+            <section class="sectionCategories">
+                <h2>CATEGORY</h2>
+                <div id="divCategory">
+                    <div id="addCategory">
+                        <!-- Formulaire pour AJOUTER une catégorie -->
+                        <h3>Ajouter une Categorie</h3>
+                        <form action="" method="post" id="formAddCategory">
+                            <label for="nameCategory">Name</label>
+                            <input type="text" name="nameCategory" id="nameCategory">
+                            <label for="idParent">ID parent</label>
+                            <input type="number" name="idParent" id="idParent">
+                            <input type="submit" name="buttonAddCategory" value="Ajouter">
+                        </form>
+                    </div>
+                    <div id="deleteCategory">
+                        <h3>Supprimer une Categorie</h3>
+                        <!-- Formulaire pour SUPPRIMER une catégorie -->
+                        <form action="" method="post" id="formDeleteCategory">
+                            <label for="idCategory">ID category</label>
+                            <input type="text" name="idCategory" id="idCategory">
+                            <input type="submit" name="buttonDeleteCategory" value="Supprimer">
+                        </form>
+                    </div>
 
-                <div id="updateCategory">
-                    <h3>Modifier une Categorie</h3>
-                    <!-- Formulaire pour MODIFIER une catégorie -->
-                    <form action="" method="post" id="formUpdateCategory">
-                        <label for="updateIdCategory">ID category</label>
-                        <input type="text" name="updateIdCategory" id="updateIdCategory">
-                        <label for="updateNameCategory">New Name</label>
-                        <input type="text" name="updateNameCategory" id="updateNameCategory">
-                        <input type="submit" name="buttonUpdateCategory" value="Modifier">
-                    </form>
+                    <div id="updateCategory">
+                        <h3>Modifier une Categorie</h3>
+                        <!-- Formulaire pour MODIFIER une catégorie -->
+                        <form action="" method="post" id="formUpdateCategory">
+                            <label for="updateIdCategory">ID category</label>
+                            <input type="text" name="updateIdCategory" id="updateIdCategory">
+                            <label for="updateNameCategory">New Name</label>
+                            <input type="text" name="updateNameCategory" id="updateNameCategory">
+                            <input type="submit" name="buttonUpdateCategory" value="Modifier">
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </section>
 
             <!-- SECTION POUR LES USERS -->
             <h2>USER</h2>

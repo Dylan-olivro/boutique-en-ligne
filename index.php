@@ -37,6 +37,7 @@
     // var_dump($result);
 
 
+
     // * Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
 
     // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES

@@ -91,6 +91,7 @@ if (isset($_POST['vider'])) {
     <script src="../js/function.js" defer></script>
     <script src="../js/header.js" defer></script>
     <script src="../js/autocompletion.js" defer></script>
+    <script src="../js/cart.js" defer></script>
 
 </head>
 
@@ -102,8 +103,8 @@ if (isset($_POST['vider'])) {
         <section id="container">
             <!-- <section class="containerCart"> -->
             <div class="sectionCart">
-                <h3>Ton Panier</h3>
                 <div class="cart">
+                    <h3>Ton Panier</h3>
                     <div class="banniere">
                         <p>Article</p>
                         <p>Prix</p>
@@ -112,50 +113,86 @@ if (isset($_POST['vider'])) {
                         </form>
                     </div>
                     <?php
-                    // Affichage du panier
-                    foreach ($result_cart as $product) {
-                        // var_dump($product);
+
+                    if (!empty($result_cart)) {
+                        // Affichage du panier
+                        foreach ($result_cart as $product) {
+                            // var_dump($product);
+
                     ?>
-                        <div class="cartDetail">
-                            <div class="cartProduct">
-                                <img src="../assets/img_item/<?= $product->image_name ?>" alt="">
-                                <div class="cartInfo">
-                                    <a href="./detail.php?id=<?= $product->product_id ?>">
-                                        <p><?= htmlspecialchars($product->product_name) ?></p>
-                                    </a>
-                                    <p><?= htmlspecialchars($product->product_stock) ?> en Stock</p>
+                            <div class="cartDetail">
+                                <div class="cartProduct">
+                                    <div class="cartImage">
+                                        <img src="../assets/img_item/<?= $product->image_name ?>" alt="">
+                                    </div>
+                                    <div class="cartInfo">
+                                        <a href="./detail.php?id=<?= $product->product_id ?>">
+                                            <p class="name"><?= htmlspecialchars(CoupePhrase($product->product_name)) ?></p>
+                                        </a>
+                                        <p class="stock"><?= htmlspecialchars($product->product_stock) ?></p>
+                                    </div>
                                 </div>
+                                <p class="price"><?= htmlspecialchars($product->product_price) ?>€</p>
+                                <form action="" method="post">
+                                    <button type="submit" name="delete<?= $product->cart_id ?>" id="delete"><i class="fa-solid fa-xmark"></i></button>
+                                </form>
                             </div>
-                            <p><?= htmlspecialchars($product->product_price) ?>€</p>
-                            <form action="" method="post">
-                                <button type="submit" name="delete<?= $product->cart_id ?>" id="delete"><i class="fa-solid fa-xmark"></i></button>
-                            </form>
+                        <?php
+                            if (isset($_POST['delete' . $product->cart_id])) {
+                                $cart2 = new Cart($product->cart_id, $_SESSION['user']->user_id, $product->product_id);
+                                $cart2->deleteProduct($bdd);
+                                header('Location: cartPage.php');
+                            }
+                        }
+                    } else { ?>
+                        <div class="cartVide">
+                            <p>Votre panier est vide !</p>
+                            <a href="./itemFilter.php"><button>Découvrez nos pruduits</button></a>
                         </div>
                     <?php
-                        if (isset($_POST['delete' . $product->cart_id])) {
-                            $cart2 = new Cart($product->cart_id, $_SESSION['user']->user_id, $product->product_id);
-                            $cart2->deleteProduct($bdd);
-                            header('Location: cartPage.php');
-                        }
                     }
                     ?>
+                </div>
+
+                <div class="order">
+                    <div class="total">
+                        <div class="totalDetail">
+                            <?php
+                            $prices = [];
+                            foreach ($result_cart as $cartProduct) {
+                                array_push($prices, $cartProduct->product_price);
+                            }
+                            $total = array_sum($prices);
+                            ?>
+                            <p>HT : <?= returnPriceHT($total) ?>€</p>
+                            <p>TVA : <?= returnAmountTVA($total, returnPriceHT($total)) ?>€</p>
+                            <hr>
+                            <p class="priceTotal">TTC : <?= number_format($total, 2) ?>€</p>
+
+                        </div>
+                    </div>
                     <?php
                     if (!empty($result_cart)) { ?>
 
-                        <form action="" method="post">
-                            <select name="adress" id="">
-                                <?php
-                                foreach ($allUserAddresses as $userAddress) {
-                                    $orderAddress = sprintf('%d %s, %d %s', htmlspecialchars($userAddress->address_numero), htmlspecialchars($userAddress->address_name), htmlspecialchars($userAddress->address_postcode), htmlspecialchars($userAddress->address_city));
-                                ?>
-                                    <option value="<?= $orderAddress ?>">
-                                        <?= $orderAddress ?>
-                                    </option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                            <input type="submit" name="valider" value="valider panier">
+                        <form action="" method="post" class="formOrder">
+                            <p>Choisissez Votre Adresse</p>
+                            <div class="formOrderAddress">
+                                <select name="adress" id="">
+                                    <?php
+                                    foreach ($allUserAddresses as $userAddress) {
+                                        $orderAddress = sprintf('%d %s, %d %s', htmlspecialchars($userAddress->address_numero), htmlspecialchars($userAddress->address_name), htmlspecialchars($userAddress->address_postcode), htmlspecialchars($userAddress->address_city));
+                                    ?>
+                                        <option value="<?= $orderAddress ?>">
+                                            <?= $orderAddress ?>
+                                        </option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="formOrderValide">
+                                <input type="submit" name="valider" value="Passer la commande">
+                            </div>
                         </form>
 
                         <p>

@@ -46,7 +46,29 @@ function isToSmall($a)
 }
 
 
-    // function special_login($login)
-    // {
-    //     return preg_match("#^[a-z0-9]+$#", $login) ? true : false;
-    // }
+// function special_login($login)
+// {
+//     return preg_match("#^[a-z0-9]+$#", $login) ? true : false;
+// }
+
+function returnPriceHT(float $priceTTC)
+{
+    $tva = 20 / 100;
+    $priceHT = $priceTTC / (1 + $tva);
+    $roundPriceHT = number_format($priceHT, 2, '.', "");
+    return (float)$roundPriceHT;
+}
+function returnAmountTVA(float $priceTTC, float $priceHT)
+{
+    $amountTVA =  $priceTTC - $priceHT;
+    $roundAmountTVA = number_format($amountTVA, 2, '.', "");
+    return (float)$roundAmountTVA;
+}
+
+function CoupePhrase($txt, $long = 50)
+{
+    if (strlen($txt) <= $long)
+        return $txt;
+    $txt = substr($txt, 0, $long);
+    return substr($txt, 0, strrpos($txt, ' ')) . '...';
+}

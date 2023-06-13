@@ -74,15 +74,13 @@ if (isset($_POST['ajouter'])) {
 
                     <div id="price_cart">
                         <p><?= htmlspecialchars($result->product_price) ?>€</p>
+                        <p class="stock"><?= htmlspecialchars($result->product_stock) ?></p>
                         <?php
                         if (isset($_SESSION['user'])) {
                             if ($result->product_stock > 0) { ?>
                                 <form action="" method="post">
                                     <input type="submit" name="ajouter" value="Ajouter au panier">
                                 </form>
-                            <?php
-                            } else { ?>
-                                <p>STOCK EPUISEE</p>
                         <?php
                             }
                         }

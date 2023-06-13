@@ -1,3 +1,97 @@
+main {
+  max-width: 1920px;
+  margin: auto !important;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sectionItem {
+  display: flex;
+  flex-direction: column;
+  padding: 1% !important;
+}
+
+#divItem {
+  background-color: rebeccapurple;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1% !important;
+}
+h2 {
+  text-align: center;
+  color: #fff !important;
+  padding: 1% !important;
+}
+h3 {
+  text-align: center;
+  color: #fff;
+}
+#addItem,
+#editItem,
+.deleteProduct_addImg {
+  width: 30%;
+}
+#addItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: brown;
+  border-radius: 10px;
+  padding: 1% !important;
+}
+#formAddItem {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+#editItem {
+  background-color: aquamarine;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  padding: 1% !important;
+}
+#formEditItem {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#formUpdateItem {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+.deleteProduct_addImg {
+  display: flex;
+  flex-direction: column;
+  background-color: chocolate;
+  border-radius: 10px;
+  padding: 1% !important;
+}
+.formImg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#formDeleteItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 60%; */
+}
+.sectionCategories {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#divCategory {
+  background-color: chartreuse;
+}
+/*----------------------------------------------- */
 #divUser {
   display: flex;
 }
