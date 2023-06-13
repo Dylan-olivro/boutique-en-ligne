@@ -49,11 +49,6 @@ main {
   display: flex;
   /* padding-right: 1%; */
 }
-.iconNavDiv span i,
-.iconNavDiv a i {
-  font-size: 1.5em;
-  /* padding-right: 1%; */
-}
 .sectionNav {
   display: flex;
   justify-content: center;
@@ -69,12 +64,11 @@ main {
 #searchBar {
   width: 100%;
   border-radius: 5px;
-  padding-left: 1%;
+  padding: 1%;
 }
 .navTop i {
-  font-size: 20px;
+  font-size: 1.5em;
 }
-
 .navTop a {
   color: #000;
 }
@@ -83,11 +77,11 @@ main {
   position: relative;
   display: inline-block;
 }
-.categoriesUl li{
+.categoriesUl li {
   padding: 0.5%;
   list-style: none;
 }
-.categoriesUl a{
+.categoriesUl a {
   text-decoration: none;
 }
 .categoriesUl li:hover {

@@ -24,7 +24,7 @@ function includeHeader($bdd, $index, $url, $image)
         <div class="sectionNav">
         <nav class="navTop">
             <div class="logo">
-                <a href="<?= $index ?>index.php">LOGO</a>
+                <a href="<?= $index ?>index.php"><i class="fa-solid fa-computer" style="color: #000000;"></i></a>
             </div>
             <div class="searchBarDiv">
                 <form action="" method="get" role="search">
