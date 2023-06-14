@@ -71,7 +71,7 @@ function fetchItems(url) {
         itemDesc.innerText = element.product_description;
         itemPrice.innerText = element.product_price + " €";
 
-        // appele la fonction qui affihce le stock
+        // appele la fonction qui affiche le stock
         checkStock(element.product_stock, itemStock);
 
         divImg.append(itemImg);
@@ -90,6 +90,7 @@ function fetchItems(url) {
  */
 
 if (urlGetSplit.length > 1) {
+  console.log(urlGetSplit);
   let urlGetName = urlGetSplit[1].split("=")[0];
   let urlGetId = urlGetSplit[1].split("=")[1];
   if (urlGetName == "subCategory") {
@@ -97,10 +98,6 @@ if (urlGetSplit.length > 1) {
     for (let i = 0; i < categoryChild.length; i++) {
       if (urlGetId == categoryChild[i].id) {
         categoryChild[i].setAttribute("checked", true);
-        // for (let y = 0; y < categoryChildDiv.length; y++) {
-        //   console.log(categoryChildDiv[y]);
-        // categoryChildDiv[y].style.display = "block";
-        // }
       }
     }
   } else if (urlGetName == "categoryParent") {
