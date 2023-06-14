@@ -1,24 +1,26 @@
 main {
-  max-width: 1920px;
-  margin: auto !important;
   background-color: var(--background-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
-#container {
+
+#firstContainer {
   padding: 1%;
   width: 100%;
   display: flex;
+  position: relative;
+  background-color: var(--section-color);
 }
 /* -------------------LIST BUTTON -------------------- */
 .allShowButtons {
   width: 13%;
-  background-color: red;
+  background-color: var(--div-color);
+  border: 1px solid var(--border-color);
   display: flex;
   justify-content: center;
   height: 200px;
   align-items: center;
+  position: sticky;
+  top: 10%;
+  border-radius: 10px;
 }
 .allShowButtons ul {
   padding-left: 1%;
@@ -30,48 +32,67 @@ main {
   height: 80%;
 }
 .allShowButtons li {
-  background-color: green;
-  border: 1px solid black;
+  background-color: var(--input-color);
+  border: 1px solid var(--border-color);
   width: 100%;
   text-align: center;
+  border-radius: 5px;
+}
+.allShowButtons li:hover {
+  border: 1px solid #fff;
+  background-color: var(--button-color);
 }
 
 #showProducts,
 #showCategories,
 #showUsers {
+  padding: 2% 0;
+  border-radius: 5px;
   width: 100%;
   border: none;
   background-color: transparent;
-}
-#showProducts:hover,
-#showCategories:hover,
-#showUsers:hover {
-  background-color: #000;
   color: #fff;
 }
+
 /* ----------------- STATS  ------------------------- */
-.containerStats {
+#secondContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 87%;
 }
-.stats {
+.sectionStats {
   width: 95%;
-  background-color: #04aa6d;
+  background-color: var(--div-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-bottom: 1%;
+}
+.sectionStats h3 {
+  color: #fff;
+  text-align: center;
+  font-size: 2rem;
+  padding: 1%;
+}
+.stats {
+  width: 100%;
   display: flex;
   justify-content: space-evenly;
-  padding: 1%;
   flex-wrap: wrap;
+  padding: 1%;
+  margin: 1% 0;
+  gap: 1%;
 }
 .cardStat {
-  background-color: aqua;
+  background-color: var(--nav-color);
   border-radius: 10px;
   width: 220px;
   padding: 1%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  margin-bottom: 2%;
+  color: #fff;
 }
 .cardStat i {
   font-size: 2em;
@@ -79,9 +100,7 @@ main {
 .cardStat > p:nth-child(2) {
   font-size: 1.5em;
 }
-.cardStat div p {
-  /* padding-left: 10%; */
-}
+
 /* -------------------LIST FORM -------------------- */
 .FormForAdd {
   width: 95%;
@@ -89,39 +108,82 @@ main {
   justify-content: space-between;
 }
 
-#addItem,
-#addCategory,
-#listUsers {
-  background-color: green;
+#addItem {
+  background-color: var(--div-color);
+  border: 1px solid var(--border-color);
   padding: 1%;
   border-radius: 10px;
-  width: 30%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#formAddItem,
+#addItem h3 {
+  color: #fff;
+  font-size: 2rem;
+}
+#addCategory {
+  width: 30%;
+}
+#formProduct,
 #formAddCategory {
-  background-color: red;
+  /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   width: 90%;
 }
-.inputDiv {
+#formProduct label {
+  color: #fff;
+  font-style: italic;
+}
+#formProduct input {
+  background-color: var(--input-color);
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+}
+.groupInput {
   display: flex;
   justify-content: space-between;
 }
-.inputDiv div {
-  /* display: flex; */
-  width: 30%;
+.divInput {
+  /* displ5y: flex; */
+  width: 15%;
 }
-.inputDiv div input {
+.divInputFile {
+  width: 35%;
+}
+.groupInput div input {
   /* display: flex; */
   width: 100%;
 }
+
 #descriptionItem {
+  border-radius: 5px;
   resize: none;
   height: 100px;
+  background-color: var(--input-color);
+  color: #fff;
+  outline: none;
+  border-style: inset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+}
+#message {
+  width: 100%;
+  color: #ffa938;
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  height: 35px;
+  margin: 0;
+}
+#submit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#submit input {
+  width: 50%;
 }
 .formEdit,
 .formCat {
@@ -138,9 +200,11 @@ main {
 .tableUsers {
   display: none;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* top: 50%;
+  left: 50%; */
+  top: 1%;
+  left: 15%;
+  /* transform: translate(-50%, -50%); */
   height: 600px;
   overflow-y: auto;
   width: 70%;
@@ -186,6 +250,8 @@ main {
   padding-bottom: 12px;
   background-color: #04aa6d;
   color: white;
+  position: sticky;
+  top: 0;
 }
 
 #IDProduct,

@@ -36,10 +36,21 @@ class Product
     }
     public function deleteProduct($bdd)
     {
+        // ! A TESTER
+        $request = $bdd->prepare('SELECT * FROM images WHERE product_id = :product_id');
+        $request->execute(['product_id' => $this->id]);
+        $result = $request->fetchAll(PDO::FETCH_OBJ);
+
+        foreach ($result as $res) {
+            unlink('../assets/img_item/' . $res->image_name);
+            $deleteImage = $bdd->prepare('DELETE FROM images WHERE product_id = :product_id');
+            $deleteImage->execute(['product_id' => $this->id]);
+        }
+
         $deleteProduct = $bdd->prepare('DELETE FROM products WHERE product_id = :product_id');
         $deleteProduct->execute(['product_id' => $this->id]);
-        // header('Location: admin.php');
     }
+
     public function editProduct($bdd)
     {
         $editProduct = $bdd->prepare('UPDATE products SET product_name = :product_name, product_description = :product_description, product_price = :product_price, product_stock = :product_stock WHERE product_id = :product_id');

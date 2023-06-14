@@ -11,32 +11,15 @@ if ($_SESSION['user']->user_role == 0) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php require_once('./include/head.php'); ?>
     <title>Admin</title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/admin.css">
-    <!-- BOOTSTRAP -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <!-- JQUERY -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <!-- FONTAWESOME -->
-    <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
-    <!-- JAVASCRIPT -->
-    <script src="../js/function.js" defer></script>
-    <!-- <script src="../js/header.js" defer></script>
-    <script src="../js/autocompletion.js" defer></script> -->
     <script src="../js/admin.js" defer></script>
-
 </head>
 
 <body>
-    <?php // require_once('./include/header.php'); 
-    ?>
-    <?php require_once('./include/header-save.php') ?>
+    <?php require_once('./include/header.php'); ?>
+
     <main>
         <?php
         $product = new Product(null, null, null, null, null, null, null);
@@ -50,7 +33,7 @@ if ($_SESSION['user']->user_role == 0) {
         // var_dump($result_users);
         // echo $_SESSION['test'];
         ?>
-        <section id="container">
+        <section id="firstContainer">
 
             <div class="allShowButtons">
                 <ul>
@@ -59,36 +42,39 @@ if ($_SESSION['user']->user_role == 0) {
                     <li><button id="showUsers">Utilisateurs</button></li>
                 </ul>
             </div>
-            <section class="containerStats">
-                <div class="stats">
-                    <div class="cardStat">
-                        <p><i class="fa-solid fa-users"></i></p>
-                        <p id="countUser">0</p>
-                        <p>Nombres d'utilisateurs</p>
+            <section id="secondContainer">
+                <section class="sectionStats">
+                    <h3>Statistiques</h3>
+                    <div class="stats">
+                        <div class="cardStat">
+                            <p><i class="fa-solid fa-users"></i></p>
+                            <p id="countUser">0</p>
+                            <p>Nombres d'utilisateurs</p>
 
-                    </div>
-                    <div class="cardStat">
-                        <p><i class="fa-solid fa-cubes"></i></p>
-                        <p id="countProduct">0</p>
-                        <p>Nombres de produits</p>
-                    </div>
-                    <div class="cardStat">
-                        <p><i class="fa-solid fa-truck-fast"></i></p>
-                        <p id="countOrder">0</p>
-                        <p>Nombres de commandes</p>
-                    </div>
-                    <div class="cardStat">
-                        <p><i class="fa-solid fa-credit-card"></i></p>
-                        <p id="avgOrder">0</p>
-                        <p>Paniers moyen</p>
-                    </div>
-                    <div class="cardStat">
-                        <p><i class="fa-solid fa-sack-dollar"></i></p>
-                        <p id="salesRevenues">0</p>
-                        <p>Chiffres d'affaires</p>
+                        </div>
+                        <div class="cardStat">
+                            <p><i class="fa-solid fa-cubes"></i></p>
+                            <p id="countProduct">0</p>
+                            <p>Nombres de produits</p>
+                        </div>
+                        <div class="cardStat">
+                            <p><i class="fa-solid fa-truck-fast"></i></p>
+                            <p id="countOrder">0</p>
+                            <p>Nombres de commandes</p>
+                        </div>
+                        <div class="cardStat">
+                            <p><i class="fa-solid fa-credit-card"></i></p>
+                            <p id="avgOrder">0</p>
+                            <p>Paniers moyen</p>
+                        </div>
+                        <div class="cardStat">
+                            <p><i class="fa-solid fa-sack-dollar"></i></p>
+                            <p id="salesRevenues">0</p>
+                            <p>Chiffres d'affaires</p>
+                        </div>
                     </div>
 
-                </div>
+                </section>
                 <div class="FormForAdd">
                     <!-- AJOUTER DES PRODUITS -->
                     <div id="addItem">
@@ -96,20 +82,24 @@ if ($_SESSION['user']->user_role == 0) {
 
                         <form action="" method="post" id="formProduct" enctype="multipart/form-data">
                             <label for="nameItem">Name</label>
-                            <input type="text" id="nameItem" name="nameItem">
+                            <input type="text" id="nameItem" name="nameItem" autocomplete="off">
 
-                            <div class="inputDiv">
-                                <div>
+                            <div class="groupInput">
+                                <div class="divInput">
                                     <label for="priceItem">Price</label>
-                                    <input type="text" id="priceItem" name="priceItem">
+                                    <input type="text" id="priceItem" name="priceItem" autocomplete="off">
                                 </div>
-                                <div>
+                                <div class="divInput">
                                     <label for="stockItem">Stock</label>
-                                    <input type="number" id="stockItem" name="stockItem">
+                                    <input type="number" id="stockItem" name="stockItem" autocomplete="off">
                                 </div>
-                                <div>
+                                <div class="divInput">
                                     <label for="categoryItem">Category</label>
-                                    <input type="number" id="categoryItem" name="categoryItem">
+                                    <input type="number" id="categoryItem" name="categoryItem" autocomplete="off">
+                                </div>
+                                <div class="divInputFile">
+                                    <label for="file">Image</label>
+                                    <input type="file" id="file" name="file">
                                 </div>
                             </div>
 
@@ -117,11 +107,11 @@ if ($_SESSION['user']->user_role == 0) {
                             <textarea name="descriptionItem" id="descriptionItem"></textarea>
                             <!-- <input type="text" id="descriptionItem" name="descriptionItem"> -->
 
-                            <label for="file">Image</label>
-                            <input type="file" id="file" name="file">
 
                             <p id="message"></p>
-                            <input type="submit" name="buttonAddItem" value="Ajouter">
+                            <div id="submit">
+                                <input type="submit" name="buttonAddItem" value="Valider">
+                            </div>
                         </form>
                     </div>
 
@@ -139,11 +129,6 @@ if ($_SESSION['user']->user_role == 0) {
 
                     </div>
 
-                    <div id="listUsers">
-                        <!-- Formulaire pour AJOUTER une catégorie -->
-                        <h3>Liste des Utilisateurs</h3>
-
-                    </div>
                 </div>
             </section>
 

@@ -18,11 +18,27 @@
   --main-color: #005078;
   --second-color: #007cb8;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 * {
-  margin: 0 !important;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+body {
+  line-height: 1.5;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 main {
@@ -102,6 +118,8 @@ main {
 .categoriesNav {
   background-color: lightcoral;
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .categoriesUlDiv {
@@ -187,6 +205,7 @@ main {
 .categoriesUl {
   display: flex;
   justify-content: space-between;
+  padding: 0;
 }
 
 /* icon burger */
@@ -205,7 +224,7 @@ main {
   width: 25px;
   height: 3px;
   background-color: #333;
-  margin: 6px 0;
+  margin: 6px 0 !important;
   transition: 0.4s;
 }
 
