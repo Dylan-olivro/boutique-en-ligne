@@ -10,14 +10,9 @@ function burger(div) {
   div.classList.toggle("change");
 }
 iconBurger.addEventListener("click", () => {
-  // categoriesNav.toggle.style.display = "flex";
   categoriesNav.classList.toggle("flexClass");
 });
 
-// userIcon.addEventListener("click", () => {
-//   userLink.classList.toggle("flexClass"); //en JS
-//   // $(".userLink").toggle(); //en jquery
-// });
 window.addEventListener("click", function (e) {
   if (userIcon.contains(e.target)) {
     userLink.style.display = "flex";
@@ -44,15 +39,34 @@ backToCategories.forEach((backToCategoriesElement) => {
   });
 });
 
+// * Dark mode
 let allBody = document.body;
-let allHeader = document.header;
+let darkModeIcon = document.getElementById("darkModeIcon");
 let darkMode = document.getElementById("darkMode");
 
+// * change l'icone dark/light mode au click
 darkMode.addEventListener("click", () => {
-  let actualTheme = allBody.className;
-  allBody.classList.toggle("dark-mode");
-  localStorage.setItem("Mytheme", actualTheme);
+  darkModeIcon.classList.toggle("fa-moon");
+  darkModeIcon.classList.toggle("fa-sun");
 });
-if (localStorage.getItem("Mytheme")) {
-  allBody.classList.toggle(localStorage.getItem("Mytheme"));
+
+//* On change le thème dans le localStorage pour qu'il soit mémorisé
+(function () {
+  let currentTheme = localStorage.getItem("theme") || "";
+  allBody.classList.add(currentTheme);
+  document.getElementById("theme").textContent =
+    localStorage.getItem("theme") || "light";
+})();
+
+//* on alterne entre le dark mode et light mode au click de l'icone
+function themeToggle() {
+  allBody.classList.toggle("dark-mode");
+  let theme = localStorage.getItem("theme");
+  if (theme && theme === "dark-mode") {
+    localStorage.setItem("theme", "");
+  } else {
+    localStorage.setItem("theme", "dark-mode");
+  }
+  document.getElementById("theme").textContent = localStorage.getItem("theme");
 }
+// * fin dark mode
