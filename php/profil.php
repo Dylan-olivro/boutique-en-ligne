@@ -79,7 +79,6 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
     <script src="../js/autocompletion.js" defer></script>
     <!-- <script src="../js/user/profil.js" defer></script> -->
     <script src="../js/user/profil.js" defer></script>
-
 </head>
 
 <body>
