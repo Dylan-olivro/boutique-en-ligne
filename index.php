@@ -1,4 +1,4 @@
-<?php require_once('./php/include/required.php'); 
+<?php require_once('./php/include/required.php');
 // ! AJOUTER LES CONDITIONS POUR LES IMAGES DANS LE FORMULAIRE DU PRODUIT
 ?>
 <!DOCTYPE html>
@@ -22,7 +22,6 @@
     <script src="./js/function.js" defer></script>
     <script src="./js/header.js" defer></script>
     <script src="./js/autocompletion.js" defer></script>
-    <!-- <script src="./js/test.js" defer></script> -->
 </head>
 
 <body>
@@ -32,8 +31,6 @@
     </form>
 
     <?php require_once('./php/include/header.php') ?>
-    <?php
-    require_once('./php/include/header-save.php') ?>
     <?php
     if (isset($_POST['submit'])) {
         if (isNumber($_POST['test'])) {

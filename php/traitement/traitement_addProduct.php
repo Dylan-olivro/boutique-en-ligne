@@ -42,7 +42,7 @@ if (isset($data)) {
         $category = new Category(null, null, $category);
         $product->addProduct($bdd);
         $category->liaisonItemCategory($bdd);
-        $message['PRODUCT_SUCCES'] = "AJOUT DE PRODUIT";
+        $message['PRODUCT_SUCCES'] = "Produit ajouté";
         // var_dump(!isNumber($stock));
 
         // if (isset($file)) {

@@ -94,13 +94,10 @@ formProduct.addEventListener("submit", (event) => {
     })
     .then((data) => {
       console.log(data);
-      // message.style.color = "";
       if (data.PRODUCT_ERROR) {
-        //   // message.style.display = "flex";
         message.innerHTML = data.PRODUCT_ERROR;
       } else {
-        //   // message.style.display = "flex";
-        message.style.color = "blue";
+        message.style.color = "green";
         message.innerHTML = data.PRODUCT_SUCCES;
         formProduct.reset();
       }
