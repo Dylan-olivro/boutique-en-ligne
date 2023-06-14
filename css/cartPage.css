@@ -52,8 +52,7 @@ main {
   border-top-right-radius: 10px;
   padding: 1% !important;
   font-size: 1.2em;
-
-  /* width: 100%; */
+  width: 95%;
 }
 .banniere > p:nth-child(1) {
   width: 70%;
@@ -77,7 +76,7 @@ main {
 /* ------------------------------------------------- */
 
 .cartDetail {
-  width: 100%;
+  width: 95%;
   display: flex;
   justify-content: space-between;
   padding: 1% !important;

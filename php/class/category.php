@@ -27,7 +27,7 @@ class Category
 
         $deleteLiaison = $bdd->prepare("DELETE FROM liaison_items_category WHERE id_category = :id_category");
         $deleteLiaison->execute(['id_category' => $this->id]);
-        header('Location: admin.php');
+        // header('Location: admin.php');
     }
     public function liaisonItemCategory($bdd)
     {
@@ -50,6 +50,14 @@ class Category
             'id' => $this->id
         ]);
         header('Location: admin.php');
+    }
+
+    public function returnAllCategories($bdd)
+    {
+        $request = $bdd->prepare('SELECT * FROM category');
+        $request->execute();
+        $result = $request->fetchAll(PDO::FETCH_OBJ);
+        return $result;
     }
 
     /**

@@ -213,6 +213,19 @@ class User
         return $result;
     }
 
+    public function returnAllUser($bdd)
+    {
+        $request = $bdd->prepare("SELECT * FROM users");
+        $request->execute();
+        $result = $request->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function deleteUserByID($bdd)
+    {
+        $request = $bdd->prepare("DELETE FROM users WHERE user_id = :user_id");
+        $request->execute(['user_id' => $this->id]);
+    }
+
     public function isConnected(): bool
     {
         if (isset($_SESSION['user']->user_login)) {

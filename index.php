@@ -1,4 +1,6 @@
-<?php require_once('./php/include/required.php'); ?>
+<?php require_once('./php/include/required.php'); 
+// ! AJOUTER LES CONDITIONS POUR LES IMAGES DANS LE FORMULAIRE DU PRODUIT
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,12 +26,22 @@
 </head>
 
 <body>
+    <form action="" method="post">
+        <input type="number" name="test">
+        <input type="submit" name="submit">
+    </form>
 
     <?php require_once('./php/include/header.php') ?>
-    <?php 
+    <?php
     require_once('./php/include/header-save.php') ?>
     <?php
-
+    if (isset($_POST['submit'])) {
+        if (isNumber($_POST['test'])) {
+            var_dump(1);
+        } else {
+            var_dump(2);
+        }
+    }
     // Requête qui permet de récupérer les ID des produits les plus vendus
     $request = $bdd->prepare("SELECT product_id,count(*) FROM liaison_product_order GROUP BY product_id ORDER BY count(*) DESC");
     $request->execute();

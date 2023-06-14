@@ -40,52 +40,161 @@ if ($_SESSION['user']->user_role == 0) {
     <main>
         <?php
         $product = new Product(null, null, null, null, null, null, null);
-        $result = $product->returnAllProducts($bdd);
-        // var_dump($result);
+        $result_products = $product->returnAllProducts($bdd);
+
+        $category = new Category(null, null, null);
+        $result_cat = $category->returnAllCategories($bdd);
+
+        $user = new User(null, null, null, null, null, null);
+        $result_users = $user->returnAllUser($bdd);
+        // var_dump($result_users);
         // echo $_SESSION['test'];
         ?>
         <section id="container">
 
-            <div id="addItem">
-                <h3>Ajouter un Produit</h3>
+            <div class="allShowButtons">
+                <ul>
+                    <li><button id="showProducts">Produits</button></li>
+                    <li> <button id="showCategories">Catégories</button></li>
+                    <li><button id="showUsers">Utilisateurs</button></li>
+                </ul>
+            </div>
+            <section class="containerStats">
+                <div class="stats">
+                    <div class="cardStat">
+                        <p><i class="fa-solid fa-users"></i></p>
+                        <p id="countUser">0</p>
+                        <p>Nombres d'utilisateurs</p>
 
-                <form action="" method="post" id="formAddItem" enctype="multipart/form-data">
-                    <label for="nameItem">Name</label>
-                    <input type="text" id="nameItem" name="nameItem">
-
-                    <div class="inputDiv">
-                        <div>
-                            <label for="priceItem">Price</label>
-                            <input type="text" id="priceItem" name="priceItem">
-                        </div>
-                        <div>
-                            <label for="stockItem">Stock</label>
-                            <input type="number" id="stockItem" name="stockItem" value="500">
-                        </div>
-                        <div>
-                            <label for="categoryItem">Category</label>
-                            <input type="number" id="categoryItem" name="categoryItem">
-                        </div>
+                    </div>
+                    <div class="cardStat">
+                        <p><i class="fa-solid fa-cubes"></i></p>
+                        <p id="countProduct">0</p>
+                        <p>Nombres de produits</p>
+                    </div>
+                    <div class="cardStat">
+                        <p><i class="fa-solid fa-truck-fast"></i></p>
+                        <p id="countOrder">0</p>
+                        <p>Nombres de commandes</p>
+                    </div>
+                    <div class="cardStat">
+                        <p><i class="fa-solid fa-credit-card"></i></p>
+                        <p id="avgOrder">0</p>
+                        <p>Paniers moyen</p>
+                    </div>
+                    <div class="cardStat">
+                        <p><i class="fa-solid fa-sack-dollar"></i></p>
+                        <p id="salesRevenues">0</p>
+                        <p>Chiffres d'affaires</p>
                     </div>
 
-                    <label for="descriptionItem">Description</label>
-                    <textarea name="descriptionItem" id="descriptionItem"></textarea>
-                    <!-- <input type="text" id="descriptionItem" name="descriptionItem"> -->
-
-                    <label for="file">Image</label>
-                    <input type="file" id="file" name="file">
-
-                    <input type="submit" name="buttonAddItem" value="Ajouter">
-                </form>
-                <div class="formEdit">
-                    <p>OU</p>
-                    <button id="test">Modifier un Produit</button>
                 </div>
+                <div class="FormForAdd">
+                    <!-- AJOUTER DES PRODUITS -->
+                    <div id="addItem">
+                        <h3>Ajouter un Produit</h3>
 
+                        <form action="" method="post" id="formProduct" enctype="multipart/form-data">
+                            <label for="nameItem">Name</label>
+                            <input type="text" id="nameItem" name="nameItem">
+
+                            <div class="inputDiv">
+                                <div>
+                                    <label for="priceItem">Price</label>
+                                    <input type="text" id="priceItem" name="priceItem">
+                                </div>
+                                <div>
+                                    <label for="stockItem">Stock</label>
+                                    <input type="number" id="stockItem" name="stockItem">
+                                </div>
+                                <div>
+                                    <label for="categoryItem">Category</label>
+                                    <input type="number" id="categoryItem" name="categoryItem">
+                                </div>
+                            </div>
+
+                            <label for="descriptionItem">Description</label>
+                            <textarea name="descriptionItem" id="descriptionItem"></textarea>
+                            <!-- <input type="text" id="descriptionItem" name="descriptionItem"> -->
+
+                            <label for="file">Image</label>
+                            <input type="file" id="file" name="file">
+
+                            <p id="message"></p>
+                            <input type="submit" name="buttonAddItem" value="Ajouter">
+                        </form>
+                    </div>
+
+
+                    <div id="addCategory">
+                        <!-- Formulaire pour AJOUTER une catégorie -->
+                        <h3>Ajouter une Categorie</h3>
+                        <form action="" method="post" id="formAddCategory">
+                            <label for="nameCategory">Name</label>
+                            <input type="text" name="nameCategory" id="nameCategory">
+                            <label for="idParent">ID parent</label>
+                            <input type="number" name="idParent" id="idParent">
+                            <input type="submit" name="buttonAddCategory" value="Ajouter">
+                        </form>
+
+                    </div>
+
+                    <div id="listUsers">
+                        <!-- Formulaire pour AJOUTER une catégorie -->
+                        <h3>Liste des Utilisateurs</h3>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIV POUR AFFICHER LES CATEGORIES -->
+            <div class="tableCategories">
+                <div class="closeCategories"><button id="hideCategories">Fermer le tableau</button></div>
+                <table id="categories">
+                    <thead>
+                        <tr>
+                            <th id="IDCategories">ID</th>
+                            <th id="NameCategories">Name</th>
+                            <th id="IDParentCategories">ID Parent</th>
+                            <!-- <th id="PrixProduct">Prix</th>
+                            <th id="StockProduct">Stock</th>
+                            <th id="IDCategoryProduct">ID Cat</th> -->
+                            <th id="EditCategories">Edit</th>
+                            <th id="DeleteCategories">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($result_cat as $key_cat) { ?>
+                            <tr>
+                                <td><?= $key_cat->id ?></td>
+                                <td><?= $key_cat->name ?></td>
+                                <td><?= $key_cat->id_parent ?></td>
+
+                                <td>
+                                    <button type="button" name="editCategories<?= $key_cat->id ?>"><a href="./user/modifyCategories.php?<?= $key_cat->id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                </td>
+                                <td>
+                                    <form action="" method="POST">
+                                        <button type="submit" name="deleteCategories<?= $key_cat->id ?>" id="<?= $key_cat->id ?>"><i class="fa-solid fa-trash-can"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        <?php
+                            if (isset($_POST['deleteCategories' . $key_cat->id])) {
+                                $category->setId($key_cat->id);
+                                // $delete = $category->deleteCategory($bdd);
+                                // header('Location: admin.php');
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
+
             <!-- DIV POUR AFFICHER LMES PRODUITS -->
             <div class="tableProducts">
-                <div class="closeProduct"><button id="close">Fermer le tableau</button></div>
+                <div class="closeProduct"><button id="hideProducts">Fermer le tableau</button></div>
                 <table id="products">
                     <thead>
                         <tr>
@@ -100,31 +209,29 @@ if ($_SESSION['user']->user_role == 0) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($result as $key) { ?>
+                        <?php foreach ($result_products as $key_product) { ?>
                             <tr>
-                                <td><?= $key->product_id ?></td>
-                                <td><?= $key->product_name ?></td>
-                                <td><?= $key->product_date ?></td>
-                                <td><?= $key->product_price ?></td>
-                                <td><?= $key->product_stock ?></td>
-                                <td><?= $key->id_category ?></td>
+                                <td><?= $key_product->product_id ?></td>
+                                <td><?= $key_product->product_name ?></td>
+                                <td><?= $key_product->product_date ?></td>
+                                <td><?= $key_product->product_price ?></td>
+                                <td><?= $key_product->product_stock ?></td>
+                                <td><?= $key_product->id_category ?></td>
                                 <td>
-                                    <button type="button" name="editProduct<?= $key->product_id ?>"><a href="./user/modifyProduct.php?<?= $key->product_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                    <button type="button" name="editProduct<?= $key_product->product_id ?>"><a href="./user/modifyProduct.php?<?= $key_product->product_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
                                 <td>
                                     <form action="" method="POST">
-                                        <button type="submit" name="deleteProduct<?= $key->product_id ?>" id="<?= $key->product_id ?>"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="submit" name="deleteProduct<?= $key_product->product_id ?>" id="<?= $key_product->product_id ?>"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
                                 </td>
                             </tr>
 
                         <?php
-                            if (isset($_POST['deleteProduct' . $key->product_id])) {
-                                $product->setId($key->product_id);
-                                // $ok = $product->deleteProduct($bdd);
-                                var_dump($ok);
-                                header('Location: admin.php');
-                                // $_SESSION['test'] = $_POST['deleteProduct' . $key->product_id];
+                            if (isset($_POST['deleteProduct' . $key_product->product_id])) {
+                                $product->setId($key_product->product_id);
+                                // $delete = $product->deleteProduct($bdd);
+                                // header('Location: admin.php');
                             }
                         }
                         ?>
@@ -132,6 +239,62 @@ if ($_SESSION['user']->user_role == 0) {
                 </table>
             </div>
 
+            <!-- DIV POUR AFFICHER LES UTILISATEURS -->
+            <div class="tableUsers">
+                <div class="closeUsers"><button id="hideUsers">Fermer le tableau</button></div>
+                <table id="users">
+                    <thead>
+                        <tr>
+                            <th id="IDUsers">ID</th>
+                            <th id="EmailUsers">Email</th>
+                            <th id="LastnameUsers">Lastname</th>
+                            <th id="FirstnameUsers">Firstname</th>
+                            <th id="RoleUsers">Role</th>
+                            <th id="EditCategories">Edit</th>
+                            <th id="DeleteCategories">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($result_users as $key_user) { ?>
+                            <tr>
+                                <td><?= $key_user->user_id ?></td>
+                                <td><?= $key_user->user_email ?></td>
+                                <td><?= $key_user->user_lastname ?></td>
+                                <td><?= $key_user->user_firstname ?></td>
+                                <td>
+                                    <?php
+                                    if ($key_user->user_role == 2) {
+                                        echo 'Admin';
+                                    } else if ($key_user->user_role == 1) {
+                                        echo "Modo";
+                                    } else {
+                                        echo 'Membre';
+                                    }
+
+                                    ?>
+                                </td>
+
+                                <td>
+                                    <button type="button" name="editUser<?= $key_user->user_id ?>"><a href="./user/modifyUser.php?<?= $key_user->user_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                </td>
+                                <td>
+                                    <form action="" method="POST">
+                                        <button type="submit" name="deleteUser<?= $key_user->user_id ?>" id="<?= $key_user->user_id ?>"><i class="fa-solid fa-trash-can"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        <?php
+                            if (isset($_POST['deleteUser' . $key_user->user_id])) {
+                                $user->setId($key_user->user_id);
+                                // $delete = $user->deleteUserByID($bdd);
+                                // header('Location: admin.php');
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 </body>

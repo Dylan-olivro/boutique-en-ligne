@@ -9,8 +9,89 @@ main {
 #container {
   padding: 1%;
   width: 100%;
+  display: flex;
 }
-#addItem {
+/* -------------------LIST BUTTON -------------------- */
+.allShowButtons {
+  width: 13%;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  height: 200px;
+  align-items: center;
+}
+.allShowButtons ul {
+  padding-left: 1%;
+  list-style-type: none;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 80%;
+}
+.allShowButtons li {
+  background-color: green;
+  border: 1px solid black;
+  width: 100%;
+  text-align: center;
+}
+
+#showProducts,
+#showCategories,
+#showUsers {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+}
+#showProducts:hover,
+#showCategories:hover,
+#showUsers:hover {
+  background-color: #000;
+  color: #fff;
+}
+/* ----------------- STATS  ------------------------- */
+.containerStats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 87%;
+}
+.stats {
+  width: 95%;
+  background-color: #04aa6d;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1%;
+  flex-wrap: wrap;
+}
+.cardStat {
+  background-color: aqua;
+  border-radius: 10px;
+  width: 220px;
+  padding: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.cardStat i {
+  font-size: 2em;
+}
+.cardStat > p:nth-child(2) {
+  font-size: 1.5em;
+}
+.cardStat div p {
+  /* padding-left: 10%; */
+}
+/* -------------------LIST FORM -------------------- */
+.FormForAdd {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#addItem,
+#addCategory,
+#listUsers {
   background-color: green;
   padding: 1%;
   border-radius: 10px;
@@ -19,7 +100,8 @@ main {
   flex-direction: column;
   align-items: center;
 }
-#formAddItem {
+#formAddItem,
+#formAddCategory {
   background-color: red;
   display: flex;
   flex-direction: column;
@@ -41,54 +123,75 @@ main {
   resize: none;
   height: 100px;
 }
-.formEdit {
+.formEdit,
+.formCat {
   width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.tableProducts {
+/* ------------------- PANEL -------------------- */
+
+.tableProducts,
+.tableCategories,
+.tableUsers {
   display: none;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 600px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  width: 70%;
 }
 
-#products {
+#products,
+#categories,
+#users {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
 #products td,
-#products th {
+#products th,
+#categories td,
+#categories th,
+#users td,
+#users th {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
 }
-#products tr {
+#products tr,
+#categories tr,
+#users tr {
   background-color: #f2f2f2;
 }
 /* #products tr:nth-child(even) {
   background-color: #f2f2f2;
 } */
 
-#products tr:hover {
+#products tr:hover,
+#categories tr:hover,
+#users tr:hover {
   background-color: #ddd;
 }
 
-#products th {
+#products th,
+#categories th,
+#users th {
   padding-top: 12px;
   padding-bottom: 12px;
   background-color: #04aa6d;
   color: white;
 }
 
-#IDProduct {
+#IDProduct,
+#EditProduct,
+#DeleteProduct,
+#IDCategoryProduct {
   width: 5%;
 }
 #NameProduct {
@@ -97,29 +200,23 @@ main {
 #DateProduct {
   width: 15%;
 }
-#PrixProduct {
-  width: 10%;
-}
+#PrixProduct,
 #StockProduct {
   width: 10%;
 }
-#IDCategoryProduct {
-  width: 5%;
-}
-#EditProduct {
-  width: 5%;
-}
-#DeleteProduct {
-  width: 5%;
-}
-.closeProduct {
+
+.closeProduct,
+.closeCategories,
+.closeUsers {
   width: 100%;
   display: flex;
   justify-content: center;
   background-color: #04aa6d;
   padding: 1%;
 }
-#close {
+#hideProducts,
+#hideCategories,
+#hideUsers {
   background-color: transparent;
   border: none;
   text-decoration: underline;
