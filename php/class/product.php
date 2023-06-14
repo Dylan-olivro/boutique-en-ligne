@@ -20,20 +20,25 @@ class Product
 
     public function addProduct($bdd)
     {
+        $name = trim($this->name);
+        $price = trim($this->price);
+        $stock = trim($this->stock);
+        $description = trim($this->description);
+
         $insertProduct = $bdd->prepare("INSERT INTO products (product_name, product_description, product_date, product_price, product_stock) VALUES(:product_name,:product_description,:product_date,:product_price,:product_stock)");
         $insertProduct->execute([
-            'product_name' => $this->name,
-            'product_description' => $this->description,
+            'product_name' => $name,
+            'product_description' => $description,
             'product_date' => $this->date,
-            'product_price' => $this->price,
-            'product_stock' => $this->stock
+            'product_price' => $price,
+            'product_stock' => $stock
         ]);
     }
     public function deleteProduct($bdd)
     {
         $deleteProduct = $bdd->prepare('DELETE FROM products WHERE product_id = :product_id');
         $deleteProduct->execute(['product_id' => $this->id]);
-        header('Location: admin.php');
+        // header('Location: admin.php');
     }
     public function editProduct($bdd)
     {
@@ -47,7 +52,7 @@ class Product
         ]);
         header('Location: admin.php');
     }
-    public function returnProducts($bdd)
+    public function returnAllProducts($bdd)
     {
         $returnProducts = $bdd->prepare('SELECT * FROM products INNER JOIN liaison_items_category ON products.product_id = liaison_items_category.id_item');
         $returnProducts->execute();

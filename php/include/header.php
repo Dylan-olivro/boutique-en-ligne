@@ -77,15 +77,15 @@ function includeHeader($bdd, $index, $url, $image)
             <div class="categoriesUlDiv" id="categoriesUlDiv">
                 <ul class="categoriesUl">
                     <li class="">
-                    <a href="<?= $url ?>itemFilter.php" class="">Tous les produits</a>
-                </li>
+                        <a href="<?= $url ?>itemFilter.php" class="">Tous les produits</a>
+                    </li>
                     <?php
                     foreach ($resultCategoryParent as $key) {
                         // var_dump($key['name']);                                
                     ?>
                         <li class="dropdown" id="">
                             <a class="" href="<?= $url ?>itemFilter.php?categoryParent=<?= $key->id ?>" role="button" data-bs-toggle="" aria-expanded="false">
-                                <?= hd($key->name); ?>
+                                <?= htmlspecialchars($key->name); ?>
                             </a>
                             <span class="chevronRight" id="">
                                 <i class="fa-solid fa-circle-chevron-right"></i>
@@ -101,7 +101,7 @@ function includeHeader($bdd, $index, $url, $image)
                                 $resultCategoryChild = $returnCategoryChild->fetchAll(PDO::FETCH_OBJ);
                                 foreach ($resultCategoryChild as $key2) {
                                 ?>
-                                    <li><a class="" href="<?= $url ?>itemFilter.php?subCategory=<?= $key2->id ?>"><?= hd($key2->name); ?></a>
+                                    <li><a class="" href="<?= $url ?>itemFilter.php?subCategory=<?= $key2->id ?>"><?= htmlspecialchars($key2->name); ?></a>
                                     </li>
                                 <?php
                                 }

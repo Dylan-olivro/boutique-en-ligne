@@ -1,81 +1,131 @@
-const container = document.getElementById("container");
+// * Tout les Boutons SHOW
+let showProducts = document.getElementById("showProducts");
+let showCategories = document.getElementById("showCategories");
+let showUsers = document.getElementById("showUsers");
+// * Tout les Boutons HIDE
+let hideProducts = document.getElementById("hideProducts");
+let hideCategories = document.getElementById("hideCategories");
+let hideUsers = document.getElementById("hideUsers");
+// * Tout les Tableaux
+let tableProducts = document.querySelector(".tableProducts");
+let tableCategories = document.querySelector(".tableCategories");
+let tableUsers = document.querySelector(".tableUsers");
 
-const titleUser = document.getElementById("titleUser");
-const titleItem = document.getElementById("titleItem");
-const titleCategory = document.getElementById("titleCategory");
-
-const divUser = document.getElementById("divUser");
-const divItem = document.getElementById("divItem");
-const divCategory = document.getElementById("divCategory");
-
-const formItem = document.getElementById("formItem");
-const formUser = document.getElementById("formUser");
-
-const price = document.getElementById("price");
-
-// ! AJOUTER TOUTES LES CONDITIONS POUR LE FORM DES ITEMS
-
-let url = window.location.href;
-console.log(url);
-// console.log(divCategory);
-
-// const stateObj = { foo: "bar" };
-// window.history.replaceState(stateObj, "user", "admin.php?page=user");
-
-divItem.style.display = "none";
-divCategory.style.display = "none";
-
-titleUser.addEventListener("click", () => {
-  //   const stateObj = { foo: "bar" };
-  //   window.history.replaceState(stateObj, "user", "admin.php?page=user");
-
-  divUser.style.display = "block";
-  divItem.style.display = "none";
-  divCategory.style.display = "none";
+// * HIDE and SHOW Products
+showProducts.addEventListener("click", () => {
+  tableProducts.style.display = "block";
+  tableCategories.style.display = "none";
+  tableUsers.style.display = "none";
+});
+hideProducts.addEventListener("click", () => {
+  tableProducts.style.display = "none";
 });
 
-titleItem.addEventListener("click", () => {
-  //   const stateObj = { foo: "bar" };
-  //   window.history.replaceState(stateObj, "item", "admin.php?page=item");
-
-  divUser.style.display = "none";
-  divItem.style.display = "block";
-  divCategory.style.display = "none";
+// * HIDE and SHOW Categories
+showCategories.addEventListener("click", () => {
+  tableCategories.style.display = "block";
+  tableProducts.style.display = "none";
+  tableUsers.style.display = "none";
+});
+hideCategories.addEventListener("click", () => {
+  tableCategories.style.display = "none";
 });
 
-titleCategory.addEventListener("click", () => {
-  //   const stateObj = { foo: "bar" };
-  //   window.history.replaceState(stateObj, "category", "admin.php?page=category");
-
-  divUser.style.display = "none";
-  divItem.style.display = "none";
-  divCategory.style.display = "block";
+// * HIDE and SHOW Users
+showUsers.addEventListener("click", () => {
+  tableUsers.style.display = "block";
+  tableProducts.style.display = "none";
+  tableCategories.style.display = "none";
+});
+hideUsers.addEventListener("click", () => {
+  tableUsers.style.display = "none";
 });
 
-// formUser.addEventListener("submit", () => {
-//   const stateObj = { foo: "bar" };
-//   window.history.replaceState(stateObj, "item", "admin.php?page=item");
+// * STATS
+let countUser = document.getElementById("countUser");
+let countProduct = document.getElementById("countProduct");
+let countOrder = document.getElementById("countOrder");
+let avgOrder = document.getElementById("avgOrder");
+let salesRevenues = document.getElementById("salesRevenues");
 
-//   window.location = "boutique-en-ligne/php/admin.php?page=item";
-// });
-const inputNumber = document.getElementById("number");
-// console.log(formNumber);
-// console.log(inputNumber);
+setInterval(() => {
+  fetchCount("product", countProduct, 1);
+  fetchCount("user", countUser, 1);
+  fetchCount("order", countOrder, 1);
+  fetchCount("orderAverage", avgOrder, 2);
+  fetchCount("salesRevenues", salesRevenues, 3);
+}, 1000);
 
-function isNumber() {
-  if (price.value == "") {
-    console.log("Empty email field");
-    return false;
-  } else if (allNumber(price) == false) {
-    console.log("Veuillez rentrer des chiffres");
-    return false;
-  } else {
-    return true;
-  }
+function fetchCount(table, countDiv, sql) {
+  fetch(`traitement/traitement_stats.php?${table}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (sql == 1) {
+        countDiv.innerText = data[0].nb;
+      } else if (sql == 2) {
+        let res = Math.round(data[0].avg * 100) / 100;
+        countDiv.innerText = `${res}€`;
+      } else if (sql == 3) {
+        countDiv.innerText = `${data[0].sum}€`;
+      }
+    });
 }
 
-formItem.addEventListener("submit", (e) => {
-  if (isNumber() == false) {
-    e.preventDefault();
-  }
+const formProduct = document.querySelector("#formProduct");
+const message = document.querySelector("#message");
+
+formProduct.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(formProduct);
+  const data = Object.fromEntries(formData);
+
+  fetch("traitement/traitement_addProduct.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      // message.style.color = "";
+      if (data.PRODUCT_ERROR) {
+        //   // message.style.display = "flex";
+        message.innerHTML = data.PRODUCT_ERROR;
+      } else {
+        //   // message.style.display = "flex";
+        message.style.color = "blue";
+        message.innerHTML = data.PRODUCT_SUCCES;
+        formProduct.reset();
+      }
+    })
+    .catch((error) => console.log(error));
 });
+//   fetch(`./stats.php?product`)
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .then((data) => {
+//       countProduct.innerText = data[0].nb;
+//       return fetch(`./stats.php?user`)
+//         .then((response) => {
+//           return response.json();
+//         })
+//         .then((userData) => {
+//           countUser.innerText = userData[0].nb;
+//           console.log(userData);
+//           return fetch(`./stats.php?order`)
+//             .then((response) => {
+//               return response.json();
+//             })
+//             .then((orderData) => {
+//               countOrder.innerText = orderData[0].nb;
+//             });
+//         });
+//     });
