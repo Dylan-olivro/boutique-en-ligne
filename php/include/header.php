@@ -21,58 +21,60 @@ function includeHeader($bdd, $index, $url, $image)
 
 ?>
     <header id="allHeader">
-        <div class="sectionNav">
-            <nav class="navTop">
-                <div class="logo">
-                    <a href="<?= $index ?>index.php"><i class="fa-solid fa-computer" style="color: #000000;"></i></a>
-                </div>
-                <div class="searchBarDiv">
-                    <form action="" method="get" role="search">
-                        <input type="text" id="searchBar" name="searchBar" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
-                        <div id="searchResultsDesktopDiv">
-                        </div>
-                    </form>
-                </div>
-                <div class="iconNavDiv">
-                    <span class="userIcon">
-                        <i class="fa-solid fa-user"></i>
-                        <div class="userLink">
-                            <?php
-                            if (isset($_SESSION['user'])) { ?>
-                                <a href="<?= $url ?>profil.php">Profil</a>
-                                <a href="<?= $url ?>cartPage.php">Panier</a>
-                                <?php if (intval($_SESSION['user']->user_role) !== 0) { ?>
-                                    <a href="<?= $url ?>admin.php">Admin</a>
-                                <?php } ?>
-                                <a href="<?= $url ?>disconnect.php">Disconnect</a>
-                            <?php } else { ?>
-                                <a href="<?= $url ?>connect.php">Connect</a>
-                                <a href="<?= $url ?>register.php">Register</a>
-                            <?php } ?>
-                        </div>
-                    </span>
-                    <a href="<?= $url ?>cartPage.php">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                    <span id="darkMode"><i class="fa-regular fa-moon"></i></span>
-                    <!-- <span><i class="fa-regular fa-sun"></i></span> -->
-                    <div class="iconBurger" onclick="burger(this)">
-                        <div class="bar1"></div>
-                        <div class="bar2"></div>
-                        <div class="bar3"></div>
+        <div class="sectionNav" id="sectionNav">
+        <nav class="navTop">
+            <div class="logo">
+                <a href="<?= $index ?>index.php"><i class="fa-solid fa-computer" style="color: #000000;"></i></a>
+            </div>
+            <div class="searchBarDiv">
+                <form action="" method="get" role="search">
+                    <input type="text" id="searchBar" name="searchBar" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
+                    <div id="searchResultsDesktopDiv">
                     </div>
+                </form>
+            </div>
+            <div class="iconNavDiv">
+                <span class="userIcon">
+                    <i class="fa-solid fa-user"></i>
+                    <div class="userLink">
+                        <?php
+                        if (isset($_SESSION['user'])) { ?>
+                            <a href="<?= $url ?>profil.php">Profil</a>
+                            <a href="<?= $url ?>cartPage.php">Panier</a>
+                            <?php if (intval($_SESSION['user']->user_role) !== 0) { ?>
+                                <a href="<?= $url ?>admin.php">Admin</a>
+                            <?php } ?>
+                            <a href="<?= $url ?>disconnect.php">Disconnect</a>
+                        <?php } else { ?>
+                            <a href="<?= $url ?>connect.php">Connect</a>
+                            <a href="<?= $url ?>register.php">Register</a>
+                        <?php } ?>
+                    </div>
+                </span>
+                <a href="<?= $url ?>cartPage.php">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                <span id="darkMode" onclick="themeToggle()"><i class="fa-regular fa-moon" id="darkModeIcon"></i></span>
+                <!-- <span><i class="fa-regular fa-sun"></i></span> -->
+                <div class="iconBurger" onclick="burger(this)">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
                 </div>
-            </nav>
-        </div>
-        <nav class="categoriesNav">
-            <form method="get" class="searchBarBurgerForm" role="search">
-                <input class="" id="searchBarBurger" name="searchBarBurger" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
-                <div id="searchResultsBurgerDiv">
-                    <div id="searchResultsBurger"></div>
-                </div>
-            </form>
+            </div>
+        </nav>
+    </div>
+        <nav class="categoriesNav" id="categoriesNav">
+            <div class="searchBarBurgerDiv" id="searchBarBurgerDiv">
+                <form method="get" class="searchBarBurgerForm" role="search">
+                    <input class="" id="searchBarBurger" name="searchBarBurger" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
+                    <div id="searchResultsBurgerDiv">
+                        <div id="searchResultsBurger"></div>
+                    </div>
+                </form>
+            </div>
 
-            <div class="navCategories" id="navCategories">
+            <div class="categoriesUlDiv" id="categoriesUlDiv">
                 <ul class="categoriesUl">
                     <li class="">
                         <a href="<?= $url ?>itemFilter.php" class="">Tous les produits</a>
@@ -111,7 +113,6 @@ function includeHeader($bdd, $index, $url, $image)
                     ?>
                 </ul>
             </div>
-
         </nav>
     </header>
 <?php
