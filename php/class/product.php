@@ -33,7 +33,7 @@ class Product
     {
         $deleteProduct = $bdd->prepare('DELETE FROM products WHERE product_id = :product_id');
         $deleteProduct->execute(['product_id' => $this->id]);
-        header('Location: admin.php');
+        // header('Location: admin.php');
     }
     public function editProduct($bdd)
     {
@@ -47,7 +47,7 @@ class Product
         ]);
         header('Location: admin.php');
     }
-    public function returnProducts($bdd)
+    public function returnAllProducts($bdd)
     {
         $returnProducts = $bdd->prepare('SELECT * FROM products INNER JOIN liaison_items_category ON products.product_id = liaison_items_category.id_item');
         $returnProducts->execute();

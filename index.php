@@ -27,7 +27,7 @@
 
     <?php require_once('./php/include/header.php') ?>
     <?php 
-    // require_once('./php/include/header-save.php') ?>
+    require_once('./php/include/header-save.php') ?>
     <?php
 
     // Requête qui permet de récupérer les ID des produits les plus vendus
