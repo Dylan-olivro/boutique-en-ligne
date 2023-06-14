@@ -21,7 +21,7 @@ function includeHeader($bdd, $index, $url, $image)
 
 ?>
     <header id="allHeader">
-        <div class="sectionNav">
+        <div class="sectionNav" id="sectionNav">
         <nav class="navTop">
             <div class="logo">
                 <a href="<?= $index ?>index.php"><i class="fa-solid fa-computer" style="color: #000000;"></i></a>
@@ -54,7 +54,7 @@ function includeHeader($bdd, $index, $url, $image)
                 <a href="<?= $url ?>cartPage.php">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </a>
-                <span id="darkMode"><i class="fa-regular fa-moon"></i></span>
+                <span id="darkMode" onclick="themeToggle()"><i class="fa-regular fa-moon" id="darkModeIcon"></i></span>
                 <!-- <span><i class="fa-regular fa-sun"></i></span> -->
                 <div class="iconBurger" onclick="burger(this)">
                     <div class="bar1"></div>
@@ -64,15 +64,17 @@ function includeHeader($bdd, $index, $url, $image)
             </div>
         </nav>
     </div>
-        <nav class="categoriesNav">
-            <form method="get" class="searchBarBurgerForm" role="search">
-                <input class="" id="searchBarBurger" name="searchBarBurger" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
-                <div id="searchResultsBurgerDiv">
-                    <div id="searchResultsBurger"></div>
-                </div>
-            </form>
+        <nav class="categoriesNav" id="categoriesNav">
+            <div class="searchBarBurgerDiv" id="searchBarBurgerDiv">
+                <form method="get" class="searchBarBurgerForm" role="search">
+                    <input class="" id="searchBarBurger" name="searchBarBurger" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
+                    <div id="searchResultsBurgerDiv">
+                        <div id="searchResultsBurger"></div>
+                    </div>
+                </form>
+            </div>
 
-            <div class="navCategories" id="navCategories">
+            <div class="categoriesUlDiv" id="categoriesUlDiv">
                 <ul class="categoriesUl">
                     <li class="">
                     <a href="<?= $url ?>itemFilter.php" class="">Tous les produits</a>
@@ -111,7 +113,6 @@ function includeHeader($bdd, $index, $url, $image)
                     ?>
                 </ul>
             </div>
-
         </nav>
     </header>
 <?php
