@@ -1,14 +1,15 @@
 let searchResultsInput = document.getElementById("searchBar"); //le input desktop
-let categoriesUlDiv = document.getElementById("categoriesUlDiv"); 
-let sectionNav = document.getElementById("sectionNav"); 
+let categoriesUlDiv = document.getElementById("categoriesUlDiv");
+let sectionNav = document.getElementById("sectionNav");
 let searchBarBurgerDiv = document.getElementById("searchBarBurgerDiv"); //le input desktop
 let searchInputBurger = document.getElementById("searchBarBurger"); //le input dans le burger
-// let categoriesNav = document.getElementById("categoriesNav"); 
+// let categoriesNav = document.getElementById("categoriesNav");
 let searchResultsDesktopDiv = document.getElementById(
   "searchResultsDesktopDiv"
 ); //la div globale
 let searchResultsBurgerDiv = document.getElementById("searchResultsBurgerDiv"); //la div globale
 // let searchResults = document.getElementById("searchResultsDesktop"); //la div des résultats
+// console.log(document.body.clientWidth);
 
 // if (searchResultsInput) {
 searchResultsInput.addEventListener("keyup", () => {
@@ -94,72 +95,76 @@ window.addEventListener("click", function (e) {
   }
 });
 
-// * autocomplétion concernant le burger
-searchInputBurger.addEventListener("keyup", () => {
-  searchResultsBurgerDiv.innerHTML = "";
-  if (searchInputBurger.value == "") {
-    searchResultsBurgerDiv.style.display = "none";
-    categoriesUlDiv.style.display = "block";
+// window.addEventListener("resize", () => {
+  // * autocomplétion concernant le burger
+  if (document.body.clientWidth <= 768) {
+    console.log(document.body.clientWidth);
+    searchInputBurger.addEventListener("keyup", () => {
+      console.log('keyup');
+      searchResultsBurgerDiv.innerHTML = "";
+      if (searchInputBurger.value == "") {
+        searchResultsBurgerDiv.style.display = "none";
+        categoriesUlDiv.style.display = "block";
+      } else {
+        categoriesUlDiv.style.display = "none";
+        searchResultsBurgerDiv.style.display = "block";
+        categoriesNav.style.position = "absolute";
+        searchBarBurgerDiv.classList.add("searchBarBurgerDivChecked");
+        fetch(
+          `./${getPage()[0]}autocompletion.php/?search=${
+            searchInputBurger.value
+          }`
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            // console.log(data);
+            if (data.length == 0) {
+              let noResult = document.createElement("p");
+              noResult.innerText = "Aucun résultat trouvé";
+              searchResultsBurgerDiv.append(noResult);
+            }
+            data.forEach((element) => {
+              let resultsDiv = document.createElement("div");
+              let resultsImgDiv = document.createElement("div");
+              let resultsNameDescDiv = document.createElement("div");
+              // let resultsDescDiv = document.createElement("div");
+              let resultsImg = document.createElement("img");
+              let resultsName = document.createElement("p");
+              let resultsDesc = document.createElement("p");
+              let resultsLink = document.createElement("a");
+
+              resultsDiv.className = "resultsDiv";
+              resultsImgDiv.className = "resultsImgDiv";
+              resultsNameDescDiv.className = "resultsNameDiv";
+              // resultsDescDiv.className = "resultsDescDiv";
+              resultsImg.className = "resultsImg";
+              resultsName.className = "resultsName";
+              resultsDesc.className = "resultsDesc";
+              resultsLink.className = "resultsLink";
+
+              resultsImg.src =
+                `.${getPage()[1]}/assets/img_item/` + element.image_name;
+              resultsName.innerText = element.product_name;
+              resultsDesc.innerText = element.product_description;
+              resultsLink.href = `./${getPage()[0]}detail.php?id=${
+                element.product_id
+              }`;
+
+              if (searchResultsBurgerDiv.children.length < 5) {
+                resultsImgDiv.append(resultsImg);
+                resultsNameDescDiv.append(resultsName, resultsDesc);
+                resultsDiv.append(resultsImgDiv, resultsNameDescDiv);
+                resultsLink.append(resultsDiv);
+                searchResultsBurgerDiv.append(resultsLink);
+              }
+            });
+          });
+      }
+    });
   } else {
-    categoriesUlDiv.style.display = "none";
-    searchResultsBurgerDiv.style.display = "block";
-    categoriesNav.style.position = "absolute";
-    searchBarBurgerDiv.classList.add("searchBarBurgerDivChecked");
-    fetch(
-      `./${getPage()[0]}autocompletion.php/?search=${searchInputBurger.value}`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // console.log(data);
-        if (data.length == 0) {
-          let noResult = document.createElement("p");
-          noResult.innerText = "Aucun résultat trouvé";
-          searchResultsBurgerDiv.append(noResult);
-        }
-        data.forEach((element) => {
-          let resultsDiv = document.createElement("div");
-          let resultsImgDiv = document.createElement("div");
-          let resultsNameDescDiv = document.createElement("div");
-          // let resultsDescDiv = document.createElement("div");
-          let resultsImg = document.createElement("img");
-          let resultsName = document.createElement("p");
-          let resultsDesc = document.createElement("p");
-          let resultsLink = document.createElement("a");
-
-          resultsDiv.className = "resultsDiv";
-          resultsImgDiv.className = "resultsImgDiv";
-          resultsNameDescDiv.className = "resultsNameDiv";
-          // resultsDescDiv.className = "resultsDescDiv";
-          resultsImg.className = "resultsImg";
-          resultsName.className = "resultsName";
-          resultsDesc.className = "resultsDesc";
-          resultsLink.className = "resultsLink";
-
-          resultsImg.src =
-            `.${getPage()[1]}/assets/img_item/` + element.image_name;
-          resultsName.innerText = element.product_name;
-          resultsDesc.innerText = element.product_description;
-          resultsLink.href = `./${getPage()[0]}detail.php?id=${
-            element.product_id
-          }`;
-
-          // for(i=0; i < 5 ; i++){
-          if (searchResultsBurgerDiv.children.length < 5) {
-            resultsImgDiv.append(resultsImg);
-            resultsNameDescDiv.append(resultsName, resultsDesc);
-            resultsDiv.append(resultsImgDiv, resultsNameDescDiv);
-            resultsLink.append(resultsDiv);
-            searchResultsBurgerDiv.append(resultsLink);
-          }
-          // console.log(typeof element);
-          // }
-
-          // let searchResultsP = document.createElement("p");
-          // searchResultsP.innerHTML = 'TEST results';
-          // searchResults.append(searchResultsP);
-        });
-      });
+    searchResultsBurgerDiv.innerHTML = "";
+    categoriesUlDiv.style.display = "";
   }
-});
+// });

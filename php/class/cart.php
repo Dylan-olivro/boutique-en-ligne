@@ -4,12 +4,14 @@ class Cart
     public $id;
     public $user_id;
     public $product_id;
+    public $quantity;
 
-    public function __construct($id, $user_id, $product_id)
+    public function __construct($id, $user_id, $product_id, $quantity)
     {
         $this->id = $id;
         $this->user_id = $user_id;
         $this->product_id = $product_id;
+        $this->quantity = $quantity;
     }
     public function deleteCart($bdd)
     {
@@ -93,4 +95,23 @@ class Cart
 
         return $this;
     }
-}
+    /**
+     * Get the value of product_id
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+    
+    /**
+     * Set the value of product_id
+     *
+     * @return  self
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+        
+        return $this;
+    }
+}   
