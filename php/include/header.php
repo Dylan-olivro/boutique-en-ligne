@@ -24,7 +24,7 @@ function includeHeader($bdd, $index, $url, $image)
         <div class="sectionNav" id="sectionNav">
         <nav class="navTop">
             <div class="logo">
-                <a href="<?= $index ?>index.php"><i class="fa-solid fa-computer" style="color: #000000;"></i></a>
+                <a href="<?= $index ?>index.php"><i class="fa-solid fa-computer"></i></a>
             </div>
             <div class="searchBarDiv">
                 <form action="" method="get" role="search">
@@ -34,13 +34,12 @@ function includeHeader($bdd, $index, $url, $image)
                 </form>
             </div>
             <div class="iconNavDiv">
-                <span class="userIcon">
+                <span class="iconNav userIcon">
                     <i class="fa-solid fa-user"></i>
                     <div class="userLink">
                         <?php
                         if (isset($_SESSION['user'])) { ?>
                             <a href="<?= $url ?>profil.php">Profil</a>
-                            <a href="<?= $url ?>cartPage.php">Panier</a>
                             <?php if (intval($_SESSION['user']->user_role) !== 0) { ?>
                                 <a href="<?= $url ?>admin.php">Admin</a>
                             <?php } ?>
@@ -51,10 +50,12 @@ function includeHeader($bdd, $index, $url, $image)
                         <?php } ?>
                     </div>
                 </span>
-                <a href="<?= $url ?>cartPage.php">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
-                <span id="darkMode" onclick="themeToggle()"><i class="fa-regular fa-moon" id="darkModeIcon"></i></span>
+                <span class="iconNav" >
+                    <a href="<?= $url ?>cartPage.php">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                </span>
+                <span class="iconNav" id="darkMode" onclick="themeToggle()"><i class="fa-regular fa-moon" id="darkModeIcon"></i></span>
                 <!-- <span><i class="fa-regular fa-sun"></i></span> -->
                 <div class="iconBurger" onclick="burger(this)">
                     <div class="bar1"></div>
@@ -91,10 +92,10 @@ function includeHeader($bdd, $index, $url, $image)
                                 <i class="fa-solid fa-circle-chevron-right"></i>
                             </span>
                             <ul class="dropdown-content" id="">
-                                <li class="backToCategories" id="">
-                                    <i class="fa-solid fa-circle-chevron-left"></i>
-                                    Retour
-                                </li>
+                                    <span class="backToCategories" id="">
+                                        <i class="fa-solid fa-circle-chevron-left"></i>
+                                        Retour
+                                    </span>
                                 <?php
                                 $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
                                 $returnCategoryChild->execute([$key->id]);
