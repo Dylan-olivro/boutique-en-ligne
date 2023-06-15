@@ -32,6 +32,10 @@ function isToSmall($a)
     return mb_strlen($a) < 2 ? true : false;
 }
 
+function isLetter($a)
+{
+    return preg_match("/^\pL+([- ']\pL+)*$/u", $a) ? true : false;
+}
 
 // function special_login($login)
 // {
