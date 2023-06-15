@@ -28,7 +28,7 @@ class Image
         $file = $uniqueName . "." . $extension;
 
         if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
-            move_uploaded_file($tmpName, '../assets/img_item/' . $file);
+            move_uploaded_file($tmpName, '../../assets/img_item/' . $file);
 
             $insertImage = $bdd->prepare('INSERT INTO images (product_id, image_name, image_main) VALUES (:product_id,:image_name,:image_main)');
             $insertImage->execute([

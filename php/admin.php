@@ -98,8 +98,8 @@ if ($_SESSION['user']->user_role == 0) {
                                     <input type="number" id="categoryItem" name="categoryItem" autocomplete="off">
                                 </div>
                                 <div class="divInputFile">
-                                    <label for="file">Image</label>
-                                    <input type="file" id="file" name="file">
+                                    <label for="image">Image</label>
+                                    <input type="file" id="image" name="image">
                                 </div>
                             </div>
 
@@ -108,7 +108,7 @@ if ($_SESSION['user']->user_role == 0) {
                             <!-- <input type="text" id="descriptionItem" name="descriptionItem"> -->
 
 
-                            <p id="message"></p>
+                            <p id="messageProduct"></p>
                             <div id="submit">
                                 <input type="submit" name="buttonAddItem" value="Valider">
                             </div>
@@ -119,11 +119,12 @@ if ($_SESSION['user']->user_role == 0) {
                     <div id="addCategory">
                         <!-- Formulaire pour AJOUTER une catégorie -->
                         <h3>Ajouter une Categorie</h3>
-                        <form action="" method="post" id="formAddCategory">
+                        <form action="" method="post" id="formCategories">
                             <label for="nameCategory">Name</label>
                             <input type="text" name="nameCategory" id="nameCategory">
                             <label for="idParent">ID parent</label>
                             <input type="number" name="idParent" id="idParent">
+                            <p id="messageCategories"></p>
                             <input type="submit" name="buttonAddCategory" value="Ajouter">
                         </form>
 

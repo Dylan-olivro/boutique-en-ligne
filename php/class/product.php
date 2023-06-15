@@ -47,6 +47,9 @@ class Product
             $deleteImage->execute(['product_id' => $this->id]);
         }
 
+        $deleteliaisonCategory = $bdd->prepare("DELETE FROM liaison_items_category WHERE id_item = :product_id");
+        $deleteliaisonCategory->execute(['product_id' => $this->id]);
+
         $deleteProduct = $bdd->prepare('DELETE FROM products WHERE product_id = :product_id');
         $deleteProduct->execute(['product_id' => $this->id]);
     }
