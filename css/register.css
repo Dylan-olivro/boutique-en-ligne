@@ -28,6 +28,12 @@
   outline: none;
   height: 35px;
 }
+#registerForm h3 {
+  color: #fff;
+  font-size: 2rem;
+  height: auto;
+  text-align: center;
+}
 label {
   color: white;
   display: flex !important;
@@ -83,4 +89,44 @@ label {
   justify-content: center;
   align-items: center;
   color: white;
+}
+.demande a {
+  color: var(--button-color);
+}
+@media screen and (max-width: 1440px) {
+  .form {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .form {
+    width: 100%;
+  }
+  #registerForm {
+    width: 90%;
+  }
+  #registerForm > * {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .form {
+    width: 100%;
+  }
+  #registerForm {
+    width: 95%;
+  }
+  #registerForm > * {
+    width: 90%;
+  }
+  .demande {
+    flex-direction: column;
+    margin: 5% 0;
+  }
+}
+@media screen and (max-width: 345px) {
+  .demande {
+    flex-direction: column;
+    margin: 5% 0;
+  }
 }

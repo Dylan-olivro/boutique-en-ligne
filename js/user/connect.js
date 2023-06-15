@@ -22,13 +22,10 @@ formEl.addEventListener("submit", (event) => {
     })
     .then((data) => {
       console.log(data);
-      // message.style.color = "";
       if (data.CONNECT_ERROR) {
-        //   // message.style.display = "flex";
-        message.innerHTML = data.erreur;
+        message.innerHTML = data.CONNECT_ERROR;
       } else {
         window.location.href = `${getURL()}index.php`;
-        //   // message.style.display = "flex";
         message.style.color = "green";
         message.innerHTML = data.CONNECT_SUCCES;
         formEl.reset();
