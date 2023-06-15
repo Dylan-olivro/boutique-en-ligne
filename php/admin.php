@@ -144,9 +144,6 @@ if ($_SESSION['user']->user_role == 0) {
                             <th id="IDCategories">ID</th>
                             <th id="NameCategories">Name</th>
                             <th id="IDParentCategories">ID Parent</th>
-                            <!-- <th id="PrixProduct">Prix</th>
-                            <th id="StockProduct">Stock</th>
-                            <th id="IDCategoryProduct">ID Cat</th> -->
                             <th id="EditCategories">Edit</th>
                             <th id="DeleteCategories">Delete</th>
                         </tr>
@@ -154,9 +151,9 @@ if ($_SESSION['user']->user_role == 0) {
                     <tbody>
                         <?php foreach ($result_cat as $key_cat) { ?>
                             <tr>
-                                <td><?= $key_cat->id ?></td>
-                                <td><?= $key_cat->name ?></td>
-                                <td><?= $key_cat->id_parent ?></td>
+                                <td><?= htmlspecialchars($key_cat->id) ?></td>
+                                <td><?= htmlspecialchars($key_cat->name) ?></td>
+                                <td><?= htmlspecialchars($key_cat->id_parent) ?></td>
 
                                 <td>
                                     <button type="button" name="editCategories<?= $key_cat->id ?>"><a href="./user/modifyCategories.php?<?= $key_cat->id ?>"><i class="fa-solid fa-pencil"></i></a></button>
@@ -199,12 +196,12 @@ if ($_SESSION['user']->user_role == 0) {
                     <tbody>
                         <?php foreach ($result_products as $key_product) { ?>
                             <tr>
-                                <td class="product_id"><?= $key_product->product_id ?></td>
-                                <td class="product_name"><?= $key_product->product_name ?></td>
-                                <td class="product_date"><?= $key_product->product_date ?></td>
-                                <td class="product_price"><?= $key_product->product_price ?></td>
-                                <td class="product_stock"><?= $key_product->product_stock ?></td>
-                                <td class="id_category"><?= $key_product->id_category ?></td>
+                                <td class="product_id"><?= htmlspecialchars($key_product->product_id) ?></td>
+                                <td class="product_name"><?= htmlspecialchars($key_product->product_name) ?></td>
+                                <td class="product_date"><?= htmlspecialchars($key_product->product_date) ?></td>
+                                <td class="product_price"><?= htmlspecialchars($key_product->product_price) ?></td>
+                                <td class="product_stock"><?= htmlspecialchars($key_product->product_stock) ?></td>
+                                <td class="id_category"><?= htmlspecialchars($key_product->id_category) ?></td>
                                 <td>
                                     <button type="button" name="editProduct<?= $key_product->product_id ?>"><a href="./user/modifyProduct.php?<?= $key_product->product_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
@@ -245,10 +242,10 @@ if ($_SESSION['user']->user_role == 0) {
                     <tbody>
                         <?php foreach ($result_users as $key_user) { ?>
                             <tr>
-                                <td class="user_id"><?= $key_user->user_id ?></td>
-                                <td class="user_email"><?= $key_user->user_email ?></td>
-                                <td class="user_lastname"><?= $key_user->user_lastname ?></td>
-                                <td class="user_firstname"><?= $key_user->user_firstname ?></td>
+                                <td class="user_id"><?= htmlspecialchars($key_user->user_id) ?></td>
+                                <td class="user_email"><?= htmlspecialchars($key_user->user_email) ?></td>
+                                <td class="user_lastname"><?= htmlspecialchars($key_user->user_lastname) ?></td>
+                                <td class="user_firstname"><?= htmlspecialchars($key_user->user_firstname) ?></td>
                                 <td>
                                     <?php
                                     if ($key_user->user_role == 2) {
@@ -285,6 +282,7 @@ if ($_SESSION['user']->user_role == 0) {
             </div>
         </section>
     </main>
+    <?php require_once('./include/footer.php') ?>
 </body>
 
 </html>

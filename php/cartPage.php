@@ -98,6 +98,7 @@ if (isset($_POST['vider'])) {
                     <div class="banniere">
                         <p>Article</p>
                         <p>Prix</p>
+                        <p>Qté</p>
                         <form action="" method="post">
                             <button type="submit" name="vider" class="vider"><i class="fa-solid fa-trash-can"></i></button>
                         </form>
@@ -123,14 +124,15 @@ if (isset($_POST['vider'])) {
                                     </div>
                                 </div>
                                 <p class="price"><?= htmlspecialchars($product->product_price) ?>€</p>
+                                <p class="quantity"><?= htmlspecialchars($product->cart_quantity) ?></p>
                                 <form action="" method="post">
                                     <button type="submit" name="delete<?= $product->cart_id ?>" id="delete"><i class="fa-solid fa-xmark"></i></button>
                                 </form>
                             </div>
                         <?php
-                            var_dump((int)$product->cart_quantity == 1);
-                            var_dump((int)$product->cart_quantity);
-                            var_dump((int)$product->product_id);
+                            // var_dump((int)$product->cart_quantity == 1);
+                            // var_dump((int)$product->cart_quantity);
+                            // var_dump((int)$product->product_id);
                             // * TEST DELETE PRODUCT
                             if (isset($_POST['delete' . $product->cart_id])) {
                                 if ((int)$product->cart_quantity > 1) {
@@ -161,7 +163,7 @@ if (isset($_POST['vider'])) {
                     } else { ?>
                         <div class="cartVide">
                             <p>Votre panier est vide !</p>
-                            <a href="./itemFilter.php"><button>Découvrez nos pruduits</button></a>
+                            <a href="./itemFilter.php"><button>Découvrez nos produits</button></a>
                         </div>
                     <?php
                     }
@@ -229,7 +231,7 @@ if (isset($_POST['vider'])) {
             </div>
         </section>
     </main>
-
+    <?php require_once('./include/footer.php') ?>
 </body>
 <style>
 
