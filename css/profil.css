@@ -94,6 +94,7 @@ label {
   justify-content: center;
   align-items: center;
   width: 90%;
+  color: var(--button-color);
 }
 
 /* AFFICHAGE ADRESSES */

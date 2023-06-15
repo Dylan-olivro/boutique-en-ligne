@@ -80,18 +80,18 @@ main {
   cursor: pointer;
 }
 
-.logo{
+.logo {
   padding: 7px;
   width: 20%;
 }
-.logo i{
+.logo i {
   color: var(--button-color);
 }
 .iconNav:hover {
   border: 2px solid white;
   border-radius: 20px;
 }
-.iconNav:hover i{
+.iconNav:hover i {
   color: var(--text-input-color);
 }
 
@@ -318,7 +318,6 @@ main {
 }
 
 @media screen and (max-width: 768px) {
-
   .iconBurger,
   .chevronRight,
   .backToCategories,
