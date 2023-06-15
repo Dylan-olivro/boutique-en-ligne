@@ -76,6 +76,7 @@ if (isset($_POST['submit'])) {
             <div class="form">
                 <!-- Formulaire pour AJOUTER un utilisateur -->
                 <form id="registerForm" method="POST">
+                    <h3>Créer ton compte</h3>
                     <label for="email">Email *</label>
                     <input type="" id="email" name="email" class="input" placeholder="Email" autofocus>
                     <label for="firstname">Prénom *</label>

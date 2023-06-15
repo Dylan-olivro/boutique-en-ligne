@@ -33,6 +33,7 @@
 
     <?php require_once('./php/include/header.php') ?>
     <?php
+    var_dump($_SESSION);
     if (isset($_POST['submit'])) {
         var_dump(isLetter($_POST['test']) ? true : false);
     }

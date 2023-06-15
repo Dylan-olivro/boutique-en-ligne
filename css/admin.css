@@ -52,6 +52,7 @@ main {
   border: none;
   background-color: transparent;
   color: #fff;
+  cursor: pointer;
 }
 
 /* ----------------- STATS  ------------------------- */
@@ -106,21 +107,25 @@ main {
   width: 95%;
   display: flex;
   justify-content: space-between;
+  gap: 1%;
 }
 
-#addItem {
+#addItem,
+#addCategory {
   background-color: var(--div-color);
   border: 1px solid var(--border-color);
-  padding: 1%;
+  padding: 1% 1% 2%;
   border-radius: 10px;
   width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#addItem h3 {
+#addItem h3,
+#addCategory h3 {
   color: #fff;
   font-size: 2rem;
+  text-align: center;
 }
 #addCategory {
   width: 30%;
@@ -132,11 +137,13 @@ main {
   flex-direction: column;
   width: 90%;
 }
-#formProduct label {
+#formProduct label,
+#formCategories label {
   color: #fff;
   font-style: italic;
 }
-#formProduct input {
+#formProduct input,
+#formCategories input {
   background-color: var(--input-color);
   color: #fff;
   outline: none;
@@ -168,7 +175,8 @@ main {
   border-style: inset;
   border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
 }
-#messageProduct {
+#messageProduct,
+#messageCategories {
   width: 100%;
   color: #ffa938;
   display: flex;
@@ -177,13 +185,14 @@ main {
   height: 35px;
   margin: 0;
 }
-#submit {
+.submit {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-#submit input {
+.submit input {
   width: 50%;
+  cursor: pointer;
 }
 .formEdit,
 .formCat {
@@ -200,11 +209,11 @@ main {
 .tableUsers {
   display: none;
   position: absolute;
-  /* top: 50%;
-  left: 50%; */
-  top: 2%;
-  left: 22%;
-  /* transform: translate(-50%, -50%); */
+  top: 50%;
+  left: 50%;
+  /* top: 2%;
+  left: 22%; */
+  transform: translate(-50%, -50%);
   height: 600px;
   overflow-y: auto;
   width: 70%;
@@ -293,4 +302,85 @@ tbody button {
 }
 tbody button a {
   color: #000;
+}
+
+@media screen and (max-width: 1024px) {
+  #firstContainer {
+    flex-direction: column;
+  }
+  .allShowButtons {
+    height: auto;
+    width: 100%;
+    position: static;
+    padding: 1% 0;
+    margin-bottom: 1%;
+    /* justify-content: space-evenly; */
+  }
+  .allShowButtons ul {
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    gap: 1%;
+    padding: 0 1%;
+  }
+  .allShowButtons li {
+    width: 50%;
+  }
+
+  #secondContainer {
+    width: 100%;
+  }
+  .sectionStats {
+    width: 100%;
+  }
+  .stats {
+    width: 92%;
+    margin: auto;
+  }
+  .FormForAdd {
+    width: 100%;
+  }
+}
+/* (min-width: 769px)  */
+@media screen and (max-width: 768px) {
+  .stats {
+    width: 100%;
+  }
+  .FormForAdd {
+    width: 100%;
+    flex-direction: column;
+  }
+  #addItem,
+  #addCategory {
+    width: 100%;
+    margin-bottom: 1%;
+  }
+  .tableProducts,
+  .tableCategories,
+  .tableUsers {
+    width: 90%;
+    transform: translate(-50%, -70%);
+  }
+  #IDUsers,
+  #LastnameUsers,
+  #FirstnameUsers,
+  .user_lastname,
+  .user_firstname,
+  .user_id,
+  #StockProduct,
+  #IDCategoryProduct,
+  #DateProduct,
+  .product_stock,
+  .id_category,
+  .product_date {
+    display: none;
+  }
+}
+@media screen and (max-width: 425px) {
+  .statsText {
+    display: none;
+  }
+  .cardStat {
+    width: 40%;
+  }
 }

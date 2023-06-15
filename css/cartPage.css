@@ -46,10 +46,13 @@
   width: 95%;
 }
 .banniere > p:nth-child(1) {
-  width: 70%;
+  width: 60%;
 }
 .banniere > p:nth-child(2) {
   width: 20%;
+}
+.banniere > p:nth-child(3) {
+  width: 10%;
 }
 .banniere > form {
   width: 10%;
@@ -84,7 +87,7 @@
 }
 .cartProduct {
   display: flex;
-  width: 70%;
+  width: 60%;
   padding: 1% !important;
 }
 .cartImage {
