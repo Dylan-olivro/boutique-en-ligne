@@ -285,6 +285,7 @@ if ($_SESSION['user']->user_role == 0) {
             </div>
         </section>
     </main>
+    <?php require_once('./include/footer.php') ?>
 </body>
 
 </html>

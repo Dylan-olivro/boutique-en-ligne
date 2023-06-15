@@ -107,6 +107,7 @@ if (isset($_POST['submit'])) {
             </div>
         </section>
     </main>
+    <?php require_once('./include/footer.php') ?>
 </body>
 
 </html>

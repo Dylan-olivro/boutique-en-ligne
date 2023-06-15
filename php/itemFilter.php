@@ -63,6 +63,7 @@ require_once('./include/required.php');
             </div>
         </div>
     </main>
+    <?php require_once('./include/footer.php') ?>
 </body>
 
 </html>
