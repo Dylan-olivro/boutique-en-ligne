@@ -211,6 +211,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
             </section>
         </section>
     </main>
+    <?php require_once('./include/footer.php') ?>
 </body>
 
 </html>

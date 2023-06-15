@@ -102,8 +102,8 @@ if (isset($_POST["ajouter"])) {
                 </div>
             </div>
         </section>
-
     </main>
+    <?php require_once('./include/footer.php') ?>
 </body>
 <style>
 
