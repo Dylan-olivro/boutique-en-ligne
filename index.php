@@ -39,7 +39,7 @@
 
     // ! TRAVAILLER LE CSS SUR DU 1920/1080
     // ! Ajouter le css concernant le main sur toutes les pages
-
+    // ! REMETTRE LE SETINTERVAL SUR LES FETCH DE L'ADMIN
     // ! Probleme si on ajoute 2 fois le même produit au panier et qu'on click sur supprimer, ça supprime les 2 (voir avec des data-id et uniqId() ou faire un systeme de quantité)
     ?>
     <?php require_once('./php/include/footer.php') ?>
