@@ -34,7 +34,8 @@ body {
   line-height: 1.5;
 }
 
-i {
+i,
+button {
   cursor: pointer;
 }
 

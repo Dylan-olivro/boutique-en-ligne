@@ -76,8 +76,16 @@
   padding: 1% !important;
 }
 
-.cartDetail > p {
+.price {
   width: 20%;
+}
+.quantity {
+  width: 10%;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
 }
 .cartDetail form {
   width: 10%;
@@ -133,6 +141,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 75%;
 }
 /* ------------------------------------------------- */
 .name {
@@ -193,6 +202,8 @@
 .formOrder select option {
   padding: 1% !important;
   background-color: var(--nav-color);
+  /* width: 50%;
+  font-size: 0.7rem; */
 }
 
 .formOrder input {
@@ -224,4 +235,94 @@
 hr {
   width: 70%;
   border: 1px solid var(--button-color) !important;
+}
+@media screen and (max-width: 1440px) {
+  .sectionCart {
+    flex-direction: column;
+    align-items: center;
+  }
+  .cart {
+    width: 80%;
+    margin-bottom: 1%;
+  }
+  .name {
+    font-size: 1rem;
+  }
+  .order {
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
+  }
+  .total {
+    width: 40%;
+  }
+  .formOrder {
+    width: 60%;
+  }
+  .totalDetail {
+    justify-content: space-evenly;
+  }
+  .formOrderAddress {
+    margin: 0 0 5% !important;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .cart {
+    width: 100%;
+  }
+  .price,
+  .quantity {
+    font-size: 1rem;
+  }
+  .order {
+    width: 90%;
+  }
+  .total {
+    width: 40%;
+  }
+  .totalDetail {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .stock {
+    font-size: 1rem;
+  }
+  .formOrder input {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .banniere {
+    align-items: center;
+  }
+  .banniere p,
+  .banniere i,
+  .price,
+  .quantity {
+    font-size: 0.9rem;
+  }
+  .order {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .formOrder {
+    width: 100%;
+  }
+  .formOrder input {
+    width: 90%;
+  }
+  .formOrder select option {
+    font-size: 0.8rem;
+  }
+  .name {
+    font-size: 0.5rem;
+  }
+  .total {
+    width: 60%;
+  }
+  .totalDetail p {
+    font-size: 0.8rem;
+  }
 }

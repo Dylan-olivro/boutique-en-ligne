@@ -49,11 +49,11 @@ let avgOrder = document.getElementById("avgOrder");
 let salesRevenues = document.getElementById("salesRevenues");
 
 // setInterval(() => {
-//   fetchCount("product", countProduct, 1);
-//   fetchCount("user", countUser, 1);
-//   fetchCount("order", countOrder, 1);
-//   fetchCount("orderAverage", avgOrder, 2);
-//   fetchCount("salesRevenues", salesRevenues, 3);
+  fetchCount("product", countProduct, 1);
+  fetchCount("user", countUser, 1);
+  fetchCount("order", countOrder, 1);
+  fetchCount("orderAverage", avgOrder, 2);
+  fetchCount("salesRevenues", salesRevenues, 3);
 // }, 1000);
 
 function fetchCount(table, countDiv, sql) {

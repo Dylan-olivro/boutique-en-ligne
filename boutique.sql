@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 08 juin 2023 à 19:37
+-- Généré le : ven. 16 juin 2023 à 00:49
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -49,7 +49,8 @@ INSERT INTO `addresses` (`address_id`, `user_id`, `address_numero`, `address_nam
 (10, 43, 1212, 'DSSD', '2122', 'SDSD', '', '', ''),
 (15, 44, 1222, 'fddfskf', '22222', 'SDJFLKSJFLKS', '', '', ''),
 (57, 1, 413, 'dsdsds', '87887', 'KFLDFDL', '06 5555 55 53', 'Hfjdjfd', 'Dsjdksd'),
-(58, 1, 123, 'azerty', '12345', 'QSDSDF', '01 02 03 04 05', 'Dylan', 'Lmmlml');
+(58, 1, 123, 'azerty', '12345', 'QSDSDF', '01 02 03 04 05', 'Dylan', 'Lmmlml'),
+(61, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan');
 
 -- --------------------------------------------------------
 
@@ -60,18 +61,19 @@ INSERT INTO `addresses` (`address_id`, `user_id`, `address_numero`, `address_nam
 CREATE TABLE `carts` (
   `cart_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL
+  `product_id` int(11) NOT NULL,
+  `cart_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `carts`
 --
 
-INSERT INTO `carts` (`cart_id`, `user_id`, `product_id`) VALUES
-(4, 2, 4),
-(5, 2, 1),
-(6, 3, 3),
-(7, 3, 3);
+INSERT INTO `carts` (`cart_id`, `user_id`, `product_id`, `cart_quantity`) VALUES
+(4, 2, 4, 0),
+(5, 2, 1, 0),
+(6, 3, 3, 0),
+(7, 3, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -428,7 +430,17 @@ INSERT INTO `liaison_product_order` (`id`, `product_id`, `order_id`) VALUES
 (43, 5, 67),
 (44, 5, 67),
 (45, 24, 68),
-(46, 39, 68);
+(46, 39, 68),
+(47, 81, 69),
+(48, 81, 69),
+(49, 81, 69),
+(50, 81, 69),
+(51, 81, 70),
+(52, 81, 70),
+(53, 81, 70),
+(54, 81, 70),
+(55, 81, 70),
+(56, 81, 70);
 
 -- --------------------------------------------------------
 
@@ -441,41 +453,44 @@ CREATE TABLE `orders` (
   `user_id` int(11) NOT NULL,
   `order_date` datetime NOT NULL,
   `order_total` decimal(10,2) NOT NULL,
-  `order_address` varchar(255) NOT NULL
+  `order_address` varchar(255) NOT NULL,
+  `order_number` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `order_total`, `order_address`) VALUES
-(2, 1, '2023-05-30 11:19:38', '0.00', ''),
-(3, 1, '2023-05-30 11:21:44', '0.00', ''),
-(4, 1, '2023-05-30 11:47:33', '0.00', ''),
-(5, 1, '2023-05-30 13:40:01', '0.00', ''),
-(6, 1, '2023-05-30 13:40:38', '0.00', ''),
-(7, 1, '2023-05-30 13:44:01', '74.98', ''),
-(8, 1, '2023-05-30 13:44:38', '214.98', ''),
-(9, 1, '2023-06-01 10:56:12', '74.00', ''),
-(10, 1, '2023-06-01 10:58:47', '428.00', ''),
-(11, 1, '2023-06-05 23:00:33', '187.00', ''),
-(13, 1, '2023-06-05 23:12:34', '187.00', ''),
-(24, 1, '2023-06-05 23:29:15', '187.00', ''),
-(27, 1, '2023-06-05 23:39:17', '261.00', ''),
-(55, 1, '2023-06-08 13:20:04', '244.00', '728 dfjdk,72382 JSDKJS'),
-(56, 1, '2023-06-08 13:20:48', '0.00', '75 rue Leon Jouhaux,83200 TOULON'),
-(57, 1, '2023-06-08 13:21:47', '299.00', '438 dsjkd,00200 SDKJLSDLS'),
-(58, 1, '2023-06-08 13:25:37', '0.00', '438 dsjkd,00200 SDKJLSDLS'),
-(59, 1, '2023-06-08 13:26:03', '0.00', '438 dsjkd,00200 SDKJLSDLS'),
-(60, 1, '2023-06-08 13:26:05', '0.00', '438 dsjkd,00200 SDKJLSDLS'),
-(61, 1, '2023-06-08 13:26:36', '0.00', '438 dsjkd,00200 SDKJLSDLS'),
-(62, 1, '2023-06-08 13:26:54', '0.00', '438 dsjkd,00200 SDKJLSDLS'),
-(63, 1, '2023-06-08 13:27:12', '0.00', '438 dsjkd,00200 SDKJLSDLS'),
-(64, 1, '2023-06-08 13:27:41', '0.00', '438 dsjkd,00200 SDKJLSDLS'),
-(65, 1, '2023-06-08 19:15:10', '0.00', ''),
-(66, 1, '2023-06-08 19:16:06', '0.00', ''),
-(67, 1, '2023-06-08 19:16:45', '507.00', '413 dsdsds, 87887 KFLDFDL'),
-(68, 1, '2023-06-08 19:24:04', '199.00', '123 azerty, 12345 QSDSDF');
+INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `order_total`, `order_address`, `order_number`) VALUES
+(2, 1, '2023-05-30 11:19:38', '0.00', '', ''),
+(3, 1, '2023-05-30 11:21:44', '0.00', '', ''),
+(4, 1, '2023-05-30 11:47:33', '0.00', '', ''),
+(5, 1, '2023-05-30 13:40:01', '0.00', '', ''),
+(6, 1, '2023-05-30 13:40:38', '0.00', '', ''),
+(7, 1, '2023-05-30 13:44:01', '74.98', '', ''),
+(8, 1, '2023-05-30 13:44:38', '214.98', '', ''),
+(9, 1, '2023-06-01 10:56:12', '74.00', '', ''),
+(10, 1, '2023-06-01 10:58:47', '428.00', '', ''),
+(11, 1, '2023-06-05 23:00:33', '187.00', '', ''),
+(13, 1, '2023-06-05 23:12:34', '187.00', '', ''),
+(24, 1, '2023-06-05 23:29:15', '187.00', '', ''),
+(27, 1, '2023-06-05 23:39:17', '261.00', '', ''),
+(55, 1, '2023-06-08 13:20:04', '244.00', '728 dfjdk,72382 JSDKJS', ''),
+(56, 1, '2023-06-08 13:20:48', '0.00', '75 rue Leon Jouhaux,83200 TOULON', ''),
+(57, 1, '2023-06-08 13:21:47', '299.00', '438 dsjkd,00200 SDKJLSDLS', ''),
+(58, 1, '2023-06-08 13:25:37', '0.00', '438 dsjkd,00200 SDKJLSDLS', ''),
+(59, 1, '2023-06-08 13:26:03', '0.00', '438 dsjkd,00200 SDKJLSDLS', ''),
+(60, 1, '2023-06-08 13:26:05', '0.00', '438 dsjkd,00200 SDKJLSDLS', ''),
+(61, 1, '2023-06-08 13:26:36', '0.00', '438 dsjkd,00200 SDKJLSDLS', ''),
+(62, 1, '2023-06-08 13:26:54', '0.00', '438 dsjkd,00200 SDKJLSDLS', ''),
+(63, 1, '2023-06-08 13:27:12', '0.00', '438 dsjkd,00200 SDKJLSDLS', ''),
+(64, 1, '2023-06-08 13:27:41', '0.00', '438 dsjkd,00200 SDKJLSDLS', ''),
+(65, 1, '2023-06-08 19:15:10', '0.00', '', ''),
+(66, 1, '2023-06-08 19:16:06', '0.00', '', ''),
+(67, 1, '2023-06-08 19:16:45', '507.00', '413 dsdsds, 87887 KFLDFDL', ''),
+(68, 1, '2023-06-08 19:24:04', '199.00', '123 azerty, 12345 QSDSDF', ''),
+(69, 1, '2023-06-15 23:44:42', '9196.00', '413 dsdsds, 87887 KFLDFDL', '648B864A68A6D4-00773925'),
+(70, 1, '2023-06-16 00:01:35', '13794.00', '413 dsdsds, 87887 KFLDFDL', '648B8A3F12D798-36935007');
 
 -- --------------------------------------------------------
 
@@ -577,7 +592,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (78, 'Gigabyte G5 (GE-51FR263SH) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6&quot; Full HD (1920 x 1080) 144 Hz - Intel Core i5-12500H 12-Core 3.3 Ghz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:26:14', '829.00', 500),
 (79, 'MSI Thin GF63 (12UDX-242FR) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-12450H Octo-Core 3,3 GHz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:27:08', '849.00', 500),
 (80, 'Acer Nitro 5 (AN517-54-53A2) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-11400H Hexa-Core 2.7 GHz - 16 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 2.7 Kg - Windows 11', '2023-06-05 15:28:33', '1079.00', 500),
-(81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 500),
+(81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 490),
 (82, 'AKRacing Core EX - Rouge / Noir', 'Fauteuil Gamer - Tissu - Accoudoirs 3D rÃ©glables - Assise inclinable - Poids supportÃ© 150 Kg', '2023-06-05 15:33:10', '249.00', 500),
 (83, 'DXRacer Air R1S (rose)', 'Fauteuil Gamer - Maille respirante - Accoudoirs 3D rÃ©glables - Dossier inclinable jusqu\'Ã  135Â°- Poids supportÃ© 114 kg', '2023-06-05 15:34:14', '289.00', 500),
 (84, 'Noblechairs Icon - Noir / Bleu', 'Fauteuil Gamer - Simili Cuir - Accoudoirs 4D rÃ©glables - Poids supportÃ© 150 Kg', '2023-06-05 15:35:18', '389.00', 500),
@@ -590,6 +605,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (96, 'HTC Face Tracker', 'DÃ©tecteur d\'expressions faciales pour HTC Vive Pro', '2023-06-07 13:34:00', '139.00', 500),
 (101, 'Apple MacBook Air M2 (2022) LumiÃ¨re stellaire 8 Go/256 Go (MLY13FN/A)', 'PC Ultra portable 13.6\" Liquid RÃ©tina (2560 x 1664) - Apple M2 Octo-Core (GPU 8-core) - 8 Go LPDDR5 - SSD 256 Go - 1.2 Kg - macOS Monterey', '2023-06-07 13:58:27', '1299.00', 500),
 (102, 'Apple MacBook Pro M2 Pro 16\" Argent (MNWD3FN/A)', 'PC Portable 16,2\" Liquid Retina XDR (3456 x 2234) - Apple M2 Pro 12-Core / GPU 19-Core - 16 Go LPDDR5 - SSD 1 To - 2,2 Kg - macOS 13', '2023-06-07 14:18:05', '3229.00', 500);
+
 -- --------------------------------------------------------
 
 --
@@ -696,13 +712,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT pour la table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT pour la table `category`
@@ -720,31 +736,31 @@ ALTER TABLE `codes`
 -- AUTO_INCREMENT pour la table `images`
 --
 ALTER TABLE `images`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT pour la table `liaison_items_category`
 --
 ALTER TABLE `liaison_items_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT pour la table `liaison_product_order`
 --
 ALTER TABLE `liaison_product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT pour la table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT pour la table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT pour la table `users`

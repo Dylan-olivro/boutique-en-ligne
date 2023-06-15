@@ -136,6 +136,10 @@ main {
   display: flex;
   flex-direction: column;
   width: 90%;
+  margin: 1% 0;
+}
+#formCategories {
+  margin: 5% 0;
 }
 #formProduct label,
 #formCategories label {
@@ -152,6 +156,7 @@ main {
 .groupInput {
   display: flex;
   justify-content: space-between;
+  margin: 2% 0;
 }
 .divInput {
   /* displ5y: flex; */
@@ -201,7 +206,9 @@ main {
   flex-direction: column;
   align-items: center;
 }
-
+#nameCategory {
+  margin-bottom: 2%;
+}
 /* ------------------- PANEL -------------------- */
 
 .tableProducts,
@@ -226,7 +233,12 @@ main {
   border-collapse: collapse;
   width: 100%;
 }
-
+/* #products tr:nth-child(odd) {
+  background-color: red;
+}
+#products tr:nth-child(even) {
+  background-color: blue;
+} */
 #products td,
 #products th,
 #categories td,
@@ -257,7 +269,7 @@ main {
 #users th {
   padding-top: 12px;
   padding-bottom: 12px;
-  background-color: #04aa6d;
+  background-color: #4b5c8c;
   color: white;
   position: sticky;
   top: 0;
@@ -286,8 +298,10 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: #04aa6d;
+  background-color: #4b5c8c;
   padding: 1%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 #hideProducts,
 #hideCategories,
@@ -296,12 +310,46 @@ main {
   border: none;
   text-decoration: underline;
   color: #fff;
+  cursor: pointer;
+}
+table button {
+  background-color: transparent;
 }
 tbody button {
   border: none;
 }
 tbody button a {
   color: #000;
+}
+
+/* width */
+.tableProducts::-webkit-scrollbar,
+.tableCategories::-webkit-scrollbar,
+.tableUsers::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.tableProducts::-webkit-scrollbar-track,
+.tableCategories::-webkit-scrollbar,
+.tableUsers::-webkit-scrollbar {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+.tableProducts::-webkit-scrollbar-thumb,
+.tableCategories::-webkit-scrollbar,
+.tableUsers::-webkit-scrollbar {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.tableProducts::-webkit-scrollbar-thumb:hover,
+.tableProducts::-webkit-scrollbar,
+.tableProducts::-webkit-scrollbar {
+  background: #555;
 }
 
 @media screen and (max-width: 1024px) {
