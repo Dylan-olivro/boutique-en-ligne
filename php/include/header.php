@@ -22,49 +22,55 @@ function includeHeader($bdd, $index, $url, $image)
 ?>
     <header id="allHeader">
         <div class="sectionNav" id="sectionNav">
-        <nav class="navTop">
-            <div class="logo">
-                <a href="<?= $index ?>index.php"><i class="fa-solid fa-computer"></i></a>
-            </div>
-            <div class="searchBarDiv">
-                <form action="" method="get" role="search">
-                    <input type="text" id="searchBar" name="searchBar" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
-                    <div id="searchResultsDesktopDiv">
-                    </div>
-                </form>
-            </div>
-            <div class="iconNavDiv">
-                <span class="iconNav userIcon">
-                    <i class="fa-solid fa-user"></i>
-                    <div class="userLink">
-                        <?php
-                        if (isset($_SESSION['user'])) { ?>
-                            <a href="<?= $url ?>profil.php">Profil</a>
-                            <?php if (intval($_SESSION['user']->user_role) !== 0) { ?>
-                                <a href="<?= $url ?>admin.php">Admin</a>
-                            <?php } ?>
-                            <a href="<?= $url ?>disconnect.php">Disconnect</a>
-                        <?php } else { ?>
-                            <a href="<?= $url ?>connect.php">Connect</a>
-                            <a href="<?= $url ?>register.php">Register</a>
-                        <?php } ?>
-                    </div>
-                </span>
-                <span class="iconNav" >
-                    <a href="<?= $url ?>cartPage.php">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                </span>
-                <span class="iconNav" id="darkMode" onclick="themeToggle()"><i class="fa-regular fa-moon" id="darkModeIcon"></i></span>
-                <!-- <span><i class="fa-regular fa-sun"></i></span> -->
-                <div class="iconBurger" onclick="burger(this)">
-                    <div class="bar1"></div>
-                    <div class="bar2"></div>
-                    <div class="bar3"></div>
+            <nav class="navTop">
+                <div class="logo">
+                    <a href="<?= $index ?>index.php"><i class="fa-solid fa-computer"></i></a>
                 </div>
-            </div>
-        </nav>
-    </div>
+                <div class="searchBarDiv">
+                    <form action="" method="get" role="search">
+                        <input type="text" id="searchBar" name="searchBar" type="text" placeholder="Cherchez un produit..." aria-label="Search" autocomplete="off">
+                        <div id="searchResultsDesktopDiv">
+                        </div>
+                    </form>
+                </div>
+                <div class="iconNavDiv">
+                    <span class="iconNav userIcon">
+                        <?php
+                        if (isset($_SESSION['user']) && (int)$_SESSION['user']->user_role !== 0) {
+                            echo '<i class="fa-solid fa-user-gear"></i>';
+                        } else {
+                            echo '<i class="fa-solid fa-user"></i>';
+                        }
+                        ?>
+                        <div class="userLink">
+                            <?php
+                            if (isset($_SESSION['user'])) { ?>
+                                <a href="<?= $url ?>profil.php">Profil</a>
+                                <?php if (intval($_SESSION['user']->user_role) !== 0) { ?>
+                                    <a href="<?= $url ?>admin.php">Admin</a>
+                                <?php } ?>
+                                <a href="<?= $url ?>disconnect.php">Disconnect</a>
+                            <?php } else { ?>
+                                <a href="<?= $url ?>connect.php">Connect</a>
+                                <a href="<?= $url ?>register.php">Register</a>
+                            <?php } ?>
+                        </div>
+                    </span>
+                    <span class="iconNav">
+                        <a href="<?= $url ?>cartPage.php">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+                    </span>
+                    <span class="iconNav" id="darkMode" onclick="themeToggle()"><i class="fa-regular fa-moon" id="darkModeIcon"></i></span>
+                    <!-- <span><i class="fa-regular fa-sun"></i></span> -->
+                    <div class="iconBurger" onclick="burger(this)">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
+                </div>
+            </nav>
+        </div>
         <nav class="categoriesNav" id="categoriesNav">
             <div class="searchBarBurgerDiv" id="searchBarBurgerDiv">
                 <form method="get" class="searchBarBurgerForm" role="search">
@@ -92,10 +98,10 @@ function includeHeader($bdd, $index, $url, $image)
                                 <i class="fa-solid fa-circle-chevron-right"></i>
                             </span>
                             <ul class="dropdown-content" id="">
-                                    <span class="backToCategories" id="">
-                                        <i class="fa-solid fa-circle-chevron-left"></i>
-                                        Retour
-                                    </span>
+                                <span class="backToCategories" id="">
+                                    <i class="fa-solid fa-circle-chevron-left"></i>
+                                    Retour
+                                </span>
                                 <?php
                                 $returnCategoryChild = $bdd->prepare('SELECT * FROM category WHERE id_parent = ?');
                                 $returnCategoryChild->execute([$key->id]);

@@ -67,6 +67,7 @@ if (isset($_POST['submit'])) {
             <div class="form">
                 <!-- Formulaire pour CONNECTER un utilisateur -->
                 <form method="post" id="formLogin">
+                    <h3>Identifie-toi</h3>
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email" placeholder="Email" class="input" autofocus>
                     <label for="password">Mot de passe</label>

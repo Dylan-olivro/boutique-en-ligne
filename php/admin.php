@@ -49,28 +49,28 @@ if ($_SESSION['user']->user_role == 0) {
                         <div class="cardStat">
                             <p><i class="fa-solid fa-users"></i></p>
                             <p id="countUser">0</p>
-                            <p>Nombres d'utilisateurs</p>
+                            <p class="statsText">Nombres d'utilisateurs</p>
 
                         </div>
                         <div class="cardStat">
                             <p><i class="fa-solid fa-cubes"></i></p>
                             <p id="countProduct">0</p>
-                            <p>Nombres de produits</p>
+                            <p class="statsText">Nombres de produits</p>
                         </div>
                         <div class="cardStat">
                             <p><i class="fa-solid fa-truck-fast"></i></p>
                             <p id="countOrder">0</p>
-                            <p>Nombres de commandes</p>
+                            <p class="statsText">Nombres de commandes</p>
                         </div>
                         <div class="cardStat">
                             <p><i class="fa-solid fa-credit-card"></i></p>
                             <p id="avgOrder">0</p>
-                            <p>Paniers moyen</p>
+                            <p class="statsText">Paniers moyen</p>
                         </div>
                         <div class="cardStat">
                             <p><i class="fa-solid fa-sack-dollar"></i></p>
                             <p id="salesRevenues">0</p>
-                            <p>Chiffres d'affaires</p>
+                            <p class="statsText">Chiffres d'affaires</p>
                         </div>
                     </div>
 
@@ -109,7 +109,7 @@ if ($_SESSION['user']->user_role == 0) {
 
 
                             <p id="messageProduct"></p>
-                            <div id="submit">
+                            <div class="submit">
                                 <input type="submit" name="buttonAddItem" value="Valider">
                             </div>
                         </form>
@@ -125,7 +125,9 @@ if ($_SESSION['user']->user_role == 0) {
                             <label for="idParent">ID parent</label>
                             <input type="number" name="idParent" id="idParent">
                             <p id="messageCategories"></p>
-                            <input type="submit" name="buttonAddCategory" value="Ajouter">
+                            <div class="submit">
+                                <input type="submit" name="buttonAddCategory" value="Ajouter">
+                            </div>
                         </form>
 
                     </div>
@@ -197,12 +199,12 @@ if ($_SESSION['user']->user_role == 0) {
                     <tbody>
                         <?php foreach ($result_products as $key_product) { ?>
                             <tr>
-                                <td><?= $key_product->product_id ?></td>
-                                <td><?= $key_product->product_name ?></td>
-                                <td><?= $key_product->product_date ?></td>
-                                <td><?= $key_product->product_price ?></td>
-                                <td><?= $key_product->product_stock ?></td>
-                                <td><?= $key_product->id_category ?></td>
+                                <td class="product_id"><?= $key_product->product_id ?></td>
+                                <td class="product_name"><?= $key_product->product_name ?></td>
+                                <td class="product_date"><?= $key_product->product_date ?></td>
+                                <td class="product_price"><?= $key_product->product_price ?></td>
+                                <td class="product_stock"><?= $key_product->product_stock ?></td>
+                                <td class="id_category"><?= $key_product->id_category ?></td>
                                 <td>
                                     <button type="button" name="editProduct<?= $key_product->product_id ?>"><a href="./user/modifyProduct.php?<?= $key_product->product_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
@@ -243,10 +245,10 @@ if ($_SESSION['user']->user_role == 0) {
                     <tbody>
                         <?php foreach ($result_users as $key_user) { ?>
                             <tr>
-                                <td><?= $key_user->user_id ?></td>
-                                <td><?= $key_user->user_email ?></td>
-                                <td><?= $key_user->user_lastname ?></td>
-                                <td><?= $key_user->user_firstname ?></td>
+                                <td class="user_id"><?= $key_user->user_id ?></td>
+                                <td class="user_email"><?= $key_user->user_email ?></td>
+                                <td class="user_lastname"><?= $key_user->user_lastname ?></td>
+                                <td class="user_firstname"><?= $key_user->user_firstname ?></td>
                                 <td>
                                     <?php
                                     if ($key_user->user_role == 2) {

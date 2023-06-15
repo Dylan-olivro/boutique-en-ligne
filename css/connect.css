@@ -29,6 +29,13 @@
   outline: none;
   height: 35px;
 }
+#formLogin h3 {
+  color: #fff;
+  text-align: center;
+  font-size: 2rem;
+  margin: 2%;
+  height: auto;
+}
 label {
   color: white;
   display: flex !important;
@@ -78,4 +85,31 @@ label {
   justify-content: center;
   align-items: center;
   color: white;
+}
+.demande a {
+  color: var(--button-color);
+}
+@media screen and (max-width: 1440px) {
+  #formLogin > * {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 1040px) {
+  .form {
+    width: 60%;
+  }
+  #formLogin {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .form {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .demande {
+    flex-direction: column;
+    margin: 5% 0;
+  }
 }
