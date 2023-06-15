@@ -1,97 +1,296 @@
 main {
-  max-width: 1920px;
-  margin: auto !important;
   background-color: var(--background-color);
+}
+
+#firstContainer {
+  padding: 1%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  position: relative;
+  background-color: var(--section-color);
+}
+/* -------------------LIST BUTTON -------------------- */
+.allShowButtons {
+  width: 13%;
+  background-color: var(--div-color);
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  height: 200px;
   align-items: center;
+  position: sticky;
+  top: 10%;
+  border-radius: 10px;
 }
-
-.sectionItem {
+.allShowButtons ul {
+  padding-left: 1%;
+  list-style-type: none;
+  width: 70%;
   display: flex;
   flex-direction: column;
-  padding: 1% !important;
+  justify-content: space-evenly;
+  height: 80%;
+}
+.allShowButtons li {
+  background-color: var(--input-color);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+}
+.allShowButtons li:hover {
+  border: 1px solid #fff;
+  background-color: var(--button-color);
 }
 
-#divItem {
-  background-color: rebeccapurple;
-  display: flex;
-  justify-content: space-evenly;
-  padding: 1% !important;
-}
-h2 {
-  text-align: center;
-  color: #fff !important;
-  padding: 1% !important;
-}
-h3 {
-  text-align: center;
+#showProducts,
+#showCategories,
+#showUsers {
+  padding: 2% 0;
+  border-radius: 5px;
+  width: 100%;
+  border: none;
+  background-color: transparent;
   color: #fff;
 }
-#addItem,
-#editItem,
-.deleteProduct_addImg {
+
+/* ----------------- STATS  ------------------------- */
+#secondContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 87%;
+}
+.sectionStats {
+  width: 95%;
+  background-color: var(--div-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-bottom: 1%;
+}
+.sectionStats h3 {
+  color: #fff;
+  text-align: center;
+  font-size: 2rem;
+  padding: 1%;
+}
+.stats {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 1%;
+  margin: 1% 0;
+  gap: 1%;
+}
+.cardStat {
+  background-color: var(--nav-color);
+  border-radius: 10px;
+  width: 220px;
+  padding: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 2%;
+  color: #fff;
+}
+.cardStat i {
+  font-size: 2em;
+}
+.cardStat > p:nth-child(2) {
+  font-size: 1.5em;
+}
+
+/* -------------------LIST FORM -------------------- */
+.FormForAdd {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#addItem {
+  background-color: var(--div-color);
+  border: 1px solid var(--border-color);
+  padding: 1%;
+  border-radius: 10px;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#addItem h3 {
+  color: #fff;
+  font-size: 2rem;
+}
+#addCategory {
   width: 30%;
 }
-#addItem {
+#formProduct,
+#formAddCategory {
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+#formProduct label {
+  color: #fff;
+  font-style: italic;
+}
+#formProduct input {
+  background-color: var(--input-color);
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+}
+.groupInput {
+  display: flex;
+  justify-content: space-between;
+}
+.divInput {
+  /* displ5y: flex; */
+  width: 15%;
+}
+.divInputFile {
+  width: 35%;
+}
+.groupInput div input {
+  /* display: flex; */
+  width: 100%;
+}
+
+#descriptionItem {
+  border-radius: 5px;
+  resize: none;
+  height: 100px;
+  background-color: var(--input-color);
+  color: #fff;
+  outline: none;
+  border-style: inset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+}
+#message {
+  width: 100%;
+  color: #ffa938;
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  height: 35px;
+  margin: 0;
+}
+#submit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#submit input {
+  width: 50%;
+}
+.formEdit,
+.formCat {
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: brown;
-  border-radius: 10px;
-  padding: 1% !important;
 }
-#formAddItem {
+
+/* ------------------- PANEL -------------------- */
+
+.tableProducts,
+.tableCategories,
+.tableUsers {
+  display: none;
+  position: absolute;
+  /* top: 50%;
+  left: 50%; */
+  top: 1%;
+  left: 15%;
+  /* transform: translate(-50%, -50%); */
+  height: 600px;
+  overflow-y: auto;
+  width: 70%;
+}
+
+#products,
+#categories,
+#users {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#products td,
+#products th,
+#categories td,
+#categories th,
+#users td,
+#users th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+#products tr,
+#categories tr,
+#users tr {
+  background-color: #f2f2f2;
+}
+/* #products tr:nth-child(even) {
+  background-color: #f2f2f2;
+} */
+
+#products tr:hover,
+#categories tr:hover,
+#users tr:hover {
+  background-color: #ddd;
+}
+
+#products th,
+#categories th,
+#users th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: #04aa6d;
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+#IDProduct,
+#EditProduct,
+#DeleteProduct,
+#IDCategoryProduct {
+  width: 5%;
+}
+#NameProduct {
+  width: 45%;
+}
+#DateProduct {
+  width: 15%;
+}
+#PrixProduct,
+#StockProduct {
+  width: 10%;
+}
+
+.closeProduct,
+.closeCategories,
+.closeUsers {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  width: 60%;
+  justify-content: center;
+  background-color: #04aa6d;
+  padding: 1%;
 }
-#editItem {
-  background-color: aquamarine;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 10px;
-  padding: 1% !important;
+#hideProducts,
+#hideCategories,
+#hideUsers {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  color: #fff;
 }
-#formEditItem {
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+tbody button {
+  border: none;
 }
-#formUpdateItem {
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-}
-.deleteProduct_addImg {
-  display: flex;
-  flex-direction: column;
-  background-color: chocolate;
-  border-radius: 10px;
-  padding: 1% !important;
-}
-.formImg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#formDeleteItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* width: 60%; */
-}
-.sectionCategories {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#divCategory {
-  background-color: chartreuse;
-}
-/*----------------------------------------------- */
-#divUser {
-  display: flex;
+tbody button a {
+  color: #000;
 }

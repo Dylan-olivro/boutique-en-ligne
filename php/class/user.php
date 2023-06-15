@@ -126,10 +126,10 @@ class User
         $res = $request->fetch(PDO::FETCH_OBJ);
         $insertUser = $bdd->prepare("UPDATE users SET user_password = :user_password WHERE user_id = :user_id ");
         // La sécurité empêche que les champs soient VIDES
-        if (isEmpty($old_password)) {
+        if (empty($old_password)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Password est vide';
             return $error;
-        } elseif (isEmpty($this->password)) {
+        } elseif (empty($this->password)) {
             $error = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ New Password est vide';
             return $error;
         }
@@ -211,6 +211,19 @@ class User
         $request->execute(['user_id' => $this->id]);
         $result = $request->fetch(PDO::FETCH_OBJ);
         return $result;
+    }
+
+    public function returnAllUser($bdd)
+    {
+        $request = $bdd->prepare("SELECT * FROM users");
+        $request->execute();
+        $result = $request->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function deleteUserByID($bdd)
+    {
+        $request = $bdd->prepare("DELETE FROM users WHERE user_id = :user_id");
+        $request->execute(['user_id' => $this->id]);
     }
 
     public function isConnected(): bool

@@ -1,9 +1,3 @@
-/* ! AJOUTER !important POUR TOUT CHANGEMENT DE padding OU DE margin */
-main * {
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 1px dashed red;
-}
 /*  SECTION  */
 #container {
 }

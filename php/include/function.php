@@ -1,21 +1,8 @@
 <?php
-function isEmpty($a)
-{
-    return empty($a) ? true : false;
-}
 
 function isSame($a, $b)
 {
     return $a == $b ? true : false;
-}
-
-function h($a)
-{
-    return htmlspecialchars($a);
-}
-function hd($a)
-{
-    return htmlspecialchars_decode(htmlspecialchars($a));
 }
 
 function isName($a)
@@ -71,4 +58,19 @@ function CoupePhrase($txt, $long = 50)
         return $txt;
     $txt = substr($txt, 0, $long);
     return substr($txt, 0, strrpos($txt, ' ')) . '...';
+}
+
+// function is_valid($number)
+// {
+//     if (is_numeric($number)) {
+//         list($nu, $de) = explode('.', $number);
+//         return (strlen($de) < 3 || !isset($de)) ? TRUE : FALSE;
+//     } else {
+//         return FALSE;
+//     }
+// }
+
+function isNumberWithDecimal($a)
+{
+    return  preg_match('/^[0-9]+(\.[0-9]{1,2})?$/', $a) ? true : false;
 }
