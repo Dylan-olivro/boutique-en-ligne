@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 16 juin 2023 à 00:49
+-- Généré le : jeu. 08 juin 2023 à 19:37
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -29,17 +29,19 @@ USE `boutique`;
 -- Structure de la table `addresses`
 --
 
-CREATE TABLE `addresses` (
-  `address_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `address_numero` int(11) NOT NULL,
-  `address_name` varchar(255) NOT NULL,
-  `address_postcode` varchar(5) NOT NULL,
-  `address_city` varchar(255) NOT NULL,
-  `address_telephone` varchar(255) NOT NULL,
-  `address_lastname` varchar(255) NOT NULL,
-  `address_firstname` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `addresses`;
+CREATE TABLE IF NOT EXISTS `addresses` (
+  `address_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `address_numero` int NOT NULL,
+  `address_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `address_postcode` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `address_city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `address_telephone` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `address_lastname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `address_firstname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`address_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `addresses`
@@ -61,8 +63,7 @@ INSERT INTO `addresses` (`address_id`, `user_id`, `address_numero`, `address_nam
 CREATE TABLE `carts` (
   `cart_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `cart_quantity` int(11) NOT NULL
+  `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -81,11 +82,13 @@ INSERT INTO `carts` (`cart_id`, `user_id`, `product_id`, `cart_quantity`) VALUES
 -- Structure de la table `category`
 --
 
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `id_parent` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE IF NOT EXISTS `category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_parent` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `category`
@@ -127,11 +130,13 @@ INSERT INTO `category` (`id`, `name`, `id_parent`) VALUES
 -- Structure de la table `codes`
 --
 
-CREATE TABLE `codes` (
-  `code_id` int(11) NOT NULL,
-  `code_name` varchar(20) NOT NULL,
-  `code_discount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `codes`;
+CREATE TABLE IF NOT EXISTS `codes` (
+  `code_id` int NOT NULL AUTO_INCREMENT,
+  `code_name` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `code_discount` int NOT NULL,
+  PRIMARY KEY (`code_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `codes`
@@ -146,12 +151,14 @@ INSERT INTO `codes` (`code_id`, `code_name`, `code_discount`) VALUES
 -- Structure de la table `images`
 --
 
-CREATE TABLE `images` (
-  `image_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `image_name` varchar(255) NOT NULL,
-  `image_main` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE IF NOT EXISTS `images` (
+  `image_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `image_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image_main` tinyint(1) NOT NULL,
+  PRIMARY KEY (`image_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `images`
@@ -254,11 +261,13 @@ INSERT INTO `images` (`image_id`, `product_id`, `image_name`, `image_main`) VALU
 -- Structure de la table `liaison_items_category`
 --
 
-CREATE TABLE `liaison_items_category` (
-  `id` int(11) NOT NULL,
-  `id_item` int(11) NOT NULL,
-  `id_category` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `liaison_items_category`;
+CREATE TABLE IF NOT EXISTS `liaison_items_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_item` int NOT NULL,
+  `id_category` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `liaison_items_category`
@@ -374,11 +383,13 @@ INSERT INTO `liaison_items_category` (`id`, `id_item`, `id_category`) VALUES
 -- Structure de la table `liaison_product_order`
 --
 
-CREATE TABLE `liaison_product_order` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `liaison_product_order`;
+CREATE TABLE IF NOT EXISTS `liaison_product_order` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `order_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `liaison_product_order`
@@ -448,13 +459,13 @@ INSERT INTO `liaison_product_order` (`id`, `product_id`, `order_id`) VALUES
 -- Structure de la table `orders`
 --
 
-CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE IF NOT EXISTS `orders` (
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
   `order_date` datetime NOT NULL,
   `order_total` decimal(10,2) NOT NULL,
-  `order_address` varchar(255) NOT NULL,
-  `order_number` varchar(255) NOT NULL
+  `order_address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -498,14 +509,16 @@ INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `order_total`, `order
 -- Structure de la table `products`
 --
 
-CREATE TABLE `products` (
-  `product_id` int(11) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `product_description` text NOT NULL,
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE IF NOT EXISTS `products` (
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `product_description` text COLLATE utf8mb4_general_ci NOT NULL,
   `product_date` datetime NOT NULL,
   `product_price` decimal(10,2) NOT NULL,
-  `product_stock` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `product_stock` int NOT NULL,
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `products`
@@ -612,14 +625,16 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 -- Structure de la table `users`
 --
 
-CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
-  `user_email` varchar(255) NOT NULL,
-  `user_lastname` varchar(255) NOT NULL,
-  `user_firstname` varchar(255) NOT NULL,
-  `user_password` varchar(255) NOT NULL,
-  `user_role` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_lastname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_firstname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_role` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `users`
@@ -712,13 +727,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT pour la table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT pour la table `category`
@@ -736,31 +751,31 @@ ALTER TABLE `codes`
 -- AUTO_INCREMENT pour la table `images`
 --
 ALTER TABLE `images`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT pour la table `liaison_items_category`
 --
 ALTER TABLE `liaison_items_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT pour la table `liaison_product_order`
 --
 ALTER TABLE `liaison_product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT pour la table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT pour la table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT pour la table `users`
