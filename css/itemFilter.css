@@ -1,22 +1,64 @@
+.categoryParentName{
+  font-weight: bold;
+  list-style: none;
+}
+
 .categoryChildDiv {
   display: none;
+  margin-top: 12px;
+  padding: 10px;
+  background-color: #232b41;
+  border: 1px solid;
+  border-color: rgb(255, 255, 255);
+  border-radius: 10px;
 }
 .categoryChildDivBlock {
   display: block;
+  margin-top: 12px;
+  border: 1px solid;
+  border-color: #444b5d;
+  border-radius: 10px;
+  background-color: var(--div-color);
 }
 
 #container {
-  display: flex !important;
-  flex-direction: row;
+  display: flex !important;  
+  width: 95%;
 }
+
 
 main li {
   list-style: none;
 }
 
 /* .categoryParentDiv:hover .categoryChildDiv {
-    display: block;
+  display: block;
 } */
+
+#container > form {
+   width: 20%;
+}
+
+#filterDiv {
+  width: 200px;
+  margin-top: 16.5px!important;
+  color: aliceblue;
+  width: 200px;
+  border-color: rgb(0, 0, 0);
+  border-radius: 10px;
+}
+
+.categoryParentDiv {
+  margin-bottom: 12px !important;
+  padding: 10px !important;
+  border-radius: 10px;
+  background-color:  var(--section-color);
+}
+
+
+#allItems{
+ width: 80%;
+}
 
 .divImg {
   width: 15%;
@@ -27,21 +69,22 @@ main li {
 }
 .itemImg {
   width: 70%;
+  border-radius: 12px;
   /* padding: 0.5em !important; */
 }
 .divGlobal {
-    border-color: black;
-    border: 1px solid;
-    border-radius: 10px;
-    margin-bottom: 1em !important;
+
+  border-radius: 10px;
+  margin: 1em !important;
+  background-color:  #232b41;
 }
 
 .divGlobal a {
-    display: flex;
-    text-decoration: none;
-    color: black;
-    width: 100%;
-    padding: 1em !important;
+  display: flex;
+  text-decoration: none;
+  color: lightgray;
+  width: 100%;
+  padding: 1em !important;
 }
 
 .divNameDesc {
@@ -65,12 +108,12 @@ main li {
 .itemName {
   font-weight: bolder;
 }
-.divGlobal:hover .itemName {
-  color: red;
+.divGlobal .itemName {
+  color: rgb(255, 255, 255);
   transition: 0.3s;
 }
-.divGlobal .itemName {
-  color: black;
+.divGlobal:hover .itemName {
+  color: red;
   transition: 0.3s;
 }
 .divGlobal:hover .itemImg {
@@ -80,8 +123,4 @@ main li {
 .divGlobal .itemImg {
   transform: scale(1);
   transition: 0.5s ease-in-out;
-}
-
-#filterDiv {
-  width: 200px;
 }
