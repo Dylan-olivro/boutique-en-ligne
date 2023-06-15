@@ -48,13 +48,13 @@ let countOrder = document.getElementById("countOrder");
 let avgOrder = document.getElementById("avgOrder");
 let salesRevenues = document.getElementById("salesRevenues");
 
-setInterval(() => {
-  fetchCount("product", countProduct, 1);
-  fetchCount("user", countUser, 1);
-  fetchCount("order", countOrder, 1);
-  fetchCount("orderAverage", avgOrder, 2);
-  fetchCount("salesRevenues", salesRevenues, 3);
-}, 1000);
+// setInterval(() => {
+//   fetchCount("product", countProduct, 1);
+//   fetchCount("user", countUser, 1);
+//   fetchCount("order", countOrder, 1);
+//   fetchCount("orderAverage", avgOrder, 2);
+//   fetchCount("salesRevenues", salesRevenues, 3);
+// }, 1000);
 
 function fetchCount(table, countDiv, sql) {
   fetch(`traitement/traitement_stats.php?${table}`)
@@ -74,15 +74,49 @@ function fetchCount(table, countDiv, sql) {
 }
 
 const formProduct = document.querySelector("#formProduct");
-const message = document.querySelector("#message");
+const messageProduct = document.querySelector("#messageProduct");
 
 formProduct.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const formData = new FormData(formProduct);
-  const data = Object.fromEntries(formData);
+  const imageInput = document.querySelector("#image");
+  const imageFile = imageInput.files[0];
+  // console.log("object");
+  formData.append("image", imageFile);
 
   fetch("traitement/traitement_addProduct.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.PRODUCT_ERROR) {
+        messageProduct.innerHTML = data.PRODUCT_ERROR;
+      } else {
+        messageProduct.style.color = "green";
+        messageProduct.innerHTML = data.PRODUCT_SUCCES;
+        formProduct.reset();
+      }
+    })
+    .catch((error) => console.log(error));
+});
+
+
+const formCategories = document.querySelector("#formCategories");
+const messageCategories = document.querySelector("#messageCategories");
+
+
+formCategories.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(formCategories);
+  const data = Object.fromEntries(formData);
+
+  fetch("traitement/traitement_addCategories.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
@@ -94,16 +128,19 @@ formProduct.addEventListener("submit", (event) => {
     })
     .then((data) => {
       console.log(data);
-      if (data.PRODUCT_ERROR) {
-        message.innerHTML = data.PRODUCT_ERROR;
+      if (data.CATEGORY_ERROR) {
+        messageCategories.innerHTML = data.CATEGORY_ERROR;
       } else {
-        message.style.color = "green";
-        message.innerHTML = data.PRODUCT_SUCCES;
-        formProduct.reset();
+        messageCategories.style.color = "green";
+        messageCategories.innerHTML = data.CATEGORY_SUCCES;
+        formCategories.reset();
       }
     })
     .catch((error) => console.log(error));
 });
+
+
+
 //   fetch(`./stats.php?product`)
 //     .then((response) => {
 //       return response.json();

@@ -126,7 +126,7 @@ main {
   width: 30%;
 }
 #formProduct,
-#formAddCategory {
+#formCategories {
   /* background-color: aqua; */
   display: flex;
   flex-direction: column;
@@ -168,7 +168,7 @@ main {
   border-style: inset;
   border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
 }
-#message {
+#messageProduct {
   width: 100%;
   color: #ffa938;
   display: flex;
@@ -202,8 +202,8 @@ main {
   position: absolute;
   /* top: 50%;
   left: 50%; */
-  top: 1%;
-  left: 15%;
+  top: 2%;
+  left: 22%;
   /* transform: translate(-50%, -50%); */
   height: 600px;
   overflow-y: auto;

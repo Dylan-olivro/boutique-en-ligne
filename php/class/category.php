@@ -18,7 +18,6 @@ class Category
             'name' => $this->name,
             'id_parent' => $this->id_parent
         ]);
-        header('Location: admin.php');
     }
     public function deleteCategory($bdd)
     {
@@ -27,7 +26,6 @@ class Category
 
         $deleteLiaison = $bdd->prepare("DELETE FROM liaison_items_category WHERE id_category = :id_category");
         $deleteLiaison->execute(['id_category' => $this->id]);
-        // header('Location: admin.php');
     }
     public function liaisonItemCategory($bdd)
     {
