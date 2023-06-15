@@ -1,10 +1,5 @@
 <?php
 require_once('./include/required.php');
-
-// $returnCategoryParent = $bdd->prepare('SELECT * FROM category WHERE id_parent != 0');
-// $returnCategoryParent->execute();
-// $resultCategoryParent = $returnCategoryParent->fetchAll(PDO::FETCH_OBJ);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,10 +45,7 @@ require_once('./include/required.php');
                                 </ul>
                             </ul>
                             </a>
-
-                            <!-- <ul class="dropdown-menu categoryParent"> -->
                         </div>
-                        <!-- </ul> -->
                     <?php
                     }
                     ?>
