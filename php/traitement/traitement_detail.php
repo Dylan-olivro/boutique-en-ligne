@@ -1,4 +1,4 @@
-<?php require_once("./include/bdd.php");
+<?php require_once("../include/bdd.php");
 
 $request = $bdd->prepare("SELECT * FROM products WHERE product_id = ?");
 $request->execute([$_GET['id']]);

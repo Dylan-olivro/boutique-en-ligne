@@ -13,30 +13,31 @@ let categoryParentRadio = document.querySelectorAll(
 let categoryParentName = document.querySelectorAll(".categoryParentName");
 let urlGet = window.location.href;
 let urlGetSplit = urlGet.split("?");
-console.log(chevronCatIcon.classList);
-// let urlGetId = urlGetSplit[1];
+
+let fetchFilter = "traitement/traitement_filter.php";
+let fetchTri = "traitement/traitement_tri.php";
 
 /**
  * Système de filtre par tri, prix, etc
  */
 $(triSelect).change(function () {
-  var triSelected = $("#triSelect option:selected").text();
+  let triSelected = $("#triSelect option:selected").text();
   if (triSelected) {
     allItems.innerHTML = "";
     if (triSelected == "Par popularité") {
-      fetchItems("traitement_tri.php?populaire");
+      fetchItems(fetchTri + "?populaire");
     } else if (triSelected == "Par nouveauté") {
-      fetchItems("traitement_tri.php?nouveau");
+      fetchItems(fetchTri + "?nouveau");
     } else if (triSelected == "Par prix croissant") {
-      fetchItems("traitement_tri.php?croissant");
+      fetchItems(fetchTri + "?croissant");
     } else if (triSelected == "Par prix décroissant") {
-      fetchItems("traitement_tri.php?decroissant");
+      fetchItems(fetchTri + "?decroissant");
     } else if (triSelected == "Par ordre de A à Z") {
-      fetchItems("traitement_tri.php?aZ");
+      fetchItems(fetchTri + "?aZ");
     } else if (triSelected == "Par ordre de Z à A") {
-      fetchItems("traitement_tri.php?zA");
+      fetchItems(fetchTri + "?zA");
     } else if (triSelected == "Par disponibilité") {
-      fetchItems("traitement_tri.php?dispo");
+      fetchItems(fetchTri + "?dispo");
     }
   }
 });
@@ -44,7 +45,7 @@ $(triSelect).change(function () {
 // * afficher ou cacher les child dans le parent correspondant au click du parent
 for (let i = 0; i < categoryParentRadio.length; i++) {
   resultParent[i].addEventListener("click", () => {
-    console.log(chevronCatIcon[i]);
+    // console.log(chevronCatIcon[i]);
     chevronCatIcon[i].classList.toggle("fa-chevron-down");
     chevronCatIcon[i].classList.toggle("fa-chevron-up");
     let childElement = document.querySelectorAll(
@@ -53,7 +54,7 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
     childElement[0].classList.toggle("categoryChildDivBlock");
     allItems.innerHTML = "";
     fetchItems(
-      `traitement_filter.php?categoryParent=` + categoryParentRadio[i].id
+      fetchFilter+`?categoryParent=` + categoryParentRadio[i].id
     );
   });
 }
@@ -119,20 +120,19 @@ function fetchItems(url) {
 /**
  * Afficher les produits de la catégorie visée dans la nav
  */
-
 if (urlGetSplit.length > 1) {
   // console.log(urlGetSplit);
   let urlGetName = urlGetSplit[1].split("=")[0];
   let urlGetId = urlGetSplit[1].split("=")[1];
   if (urlGetName == "subCategory") {
-    fetchItems(`traitement_filter.php?subCategory=` + urlGetId);
+    fetchItems(fetchFilter + `?subCategory=` + urlGetId);
     for (let i = 0; i < categoryChild.length; i++) {
       if (urlGetId == categoryChild[i].id) {
         categoryChild[i].setAttribute("checked", true);
       }
     }
   } else if (urlGetName == "categoryParent") {
-    fetchItems(`traitement_filter.php?categoryParent=` + urlGetId);
+    fetchItems(fetchFilter + `?categoryParent=` + urlGetId);
     for (let i = 0; i < categoryParentRadio.length; i++) {
       if (urlGetId == categoryParentRadio[i].id) {
         categoryParentRadio[i].setAttribute("checked", true);
@@ -143,7 +143,7 @@ if (urlGetSplit.length > 1) {
 } else {
   // console.log("pas d'id");
   //* exécution de la fonction fetchItems dès lors qu'on arrive sur la page
-  fetchItems(`traitement_filter.php`);
+  fetchItems(fetchFilter);
 }
 
 // * générer les contenu de la catégorie enfant sélectionnée
@@ -163,7 +163,7 @@ for (let i = 0; i < categoryChild.length; i++) {
     // window.history.pushState({urlPath:'/page1'},"",'/page1')
 
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
-    fetchItems(`traitement_filter.php?subCategory=` + categoryChild[i].id);
+    fetchItems(fetchFilter + `?subCategory=` + categoryChild[i].id);
     // console.log(categoryChild[i].id);
   });
 }
@@ -185,7 +185,7 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
 
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
     fetchItems(
-      `traitement_filter.php?categoryParent=` + categoryParentRadio[i].id
+      fetchFilter + `?categoryParent=` + categoryParentRadio[i].id
     );
     // console.log(categoryChild[i].id);
   });

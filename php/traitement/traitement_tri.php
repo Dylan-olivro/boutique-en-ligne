@@ -1,5 +1,5 @@
 <?php
-require_once("./include/bdd.php");
+require_once("../include/bdd.php");
 
 
 if (isset($_GET['populaire'])) {
