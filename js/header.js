@@ -5,6 +5,7 @@ let iconBurger = document.querySelector(".iconBurger");
 let categoriesNav = document.querySelector(".categoriesNav");
 let userIcon = document.querySelector(".userIcon");
 let userLink = document.querySelector(".userLink");
+let cartIcon  = document.getElementById("cart-icon");
 
 function burger(div) {
   div.classList.toggle("change");
@@ -48,6 +49,7 @@ let darkMode = document.getElementById("darkMode");
 darkMode.addEventListener("click", () => {
   darkModeIcon.classList.toggle("fa-moon");
   darkModeIcon.classList.toggle("fa-sun");
+  console.log(cartIcon);
 });
 
 //* On change le thème dans le localStorage pour qu'il soit mémorisé
