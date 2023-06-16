@@ -14,7 +14,7 @@ if (isset($_GET['categoryParent'])) {
     $json = json_encode($result);
     echo $json;
 } else {
-    $requestAllItems = $bdd->prepare("SELECT * FROM products INNER JOIN images ON products.product_id = images.product_id WHERE image_main = 1 ORDER BY products.product_price DESC");
+    $requestAllItems = $bdd->prepare("SELECT *,count(*) FROM liaison_product_order INNER JOIN products ON liaison_product_order.product_id = products.product_id INNER JOIN images ON products.product_id = images.product_id WHERE images.image_main = 1 GROUP BY products.product_id ORDER BY count(*) DESC");
     $requestAllItems->execute();
     $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_ASSOC);
     $jsonAllItems = json_encode($resultAllItems);

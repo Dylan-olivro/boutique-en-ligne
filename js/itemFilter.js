@@ -1,4 +1,7 @@
 let allItems = document.getElementById("allItems");
+let chevronCat = document.querySelectorAll(".chevronCat");
+let chevronCatIcon = document.querySelectorAll(".chevronCatIcon");
+let triSelect = document.getElementById("triSelect");
 let categoryChildDiv = document.querySelectorAll(".categoryChildDiv");
 let categoryChild = document.querySelectorAll("input[name='subCategory']");
 let resultParent = document.querySelectorAll(".resultParent");
@@ -10,12 +13,40 @@ let categoryParentRadio = document.querySelectorAll(
 let categoryParentName = document.querySelectorAll(".categoryParentName");
 let urlGet = window.location.href;
 let urlGetSplit = urlGet.split("?");
-console.log(urlGetSplit);
+console.log(chevronCatIcon.classList);
 // let urlGetId = urlGetSplit[1];
+
+/**
+ * Système de filtre par tri, prix, etc
+ */
+$(triSelect).change(function () {
+  var triSelected = $("#triSelect option:selected").text();
+  if (triSelected) {
+    allItems.innerHTML = "";
+    if (triSelected == "Par popularité") {
+      fetchItems("traitement_tri.php?populaire");
+    } else if (triSelected == "Par nouveauté") {
+      fetchItems("traitement_tri.php?nouveau");
+    } else if (triSelected == "Par prix croissant") {
+      fetchItems("traitement_tri.php?croissant");
+    } else if (triSelected == "Par prix décroissant") {
+      fetchItems("traitement_tri.php?decroissant");
+    } else if (triSelected == "Par ordre de A à Z") {
+      fetchItems("traitement_tri.php?aZ");
+    } else if (triSelected == "Par ordre de Z à A") {
+      fetchItems("traitement_tri.php?zA");
+    } else if (triSelected == "Par disponibilité") {
+      fetchItems("traitement_tri.php?dispo");
+    }
+  }
+});
 
 // * afficher ou cacher les child dans le parent correspondant au click du parent
 for (let i = 0; i < categoryParentRadio.length; i++) {
-  categoryParentName[i].addEventListener("click", () => {
+  resultParent[i].addEventListener("click", () => {
+    console.log(chevronCatIcon[i]);
+    chevronCatIcon[i].classList.toggle("fa-chevron-down");
+    chevronCatIcon[i].classList.toggle("fa-chevron-up");
     let childElement = document.querySelectorAll(
       "#categoryChildDiv" + categoryParentName[i].getAttribute("id")
     );
@@ -90,7 +121,7 @@ function fetchItems(url) {
  */
 
 if (urlGetSplit.length > 1) {
-  console.log(urlGetSplit);
+  // console.log(urlGetSplit);
   let urlGetName = urlGetSplit[1].split("=")[0];
   let urlGetId = urlGetSplit[1].split("=")[1];
   if (urlGetName == "subCategory") {
