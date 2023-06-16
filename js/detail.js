@@ -3,7 +3,7 @@ function getID() {
   let id = url.split("=")[1];
   return id;
 }
-fetch(`./traitement_detail.php?id=${getID()}`)
+fetch(`traitement/traitement_detail.php?id=${getID()}`)
   .then((response) => {
     return response.json();
   })
