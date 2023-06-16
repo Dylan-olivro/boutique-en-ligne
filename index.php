@@ -82,6 +82,7 @@ $result = $request->fetchAll(PDO::FETCH_OBJ);
 // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
 // ? Quand les inputs sont différents de vide mettre leur border en --button-color
 // ? PASSER LE MESSAGE DE STOCK EPUISEE SUR LE DETAIL EN --> JAVASCRIPT
+// ? Faire un select sur les categories
 
 // ! AJOUTER LES CONDITIONS POUR LES IMAGES DANS LE FORMULAIRE DU PRODUIT
 // ! INTVAL POUR LA CONNEXION

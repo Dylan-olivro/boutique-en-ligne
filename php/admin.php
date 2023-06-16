@@ -27,6 +27,7 @@ if ($_SESSION['user']->user_role == 0) {
 
         $category = new Category(null, null, null);
         $result_cat = $category->returnAllCategories($bdd);
+        // var_dump($result_cat);
 
         $user = new User(null, null, null, null, null, null);
         $result_users = $user->returnAllUser($bdd);
