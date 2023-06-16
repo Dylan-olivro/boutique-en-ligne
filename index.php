@@ -49,6 +49,8 @@
 
 <?php
 
+// TODO: désactiver la touche ENTRER sur l'autocomplétion car elle envoie sur une page erreur
+// TODO: rajouter un header location après le post Delete de la page Cart
 // TODO: FAIRE toutes les verif en html, php et js pour les formulaires des pages admin, cartPage, profil, addAdress, modifyAdress, modifyPassword 
 // TODO: FAIRE la maquette
 // TODO: FAIRE le MCD

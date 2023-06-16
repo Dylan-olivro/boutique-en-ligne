@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : ven. 16 juin 2023 à 00:49
+-- HÃ´te : 127.0.0.1
+-- GÃ©nÃ©rÃ© le : ven. 16 juin 2023 Ã  00:49
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `boutique`
+-- Base de donnÃ©es : `boutique`
 --
 CREATE DATABASE IF NOT EXISTS `boutique` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `boutique`;
@@ -42,7 +42,7 @@ CREATE TABLE `addresses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `addresses`
+-- DÃ©chargement des donnÃ©es de la table `addresses`
 --
 
 INSERT INTO `addresses` (`address_id`, `user_id`, `address_numero`, `address_name`, `address_postcode`, `address_city`, `address_telephone`, `address_lastname`, `address_firstname`) VALUES
@@ -66,7 +66,7 @@ CREATE TABLE `carts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `carts`
+-- DÃ©chargement des donnÃ©es de la table `carts`
 --
 
 INSERT INTO `carts` (`cart_id`, `user_id`, `product_id`, `cart_quantity`) VALUES
@@ -88,11 +88,11 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `category`
+-- DÃ©chargement des donnÃ©es de la table `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `id_parent`) VALUES
-(1, 'Périphériques', 0),
+(1, 'PÃ©riphÃ©riques', 0),
 (2, 'Composants', 0),
 (3, 'Ordinateurs', 0),
 (4, 'Gaming', 0),
@@ -104,7 +104,7 @@ INSERT INTO `category` (`id`, `name`, `id_parent`) VALUES
 (10, 'Webcam', 1),
 (11, 'Processeur', 2),
 (12, 'Carte Graphique', 2),
-(13, 'Carte Mère', 2),
+(13, 'Carte MÃ¨re', 2),
 (14, 'Alimentation PC', 2),
 (15, 'RAM', 2),
 (16, 'Stockage', 2),
@@ -134,7 +134,7 @@ CREATE TABLE `codes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `codes`
+-- DÃ©chargement des donnÃ©es de la table `codes`
 --
 
 INSERT INTO `codes` (`code_id`, `code_name`, `code_discount`) VALUES
@@ -154,7 +154,7 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `images`
+-- DÃ©chargement des donnÃ©es de la table `images`
 --
 
 INSERT INTO `images` (`image_id`, `product_id`, `image_name`, `image_main`) VALUES
@@ -261,7 +261,7 @@ CREATE TABLE `liaison_items_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `liaison_items_category`
+-- DÃ©chargement des donnÃ©es de la table `liaison_items_category`
 --
 
 INSERT INTO `liaison_items_category` (`id`, `id_item`, `id_category`) VALUES
@@ -381,7 +381,7 @@ CREATE TABLE `liaison_product_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `liaison_product_order`
+-- DÃ©chargement des donnÃ©es de la table `liaison_product_order`
 --
 
 INSERT INTO `liaison_product_order` (`id`, `product_id`, `order_id`) VALUES
@@ -458,7 +458,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `orders`
+-- DÃ©chargement des donnÃ©es de la table `orders`
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `order_total`, `order_address`, `order_number`) VALUES
@@ -508,102 +508,102 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `products`
+-- DÃ©chargement des donnÃ©es de la table `products`
 --
 
 INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_date`, `product_price`, `product_stock`) VALUES
 (1, 'AMD Ryzen 5 5600X (3.7 GHz)', 'Processeur Socket AM4 - Hexa Core - Cache 35 Mo - Vermeer', '2023-05-30 14:55:55', '187.00', 500),
-(2, 'DDR5 Corsair Vengeance - 32 Go (2 x 16 Go) 5200 MHz - CAS 40', 'MÃ©moire DDR5 - PC-41600 - Low-Profile', '2023-05-30 14:56:40', '179.00', 500),
+(2, 'DDR5 Corsair Vengeance - 32 Go (2 x 16 Go) 5200 MHz - CAS 40', 'MÃƒÂ©moire DDR5 - PC-41600 - Low-Profile', '2023-05-30 14:56:40', '179.00', 500),
 (3, 'Intel Core i5-13600KF (3.5 GHz)', 'Processeur Socket 1700 - 14 coeurs - Cache 24 Mo - Raptor Lake - Ventirad non inclus', '2023-05-30 14:59:22', '369.00', 500),
-(4, 'DDR5 Kingston Fury Beast Black - 32 Go (2 x 16 Go) 5600 MHz - CAS 40', 'MÃ©moire DDR5 - PC-44800 - Low-Profile', '2023-05-30 14:59:38', '159.00', 500),
+(4, 'DDR5 Kingston Fury Beast Black - 32 Go (2 x 16 Go) 5600 MHz - CAS 40', 'MÃƒÂ©moire DDR5 - PC-44800 - Low-Profile', '2023-05-30 14:59:38', '159.00', 500),
 (5, 'AMD Ryzen 5 5600 (3.5 GHz)', 'Processeur Socket AM4 - Hexa Core - Cache 35 Mo - Vermeer - Ventirad inclus', '2023-05-30 15:00:01', '169.00', 500),
 (6, 'AMD Ryzen 7 5700X (3.4 GHz)', 'Processeur Socket AM4 - Octo Core - Cache 36 Mo - Vermeer - Ventirad non inclus', '2023-05-30 15:00:38', '244.00', 500),
-(7, 'DDR4 G.Skill Trident Z RGB - 16 Go (2 x 8 Go) 3600 MHz - CAS 18', 'Kit Dual Channel - MÃ©moire DDR4 optimisÃ©e Intel - PC-28800 - LED RGB', '2023-05-30 15:00:56', '53.00', 500),
+(7, 'DDR4 G.Skill Trident Z RGB - 16 Go (2 x 8 Go) 3600 MHz - CAS 18', 'Kit Dual Channel - MÃƒÂ©moire DDR4 optimisÃƒÂ©e Intel - PC-28800 - LED RGB', '2023-05-30 15:00:56', '53.00', 500),
 (8, 'Intel Core i5-12400F (2.5 GHz)', 'Processeur Socket 1700 - Hexa Core - Cache 18 Mo - Alder Lake - Ventirad inclus', '2023-05-30 15:01:46', '178.00', 500),
-(9, 'DDR5 Crucial PRO - 32 Go (2 x 16 Go) 5600 MHz - CAS 46', 'MÃ©moire DDR5 - PC-44800 - Low-Profile - OptimisÃ©e AMD EXPO', '2023-05-30 15:02:16', '129.00', 500),
-(10, 'DDR5 Textorm - 32 Go (2 x 16 Go) 4800 MHz - CAS 40', 'MÃ©moire DDR5 - PC-38400 - Low-Profile', '2023-05-30 15:03:09', '139.00', 500),
+(9, 'DDR5 Crucial PRO - 32 Go (2 x 16 Go) 5600 MHz - CAS 46', 'MÃƒÂ©moire DDR5 - PC-44800 - Low-Profile - OptimisÃƒÂ©e AMD EXPO', '2023-05-30 15:02:16', '129.00', 500),
+(10, 'DDR5 Textorm - 32 Go (2 x 16 Go) 4800 MHz - CAS 40', 'MÃƒÂ©moire DDR5 - PC-38400 - Low-Profile', '2023-05-30 15:03:09', '139.00', 500),
 (11, 'Gainward GeForce RTX 4070 Ghost + Diablo IV offert !', 'Carte graphique - Avec backplate - Compatible VR', '2023-05-30 15:03:10', '610.00', 500),
 (12, 'Asus Radeon RX 6650 XT DUAL O8G', 'Carte graphique - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR', '2023-05-30 15:03:57', '299.00', 500),
 (13, 'Gigabyte Radeon RX 6700 XT EAGLE', 'Carte graphique PCI-Express - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR', '2023-05-30 15:04:46', '338.00', 500),
-(14, 'Samsung SÃ©rie 970 EVO Plus 2 To', 'SSD M.2 - PCI-Express 3.0 NVMe - ContrÃ´leur Samsung Phoenix - Lecture max : 3500 Mo/s - Ecriture max : 3300 Mo/s - MÃ©moire TLC 3D', '2023-05-30 15:05:00', '99.00', 500),
-(15, 'KFA2 GeForce RTX 3060 Ti (1-Click OC) (LHR)', 'Carte graphique overclockÃ©e - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR - MÃ©moire GDDR6', '2023-05-30 15:05:17', '319.00', 500),
+(14, 'Samsung SÃƒÂ©rie 970 EVO Plus 2 To', 'SSD M.2 - PCI-Express 3.0 NVMe - ContrÃƒÂ´leur Samsung Phoenix - Lecture max : 3500 Mo/s - Ecriture max : 3300 Mo/s - MÃƒÂ©moire TLC 3D', '2023-05-30 15:05:00', '99.00', 500),
+(15, 'KFA2 GeForce RTX 3060 Ti (1-Click OC) (LHR)', 'Carte graphique overclockÃƒÂ©e - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR - MÃƒÂ©moire GDDR6', '2023-05-30 15:05:17', '319.00', 500),
 (16, 'KFA2 GeForce GTX 1630 EX (1-Click OC)', 'Carte graphique - Compatible VR', '2023-05-30 15:06:01', '112.00', 500),
-(17, 'Crucial P3 1 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Lecture max : 3500 Mo/s - Ecriture max : 3000 Mo/s - MÃ©moire QLC', '2023-05-30 15:06:11', '51.00', 500),
-(18, 'ASUS ROG STRIX B760-F GAMING WIFI', 'Carte mÃ¨re ATX - Socket 1700 - Chipset Intel B760 - USB 3.2 Type C - SATA 6 Gb/s - M.2 - WiFi - LEDs intÃ©grÃ©es', '2023-05-30 15:06:54', '249.00', 500),
-(19, 'ASUS ROG STRIX B760-A GAMING WIFI DDR4 + opÃ©ration COD Modern Warfare 2', 'Carte mÃ¨re ATX - Socket 1700 - Chipset Intel B760 - USB 3.2 Type C - SATA 6 Gb/s - M.2 - WiFi - LEDs intÃ©grÃ©es', '2023-05-30 15:07:35', '229.00', 500),
-(20, 'Kingston NV2 1 To', 'SSD M.2 - PCI-Express 4.0 NVMe - Lecture Max : 3500 Mo/s - Ecriture max : 2100 Mo/s - MÃ©moire QLC 3D', '2023-05-30 15:07:42', '52.00', 500),
-(21, 'GIGABYTE B760 GAMING X DDR4', 'Carte mÃ¨re ATX - Socket 1700 - Chipset Intel B760 - USB 3.1 - SATA 6 Gb/s - M.2', '2023-05-30 15:08:11', '149.00', 500),
-(22, 'Fox Spirit PM18 240 Go', 'SSD M.2 - PCI-Express 3.0 NVMe - ContrÃ´leur Silicon Motion SM2263XT - Lecture max : 3400 Mo/s - Ecriture max : 1200 Mo/s - MÃ©moire TLC 3D', '2023-05-30 15:08:35', '17.00', 500),
-(23, 'MSI PRO Z690-P DDR4', 'Carte mÃ¨re ATX - Socket 1700 - Chipset Intel Z690 - USB 3.2 Type C - SATA 6 Gb/s - M.2', '2023-05-30 15:08:47', '199.00', 500),
-(24, 'ASRock B760M PG SONIC WIFI', 'Carte mÃ¨re mATX - Socket 1700 - Chipset Intel B760 - USB 3.1 Type C - SATA 6 Gb/s - M.2 - Wifi - LED intÃ©grÃ©es', '2023-05-30 15:09:21', '199.00', 500),
-(25, 'Intel SSD 670P Series 2 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Lecture max : 3500 Mo/s - Ecriture max : 2700 Mo/s - MÃ©moire QLC 3D4', '2023-05-30 15:09:57', '99.00', 500),
-(26, 'Aerocool Lux RGB 750M - 750W', 'Alimentation PC CertifiÃ©e 80+ Bronze - Semi-Modulaire', '2023-05-30 15:10:05', '74.00', 500),
-(27, 'MSI MPG A850G PCIE5 - 850W', 'Alimentation PC CertifiÃ©e 80+ Gold - Modulaire - Semi-passive - ATX 3.0', '2023-05-30 15:11:16', '139.00', 500),
-(28, 'Corsair CV650 - 650W', 'Alimentation PC CertifiÃ©e 80+ Bronze', '2023-05-30 15:11:52', '89.00', 500),
-(29, 'be quiet! Pure Wings 2 PWM - 120 mm', 'Ventilateur boitier - PWM - 1500 RPM - 20.2 dB - Jusqu\'Ã  51.4 CFM', '2023-05-30 15:12:04', '10.00', 500),
-(30, 'Corsair CX550F RGB (Blanc) - 550W', 'Alimentation PC CertifiÃ©e 80+ Bronze - Modulaire', '2023-05-30 15:12:28', '79.00', 500),
-(31, 'Arctic P12 PWM PST - Blanc', 'Ventilateur boÃ®tier - PWM - 200 Ã  1800 RPM - 22,5 dB - 56,3 CFM', '2023-05-30 15:13:21', '6.00', 500),
-(32, 'Cooler Master V750 Gold I - 750W', 'Alimentation PC CertifiÃ©e 80+ Gold - Modulaire - ATX 3.0', '2023-05-30 15:13:53', '199.00', 500),
-(33, 'Cooler Master SickleFlow 120 ARGB - 120 mm', 'Ventilateur boitier - PWM - 650 Ã  1800 RPM - 27 dB - 62 CFM', '2023-05-30 15:14:34', '16.00', 500),
-(34, 'Cooler Master MasterFan MF120 Halo - 120 mm - Blanc', 'Ventilateur boitier - PWM - 650 Ã  1800 RPM - 30 dB - 47.2 CFM', '2023-05-30 15:17:00', '15.00', 500),
+(17, 'Crucial P3 1 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Lecture max : 3500 Mo/s - Ecriture max : 3000 Mo/s - MÃƒÂ©moire QLC', '2023-05-30 15:06:11', '51.00', 500),
+(18, 'ASUS ROG STRIX B760-F GAMING WIFI', 'Carte mÃƒÂ¨re ATX - Socket 1700 - Chipset Intel B760 - USB 3.2 Type C - SATA 6 Gb/s - M.2 - WiFi - LEDs intÃƒÂ©grÃƒÂ©es', '2023-05-30 15:06:54', '249.00', 500),
+(19, 'ASUS ROG STRIX B760-A GAMING WIFI DDR4 + opÃƒÂ©ration COD Modern Warfare 2', 'Carte mÃƒÂ¨re ATX - Socket 1700 - Chipset Intel B760 - USB 3.2 Type C - SATA 6 Gb/s - M.2 - WiFi - LEDs intÃƒÂ©grÃƒÂ©es', '2023-05-30 15:07:35', '229.00', 500),
+(20, 'Kingston NV2 1 To', 'SSD M.2 - PCI-Express 4.0 NVMe - Lecture Max : 3500 Mo/s - Ecriture max : 2100 Mo/s - MÃƒÂ©moire QLC 3D', '2023-05-30 15:07:42', '52.00', 500),
+(21, 'GIGABYTE B760 GAMING X DDR4', 'Carte mÃƒÂ¨re ATX - Socket 1700 - Chipset Intel B760 - USB 3.1 - SATA 6 Gb/s - M.2', '2023-05-30 15:08:11', '149.00', 500),
+(22, 'Fox Spirit PM18 240 Go', 'SSD M.2 - PCI-Express 3.0 NVMe - ContrÃƒÂ´leur Silicon Motion SM2263XT - Lecture max : 3400 Mo/s - Ecriture max : 1200 Mo/s - MÃƒÂ©moire TLC 3D', '2023-05-30 15:08:35', '17.00', 500),
+(23, 'MSI PRO Z690-P DDR4', 'Carte mÃƒÂ¨re ATX - Socket 1700 - Chipset Intel Z690 - USB 3.2 Type C - SATA 6 Gb/s - M.2', '2023-05-30 15:08:47', '199.00', 500),
+(24, 'ASRock B760M PG SONIC WIFI', 'Carte mÃƒÂ¨re mATX - Socket 1700 - Chipset Intel B760 - USB 3.1 Type C - SATA 6 Gb/s - M.2 - Wifi - LED intÃƒÂ©grÃƒÂ©es', '2023-05-30 15:09:21', '199.00', 500),
+(25, 'Intel SSD 670P Series 2 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Lecture max : 3500 Mo/s - Ecriture max : 2700 Mo/s - MÃƒÂ©moire QLC 3D4', '2023-05-30 15:09:57', '99.00', 500),
+(26, 'Aerocool Lux RGB 750M - 750W', 'Alimentation PC CertifiÃƒÂ©e 80+ Bronze - Semi-Modulaire', '2023-05-30 15:10:05', '74.00', 500),
+(27, 'MSI MPG A850G PCIE5 - 850W', 'Alimentation PC CertifiÃƒÂ©e 80+ Gold - Modulaire - Semi-passive - ATX 3.0', '2023-05-30 15:11:16', '139.00', 500),
+(28, 'Corsair CV650 - 650W', 'Alimentation PC CertifiÃƒÂ©e 80+ Bronze', '2023-05-30 15:11:52', '89.00', 500),
+(29, 'be quiet! Pure Wings 2 PWM - 120 mm', 'Ventilateur boitier - PWM - 1500 RPM - 20.2 dB - Jusqu\'ÃƒÂ  51.4 CFM', '2023-05-30 15:12:04', '10.00', 500),
+(30, 'Corsair CX550F RGB (Blanc) - 550W', 'Alimentation PC CertifiÃƒÂ©e 80+ Bronze - Modulaire', '2023-05-30 15:12:28', '79.00', 500),
+(31, 'Arctic P12 PWM PST - Blanc', 'Ventilateur boÃƒÂ®tier - PWM - 200 ÃƒÂ  1800 RPM - 22,5 dB - 56,3 CFM', '2023-05-30 15:13:21', '6.00', 500),
+(32, 'Cooler Master V750 Gold I - 750W', 'Alimentation PC CertifiÃƒÂ©e 80+ Gold - Modulaire - ATX 3.0', '2023-05-30 15:13:53', '199.00', 500),
+(33, 'Cooler Master SickleFlow 120 ARGB - 120 mm', 'Ventilateur boitier - PWM - 650 ÃƒÂ  1800 RPM - 27 dB - 62 CFM', '2023-05-30 15:14:34', '16.00', 500),
+(34, 'Cooler Master MasterFan MF120 Halo - 120 mm - Blanc', 'Ventilateur boitier - PWM - 650 ÃƒÂ  1800 RPM - 30 dB - 47.2 CFM', '2023-05-30 15:17:00', '15.00', 500),
 (35, 'In Win Saturn ASN140 - 140 mm', 'Ventilateur boitier - PWM - 500-1400 RPM - 36 dB - 93.97 CFM', '2023-05-30 15:18:03', '12.00', 500),
-(36, 'CÃ¢ble ethernet RJ45 CAT6 F/UTP - Noir - 3 mÃ¨tres - Textorm', 'MÃ¢le / MÃ¢le', '2023-05-30 15:20:51', '6.00', 500),
-(37, 'CÃ¢ble ethernet RJ45 CAT6 U/UTP - Blanc - 5 mÃ¨tres - Textorm', 'MÃ¢le / MÃ¢le', '2023-05-30 15:22:09', '7.00', 500),
-(38, 'CÃ¢ble USB 3.0 Type A - 1.8 mÃ¨tre - Bleu', 'CÃ¢ble USB 3.0 Type A MÃ¢le/MÃ¢le', '2023-05-30 15:25:18', '8.00', 500),
-(39, 'Adaptateur USB 3.0 Type C MÃ¢le vers USB 3.0 Type A Femelle', 'Cet adaptateur adaptateur USB Type C MÃ¢le / USB 3.0 Type A Femelle permet de connecter tout accessoire ou pÃ©riphÃ©rique prÃ©vu pour de l\'USB C via un port USB 3.0 Type A.', '2023-05-30 15:28:12', '0.00', 500),
-(40, 'CÃ¢ble SATA - 50 cm', 'CÃ¢ble SATA MÃ¢le / MÃ¢le', '2023-05-30 15:29:15', '5.00', 500),
-(41, 'Ducky Channel One 2 Mini RGB Blanc (Cherry MX Blue) (AZERTY)', 'Clavier Gamer mÃ©canique - RÃ©troÃ©clairage RGB - Switch Cherry MX Blue', '2023-06-05 12:25:52', '114.00', 500),
-(42, 'Logitech G910 Orion Spectrum (Romer-G) (AZERTY)', 'Clavier Gamer mÃ©canique - RÃ©troÃ©clairage 16.8M de couleurs touche par touche - Switches Romer-G', '2023-06-05 12:28:08', '79.00', 500),
+(36, 'CÃƒÂ¢ble ethernet RJ45 CAT6 F/UTP - Noir - 3 mÃƒÂ¨tres - Textorm', 'MÃƒÂ¢le / MÃƒÂ¢le', '2023-05-30 15:20:51', '6.00', 500),
+(37, 'CÃƒÂ¢ble ethernet RJ45 CAT6 U/UTP - Blanc - 5 mÃƒÂ¨tres - Textorm', 'MÃƒÂ¢le / MÃƒÂ¢le', '2023-05-30 15:22:09', '7.00', 500),
+(38, 'CÃƒÂ¢ble USB 3.0 Type A - 1.8 mÃƒÂ¨tre - Bleu', 'CÃƒÂ¢ble USB 3.0 Type A MÃƒÂ¢le/MÃƒÂ¢le', '2023-05-30 15:25:18', '8.00', 500),
+(39, 'Adaptateur USB 3.0 Type C MÃƒÂ¢le vers USB 3.0 Type A Femelle', 'Cet adaptateur adaptateur USB Type C MÃƒÂ¢le / USB 3.0 Type A Femelle permet de connecter tout accessoire ou pÃƒÂ©riphÃƒÂ©rique prÃƒÂ©vu pour de l\'USB C via un port USB 3.0 Type A.', '2023-05-30 15:28:12', '0.00', 500),
+(40, 'CÃƒÂ¢ble SATA - 50 cm', 'CÃƒÂ¢ble SATA MÃƒÂ¢le / MÃƒÂ¢le', '2023-05-30 15:29:15', '5.00', 500),
+(41, 'Ducky Channel One 2 Mini RGB Blanc (Cherry MX Blue) (AZERTY)', 'Clavier Gamer mÃƒÂ©canique - RÃƒÂ©troÃƒÂ©clairage RGB - Switch Cherry MX Blue', '2023-06-05 12:25:52', '114.00', 500),
+(42, 'Logitech G910 Orion Spectrum (Romer-G) (AZERTY)', 'Clavier Gamer mÃƒÂ©canique - RÃƒÂ©troÃƒÂ©clairage 16.8M de couleurs touche par touche - Switches Romer-G', '2023-06-05 12:28:08', '79.00', 500),
 (43, 'Razer Ornata V3 X (AZERTY)', 'Clavier Gamer - Switchs membrane silencieux - RGB', '2023-06-05 12:29:37', '49.00', 500),
 (44, 'Speedlink Ludicium (AZERTY)', 'Clavier Gamer', '2023-06-05 12:38:30', '9.00', 500),
-(45, 'Roccat Vulcan Pro (Switch Titan Optique Tactile) (AZERTY)', 'Clavier Gamer mÃ©canique - RÃ©troÃ©clairage AIMO 16.8 M de couleurs - Switches Roccat Titan Optique Tactile - Repose-poignets dÃ©tachable', '2023-06-05 12:40:17', '99.00', 500),
-(46, 'Logitech G502 HERO', 'Souris Gamer optique - RÃ©solution ajustable 100 Ã  16 000 dpi - 11 boutons programmables', '2023-06-05 12:42:32', '49.00', 500),
-(47, 'Razer Basilisk v3', 'Souris Gamer optique - RÃ©solution ajustable 26 000 dpi - 11 boutons programmables', '2023-06-05 12:43:43', '69.00', 500),
-(48, 'Cooler Master MM720 - Matte Black', 'Souris Gamer optique - RÃ©solution ajustable 16000 DPI - RGB - 6 boutons - 49 grammes', '2023-06-05 12:45:10', '49.00', 500),
-(49, 'MSI Gaming M99', 'Souris Gamer optique - RÃ©solution ajustable 4000 dpi - 7 boutons - RÃ©troÃ©clairage RGB', '2023-06-05 12:46:41', '24.00', 500),
-(50, 'SteelSeries Prime+', 'Souris Gamer optique - RÃ©solution ajustable jusqu\'Ã  18 000 dpi - 5 boutons programmables', '2023-06-05 12:47:50', '39.00', 500),
-(51, 'Asus TUF VG27AQ Adaptive Sync + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 27&quot; IPS 165 Hz - HDR - 2560 x 1440 px (QHD) - 1 ms - DisplayPort / HDMI - Pied rÃ©glable + Rotation - Bords extra-fins - Compatible G-Sync', '2023-06-05 12:49:58', '389.00', 500),
+(45, 'Roccat Vulcan Pro (Switch Titan Optique Tactile) (AZERTY)', 'Clavier Gamer mÃƒÂ©canique - RÃƒÂ©troÃƒÂ©clairage AIMO 16.8 M de couleurs - Switches Roccat Titan Optique Tactile - Repose-poignets dÃƒÂ©tachable', '2023-06-05 12:40:17', '99.00', 500),
+(46, 'Logitech G502 HERO', 'Souris Gamer optique - RÃƒÂ©solution ajustable 100 ÃƒÂ  16 000 dpi - 11 boutons programmables', '2023-06-05 12:42:32', '49.00', 500),
+(47, 'Razer Basilisk v3', 'Souris Gamer optique - RÃƒÂ©solution ajustable 26 000 dpi - 11 boutons programmables', '2023-06-05 12:43:43', '69.00', 500),
+(48, 'Cooler Master MM720 - Matte Black', 'Souris Gamer optique - RÃƒÂ©solution ajustable 16000 DPI - RGB - 6 boutons - 49 grammes', '2023-06-05 12:45:10', '49.00', 500),
+(49, 'MSI Gaming M99', 'Souris Gamer optique - RÃƒÂ©solution ajustable 4000 dpi - 7 boutons - RÃƒÂ©troÃƒÂ©clairage RGB', '2023-06-05 12:46:41', '24.00', 500),
+(50, 'SteelSeries Prime+', 'Souris Gamer optique - RÃƒÂ©solution ajustable jusqu\'ÃƒÂ  18 000 dpi - 5 boutons programmables', '2023-06-05 12:47:50', '39.00', 500),
+(51, 'Asus TUF VG27AQ Adaptive Sync + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 27&quot; IPS 165 Hz - HDR - 2560 x 1440 px (QHD) - 1 ms - DisplayPort / HDMI - Pied rÃƒÂ©glable + Rotation - Bords extra-fins - Compatible G-Sync', '2023-06-05 12:49:58', '389.00', 500),
 (52, 'AOC 24G2SPAE', 'Moniteur 23.6&quot; IPS 165 Hz - Full HD - 1 ms MPRT - DisplayPort / HDMI / VGA - Bords fins', '2023-06-05 12:51:05', '169.00', 500),
-(53, 'Iiyama G-Master G2470HSU-B1 FreeSync', 'Moniteur 23.8&quot; IPS LED 165 Hz - Full HD - 0.8 ms MPRT - DisplayPort / HDMI - HP intÃ©grÃ©s - Bords extra-fins - Hub USB', '2023-06-05 12:51:44', '179.00', 500),
-(54, 'AOC CQ27G2U/BK Adaptive Sync (dalle incurvÃ©e) + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 27&quot; VA 144 Hz - 2560 x 1440 px (QHD) - 1 ms - DisplayPort / HDMI (x2) - Pied rÃ©glable - Bords extra-fins - Hub USB', '2023-06-05 12:52:33', '279.00', 500),
-(55, 'Gigabyte M28U VRR + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 28&quot; IPS 144 Hz - HDR 400 - 3840 x 2160 px (Ultra HD 4K) - 1 ms - DisplayPort / HDMI 2.1 (x2) - Pied rÃ©glable - Bords extra-fins - Hub USB - Switch KVM intÃ©grÃ©', '2023-06-05 12:53:19', '589.00', 500),
+(53, 'Iiyama G-Master G2470HSU-B1 FreeSync', 'Moniteur 23.8&quot; IPS LED 165 Hz - Full HD - 0.8 ms MPRT - DisplayPort / HDMI - HP intÃƒÂ©grÃƒÂ©s - Bords extra-fins - Hub USB', '2023-06-05 12:51:44', '179.00', 500),
+(54, 'AOC CQ27G2U/BK Adaptive Sync (dalle incurvÃƒÂ©e) + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 27&quot; VA 144 Hz - 2560 x 1440 px (QHD) - 1 ms - DisplayPort / HDMI (x2) - Pied rÃƒÂ©glable - Bords extra-fins - Hub USB', '2023-06-05 12:52:33', '279.00', 500),
+(55, 'Gigabyte M28U VRR + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 28&quot; IPS 144 Hz - HDR 400 - 3840 x 2160 px (Ultra HD 4K) - 1 ms - DisplayPort / HDMI 2.1 (x2) - Pied rÃƒÂ©glable - Bords extra-fins - Hub USB - Switch KVM intÃƒÂ©grÃƒÂ©', '2023-06-05 12:53:19', '589.00', 500),
 (56, 'Blue Yeti USB Blackout', 'Microphone Gamer - PC - USB', '2023-06-05 12:57:12', '139.00', 500),
-(57, 'Streamplify Mic Arm', 'Microphone USB - cardioÃ¯de - 2 modes de sortie audio - fonction mise en sourdine - rÃ©troÃ©clairage RGB - filtre pop - bras de montage', '2023-06-05 12:57:58', '99.00', 500),
+(57, 'Streamplify Mic Arm', 'Microphone USB - cardioÃƒÂ¯de - 2 modes de sortie audio - fonction mise en sourdine - rÃƒÂ©troÃƒÂ©clairage RGB - filtre pop - bras de montage', '2023-06-05 12:57:58', '99.00', 500),
 (58, 'HyperX Quadcast S', 'Microphone pour PC - USB', '2023-06-05 12:58:51', '159.00', 500),
 (59, 'Razer Seiren Mini - Mercury', 'Microphone PC - USB', '2023-06-05 12:59:54', '49.00', 500),
-(60, 'Elgato Wave DX', 'Microphone streaming - CardioÃ¯de - XLR 3 broches', '2023-06-05 13:00:45', '129.00', 500),
+(60, 'Elgato Wave DX', 'Microphone streaming - CardioÃƒÂ¯de - XLR 3 broches', '2023-06-05 13:00:45', '129.00', 500),
 (61, 'AVerMedia Live Streamer', 'Webcam Full HD 1080p', '2023-06-05 13:27:00', '56.00', 500),
-(62, 'Logitech HD Pro Webcam C920 Refresh', 'Webcam Full HD 1080p - RÃ©solution photo 15 Mpx', '2023-06-05 13:28:46', '99.00', 500),
-(63, 'Microsoft Modern Webcam', 'Webcam Full HD 1080p - HDR et True Look - certifiÃ©e Microsoft Teams', '2023-06-05 13:30:47', '65.00', 500),
-(64, 'Razer Kiyo', 'Webcam HD 720p/60fps - RÃ©solution photo 4 Mpx', '2023-06-05 13:32:12', '89.00', 500),
+(62, 'Logitech HD Pro Webcam C920 Refresh', 'Webcam Full HD 1080p - RÃƒÂ©solution photo 15 Mpx', '2023-06-05 13:28:46', '99.00', 500),
+(63, 'Microsoft Modern Webcam', 'Webcam Full HD 1080p - HDR et True Look - certifiÃƒÂ©e Microsoft Teams', '2023-06-05 13:30:47', '65.00', 500),
+(64, 'Razer Kiyo', 'Webcam HD 720p/60fps - RÃƒÂ©solution photo 4 Mpx', '2023-06-05 13:32:12', '89.00', 500),
 (65, 'Logitech Streamcam - Graphite', 'Stream Cam - Webcam Full HD 60 fps', '2023-06-05 13:33:00', '139.00', 500),
 (66, 'Logitech G PRO X', 'Casque-micro gamer 2.0 - PC - USB ou 1 x Jack 3.5 mm - Carte Son externe', '2023-06-05 13:35:15', '99.00', 500),
 (67, 'HyperX Cloud II - Gun Metal', 'Casque-micro gamer 7.1 - PC / PS4 - USB ou 1 x Jack 3.5 mm', '2023-06-05 13:36:47', '89.00', 500),
 (68, 'Steelseries Arctis 9 - Noir', 'Steelseries Arctis 9 - Noir', '2023-06-05 13:38:01', '149.00', 500),
 (69, 'Astro A10 Gris / Rouge', 'Casque-micro gamer - PC / PS4 / Xbox One / Mobiles / Switch - Jack 3.5 mm', '2023-06-05 13:39:56', '49.00', 500),
 (70, 'Fox Spirit GHS 7.1', 'Casque-micro Gamer - PC - USB - Son surround virtuel 7.1', '2023-06-05 13:40:47', '24.00', 500),
-(71, 'Aerocool Cylon Mini - Blanc', 'Boitier PC Mini Tour - mATX / Mini-ITX - USB 3.0 - Avec fenÃªtre (pleine taille)', '2023-06-05 13:56:50', '39.00', 500),
-(72, 'Zalman S2 TG', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.0 - Avec fenÃªtre (pleine taille)', '2023-06-05 13:57:32', '49.00', 500),
-(73, 'Corsair 4000D Airflow - Noir', 'Boitier PC Moyen Tour - E-ATX / ATX / mATX / Mini-ITX - USB 3.1 Type C - Avec fenÃªtre (pleine taille)', '2023-06-05 13:58:43', '99.00', 500),
-(74, 'NZXT H5 Flow - Blanc', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.1 Type C - Avec fenÃªtre (pleine taille)', '2023-06-05 13:59:35', '109.00', 500),
-(75, 'Mars Gaming MC-ART - Blanc', 'Boitier PC Moyen Tour - ATX / micro-ATX / Mini-ITX - USB 3.0 - Avec fenÃªtre (pleine taille)', '2023-06-05 14:00:34', '51.00', 500),
-(76, 'Antec NX210', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.0 - Avec fenÃªtre (pleine taille)', '2023-06-05 14:05:17', '69.00', 500),
+(71, 'Aerocool Cylon Mini - Blanc', 'Boitier PC Mini Tour - mATX / Mini-ITX - USB 3.0 - Avec fenÃƒÂªtre (pleine taille)', '2023-06-05 13:56:50', '39.00', 500),
+(72, 'Zalman S2 TG', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.0 - Avec fenÃƒÂªtre (pleine taille)', '2023-06-05 13:57:32', '49.00', 500),
+(73, 'Corsair 4000D Airflow - Noir', 'Boitier PC Moyen Tour - E-ATX / ATX / mATX / Mini-ITX - USB 3.1 Type C - Avec fenÃƒÂªtre (pleine taille)', '2023-06-05 13:58:43', '99.00', 500),
+(74, 'NZXT H5 Flow - Blanc', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.1 Type C - Avec fenÃƒÂªtre (pleine taille)', '2023-06-05 13:59:35', '109.00', 500),
+(75, 'Mars Gaming MC-ART - Blanc', 'Boitier PC Moyen Tour - ATX / micro-ATX / Mini-ITX - USB 3.0 - Avec fenÃƒÂªtre (pleine taille)', '2023-06-05 14:00:34', '51.00', 500),
+(76, 'Antec NX210', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.0 - Avec fenÃƒÂªtre (pleine taille)', '2023-06-05 14:05:17', '69.00', 500),
 (77, 'ASUS TUF Gaming F17 (TUF707ZC-HX023) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; Full HD (1920 x 1080) 144 Hz - Intel Core i5-12500H 12-Core 3.3 GHz - 16 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 2.6 Kg - Sans Windows', '2023-06-05 15:24:55', '999.00', 500),
 (78, 'Gigabyte G5 (GE-51FR263SH) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6&quot; Full HD (1920 x 1080) 144 Hz - Intel Core i5-12500H 12-Core 3.3 Ghz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:26:14', '829.00', 500),
 (79, 'MSI Thin GF63 (12UDX-242FR) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-12450H Octo-Core 3,3 GHz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:27:08', '849.00', 500),
 (80, 'Acer Nitro 5 (AN517-54-53A2) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-11400H Hexa-Core 2.7 GHz - 16 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 2.7 Kg - Windows 11', '2023-06-05 15:28:33', '1079.00', 500),
 (81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 490),
-(82, 'AKRacing Core EX - Rouge / Noir', 'Fauteuil Gamer - Tissu - Accoudoirs 3D rÃ©glables - Assise inclinable - Poids supportÃ© 150 Kg', '2023-06-05 15:33:10', '249.00', 500),
-(83, 'DXRacer Air R1S (rose)', 'Fauteuil Gamer - Maille respirante - Accoudoirs 3D rÃ©glables - Dossier inclinable jusqu\'Ã  135Â°- Poids supportÃ© 114 kg', '2023-06-05 15:34:14', '289.00', 500),
-(84, 'Noblechairs Icon - Noir / Bleu', 'Fauteuil Gamer - Simili Cuir - Accoudoirs 4D rÃ©glables - Poids supportÃ© 150 Kg', '2023-06-05 15:35:18', '389.00', 500),
-(85, 'Noblechairs Epic - White Edition', 'Fauteuil Gamer - Simili Cuir Hybride - Accoudoirs 4D rÃ©glables - Poids supportÃ© 120 Kg', '2023-06-05 15:36:21', '429.00', 500),
+(82, 'AKRacing Core EX - Rouge / Noir', 'Fauteuil Gamer - Tissu - Accoudoirs 3D rÃƒÂ©glables - Assise inclinable - Poids supportÃƒÂ© 150 Kg', '2023-06-05 15:33:10', '249.00', 500),
+(83, 'DXRacer Air R1S (rose)', 'Fauteuil Gamer - Maille respirante - Accoudoirs 3D rÃƒÂ©glables - Dossier inclinable jusqu\'ÃƒÂ  135Ã‚Â°- Poids supportÃƒÂ© 114 kg', '2023-06-05 15:34:14', '289.00', 500),
+(84, 'Noblechairs Icon - Noir / Bleu', 'Fauteuil Gamer - Simili Cuir - Accoudoirs 4D rÃƒÂ©glables - Poids supportÃƒÂ© 150 Kg', '2023-06-05 15:35:18', '389.00', 500),
+(85, 'Noblechairs Epic - White Edition', 'Fauteuil Gamer - Simili Cuir Hybride - Accoudoirs 4D rÃƒÂ©glables - Poids supportÃƒÂ© 120 Kg', '2023-06-05 15:36:21', '429.00', 500),
 (86, 'Vertagear S-line SL2000 - Noir / Rouge', 'Vertagear S-line SL2000 - Noir / Rouge', '2023-06-05 15:37:13', '214.00', 500),
-(87, 'HTC VIVE PRO 2', 'Casque de rÃ©alitÃ© virtuelle - 5120 x 2880 - 120 Hz', '2023-06-07 12:53:25', '699.00', 500),
+(87, 'HTC VIVE PRO 2', 'Casque de rÃƒÂ©alitÃƒÂ© virtuelle - 5120 x 2880 - 120 Hz', '2023-06-07 12:53:25', '699.00', 500),
 (88, 'HTC Station de base 2.0', 'Station de base pour VIVE Pro et VIVE Pro Eye', '2023-06-07 12:56:33', '199.00', 500),
-(89, 'HTC Tracker 3.0', 'DÃ©tecteur de mouvement polyvalent pour HTC Vive', '2023-06-07 12:59:51', '139.00', 500),
+(89, 'HTC Tracker 3.0', 'DÃƒÂ©tecteur de mouvement polyvalent pour HTC Vive', '2023-06-07 12:59:51', '139.00', 500),
 (90, 'HTC Controller VIVE Pro', 'Manette sans fil pour HTC VIVE Pro', '2023-06-07 13:24:49', '219.00', 500),
-(96, 'HTC Face Tracker', 'DÃ©tecteur d\'expressions faciales pour HTC Vive Pro', '2023-06-07 13:34:00', '139.00', 500),
-(101, 'Apple MacBook Air M2 (2022) LumiÃ¨re stellaire 8 Go/256 Go (MLY13FN/A)', 'PC Ultra portable 13.6\" Liquid RÃ©tina (2560 x 1664) - Apple M2 Octo-Core (GPU 8-core) - 8 Go LPDDR5 - SSD 256 Go - 1.2 Kg - macOS Monterey', '2023-06-07 13:58:27', '1299.00', 500),
+(96, 'HTC Face Tracker', 'DÃƒÂ©tecteur d\'expressions faciales pour HTC Vive Pro', '2023-06-07 13:34:00', '139.00', 500),
+(101, 'Apple MacBook Air M2 (2022) LumiÃƒÂ¨re stellaire 8 Go/256 Go (MLY13FN/A)', 'PC Ultra portable 13.6\" Liquid RÃƒÂ©tina (2560 x 1664) - Apple M2 Octo-Core (GPU 8-core) - 8 Go LPDDR5 - SSD 256 Go - 1.2 Kg - macOS Monterey', '2023-06-07 13:58:27', '1299.00', 500),
 (102, 'Apple MacBook Pro M2 Pro 16\" Argent (MNWD3FN/A)', 'PC Portable 16,2\" Liquid Retina XDR (3456 x 2234) - Apple M2 Pro 12-Core / GPU 19-Core - 16 Go LPDDR5 - SSD 1 To - 2,2 Kg - macOS 13', '2023-06-07 14:18:05', '3229.00', 500);
 
 -- --------------------------------------------------------
@@ -622,7 +622,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `users`
+-- DÃ©chargement des donnÃ©es de la table `users`
 --
 
 INSERT INTO `users` (`user_id`, `user_email`, `user_lastname`, `user_firstname`, `user_password`, `user_role`) VALUES
@@ -641,7 +641,7 @@ INSERT INTO `users` (`user_id`, `user_email`, `user_lastname`, `user_firstname`,
 (93, 'w@laplateforme.io', 'ww', 'ww', '$2y$10$tNc7uR0bjh4tA1Gkx7rveuYLuuXmAb/mqBx90p4xEq1ij8x2DQLEy', 0);
 
 --
--- Index pour les tables déchargées
+-- Index pour les tables dÃ©chargÃ©es
 --
 
 --
@@ -705,7 +705,7 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT pour les tables dÃ©chargÃ©es
 --
 
 --
