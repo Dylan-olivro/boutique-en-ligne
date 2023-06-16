@@ -156,7 +156,7 @@ if ($_SESSION['user']->user_role == 0) {
                                 <td><?= htmlspecialchars($key_cat->id_parent) ?></td>
 
                                 <td>
-                                    <button type="button" name="editCategories<?= $key_cat->id ?>"><a href="./user/modifyCategories.php?<?= $key_cat->id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                    <button type="button" name="editCategories<?= $key_cat->id ?>"><a href="./user/modifyCategories.php?id=<?= $key_cat->id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
                                 <td>
                                     <form action="" method="POST">
@@ -203,7 +203,7 @@ if ($_SESSION['user']->user_role == 0) {
                                 <td class="product_stock"><?= htmlspecialchars($key_product->product_stock) ?></td>
                                 <td class="id_category"><?= htmlspecialchars($key_product->id_category) ?></td>
                                 <td>
-                                    <button type="button" name="editProduct<?= $key_product->product_id ?>"><a href="./user/modifyProduct.php?<?= $key_product->product_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                    <button type="button" name="editProduct<?= $key_product->product_id ?>"><a href="./user/modifyProduct.php?id=<?= $key_product->product_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
                                 <td>
                                     <form action="" method="POST">
@@ -260,7 +260,7 @@ if ($_SESSION['user']->user_role == 0) {
                                 </td>
 
                                 <td>
-                                    <button type="button" name="editUser<?= $key_user->user_id ?>"><a href="./user/modifyUser.php?<?= $key_user->user_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                    <button type="button" name="editUser<?= $key_user->user_id ?>"><a href="./user/modifyUser.php?id=<?= $key_user->user_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
                                 <td>
                                     <form action="" method="POST">

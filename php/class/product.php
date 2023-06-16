@@ -64,7 +64,6 @@ class Product
             'product_stock' => $this->stock,
             'product_id' => $this->id
         ]);
-        header('Location: admin.php');
     }
     public function returnAllProducts($bdd)
     {
@@ -76,6 +75,13 @@ class Product
     public function returnProduct($bdd)
     {
         $returnProduct = $bdd->prepare('SELECT * FROM products WHERE product_id = :product_id');
+        $returnProduct->execute(['product_id' => $this->id]);
+        $result = $returnProduct->fetch(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function returnAllProductInfo($bdd)
+    {
+        $returnProduct = $bdd->prepare('SELECT * FROM products INNER JOIN images ON products.product_id = images.product_id INNER JOIN liaison_items_category ON products.product_id = liaison_items_category.id_item WHERE products.product_id = :product_id');
         $returnProduct->execute(['product_id' => $this->id]);
         $result = $returnProduct->fetch(PDO::FETCH_OBJ);
         return $result;

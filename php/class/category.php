@@ -42,12 +42,12 @@ class Category
     }
     public function updateCategory($bdd)
     {
-        $updateCategory = $bdd->prepare('UPDATE category SET name = :name WHERE id = :id');
+        $updateCategory = $bdd->prepare('UPDATE category SET name = :name , id_parent = :id_parent WHERE id = :id');
         $updateCategory->execute([
             'name' => $this->name,
+            'id_parent' => $this->id_parent,
             'id' => $this->id
         ]);
-        header('Location: admin.php');
     }
 
     public function returnAllCategories($bdd)
@@ -55,6 +55,13 @@ class Category
         $request = $bdd->prepare('SELECT * FROM category');
         $request->execute();
         $result = $request->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function returnCategory($bdd)
+    {
+        $request = $bdd->prepare('SELECT * FROM category WHERE id = :id');
+        $request->execute(['id' => $this->id]);
+        $result = $request->fetch(PDO::FETCH_OBJ);
         return $result;
     }
 
