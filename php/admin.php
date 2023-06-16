@@ -96,7 +96,16 @@ if ($_SESSION['user']->user_role == 0) {
                                 </div>
                                 <div class="divInput">
                                     <label for="categoryItem">Category</label>
-                                    <input type="number" id="categoryItem" name="categoryItem" autocomplete="off">
+                                    <select name="categoryItem" id="categoryItem">
+                                        <?php
+                                        foreach ($result_cat as $cat) {
+                                            if ($cat->id_parent != 0) { ?>
+                                                <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                                        <?php
+                                            }
+                                        } ?>
+                                    </select>
+                                    <!-- <input type="number" id="categoryItem" name="categoryItem" autocomplete="off"> -->
                                 </div>
                                 <div class="divInputFile">
                                     <label for="image">Image</label>
@@ -124,7 +133,17 @@ if ($_SESSION['user']->user_role == 0) {
                             <label for="nameCategory">Name</label>
                             <input type="text" name="nameCategory" id="nameCategory">
                             <label for="idParent">ID parent</label>
-                            <input type="number" name="idParent" id="idParent">
+                            <select name="idParent" id="idParent">
+                                <?php
+                                foreach ($result_cat as $cat) {
+                                    if ($cat->id_parent == 0) { ?>
+                                        <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                                <?php
+                                    }
+                                } ?>
+                                <option value="0">Nouveau Parent</option>
+                            </select>
+                            <!-- <input type="number" name="idParent" id="idParent"> -->
                             <p id="messageCategories"></p>
                             <div class="submit">
                                 <input type="submit" name="buttonAddCategory" value="Ajouter">

@@ -7,6 +7,10 @@ if (!isset($_SESSION['user'])) {
 
 $product = new Product($_GET['id'], null, null, null, null, null);
 $result = $product->returnAllProductInfo($bdd);
+// var_dump($result);
+
+$category = new Category(null, null, null);
+$result_cat = $category->returnAllCategories($bdd);
 
 ?>
 <!DOCTYPE html>
@@ -43,7 +47,17 @@ $result = $product->returnAllProductInfo($bdd);
                     </div>
                     <div class="divInput">
                         <label for="categoryItem">Category</label>
-                        <input type="number" id="categoryItem" name="categoryItem" autocomplete="off" value="<?= htmlspecialchars($result->id_category) ?>">
+                        <select name="categoryItem" id="categoryItem">
+                            <option value="<?= $result->id_category ?>" selected><?= $result->name ?></option>
+                            <?php
+                            foreach ($result_cat as $cat) {
+                                if ($cat->id_parent != 0) { ?>
+                                    <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                            <?php
+                                }
+                            } ?>
+                        </select>
+
                     </div>
                     <div class="divInputFile">
                         <label for="image">Image</label>
@@ -64,4 +78,5 @@ $result = $product->returnAllProductInfo($bdd);
     </main>
     <?php require_once('../include/footer.php') ?>
 </body>
+
 </html>
