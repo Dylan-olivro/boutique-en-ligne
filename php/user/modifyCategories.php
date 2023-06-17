@@ -7,7 +7,8 @@ if (!isset($_SESSION['user'])) {
 
 $category = new Category($_GET['id'], null, null);
 $result = $category->returnCategory($bdd);
-
+$result_cat = $category->returnAllCategories($bdd);
+var_dump($result);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,13 +27,23 @@ $result = $category->returnCategory($bdd);
         <!-- Formulaire pour MODIFIER l'adresse de l'utilisateur -->
         <div id="addCategory">
             <!-- Formulaire pour AJOUTER une catégorie -->
-            <h3>Ajouter une Categorie</h3>
+            <h3>Modifier une Categorie</h3>
             <form action="" method="post" id="formCategories">
                 <input type="hidden" name="id" value="<?= htmlspecialchars($_GET['id']) ?>">
                 <label for="nameCategory">Name</label>
                 <input type="text" name="nameCategory" id="nameCategory" value="<?= htmlspecialchars($result->name) ?>">
                 <label for="idParent">ID parent</label>
-                <input type="number" name="idParent" id="idParent" value="<?= htmlspecialchars($result->id_parent) ?>">
+                <select name="idParent" id="idParent">
+                    <option value="<?= $result->id_parent ?>">Current</option>
+                    <?php
+                    foreach ($result_cat as $cat) {
+                        if ($cat->id_parent == 0) { ?>
+                            <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                    <?php
+                        }
+                    } ?>
+                    <option value="0">Nouveau Parent</option>
+                </select>
                 <p id="messageCategories"></p>
                 <div class="submit">
                     <input type="submit" name="submit " value="Modifier">

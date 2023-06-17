@@ -59,7 +59,7 @@ class Category
     }
     public function returnCategory($bdd)
     {
-        $request = $bdd->prepare('SELECT * FROM category WHERE id = :id');
+        $request = $bdd->prepare('SELECT * FROM category INNER JOIN liaison_items_category ON category.id = liaison_items_category.id_category WHERE category.id = :id');
         $request->execute(['id' => $this->id]);
         $result = $request->fetch(PDO::FETCH_OBJ);
         return $result;
