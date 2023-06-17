@@ -64,27 +64,27 @@ if (isset($_POST['submit'])) {
 
     <main>
         <section id="container">
-            <div class="form">
+            <div class="MainContent">
                 <!-- Formulaire pour CONNECTER un utilisateur -->
-                <form method="post" id="formLogin">
+                <form method="post" id="FormConnect">
                     <h3>Identifie-toi</h3>
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" placeholder="Email" class="input" autofocus>
-                    <label for="password">Mot de passe</label>
-                    <div class="password">
-                        <input type="password" id="password" name="password" class="input" placeholder="Mot de passe">
+                    <label for="email" class="FormChild">Email</label>
+                    <input type="text" id="email" name="email" placeholder="Email" class="FormChild" autofocus>
+                    <label for="password" class="FormChild">Mot de passe</label>
+                    <div class="BoxPassword FormChild">
+                        <input type="password" id="password" name="password"  placeholder="Mot de passe">
                         <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
                     <!-- Affichage des erreurs -->
-                    <p id="message">
+                    <p id="message" class="FormChild">
                         <?php
                         if (isset($message['CONNECT_ERROR'])) {
                             echo $message['CONNECT_ERROR'];
                         }
                         ?>
                     </p>
-                    <input type="submit" name="submit" id="submit">
-                    <p class="demande">Vous n'avez pas de compte ?<a href="./register.php">&nbspS'inscrire</a></p>
+                    <input type="submit" name="submit" id="submit" class="FormChild">
+                    <p class="Inscription">Vous n'avez pas de compte ?<a href="./register.php" id="Link">&nbspS'inscrire</a></p>
                 </form>
             </div>
         </section>
