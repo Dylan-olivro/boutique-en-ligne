@@ -1,4 +1,4 @@
-const formEl = document.querySelector("#formProfil");
+const formEl = document.querySelector("#FormProfil");
 const message = document.querySelector("#message");
 
 let password = document.querySelector("#password");

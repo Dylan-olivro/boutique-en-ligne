@@ -73,36 +73,36 @@ if (isset($_POST['submit'])) {
     <?php require_once('./include/header.php'); ?>
     <main>
         <section id="container">
-            <div class="form">
+            <div class="MainContent">
                 <!-- Formulaire pour AJOUTER un utilisateur -->
-                <form id="registerForm" method="POST">
+                <form id="FormRegister" method="POST">
                     <h3>Créer ton compte</h3>
-                    <label for="email">Email *</label>
-                    <input type="" id="email" name="email" class="input" placeholder="Email" autofocus>
-                    <label for="firstname">Prénom *</label>
-                    <input type="text" id="firstname" name="firstname" class="input" placeholder="Prénom">
-                    <label for="lastname">Nom *</label>
-                    <input type="text" id="lastname" name="lastname" class="input" placeholder="Nom">
-                    <label for="password">Mot de passe *</label>
-                    <div class="password">
-                        <input type="password" id="password" name="password" class="input" placeholder="Mot de passe">
+                    <label for="email" class="FormChild">Email *</label>
+                    <input type="" id="email" name="email" class="FormChild" placeholder="Email" autofocus>
+                    <label for="firstname" class="FormChild">Prénom *</label>
+                    <input type="text" id="firstname" name="firstname" class="FormChild" placeholder="Prénom">
+                    <label for="lastname" class="FormChild">Nom *</label>
+                    <input type="text" id="lastname" name="lastname" class="FormChild" placeholder="Nom">
+                    <label for="password" class="FormChild">Mot de passe *</label>
+                    <div class="BoxPassword FormChild">
+                        <input type="password" id="password" name="password" placeholder="Mot de passe">
                         <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
-                    <label for="confirm_password">Confirmé votre mot de passe *</label>
-                    <div class="password">
-                        <input type="password" id="confirm_password" name="confirm_password" class="input" placeholder="Confirmé votre mot de passe">
+                    <label for="confirm_password" class="FormChild">Confirmé votre mot de passe *</label>
+                    <div class="BoxPassword FormChild">
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmé votre mot de passe">
                         <button type='button' id="showConfirmPassword"><i class="fa-solid fa-eye-slash"></i></button>
                     </div>
                     <!-- Affichage des erreurs -->
-                    <p id="message">
+                    <p id="message" class="FormChild">
                         <?php
                         if (isset($message['REGISTER_ERROR'])) {
                             echo $message['REGISTER_ERROR'];
                         }
                         ?>
                     </p>
-                    <input type="submit" name="submit" id="submit" value="Valider">
-                    <p class="demande">Vous avez déjà un compte ?<a href="./connect.php">&nbspConnexion</a></p>
+                    <input type="submit" name="submit" id="submit" value="Valider" class="FormChild">
+                    <p class="Connexion">Vous avez déjà un compte ?<a href="./connect.php" id="Link">&nbspConnexion</a></p>
                 </form>
             </div>
         </section>

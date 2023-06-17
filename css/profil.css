@@ -1,25 +1,22 @@
 #container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 95%;
-  background-color: var(--section-color);
-  border-radius: 20px;
-  margin: 1% 0 !important;
-}
-/* FORMULAIRE PROFIL */
-.containerProfil {
-  display: flex;
-  justify-content: space-evenly;
   width: 100%;
-  padding: 2% 0 !important;
+  margin: 2% 0;
 }
-.profil {
-  width: 25%;
+.ProfilContent {
   display: flex;
-  justify-content: center;
+  margin: auto;
+  width: 90%;
+  gap: 3%;
+  height: 630px;
 }
-#formProfil {
+
+/** Formulaire */
+
+.BoxProfil {
+  display: flex;
+  flex: 1;
+}
+#FormProfil {
   background-color: var(--div-color);
   border-radius: 10px;
   border: 1px solid var(--border-color);
@@ -27,150 +24,173 @@
   width: 100%;
   flex-direction: column;
   align-items: center;
-  padding: 2% 2% !important;
-  /* margin: 5% 0 !important; */
+  padding: 2%;
 }
-#formProfil h3 {
+#FormProfil h3 {
   font-size: 1.3rem;
-  width: 100%;
   color: #fff;
   text-align: center;
-  padding: 2% 0 !important;
+  margin: 2% 0;
 }
-#formProfil > input,
-#formProfil > label,
-#formProfil > div,
-#formProfil > p {
+.FormChild {
   width: 80%;
   border-radius: 10px;
   outline: none;
-  height: 35px;
+  height: 50px;
 }
-label {
+#FormProfil label {
   color: white;
-  display: flex !important;
+  display: flex;
   align-items: end;
   font-style: italic;
 }
-.input {
-  padding: 2% !important;
+#FormProfil input {
+  padding: 2%;
   background-color: var(--input-color);
   color: #fff;
 }
-.password {
+.BoxPassword {
   display: flex;
+  position: relative;
 }
 #password {
-  width: 80%;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  width: 100%;
+  border-radius: 10px;
   border-right: none;
   outline: none;
 }
 #showPassword {
-  background-color: var(--input-color);
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  width: 20%;
-  /* border: none; */
-}
-#showPassword i {
-  color: var(--button-color);
+  position: absolute;
+  background-color: transparent;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  color: #fff;
 }
 #message {
-  width: 100%;
   color: #ffa938;
   display: flex;
   align-items: center;
   font-size: 0.8rem;
 }
 #submit {
-  background-color: var(--button-color);
-  border: none;
-  margin: 1% auto !important;
+  background-color: var(--button-color) !important;
   cursor: pointer;
 }
-#updatePassword {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
+#submit:hover {
+  background-color: var(--main-color) !important;
+}
+#LinkPassword {
+  margin: 3% 0;
   color: var(--button-color);
 }
+/** Adresse  */
 
-/* AFFICHAGE ADRESSES */
-.sectionAdress {
-  width: 65%;
+.BoxAddress {
+  flex: 2;
   background-color: var(--div-color);
   border: 1px solid var(--border-color);
-  padding: 1% !important;
+  padding: 1%;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
-.sectionAdress h3 {
+.BoxAddress h3 {
   font-size: 1.3rem;
-  width: 100%;
   color: #fff;
   text-align: center;
-  padding: 1% 0 !important;
+  margin: 1% 0;
 }
-.addAdress {
+/** Ajouter une adresse  */
+.BoxAddAddress {
   background-color: var(--nav-color);
   border: 1px solid var(--border-color);
   border-radius: 5px;
   width: 30%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
   color: #fff;
-  margin-left: 1% !important;
+  padding: 3px 0;
+  margin-left: 1%;
 }
-#addAdress {
+#LinkAddAddress {
   color: #fff;
   text-decoration: none;
-  width: 100%;
-}
-.link {
+  /* width: 100%; */
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
-.allAdress {
-  padding: 1% 0 !important;
-  display: flex;
-  flex-wrap: wrap;
+#LinkAddAddress:hover span {
+  text-decoration: underline;
 }
-.adress {
+#MaxAddress {
+  width: 100%;
+  text-align: center;
+}
+/** Liste des adresses  */
+.ListAddresses {
+  padding: 1% 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+.DetailAddress {
   display: flex;
   background-color: var(--nav-color);
   border-radius: 10px;
-  width: 31%;
-  padding: 1% !important;
-  margin: 1% !important;
+  width: 100%;
+  padding: 1%;
+  margin: 1%;
   color: #fff;
   justify-content: space-between;
 }
-.name {
-  font-weight: bold;
-}
-.infoAdress {
+.InfoAddress {
   flex: 3;
 }
-.edit_delete {
+#name {
+  font-weight: bold;
+}
+.BoxButtons {
   display: flex;
-  flex-direction: column;
   justify-content: space-evenly;
   flex: 1;
   align-items: center;
 }
-
-.button {
-  border-radius: 50px;
+.ButtonAddress {
+  /* border-radius: 50px; */
+  background-color: transparent;
+  border: none;
 }
-.button i {
-  padding: 10px !important;
+.ButtonAddress i {
+  /* padding: 10px; */
+  color: #fff;
+  font-size: 1.5rem;
+}
+.ButtonAddress:hover i {
+  color: var(--button-color);
+}
+/** Scroll bar des adresses */
+/* width */
+.ListAddresses::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+.ListAddresses::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+/* Handle */
+.ListAddresses::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 5px;
+}
+/* Handle on hover */
+.ListAddresses::-webkit-scrollbar-thumb:hover {
+  background: var(--button-color);
 }
 
-/* AFFICHAGE HISTORIQUE DES COMMANDES */
+/** Historique des commandes  */
 .containerCommand {
   display: flex;
   justify-content: space-evenly;
@@ -264,89 +284,4 @@ img {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-}
-@media screen and (max-width: 1440px) {
-  .allCommand {
-    width: 80%;
-  }
-}
-@media screen and (max-width: 1000px) {
-  .containerProfil {
-    flex-direction: column;
-    align-items: center;
-  }
-  .profil {
-    width: 95%;
-    margin-bottom: 5% !important;
-  }
-  #formProfil > input,
-  #formProfil > label,
-  #formProfil > div,
-  #formProfil > p {
-    width: 60%;
-  }
-  .sectionAdress {
-    width: 95%;
-  }
-  .addAdress {
-    width: 40%;
-    margin: 2% 0 0 1% !important;
-  }
-  .allCommand {
-    width: 95%;
-  }
-  .titleProduct {
-    font-size: 1rem;
-  }
-}
-
-@media screen and (max-width: 768px) and (min-width: 601px) {
-  .allAdress {
-    justify-content: space-evenly;
-  }
-  .adress {
-    width: 40%;
-  }
-  .addAdress {
-    margin-left: 7% !important;
-  }
-  .titleProduct {
-    display: none;
-  }
-  .infoProduct div {
-    width: 30%;
-    display: flex;
-    align-items: center;
-  }
-  .infoProduct a {
-    width: 70%;
-    justify-content: center;
-  }
-  .showCommands {
-    width: 75%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .adress {
-    width: 95%;
-  }
-  .addAdress {
-    width: 50%;
-  }
-  .titleProduct {
-    display: none;
-  }
-  .infoProduct div {
-    width: 30%;
-    display: flex;
-    align-items: center;
-  }
-  .infoProduct a {
-    width: 70%;
-    justify-content: center;
-  }
-  .showCommands {
-    width: 100%;
-  }
 }

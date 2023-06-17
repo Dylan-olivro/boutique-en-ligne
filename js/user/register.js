@@ -1,4 +1,4 @@
-const formEl = document.querySelector("#registerForm");
+const formEl = document.querySelector("#FormRegister");
 const message = document.querySelector("#message");
 
 let cpassword = document.querySelector("#confirm_password");

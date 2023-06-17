@@ -1,96 +1,89 @@
-/* MAIN OU BODY A VOIR */
 #container {
-  background-color: var(--section-color);
   display: flex;
   justify-content: center;
   width: 95%;
-  border-radius: 20px;
-  margin: 2% 0 !important;
+  margin: 2% 0;
 }
-.form {
-  width: 40%;
+
+/** Formulaire */
+
+.MainContent {
   display: flex;
-  justify-content: center;
-  padding: 1% 0;
+  width: 50%;
 }
-#formLogin {
+#FormConnect {
   background-color: var(--div-color);
   border-radius: 10px;
   border: 1px solid var(--border-color);
   display: flex;
-  width: 80%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
-  padding: 2% 2% !important;
-  margin: 5% 0 !important;
+  padding: 2%;
 }
-#formLogin > * {
-  width: 60%;
-  border-radius: 10px;
-  outline: none;
-  height: 35px;
-}
-#formLogin h3 {
+#FormConnect h3 {
+  font-size: 1.3rem;
   color: #fff;
   text-align: center;
-  font-size: 2rem;
-  margin: 2%;
-  height: auto;
+  margin: 2% 0;
 }
-label {
+.FormChild {
+  width: 80%;
+  border-radius: 10px;
+  outline: none;
+  height: 50px;
+}
+#FormConnect label {
   color: white;
-  display: flex !important;
+  display: flex;
   align-items: end;
   font-style: italic;
 }
-.input {
-  padding: 2% !important;
+#FormConnect input {
+  padding: 2%;
   background-color: var(--input-color);
   color: #fff;
 }
-.password {
+.BoxPassword {
   display: flex;
+  position: relative;
 }
 #password {
-  width: 87%;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  width: 100%;
+  border-radius: 10px;
   border-right: none;
   outline: none;
 }
 #showPassword {
-  background-color: var(--input-color);
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  width: 13%;
-}
-#showPassword i {
-  color: var(--button-color);
+  position: absolute;
+  background-color: transparent;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  color: #fff;
 }
 #message {
-  width: 100%;
   color: #ffa938;
   display: flex;
-  justify-content: center;
   align-items: center;
+  font-size: 0.8rem;
 }
 #submit {
-  background-color: var(--button-color);
-  border: none;
-  width: 30%;
-  margin: 1% auto !important;
+  padding: 0 !important;
+  background-color: var(--button-color) !important;
+  cursor: pointer;
 }
-.demande {
-  width: 100% !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
+#submit:hover {
+  background-color: var(--main-color) !important;
 }
-.demande a {
+.Inscription {
+  margin: 3% 0;
+}
+#Link {
   color: var(--button-color);
 }
-@media screen and (max-width: 1440px) {
+/* @media screen and (max-width: 1440px) {
   #formLogin > * {
     width: 90%;
   }
@@ -113,4 +106,4 @@ label {
     flex-direction: column;
     margin: 5% 0;
   }
-}
+}  */
