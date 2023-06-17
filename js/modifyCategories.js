@@ -1,4 +1,4 @@
-const formEl = document.querySelector("#formCategories");
+const formEl = document.querySelector("#FormCategories");
 const message = document.querySelector("#messageCategories");
 
 formEl.addEventListener("submit", (event) => {

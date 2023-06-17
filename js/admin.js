@@ -106,7 +106,7 @@ formProduct.addEventListener("submit", (event) => {
 });
 
 
-const formCategories = document.querySelector("#formCategories");
+const formCategories = document.querySelector("#FormCategories");
 const messageCategories = document.querySelector("#messageCategories");
 
 

@@ -6,11 +6,6 @@ if (isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
-$erreur = '1';
-$ERROR = '2';
-var_dump($erreur);
-var_dump($ERROR);
-
 // * Ne s'active que si le JAVASCRIPT est désactivé
 // L'insertion de l'utilisateur dans la base de donnée
 if (isset($_POST['submit'])) {

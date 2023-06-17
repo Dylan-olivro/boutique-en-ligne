@@ -22,7 +22,7 @@
   padding: 2%;
 }
 #FormConnect h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   color: #fff;
   text-align: center;
   margin: 2% 0;
@@ -79,6 +79,7 @@
 }
 .Inscription {
   margin: 3% 0;
+  color: #fff;
 }
 #Link {
   color: var(--button-color);

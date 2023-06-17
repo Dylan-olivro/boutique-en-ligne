@@ -1,7 +1,10 @@
 let password = document.querySelector("#password");
 let newPassword = document.querySelector("#new_password");
+const buttonShow = document.getElementById("showPassword");
+const buttonShow2 = document.getElementById("showNewPassword");
+
 let message = document.querySelector("#message");
-let formUpdatePassword = document.querySelector("#formUpdatePassword");
+let formUpdatePassword = document.querySelector("#FormUpdatePassword");
 
 function updatePassword() {
   if (isEmpty(password.value)) {
@@ -20,3 +23,6 @@ formUpdatePassword.addEventListener("submit", (e) => {
     e.preventDefault();
   }
 });
+
+showPassword(buttonShow, password);
+showPassword(buttonShow2, newPassword);
