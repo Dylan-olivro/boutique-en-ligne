@@ -126,14 +126,14 @@ if ($_SESSION['user']->user_role == 0) {
                     </div>
 
 
-                    <div id="addCategory">
+                    <div class="MainContent">
                         <!-- Formulaire pour AJOUTER une catégorie -->
-                        <h3>Ajouter une Categorie</h3>
-                        <form action="" method="post" id="formCategories">
-                            <label for="nameCategory">Name</label>
-                            <input type="text" name="nameCategory" id="nameCategory">
-                            <label for="idParent">ID parent</label>
-                            <select name="idParent" id="idParent">
+                        <form action="" method="post" id="FormCategories">
+                            <h3>Ajouter une Categorie</h3>
+                            <label for="nameCategory" class="FormChild">Nom</label>
+                            <input type="text" name="nameCategory" id="nameCategory" class="FormChild">
+                            <label for="idParent" class="FormChild">Catégorie parent</label>
+                            <select name="idParent" id="idParent" class="FormChild">
                                 <?php
                                 foreach ($result_cat as $cat) {
                                     if ($cat->id_parent == 0) { ?>
@@ -144,12 +144,9 @@ if ($_SESSION['user']->user_role == 0) {
                                 <option value="0">Nouveau Parent</option>
                             </select>
                             <!-- <input type="number" name="idParent" id="idParent"> -->
-                            <p id="messageCategories"></p>
-                            <div class="submit">
-                                <input type="submit" name="buttonAddCategory" value="Ajouter">
-                            </div>
+                            <p id="messageCategories" class="FormChild"></p>
+                            <input type="submit" name="buttonAddCategory" class="FormChild" id="submitCategorie" value="Ajouter">
                         </form>
-
                     </div>
 
                 </div>

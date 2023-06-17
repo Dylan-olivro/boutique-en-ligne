@@ -110,8 +110,7 @@ main {
   gap: 1%;
 }
 
-#addItem,
-#addCategory {
+#addItem {
   background-color: var(--div-color);
   border: 1px solid var(--border-color);
   padding: 1% 1% 2%;
@@ -121,33 +120,25 @@ main {
   flex-direction: column;
   align-items: center;
 }
-#addItem h3,
-#addCategory h3 {
+#addItem h3 {
   color: #fff;
   font-size: 2rem;
   text-align: center;
 }
-#addCategory {
-  width: 30%;
-}
-#formProduct,
-#formCategories {
+
+#formProduct {
   /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   width: 90%;
   margin: 1% 0;
 }
-#formCategories {
-  margin: 5% 0;
-}
-#formProduct label,
-#formCategories label {
+
+#formProduct label {
   color: #fff;
   font-style: italic;
 }
-#formProduct input,
-#formCategories input {
+#formProduct input {
   background-color: var(--input-color);
   color: #fff;
   outline: none;
@@ -180,8 +171,7 @@ main {
   border-style: inset;
   border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
 }
-#messageProduct,
-#messageCategories {
+#messageProduct {
   width: 100%;
   color: #ffa938;
   display: flex;
@@ -199,15 +189,70 @@ main {
   width: 50%;
   cursor: pointer;
 }
-.formEdit,
-.formCat {
+.formEdit {
   width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#nameCategory {
-  margin-bottom: 2%;
+
+/** Formulaire Catégories */
+
+.MainContent {
+  display: flex;
+  width: 30%;
+}
+#FormCategories {
+  background-color: var(--div-color);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 2%;
+}
+#FormCategories h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+  margin: 2% 0;
+}
+.FormChild {
+  width: 80%;
+  border-radius: 10px;
+  outline: none;
+  height: 50px;
+}
+#FormCategories label {
+  color: white;
+  display: flex;
+  align-items: end;
+  font-style: italic;
+}
+#FormCategories input,
+#FormCategories select {
+  padding: 2%;
+  background-color: var(--input-color);
+  color: #fff;
+}
+#idParent {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+#messageCategories {
+  color: #ffa938;
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+#submitCategorie {
+  padding: 0 !important;
+  background-color: var(--button-color) !important;
+  cursor: pointer;
+}
+#submitCategorie:hover {
+  background-color: var(--main-color) !important;
 }
 /* ------------------- PANEL -------------------- */
 
