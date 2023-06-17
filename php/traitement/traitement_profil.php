@@ -40,7 +40,6 @@ if (isset($data)) {
         $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
     } else {
         $res = $user->returnUserById($bdd);
-        // var_dump($res);
         if ($password != password_verify($password, $res->user_password)) {
             $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
         } else {

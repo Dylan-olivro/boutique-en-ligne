@@ -22,20 +22,20 @@ if ($_SESSION['user']->user_role == 0) {
 
     <main>
         <?php
+        // Récupération de tous les produits de la base de donnée
         $product = new Product(null, null, null, null, null, null, null);
         $result_products = $product->returnAllProducts($bdd);
 
+        // Récupération de toutes les catégories de la base de donnée
         $category = new Category(null, null, null);
         $result_cat = $category->returnAllCategories($bdd);
-        // var_dump($result_cat);
 
+        // Récupération de tous les utilisateurs de la base de donnée
         $user = new User(null, null, null, null, null, null);
         $result_users = $user->returnAllUser($bdd);
-        // var_dump($result_users);
-        // echo $_SESSION['test'];
         ?>
+        <!-- Affichage des Statistiques -->
         <section id="firstContainer">
-
             <div class="allShowButtons">
                 <ul>
                     <li><button id="showProducts">Produits</button></li>
@@ -76,6 +76,7 @@ if ($_SESSION['user']->user_role == 0) {
                     </div>
 
                 </section>
+
                 <div class="FormForAdd">
                     <!-- AJOUTER DES PRODUITS -->
                     <div id="addItem">
@@ -115,8 +116,6 @@ if ($_SESSION['user']->user_role == 0) {
 
                             <label for="descriptionItem">Description</label>
                             <textarea name="descriptionItem" id="descriptionItem"></textarea>
-                            <!-- <input type="text" id="descriptionItem" name="descriptionItem"> -->
-
 
                             <p id="messageProduct"></p>
                             <div class="submit">
@@ -143,7 +142,6 @@ if ($_SESSION['user']->user_role == 0) {
                                 } ?>
                                 <option value="0">Nouveau Parent</option>
                             </select>
-                            <!-- <input type="number" name="idParent" id="idParent"> -->
                             <p id="messageCategories" class="FormChild"></p>
                             <input type="submit" name="buttonAddCategory" class="FormChild" id="submitCategorie" value="Ajouter">
                         </form>
@@ -173,7 +171,7 @@ if ($_SESSION['user']->user_role == 0) {
                                 <td><?= htmlspecialchars($key_cat->id_parent) ?></td>
 
                                 <td>
-                                    <button type="button" name="editCategories<?= $key_cat->id ?>"><a href="./user/modifyCategories.php?id=<?= $key_cat->id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                    <button type="button" name="editCategories<?= $key_cat->id ?>"><a href="./user/modifyCategories.php?id=<?= (int)$key_cat->id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
                                 <td>
                                     <form action="" method="POST">
@@ -183,6 +181,7 @@ if ($_SESSION['user']->user_role == 0) {
                             </tr>
 
                         <?php
+                            // Supprime la catégorie selectionnée
                             if (isset($_POST['deleteCategories' . $key_cat->id])) {
                                 $category->setId($key_cat->id);
                                 $delete = $category->deleteCategory($bdd);
@@ -230,6 +229,7 @@ if ($_SESSION['user']->user_role == 0) {
                             </tr>
 
                         <?php
+                            // Supprime le produit selectionnée
                             if (isset($_POST['deleteProduct' . $key_product->product_id])) {
                                 $product->setId($key_product->product_id);
                                 $delete = $product->deleteProduct($bdd);
@@ -287,6 +287,7 @@ if ($_SESSION['user']->user_role == 0) {
                             </tr>
 
                         <?php
+                            // Supprime l'utilisateur selectionnée
                             if (isset($_POST['deleteUser' . $key_user->user_id])) {
                                 $user->setId($key_user->user_id);
                                 $delete = $user->deleteUserByID($bdd);

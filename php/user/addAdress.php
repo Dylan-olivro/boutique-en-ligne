@@ -3,12 +3,13 @@
 // Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
+    exit();
 }
-
+// Récupération de toutes les adresses de l'utilisateur
 $address = new Address(null, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
 $allUserAddresses = $address->returnAddressesByUser($bdd);
 
-
+// * Ne s'active que si le JAVASCRIPT est désactivé
 // Insert une adresse
 if (isset($_POST['submit'])) {
     $numero = $_POST['numero'];
@@ -74,7 +75,7 @@ if (isset($_POST['submit'])) {
 
             <div class="MainContent">
                 <!-- Formulaire pour AJOUTER une adresse à l'utilisateur -->
-                <form action="" method="post" id="FormUpdateAddress">
+                <form action="" method="post" id="FormAddAddress">
                     <h3>Ajouter une Adresse</h3>
                     <label for="numero" class="FormChild">Numéro</label>
                     <input type="number" name="numero" id="numero" class="FormChild" autofocus>
@@ -102,23 +103,5 @@ if (isset($_POST['submit'])) {
     </main>
     <?php require_once('../include/footer.php') ?>
 </body>
-<style>
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .input {
-        color: #f1b16a;
-        padding: 5px;
-        background-color: #121a2e;
-        margin-top: 10px;
-    }
-
-    label {
-        font-size: 1.5rem;
-
-    }
-</style>
 
 </html>

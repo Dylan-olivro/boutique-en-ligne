@@ -1,17 +1,18 @@
 <?php require_once('../include/required.php');
 
-// Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
-if (!isset($_SESSION['user'])) {
-    header('Location:../../index.php');
-}
-
+// Récupération du produit sélectionné
 $product = new Product($_GET['id'], null, null, null, null, null);
 $result = $product->returnAllProductInfo($bdd);
-// var_dump($result);
 
+// Empêche les utilisateurs qui ne sont pas ADMINISTRATEUR 
+if (!$result || $_SESSION['user']->user_role != 2) {
+    header('Location: ../../index.php');
+    exit();
+}
+
+// Récupération de toutes les catégories
 $category = new Category(null, null, null);
 $result_cat = $category->returnAllCategories($bdd);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +68,6 @@ $result_cat = $category->returnAllCategories($bdd);
 
                 <label for="descriptionItem">Description</label>
                 <textarea name="descriptionItem" id="descriptionItem"><?= htmlspecialchars($result->product_description) ?></textarea>
-
 
                 <p id="messageProduct"></p>
                 <div class="submit">

@@ -2,20 +2,23 @@
 
 // Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
-    header('Location:../../index.php');
+    header('Location: ../../index.php');
+    exit();
 }
 
 // Récupération de l'adresse à modifier
 if (isset($_GET['id'])) {
-    $address = new Address($_GET['id'], null, null, null, null, null, null, null, null);
+    $address = new Address($_GET['id'], $_SESSION['user']->user_id, null, null, null, null, null, null, null);
     $userAddress = $address->returnAddressesById($bdd);
 
     // Empêche d'aller sur la page si il n'y a aucun ID selectionner dans le lien ou si l'ID ne correspond pas à une adresse de l'utilisateur
     if (!$userAddress) {
         header('Location: ../profil.php');
+        exit();
     }
 }
 
+// * Ne s'active que si le JAVASCRIPT est désactivé
 // Mise à jour de l'adresse sélectionner
 if (isset($_POST['submit'])) {
     $numero = $_POST['numero'];

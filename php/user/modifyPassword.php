@@ -4,6 +4,7 @@ require_once('../include/required.php');
 // Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
     header('Location:../../index.php');
+    exit();
 }
 
 // Mise à jour du mot de passe
@@ -47,6 +48,7 @@ if (isset($_POST['submit'])) {
                     </div>
                     <p id="message" class="FormChild">
                         <?php
+                        // ! A CHANGER
                         if (isset($user)) {
                             echo $user->updatePassword($bdd, $old_password);
                         } ?>
