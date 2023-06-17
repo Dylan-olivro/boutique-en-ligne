@@ -155,6 +155,7 @@ $result = $request->fetchAll(PDO::FETCH_OBJ);
 // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
 // ? Quand les inputs sont différents de vide mettre leur border en --button-color
 
+// ! Corriger l'affichage du numero de telephone dans la modification d'adresse
 // ! VERIFIER TOUTES LES ERREURS POSSIBLE EN CHANGEANT LES GET
 // ! INTVAL POUR LA CONNEXION
 // ! REMETTRE LE SETINTERVAL SUR LES FETCH DE L'ADMIN

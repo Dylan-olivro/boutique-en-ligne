@@ -1,50 +1,86 @@
-.form {
-    background-color: var(--div-color);
-    border: 1px solid var(--border-color);
-    padding: 1% 1% 2%;
-    border-radius: 10px;
-    display: flex;
+#container {
+  display: flex;
+  justify-content: center;
+  width: 95%;
+  margin: 2% 0;
+}
+
+/** Formulaire */
+
+.MainContent {
+  display: flex;
+  width: 50%;
+}
+#FormUpdateAddress {
+  background-color: var(--div-color);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 2%;
+}
+#FormUpdateAddress h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+  margin: 2% 0;
+}
+.FormChild {
+  width: 80%;
+  border-radius: 10px;
+  outline: none;
+  height: 50px;
+}
+#FormUpdateAddress label {
+  color: white;
+  display: flex;
+  align-items: end;
+  font-style: italic;
+}
+#FormUpdateAddress input {
+  padding: 2%;
+  background-color: var(--input-color);
+  color: #fff;
+}
+
+#message {
+  color: #ffa938;
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+#submit {
+  padding: 0 !important;
+  background-color: var(--button-color) !important;
+  cursor: pointer;
+}
+#submit:hover {
+  background-color: var(--main-color) !important;
+}
+
+/* @media screen and (max-width: 1440px) {
+  #formLogin > * {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 1040px) {
+  .form {
+    width: 60%;
+  }
+  #formLogin {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .form {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .demande {
     flex-direction: column;
-    align-items: center;
-    margin: 3% 0;
-  }
-  .form h3 {
-    color: #fff;
-    font-size: 2rem;
-    text-align: center;
-  }
-  
-  #formUpdateAdress {
-    /* background-color: aqua; */
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    margin: 1% 0;
-  }
-  #formUpdateAdress {
     margin: 5% 0;
   }
-  #formUpdateAdress label {
-    color: #fff;
-    font-style: italic;
-  }
-  #formUpdateAdress input {
-    background-color: var(--input-color);
-    color: #fff;
-    outline: none;
-    border-radius: 5px;
-  }
-  
-  #message {
-    width: 100%;
-    color: #ffa938;
-    display: flex;
-    align-items: center;
-    font-size: 0.8rem;
-    height: 35px;
-    margin: 0;
-  }
-  .submit {
-    background-color: var(--button-color) !important;
-  }
-  
+}  */

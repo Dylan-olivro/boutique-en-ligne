@@ -70,33 +70,35 @@ if (isset($_POST['submit'])) {
     <?php require_once('../include/header.php'); ?>
 
     <main>
-        <div class="form">
-            <h3>Ajouter une Adresse</h3>
+        <section id="container">
 
-            <!-- Formulaire pour AJOUTER une adresse à l'utilisateur -->
-            <form action="" method="post" id="formUpdateAdress">
-                <label for="numero">Numéro</label>
-                <input type="number" name="numero" id="numero" autofocus>
-                <label for="name">Adresse</label>
-                <input type="text" name="name" id="name">
-                <label for="postcode">Code Postal</label>
-                <input type="number" name="postcode" id="postcode">
-                <label for="city">Ville</label>
-                <input type="text" name="city" id="city">
-                <label for="telephone">Téléphone</label>
-                <input type="text" name="telephone" id="telephone">
-                <label for="nom">Nom</label>
-                <input type="text" name="nom" id="nom">
-                <label for="prenom">Prénom</label>
-                <input type="text" name="prenom" id="prenom">
-                <p id="message">
-                    <?php if (isset($INSERT_ADDRESS_ERROR)) {
-                        echo $INSERT_ADDRESS_ERROR;
-                    } ?>
-                </p>
-                <input type="submit" name="submit" class="submit" value="Valider">
-            </form>
-        </div>
+            <div class="MainContent">
+                <!-- Formulaire pour AJOUTER une adresse à l'utilisateur -->
+                <form action="" method="post" id="FormUpdateAddress">
+                    <h3>Ajouter une Adresse</h3>
+                    <label for="numero" class="FormChild">Numéro</label>
+                    <input type="number" name="numero" id="numero" class="FormChild" autofocus>
+                    <label for="name" class="FormChild">Adresse</label>
+                    <input type="text" name="name" id="name" class="FormChild">
+                    <label for="postcode" class="FormChild">Code Postal</label>
+                    <input type="number" name="postcode" id="postcode" class="FormChild">
+                    <label for="city" class="FormChild">Ville</label>
+                    <input type="text" name="city" id="city" class="FormChild">
+                    <label for="telephone" class="FormChild">Téléphone</label>
+                    <input type="text" name="telephone" id="telephone" class="FormChild">
+                    <label for="nom" class="FormChild">Nom</label>
+                    <input type="text" name="nom" id="nom" class="FormChild">
+                    <label for="prenom" class="FormChild">Prénom</label>
+                    <input type="text" name="prenom" id="prenom" class="FormChild">
+                    <p id="message" class="FormChild">
+                        <?php if (isset($INSERT_ADDRESS_ERROR)) {
+                            echo $INSERT_ADDRESS_ERROR;
+                        } ?>
+                    </p>
+                    <input type="submit" name="submit" id="submit" class="FormChild" value="Valider">
+                </form>
+            </div>
+        </section>
     </main>
     <?php require_once('../include/footer.php') ?>
 </body>
