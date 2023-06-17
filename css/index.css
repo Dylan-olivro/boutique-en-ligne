@@ -1,93 +1,165 @@
-#container {
+#Container {
   width: 95%;
+  display: flex;
+  gap: 3%;
 }
 
-.populaire {
+.MainContent {
   display: flex;
   flex-direction: column;
-  align-items: center;
   background-color: var(--section-color);
   border-radius: 10px;
   margin: 2% 0;
 }
-
-.populaire h2 {
+.MainContent h2 {
   margin: 2% 0;
   color: #fff;
   font-size: 2rem;
+  text-align: center;
 }
-
-.productPop {
-  margin: 2% 0;
+.BoxProducts {
   display: flex;
-  width: 70%;
+  width: 100%;
   flex-wrap: wrap;
-  gap: 1%;
   justify-content: center;
+  gap: 5%;
 }
 
-.cardPop {
+/** Card des produits  */
+.CardProduct {
   background-color: var(--div-color);
   border: 1px solid var(--border-color);
   border-radius: 10px;
   margin-bottom: 2%;
-  width: 250px;
+  width: 280px;
+  height: 350px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 1%;
 }
-
-.linkPop {
+.LinkProduct {
   text-decoration: none;
   color: #000;
   width: 100%;
 }
-
+.LinkProduct:hover p {
+  text-decoration: underline;
+}
 .divImg {
   width: 100%;
   text-align: center;
 }
-
-img {
+.CardProduct img {
   width: 200px;
   border-radius: 10px;
 }
-
-.divText {
-  width: 90%;
-  color: #fff;
-  /* margin: auto;
-    text-align: center; */
-}
-
-.productName {
+.BoxProductName {
   width: 100%;
+  color: #fff;
 }
-
-.priceAndCart {
+.ProductName {
+  width: 100%;
+  text-align: center;
+}
+.BoxPriceBtn {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  padding: 2% 5%;
 }
-
-.productPrice {
+.ProductPrice {
   width: 70%;
   margin: auto;
   font-size: 1.2rem;
   color: #ffa938;
   font-weight: bold;
-  /* padding-left: 5px; */
-}
-
-#formPop {
-  width: 30%;
   text-align: center;
 }
 
-#addPop {
+/** Button ajouter au panier */
+#FormCart {
+  width: 30%;
+  text-align: center;
+}
+#ButtonAddCartPopular,
+#ButtonAddCartNew {
   background-color: #ffa938;
   padding: 10px 13px;
   border-radius: 50px;
+}
+#ButtonAddCartPopular:hover,
+#ButtonAddCartNew:hover {
+  background-color: #cc811e;
+}
+
+/** MEDIA QUERY */
+@media screen and (max-width: 1440px) {
+  #Container {
+    flex-direction: column;
+  }
+  .CardProduct {
+    width: 40%;
+    height: 250px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .LinkProduct {
+    width: initial;
+  }
+  .CardProduct img {
+    width: 100%;
+    max-width: 175px;
+  }
+  .BoxDetailProduct {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5%;
+    height: 60%;
+  }
+  .BoxProductName {
+    margin-bottom: 5%;
+  }
+  .ProductName {
+    width: 90%;
+    margin: auto;
+  }
+  .ProductPrice {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .BoxProducts {
+    gap: 2%;
+  }
+  .CardProduct {
+    flex-direction: column;
+    height: auto;
+  }
+  .CardProduct img {
+    width: 100%;
+    max-width: 175px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .MainContent h2 {
+    font-size: 1.5rem;
+    margin: 5% 0;
+  }
+  .BoxProducts {
+    flex-direction: column;
+    align-items: center;
+  }
+  .CardProduct {
+    width: 90%;
+    padding: 5%;
+    margin-bottom: 5%;
+  }
+  .ProductName {
+    width: 100%;
+  }
 }
