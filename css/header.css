@@ -245,7 +245,7 @@ main {
   position: absolute;
   top: 0;
   left: 55%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
 }
 .resultsDiv {
   display: flex;
@@ -354,6 +354,14 @@ main {
   border-radius: 10px;
 }
 
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  .searchBarDiv {
+    width: 50%;
+  }
+  .iconNavDiv {
+    width: 30%;
+  }
+}
 @media screen and (max-width: 768px) {
   .iconBurger,
   .chevronRight,

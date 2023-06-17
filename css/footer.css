@@ -14,10 +14,6 @@
   transition: all 0.3s ease;
 }
 
-/* .card-client:hover {
-  transform: translateY(-10px);
-} */
-
 .user-picture {
   overflow: hidden;
   object-fit: cover;
@@ -130,7 +126,11 @@ footer {
   align-items: center;
   padding: 2% 0;
 }
-
+#copyright {
+  margin-top: 3%;
+  color: #fff;
+  text-align: center;
+}
 @media screen and (max-width: 1440px) {
   .footerCard {
     width: 80%;
@@ -151,13 +151,3 @@ footer {
     padding: 2%;
   }
 }
-/* @media screen and (max-width: 425px) {
-  .footerCard {
-    flex-direction: column;
-  }
-  .card-client {
-    width: 100%;
-    margin: 5% 0;
-    padding: 2%;
-  }
-} */
