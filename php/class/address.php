@@ -51,7 +51,6 @@ class Address
             'address_firstname' => $firstname,
             'address_lastname' => $lastname
         ]);
-        // header('Location: ../profil.php');
     }
     public function deleteAddress($bdd)
     {
@@ -86,8 +85,6 @@ class Address
             'address_id' => $this->id,
             'user_id' => $user_id
         ]);
-        // header('Location: ../profil.php');
-
     }
 
     public function returnAddressesById($bdd)
@@ -95,7 +92,7 @@ class Address
         $returnAdress = $bdd->prepare('SELECT * FROM addresses WHERE address_id = :address_id AND user_id = :user_id');
         $returnAdress->execute([
             'address_id' => $this->id,
-            'user_id' => $_SESSION['user']->user_id
+            'user_id' => $this->user_id
         ]);
         $result = $returnAdress->fetch(PDO::FETCH_OBJ);
         return $result;
@@ -116,7 +113,6 @@ class Address
         $formateNum = trim($formateNum); // Supprimer les espaces en début et fin de chaîne
         return $formateNum;
     }
-
 
     /**
      * Get the value of id
@@ -260,7 +256,7 @@ class Address
 
     /**
      * Get the value of firstname
-     */ 
+     */
     public function getFirstname()
     {
         return $this->firstname;
@@ -270,7 +266,7 @@ class Address
      * Set the value of firstname
      *
      * @return  self
-     */ 
+     */
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
@@ -280,7 +276,7 @@ class Address
 
     /**
      * Get the value of lastname
-     */ 
+     */
     public function getLastname()
     {
         return $this->lastname;
@@ -290,7 +286,7 @@ class Address
      * Set the value of lastname
      *
      * @return  self
-     */ 
+     */
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
