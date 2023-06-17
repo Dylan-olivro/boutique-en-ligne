@@ -1,11 +1,15 @@
 /*  SECTION  */
 #container {
+  margin: 12px;
 }
 /* DIV */
 #item {
   margin: auto !important;
   display: flex;
   width: 80%;
+  background-color: var(--section-color);
+  border: 1px solid var( --border-color);
+  border-radius: 10px;
 }
 #imageItem {
   display: flex;
@@ -14,14 +18,20 @@
 }
 #imageItem img {
   width: 400px;
+  border-radius: 10px;
 }
 #detailItem {
   flex: 1;
+  margin-left: 12px;
+  color: white;
 }
 #description {
+  color: white;
 }
 #price_cart {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 90px;
+  color: #f75b5b;
 }

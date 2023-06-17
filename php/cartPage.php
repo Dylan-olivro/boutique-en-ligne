@@ -131,7 +131,7 @@ if (isset($_POST['vider'])) {
                     } else { ?>
                         <div class="cartVide">
                             <p>Votre panier est vide !</p>
-                            <a href="./itemFilter.php"><button>Découvrez nos pruduits</button></a>
+                            <a href="./itemFilter.php"><button>Découvrez nos produits</button></a>
                         </div>
                     <?php
                     }

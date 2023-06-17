@@ -97,6 +97,7 @@ main {
 }
 .categoriesUl a {
   text-decoration: none;
+  color: white;
 }
 .categoriesUl li:hover {
   background-color: #0091ee;
