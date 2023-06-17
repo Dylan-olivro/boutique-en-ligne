@@ -188,8 +188,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteCategories' . $key_cat->id])) {
                                 $category->setId($key_cat->id);
-                                // $delete = $category->deleteCategory($bdd);
-                                // header('Location: admin.php');
+                                $delete = $category->deleteCategory($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
@@ -235,8 +235,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteProduct' . $key_product->product_id])) {
                                 $product->setId($key_product->product_id);
-                                // $delete = $product->deleteProduct($bdd);
-                                // header('Location: admin.php');
+                                $delete = $product->deleteProduct($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
@@ -292,8 +292,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteUser' . $key_user->user_id])) {
                                 $user->setId($key_user->user_id);
-                                // $delete = $user->deleteUserByID($bdd);
-                                // header('Location: admin.php');
+                                $delete = $user->deleteUserByID($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
