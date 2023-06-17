@@ -52,6 +52,7 @@ main {
   border: none;
   background-color: transparent;
   color: #fff;
+  cursor: pointer;
 }
 
 /* ----------------- STATS  ------------------------- */
@@ -106,37 +107,47 @@ main {
   width: 95%;
   display: flex;
   justify-content: space-between;
+  gap: 1%;
 }
 
-#addItem {
+#addItem,
+#addCategory {
   background-color: var(--div-color);
   border: 1px solid var(--border-color);
-  padding: 1%;
+  padding: 1% 1% 2%;
   border-radius: 10px;
   width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#addItem h3 {
+#addItem h3,
+#addCategory h3 {
   color: #fff;
   font-size: 2rem;
+  text-align: center;
 }
 #addCategory {
   width: 30%;
 }
 #formProduct,
-#formAddCategory {
+#formCategories {
   /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   width: 90%;
+  margin: 1% 0;
 }
-#formProduct label {
+#formCategories {
+  margin: 5% 0;
+}
+#formProduct label,
+#formCategories label {
   color: #fff;
   font-style: italic;
 }
-#formProduct input {
+#formProduct input,
+#formCategories input {
   background-color: var(--input-color);
   color: #fff;
   outline: none;
@@ -145,6 +156,7 @@ main {
 .groupInput {
   display: flex;
   justify-content: space-between;
+  margin: 2% 0;
 }
 .divInput {
   /* displ5y: flex; */
@@ -168,7 +180,8 @@ main {
   border-style: inset;
   border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
 }
-#message {
+#messageProduct,
+#messageCategories {
   width: 100%;
   color: #ffa938;
   display: flex;
@@ -177,13 +190,14 @@ main {
   height: 35px;
   margin: 0;
 }
-#submit {
+.submit {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-#submit input {
+.submit input {
   width: 50%;
+  cursor: pointer;
 }
 .formEdit,
 .formCat {
@@ -192,7 +206,9 @@ main {
   flex-direction: column;
   align-items: center;
 }
-
+#nameCategory {
+  margin-bottom: 2%;
+}
 /* ------------------- PANEL -------------------- */
 
 .tableProducts,
@@ -200,11 +216,11 @@ main {
 .tableUsers {
   display: none;
   position: absolute;
-  /* top: 50%;
-  left: 50%; */
-  top: 1%;
-  left: 15%;
-  /* transform: translate(-50%, -50%); */
+  top: 50%;
+  left: 50%;
+  /* top: 2%;
+  left: 22%; */
+  transform: translate(-50%, -50%);
   height: 600px;
   overflow-y: auto;
   width: 70%;
@@ -217,7 +233,12 @@ main {
   border-collapse: collapse;
   width: 100%;
 }
-
+/* #products tr:nth-child(odd) {
+  background-color: red;
+}
+#products tr:nth-child(even) {
+  background-color: blue;
+} */
 #products td,
 #products th,
 #categories td,
@@ -248,7 +269,7 @@ main {
 #users th {
   padding-top: 12px;
   padding-bottom: 12px;
-  background-color: #04aa6d;
+  background-color: #4b5c8c;
   color: white;
   position: sticky;
   top: 0;
@@ -277,8 +298,10 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: #04aa6d;
+  background-color: #4b5c8c;
   padding: 1%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 #hideProducts,
 #hideCategories,
@@ -287,10 +310,125 @@ main {
   border: none;
   text-decoration: underline;
   color: #fff;
+  cursor: pointer;
+}
+table button {
+  background-color: transparent;
 }
 tbody button {
   border: none;
 }
 tbody button a {
   color: #000;
+}
+
+/* width */
+.tableProducts::-webkit-scrollbar,
+.tableCategories::-webkit-scrollbar,
+.tableUsers::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.tableProducts::-webkit-scrollbar-track,
+.tableCategories::-webkit-scrollbar,
+.tableUsers::-webkit-scrollbar {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+.tableProducts::-webkit-scrollbar-thumb,
+.tableCategories::-webkit-scrollbar,
+.tableUsers::-webkit-scrollbar {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.tableProducts::-webkit-scrollbar-thumb:hover,
+.tableProducts::-webkit-scrollbar,
+.tableProducts::-webkit-scrollbar {
+  background: #555;
+}
+
+@media screen and (max-width: 1024px) {
+  #firstContainer {
+    flex-direction: column;
+  }
+  .allShowButtons {
+    height: auto;
+    width: 100%;
+    position: static;
+    padding: 1% 0;
+    margin-bottom: 1%;
+    /* justify-content: space-evenly; */
+  }
+  .allShowButtons ul {
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    gap: 1%;
+    padding: 0 1%;
+  }
+  .allShowButtons li {
+    width: 50%;
+  }
+
+  #secondContainer {
+    width: 100%;
+  }
+  .sectionStats {
+    width: 100%;
+  }
+  .stats {
+    width: 92%;
+    margin: auto;
+  }
+  .FormForAdd {
+    width: 100%;
+  }
+}
+/* (min-width: 769px)  */
+@media screen and (max-width: 768px) {
+  .stats {
+    width: 100%;
+  }
+  .FormForAdd {
+    width: 100%;
+    flex-direction: column;
+  }
+  #addItem,
+  #addCategory {
+    width: 100%;
+    margin-bottom: 1%;
+  }
+  .tableProducts,
+  .tableCategories,
+  .tableUsers {
+    width: 90%;
+    transform: translate(-50%, -70%);
+  }
+  #IDUsers,
+  #LastnameUsers,
+  #FirstnameUsers,
+  .user_lastname,
+  .user_firstname,
+  .user_id,
+  #StockProduct,
+  #IDCategoryProduct,
+  #DateProduct,
+  .product_stock,
+  .id_category,
+  .product_date {
+    display: none;
+  }
+}
+@media screen and (max-width: 425px) {
+  .statsText {
+    display: none;
+  }
+  .cardStat {
+    width: 40%;
+  }
 }

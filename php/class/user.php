@@ -224,6 +224,9 @@ class User
     {
         $request = $bdd->prepare("DELETE FROM users WHERE user_id = :user_id");
         $request->execute(['user_id' => $this->id]);
+
+        $req = $bdd->prepare('DELETE FROM carts WHERE user_id = :user_id');
+        $req->execute(['user_id' => $this->id]);
     }
 
     public function isConnected(): bool

@@ -23,18 +23,31 @@
 
 #container {
   display: flex !important;  
+  flex-direction: column;
   width: 95%;
 }
-
-
+.tri{
+  width: 93%;
+  margin-top: 1em;
+}
+.triForm{
+  display: flex;
+  justify-content: end;
+}
+.catAndItems{
+  display: flex;
+}
 main li {
   list-style: none;
 }
-
-/* .categoryParentDiv:hover .categoryChildDiv {
-  display: block;
-} */
-
+.categoryParentRadio{
+  display: none;
+}
+.resultParent{
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
 #container > form {
    width: 20%;
 }
@@ -54,7 +67,6 @@ main li {
   border-radius: 10px;
   background-color:  var(--section-color);
 }
-
 
 #allItems{
  width: 80%;
@@ -117,10 +129,12 @@ main li {
   transition: 0.3s;
 }
 .divGlobal:hover .itemImg {
+  z-index: 0;
   transform: scale(1.1);
   transition: 0.5s ease-in-out;
 }
 .divGlobal .itemImg {
+  z-index: 0;
   transform: scale(1);
   transition: 0.5s ease-in-out;
 }

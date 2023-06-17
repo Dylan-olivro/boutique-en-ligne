@@ -27,6 +27,7 @@ if ($_SESSION['user']->user_role == 0) {
 
         $category = new Category(null, null, null);
         $result_cat = $category->returnAllCategories($bdd);
+        // var_dump($result_cat);
 
         $user = new User(null, null, null, null, null, null);
         $result_users = $user->returnAllUser($bdd);
@@ -49,28 +50,28 @@ if ($_SESSION['user']->user_role == 0) {
                         <div class="cardStat">
                             <p><i class="fa-solid fa-users"></i></p>
                             <p id="countUser">0</p>
-                            <p>Nombres d'utilisateurs</p>
+                            <p class="statsText">Nombres d'utilisateurs</p>
 
                         </div>
                         <div class="cardStat">
                             <p><i class="fa-solid fa-cubes"></i></p>
                             <p id="countProduct">0</p>
-                            <p>Nombres de produits</p>
+                            <p class="statsText">Nombres de produits</p>
                         </div>
                         <div class="cardStat">
                             <p><i class="fa-solid fa-truck-fast"></i></p>
                             <p id="countOrder">0</p>
-                            <p>Nombres de commandes</p>
+                            <p class="statsText">Nombres de commandes</p>
                         </div>
                         <div class="cardStat">
                             <p><i class="fa-solid fa-credit-card"></i></p>
                             <p id="avgOrder">0</p>
-                            <p>Paniers moyen</p>
+                            <p class="statsText">Paniers moyen</p>
                         </div>
                         <div class="cardStat">
                             <p><i class="fa-solid fa-sack-dollar"></i></p>
                             <p id="salesRevenues">0</p>
-                            <p>Chiffres d'affaires</p>
+                            <p class="statsText">Chiffres d'affaires</p>
                         </div>
                     </div>
 
@@ -95,11 +96,20 @@ if ($_SESSION['user']->user_role == 0) {
                                 </div>
                                 <div class="divInput">
                                     <label for="categoryItem">Category</label>
-                                    <input type="number" id="categoryItem" name="categoryItem" autocomplete="off">
+                                    <select name="categoryItem" id="categoryItem">
+                                        <?php
+                                        foreach ($result_cat as $cat) {
+                                            if ($cat->id_parent != 0) { ?>
+                                                <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                                        <?php
+                                            }
+                                        } ?>
+                                    </select>
+                                    <!-- <input type="number" id="categoryItem" name="categoryItem" autocomplete="off"> -->
                                 </div>
                                 <div class="divInputFile">
-                                    <label for="file">Image</label>
-                                    <input type="file" id="file" name="file">
+                                    <label for="image">Image</label>
+                                    <input type="file" id="image" name="image">
                                 </div>
                             </div>
 
@@ -108,8 +118,8 @@ if ($_SESSION['user']->user_role == 0) {
                             <!-- <input type="text" id="descriptionItem" name="descriptionItem"> -->
 
 
-                            <p id="message"></p>
-                            <div id="submit">
+                            <p id="messageProduct"></p>
+                            <div class="submit">
                                 <input type="submit" name="buttonAddItem" value="Valider">
                             </div>
                         </form>
@@ -119,12 +129,25 @@ if ($_SESSION['user']->user_role == 0) {
                     <div id="addCategory">
                         <!-- Formulaire pour AJOUTER une catégorie -->
                         <h3>Ajouter une Categorie</h3>
-                        <form action="" method="post" id="formAddCategory">
+                        <form action="" method="post" id="formCategories">
                             <label for="nameCategory">Name</label>
                             <input type="text" name="nameCategory" id="nameCategory">
                             <label for="idParent">ID parent</label>
-                            <input type="number" name="idParent" id="idParent">
-                            <input type="submit" name="buttonAddCategory" value="Ajouter">
+                            <select name="idParent" id="idParent">
+                                <?php
+                                foreach ($result_cat as $cat) {
+                                    if ($cat->id_parent == 0) { ?>
+                                        <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                                <?php
+                                    }
+                                } ?>
+                                <option value="0">Nouveau Parent</option>
+                            </select>
+                            <!-- <input type="number" name="idParent" id="idParent"> -->
+                            <p id="messageCategories"></p>
+                            <div class="submit">
+                                <input type="submit" name="buttonAddCategory" value="Ajouter">
+                            </div>
                         </form>
 
                     </div>
@@ -141,9 +164,6 @@ if ($_SESSION['user']->user_role == 0) {
                             <th id="IDCategories">ID</th>
                             <th id="NameCategories">Name</th>
                             <th id="IDParentCategories">ID Parent</th>
-                            <!-- <th id="PrixProduct">Prix</th>
-                            <th id="StockProduct">Stock</th>
-                            <th id="IDCategoryProduct">ID Cat</th> -->
                             <th id="EditCategories">Edit</th>
                             <th id="DeleteCategories">Delete</th>
                         </tr>
@@ -151,12 +171,12 @@ if ($_SESSION['user']->user_role == 0) {
                     <tbody>
                         <?php foreach ($result_cat as $key_cat) { ?>
                             <tr>
-                                <td><?= $key_cat->id ?></td>
-                                <td><?= $key_cat->name ?></td>
-                                <td><?= $key_cat->id_parent ?></td>
+                                <td><?= htmlspecialchars($key_cat->id) ?></td>
+                                <td><?= htmlspecialchars($key_cat->name) ?></td>
+                                <td><?= htmlspecialchars($key_cat->id_parent) ?></td>
 
                                 <td>
-                                    <button type="button" name="editCategories<?= $key_cat->id ?>"><a href="./user/modifyCategories.php?<?= $key_cat->id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                    <button type="button" name="editCategories<?= $key_cat->id ?>"><a href="./user/modifyCategories.php?id=<?= $key_cat->id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
                                 <td>
                                     <form action="" method="POST">
@@ -168,8 +188,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteCategories' . $key_cat->id])) {
                                 $category->setId($key_cat->id);
-                                // $delete = $category->deleteCategory($bdd);
-                                // header('Location: admin.php');
+                                $delete = $category->deleteCategory($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
@@ -196,14 +216,14 @@ if ($_SESSION['user']->user_role == 0) {
                     <tbody>
                         <?php foreach ($result_products as $key_product) { ?>
                             <tr>
-                                <td><?= $key_product->product_id ?></td>
-                                <td><?= $key_product->product_name ?></td>
-                                <td><?= $key_product->product_date ?></td>
-                                <td><?= $key_product->product_price ?></td>
-                                <td><?= $key_product->product_stock ?></td>
-                                <td><?= $key_product->id_category ?></td>
+                                <td class="product_id"><?= htmlspecialchars($key_product->product_id) ?></td>
+                                <td class="product_name"><?= htmlspecialchars($key_product->product_name) ?></td>
+                                <td class="product_date"><?= htmlspecialchars($key_product->product_date) ?></td>
+                                <td class="product_price"><?= htmlspecialchars($key_product->product_price) ?></td>
+                                <td class="product_stock"><?= htmlspecialchars($key_product->product_stock) ?></td>
+                                <td class="id_category"><?= htmlspecialchars($key_product->id_category) ?></td>
                                 <td>
-                                    <button type="button" name="editProduct<?= $key_product->product_id ?>"><a href="./user/modifyProduct.php?<?= $key_product->product_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                    <button type="button" name="editProduct<?= $key_product->product_id ?>"><a href="./user/modifyProduct.php?id=<?= $key_product->product_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
                                 <td>
                                     <form action="" method="POST">
@@ -215,8 +235,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteProduct' . $key_product->product_id])) {
                                 $product->setId($key_product->product_id);
-                                // $delete = $product->deleteProduct($bdd);
-                                // header('Location: admin.php');
+                                $delete = $product->deleteProduct($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
@@ -242,10 +262,10 @@ if ($_SESSION['user']->user_role == 0) {
                     <tbody>
                         <?php foreach ($result_users as $key_user) { ?>
                             <tr>
-                                <td><?= $key_user->user_id ?></td>
-                                <td><?= $key_user->user_email ?></td>
-                                <td><?= $key_user->user_lastname ?></td>
-                                <td><?= $key_user->user_firstname ?></td>
+                                <td class="user_id"><?= htmlspecialchars($key_user->user_id) ?></td>
+                                <td class="user_email"><?= htmlspecialchars($key_user->user_email) ?></td>
+                                <td class="user_lastname"><?= htmlspecialchars($key_user->user_lastname) ?></td>
+                                <td class="user_firstname"><?= htmlspecialchars($key_user->user_firstname) ?></td>
                                 <td>
                                     <?php
                                     if ($key_user->user_role == 2) {
@@ -260,7 +280,7 @@ if ($_SESSION['user']->user_role == 0) {
                                 </td>
 
                                 <td>
-                                    <button type="button" name="editUser<?= $key_user->user_id ?>"><a href="./user/modifyUser.php?<?= $key_user->user_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
+                                    <button type="button" name="editUser<?= $key_user->user_id ?>"><a href="./user/modifyUser.php?id=<?= $key_user->user_id ?>"><i class="fa-solid fa-pencil"></i></a></button>
                                 </td>
                                 <td>
                                     <form action="" method="POST">
@@ -272,8 +292,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteUser' . $key_user->user_id])) {
                                 $user->setId($key_user->user_id);
-                                // $delete = $user->deleteUserByID($bdd);
-                                // header('Location: admin.php');
+                                $delete = $user->deleteUserByID($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
@@ -282,6 +302,7 @@ if ($_SESSION['user']->user_role == 0) {
             </div>
         </section>
     </main>
+    <?php require_once('./include/footer.php') ?>
 </body>
 
 </html>

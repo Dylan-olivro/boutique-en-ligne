@@ -1,8 +1,5 @@
-const formEl = document.querySelector("#formLogin");
+const formEl = document.querySelector("#formUser");
 const message = document.querySelector("#message");
-
-const password = document.querySelector("#password");
-const buttonShow = document.getElementById("showPassword");
 
 formEl.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -10,7 +7,7 @@ formEl.addEventListener("submit", (event) => {
   const formData = new FormData(formEl);
   const data = Object.fromEntries(formData);
 
-  fetch("traitement/traitement_connect.php", {
+  fetch("../traitement/traitement_modifyUser.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
@@ -22,16 +19,15 @@ formEl.addEventListener("submit", (event) => {
     })
     .then((data) => {
       console.log(data);
-      if (data.CONNECT_ERROR) {
-        message.innerHTML = data.CONNECT_ERROR;
+      if (data.USER_ERROR) {
+        message.innerHTML = data.USER_ERROR;
       } else {
-        window.location.href = `${getURL()}index.php`;
-        message.style.color = "green";
-        message.innerHTML = data.CONNECT_SUCCES;
         formEl.reset();
+        // window.location.href = `${getURL()}php/admin.php`;
+        message.style.color = "green";
+        message.innerHTML = data.USER_SUCCES;
       }
     })
     .catch((error) => console.log(error));
 });
 
-showPassword(buttonShow, password);

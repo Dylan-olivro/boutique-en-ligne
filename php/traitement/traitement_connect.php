@@ -21,12 +21,23 @@ if (isset($data)) {
         $message['CONNECT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspL\'adresse mail n\'est pas valide.';
     } elseif ($user->isExist($bdd)) {
         $res = $user->returnUserByEmail($bdd);
-        $result = $user->returnUserByEmailAndPassword($bdd, $res->user_password);
+        // $result = $user->returnUserByEmailAndPassword($bdd, $res->user_password);
 
-        if ($result) {
+        if ($res) {
             // Vérification du mot de passe 
-            if (password_verify($password, $result->user_password)) {
-                $_SESSION['user'] = $result;
+            if (password_verify($password, $res->user_password)) {
+
+                // $user = new User($res->user_id, $email, $res->user_firstname, $res->user_lastname, $res->user_password, $res->user_role);
+                // $_SESSION['user'] = $user;
+
+                // $_SESSION['user']->user_id = (int)$res->user_id;
+                // $_SESSION['user']->user_email = $res->user_email;
+                // $_SESSION['user']->user_firstname = $res->user_firstname;
+                // $_SESSION['user']->user_lastname = $res->user_lastname;
+                // $_SESSION['user']->user_password = $res->user_password;
+                // $_SESSION['user']->user_role = (int)$res->user_role;
+
+                $_SESSION['user'] = $res;
                 $message['CONNECT_SUCCES'] = "Utilisateur connecté avec succès";
             } else {
                 $message['CONNECT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe mot de passe est incorrect.';

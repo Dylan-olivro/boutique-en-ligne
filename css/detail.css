@@ -1,3 +1,4 @@
+/* #item {
 /*  SECTION  */
 #container {
   margin: 12px;
@@ -25,13 +26,89 @@
   margin-left: 12px;
   color: white;
 }
-#description {
-  color: white;
-}
 #price_cart {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 90px;
-  color: #f75b5b;
+} */
+
+/* Style pour la section principale */
+main {
+  padding: 20px;
+}
+
+/* Style pour le conteneur */
+#container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Style pour l'élément */
+#item {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Style pour l'image du produit */
+#imageItem {
+  margin-right: 20px;
+}
+
+#imageItem img {
+  width: 200px;
+  height: auto;
+}
+
+/* Style pour les détails du produit */
+#detailItem {
+  flex-grow: 1;
+}
+
+#detailItem p {
+  font-weight: bold;
+}
+
+/* Style pour la description du produit */
+#description {
+  margin-top: 10px;
+}
+
+#description p {
+  margin: 0;
+}
+
+/* Style pour le prix et le panier */
+#price_cart {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#price_cart p {
+  margin: 0;
+  margin-right: 10px;
+}
+
+#price_cart .stock {
+  font-style: italic;
+}
+
+#price_cart form {
+  margin: 0;
+}
+
+#price_cart input[type="submit"] {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#price_cart input[type="submit"]:hover {
+  background-color: #45a049;
 }

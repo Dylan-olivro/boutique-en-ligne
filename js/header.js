@@ -5,6 +5,7 @@ let iconBurger = document.querySelector(".iconBurger");
 let categoriesNav = document.querySelector(".categoriesNav");
 let userIcon = document.querySelector(".userIcon");
 let userLink = document.querySelector(".userLink");
+let cartIcon  = document.getElementById("cart-icon");
 
 function burger(div) {
   div.classList.toggle("change");
@@ -48,14 +49,13 @@ let darkMode = document.getElementById("darkMode");
 darkMode.addEventListener("click", () => {
   darkModeIcon.classList.toggle("fa-moon");
   darkModeIcon.classList.toggle("fa-sun");
+  console.log(cartIcon);
 });
 
 //* On change le thème dans le localStorage pour qu'il soit mémorisé
 (function () {
-  let currentTheme = localStorage.getItem("theme") || "";
+  let currentTheme = localStorage.getItem("theme") || null;
   allBody.classList.add(currentTheme);
-  document.getElementById("theme").textContent =
-    localStorage.getItem("theme") || "light";
 })();
 
 //* on alterne entre le dark mode et light mode au click de l'icone
@@ -63,10 +63,11 @@ function themeToggle() {
   allBody.classList.toggle("dark-mode");
   let theme = localStorage.getItem("theme");
   if (theme && theme === "dark-mode") {
+    // darkModeIcon.classList.toggle("fa-sun");
     localStorage.setItem("theme", "");
   } else {
+    // darkModeIcon.classList.toggle("fa-moon");
     localStorage.setItem("theme", "dark-mode");
   }
-  document.getElementById("theme").textContent = localStorage.getItem("theme");
 }
 // * fin dark mode

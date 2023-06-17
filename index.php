@@ -1,69 +1,166 @@
 <?php require_once('./php/include/required.php');
-// ! AJOUTER LES CONDITIONS POUR LES IMAGES DANS LE FORMULAIRE DU PRODUIT
+
+// Requête pour récupérer les produits les plus acheter
+$request = $bdd->prepare("SELECT *,count(*) FROM liaison_product_order INNER JOIN products ON liaison_product_order.product_id = products.product_id INNER JOIN images ON images.product_id = products.product_id WHERE image_main = 1 GROUP BY products.product_id ORDER BY count(*) DESC LIMIT 4");
+$request->execute();
+$result = $request->fetchAll(PDO::FETCH_OBJ);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/header.css">
-    <!-- BOOTSTRAP -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script> -->
-    <!-- JQUERY -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <!-- FONTAWESOME -->
-    <script src="https://kit.fontawesome.com/9a09d189de.js" crossorigin="anonymous"></script>
-    <!-- JAVASCRIPT -->
-    <script src="./js/function.js" defer></script>
-    <script src="./js/header.js" defer></script>
-    <script src="./js/autocompletion.js" defer></script>
+    <?php require_once('./php/include/head.php') ?>
+    <title>Index</title>
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
-    <form action="" method="post">
-        <input type="number" name="test">
-        <input type="submit" name="submit">
-    </form>
-
     <?php require_once('./php/include/header.php') ?>
-    <?php
-    if (isset($_POST['submit'])) {
-        if (isNumber($_POST['test'])) {
-            var_dump(1);
-        } else {
-            var_dump(2);
-        }
-    }
-    // Requête qui permet de récupérer les ID des produits les plus vendus
-    $request = $bdd->prepare("SELECT product_id,count(*) FROM liaison_product_order GROUP BY product_id ORDER BY count(*) DESC");
-    $request->execute();
-    $result = $request->fetchAll(PDO::FETCH_ASSOC);
-    // var_dump($result);
+    <main>
+        <section id="Container">
 
+            <!-- DIV POUR LES PRODUTIS LES PLUS POPULAIRES -->
+            <div class="MainContent">
+                <h2>LES PLUS POPULAIRES</h2>
+                <div class="BoxProducts">
+                    <?php
+                    foreach ($result as $key) { ?>
+                        <div class="CardProduct">
+                            <a href="./php/detail.php?id=<?= $key->image_id ?>" class="LinkProduct">
+                                <div class="divImg">
+                                    <img src="./assets/img_item/<?= $key->image_name ?>" alt="">
+                                </div>
+                            </a>
 
+                            <div class="BoxDetailProduct">
 
-    // * Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
+                                <a href="./php/detail.php?id=<?= $key->image_id ?>" class="LinkProduct">
+                                    <div class="BoxProductName">
+                                        <p class="ProductName"><?= CoupePhrase(htmlspecialchars($key->product_name), 40) ?></p>
+                                    </div>
+                                </a>
 
-    // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
-    // ? Quand les inputs sont différents de vide mettre leur border en --button-color
-    // ? PASSER LE MESSAGE DE STOCK EPUISEE SUR LE DETAIL EN --> JAVASCRIPT
+                                <div class="BoxPriceBtn">
+                                    <p class="ProductPrice"><?= htmlspecialchars($key->product_price) ?>€</p>
+                                    <?php if (isset($_SESSION['user'])) { ?>
+                                        <form action="" method="post" id="FormCart">
+                                            <button type="submit" name="ButtonAddCartPopular<?= $key->product_id ?>" id="ButtonAddCartPopular"><i class="fa-solid fa-cart-plus"></i></button>
+                                        </form>
+                                    <?php } ?>
+                                </div>
 
-    // ! TRAVAILLER LE CSS SUR DU 1920/1080
-    // ! Ajouter le css concernant le main sur toutes les pages
+                            </div>
 
-    // ! Probleme si on ajoute 2 fois le même produit au panier et qu'on click sur supprimer, ça supprime les 2 (voir avec des data-id et uniqId() ou faire un systeme de quantité)
-    ?>
+                        </div>
+                    <?php
+                        if (isset($_POST['ButtonAddCartPopular' . $key->product_id])) {
+                            // Récupère la quantité du produit
+                            $quantity = $bdd->prepare("SELECT cart_quantity FROM carts WHERE product_id = :product_id");
+                            $quantity->execute(['product_id' => $key->product_id]);
+                            $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
+
+                            // Insert le produit de la page dans le panier en gérant la quantité
+                            if ($quantity->rowCount() > 0) {
+                                $updateQuantity = $bdd->prepare("UPDATE carts SET cart_quantity= :cart_quantity WHERE product_id = :product_id");
+                                $updateQuantity->execute([
+                                    'cart_quantity' => $result_quantity->cart_quantity + 1,
+                                    'product_id' => $key->product_id
+                                ]);
+                            } else {
+                                $insertQuantity = $bdd->prepare("INSERT INTO carts(user_id, product_id, cart_quantity) VALUES (:user_id,:product_id,:cart_quantity)");
+                                $insertQuantity->execute([
+                                    'user_id' => $_SESSION['user']->user_id,
+                                    'product_id' => $key->product_id,
+                                    'cart_quantity' => 1
+                                ]);
+                            }
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <!-- DIV POUR LES PRODUTIS LES PLUS ????????? -->
+            <div class="MainContent">
+                <h2>LES PLUS POPULAIRES</h2>
+                <div class="BoxProducts">
+                    <?php
+                    foreach ($result as $key) { ?>
+                        <div class="CardProduct">
+                            <a href="./php/detail.php?id=<?= $key->image_id ?>" class="LinkProduct">
+                                <div class="divImg">
+                                    <img src="./assets/img_item/<?= $key->image_name ?>" alt="">
+                                </div>
+                            </a>
+
+                            <div class="BoxDetailProduct">
+
+                                <a href="./php/detail.php?id=<?= $key->image_id ?>" class="LinkProduct">
+                                    <div class="BoxProductName">
+                                        <p class="ProductName"><?= CoupePhrase(htmlspecialchars($key->product_name), 40) ?></p>
+                                    </div>
+                                </a>
+
+                                <div class="BoxPriceBtn">
+                                    <p class="ProductPrice"><?= htmlspecialchars($key->product_price) ?>€</p>
+                                    <?php if (isset($_SESSION['user'])) { ?>
+                                        <form action="" method="post" id="FormCart">
+                                            <button type="submit" name="ButtonAddCartNew<?= $key->product_id ?>" id="ButtonAddCartNew"><i class="fa-solid fa-cart-plus"></i></button>
+                                        </form>
+                                    <?php } ?>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <?php
+                        if (isset($_POST['ButtonAddCartNew' . $key->product_id])) {
+                            // Récupère la quantité du produit
+                            $quantity = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
+                            $quantity->execute(['product_id' => $key->product_id]);
+                            $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
+
+                            // Insert le produit de la page dans le panier en gérant la quantité
+                            if ($quantity->rowCount() > 0) {
+                                $updateQuantity = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
+                                $updateQuantity->execute([
+                                    'cart_quantity' => $result_quantity->cart_quantity + 1,
+                                    'product_id' => $key->product_id
+                                ]);
+                            } else {
+                                $insertQuantity = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
+                                $insertQuantity->execute([
+                                    'user_id' => $_SESSION['user']->user_id,
+                                    'product_id' => $key->product_id,
+                                    'cart_quantity' => 1
+                                ]);
+                            }
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <?php require_once('./php/include/footer.php') ?>
 </body>
 
 </html>
 
 <?php
+// * Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
+// * TRAVAILLER LE CSS SUR DU 1920x1080
 
+// ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
+// ? Quand les inputs sont différents de vide mettre leur border en --button-color
+
+// ! VERIFIER TOUTES LES ERREURS POSSIBLE EN CHANGEANT LES GET
+// ! INTVAL POUR LA CONNEXION
+// ! REMETTRE LE SETINTERVAL SUR LES FETCH DE L'ADMIN
+
+// TODO: désactiver la touche ENTRER sur l'autocomplétion car elle envoie sur une page erreur
+// TODO: rajouter un header location après le post Delete de la page Cart
 // TODO: FAIRE toutes les verif en html, php et js pour les formulaires des pages admin, cartPage, profil, addAdress, modifyAdress, modifyPassword 
 // TODO: FAIRE la maquette
 // TODO: FAIRE le MCD

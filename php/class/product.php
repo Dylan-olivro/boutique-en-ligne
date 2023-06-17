@@ -47,6 +47,9 @@ class Product
             $deleteImage->execute(['product_id' => $this->id]);
         }
 
+        $deleteliaisonCategory = $bdd->prepare("DELETE FROM liaison_items_category WHERE id_item = :product_id");
+        $deleteliaisonCategory->execute(['product_id' => $this->id]);
+
         $deleteProduct = $bdd->prepare('DELETE FROM products WHERE product_id = :product_id');
         $deleteProduct->execute(['product_id' => $this->id]);
     }
@@ -61,7 +64,6 @@ class Product
             'product_stock' => $this->stock,
             'product_id' => $this->id
         ]);
-        header('Location: admin.php');
     }
     public function returnAllProducts($bdd)
     {
@@ -73,6 +75,13 @@ class Product
     public function returnProduct($bdd)
     {
         $returnProduct = $bdd->prepare('SELECT * FROM products WHERE product_id = :product_id');
+        $returnProduct->execute(['product_id' => $this->id]);
+        $result = $returnProduct->fetch(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function returnAllProductInfo($bdd)
+    {
+        $returnProduct = $bdd->prepare('SELECT * FROM products INNER JOIN images ON products.product_id = images.product_id INNER JOIN liaison_items_category ON products.product_id = liaison_items_category.id_item INNER JOIN category ON category.id = liaison_items_category.id_category WHERE products.product_id = :product_id');
         $returnProduct->execute(['product_id' => $this->id]);
         $result = $returnProduct->fetch(PDO::FETCH_OBJ);
         return $result;

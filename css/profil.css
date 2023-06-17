@@ -88,12 +88,14 @@ label {
   background-color: var(--button-color);
   border: none;
   margin: 1% auto !important;
+  cursor: pointer;
 }
 #updatePassword {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 90%;
+  color: var(--button-color);
 }
 
 /* AFFICHAGE ADRESSES */
@@ -246,6 +248,7 @@ img {
 .infoProduct a button {
   border-radius: 20px;
   padding: 4% !important;
+  cursor: pointer;
 }
 
 .showCommands {
