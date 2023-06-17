@@ -1,16 +1,15 @@
 <?php require_once('../include/required.php');
 
-// Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
-if (!isset($_SESSION['user'])) {
-    header('Location:../../index.php');
-}
-
+// Récupération de la catégorie sélectionnée
 $category = new Category($_GET['id'], null, null);
 $result = $category->returnCategory($bdd);
 $result_cat = $category->returnAllCategories($bdd);
-// var_dump($result);
-// var_dump($result_cat);
 
+// Empêche les utilisateurs qui ne sont pas ADMINISTRATEUR
+if (!$result || $_SESSION['user']->user_role != 2) {
+    header('Location: ../../index.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

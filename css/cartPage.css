@@ -1,5 +1,5 @@
 #container {
-  background-color: var(--section-color);
+  /* background-color: var(--section-color); */
   padding: 2% 2% !important;
   display: flex;
   justify-content: center;

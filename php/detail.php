@@ -1,28 +1,25 @@
 <?php
 require_once('./include/required.php');
-// ! VERIFIER AVEC PLESK POUR LES ACCENTS
-
 
 // Récupération du produit
 $returnProduct = $bdd->prepare("SELECT * FROM products WHERE product_id = :product_id");
 $returnProduct->execute(['product_id' => $_GET['id']]);
 $result = $returnProduct->fetch(PDO::FETCH_OBJ);
-// var_dump($result->product_id);
+
 // Empêche d'aller sur la page si il n'y a aucun produit de selectionner 
 if (!$result) {
     header('Location: ../index.php');
 }
+
 // Récupération des images du produit
 $image = new Image(null, $_GET['id'], null, null);
 $result_images = $image->returnImagesByID($bdd);
 
 // Insert le produit de la page dans le panier en gérant la quantité
-// * TEST QUANTITés
 if (isset($_POST["ajouter"])) {
     $req2 = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
     $req2->execute(['product_id' => $result->product_id]);
     $res2 = $req2->fetch(PDO::FETCH_OBJ);
-    // $res2->cart_quantity = intval($res2->cart_quantity);
 
     if ($req2->rowCount() > 0) {
         $req3 = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
@@ -31,7 +28,6 @@ if (isset($_POST["ajouter"])) {
             'product_id' => $result->product_id
         ]);
         echo '<i class="fa-solid fa-circle-check" style="color: #0cad00;"></i> Article ajouté au panier.';
-        var_dump($res2->cart_quantity);
     } else {
         $req = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
         $req->execute([
@@ -39,21 +35,9 @@ if (isset($_POST["ajouter"])) {
             'product_id' => $result->product_id,
             'cart_quantity' => 1
         ]);
-        // $_POST["ajouter"] == id de l'article (jsp ce qu'il fout la)
         echo '<i class="fa-solid fa-circle-check" style="color: #0cad00;"></i> Article ajouté au panier.';
     }
 }
-
-// * FIN TEST QUANTITés
-
-// if (isset($_POST['ajouter'])) {
-//     $insertIntoPanier = $bdd->prepare('INSERT INTO carts (user_id,product_id) VALUES(:user_id,:product_id)');
-//     $insertIntoPanier->execute([
-//         'user_id' => $_SESSION['user']->user_id,
-//         'product_id' => trim(intval($_GET['id']))
-//     ]);
-// header('Location: detail.php?id=' . $_GET['id']);
-// }
 ?>
 
 <!DOCTYPE html>
@@ -89,6 +73,7 @@ if (isset($_POST["ajouter"])) {
                         <p><?= htmlspecialchars($result->product_price) ?>€</p>
                         <p class="stock"><?= htmlspecialchars($result->product_stock) ?></p>
                         <?php
+                        // Affiche le bouton 'ajouter au panier' si l'utilisateu est connecté et si le stock est supérieur à 1
                         if (isset($_SESSION['user'])) {
                             if ($result->product_stock > 0) { ?>
                                 <form action="" method="post">

@@ -1,14 +1,14 @@
 <?php require_once('../include/required.php');
 
-// Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
-if (!isset($_SESSION['user'])) {
-    header('Location:../../index.php');
-}
-
+// Récupération du l'utilisateur sélectionné
 $user = new User($_GET['id'], null, null, null, null, null);
 $result = $user->returnUserById($bdd);
-// var_dump($result);
 
+// Empêche les utilisateurs qui ne sont pas ADMINISTRATEUR
+if (!$result || $_SESSION['user']->user_role != 2) {
+    header('Location: ../../index.php');
+    exit();
+}
 // Mise à jour du ROLE d'un utilisateur
 // if (isset($_POST['update'])) {
 //     if ($_POST['role'] == 0 || $_POST['role'] == 1 || $_POST['role'] == 2) {
@@ -57,12 +57,16 @@ $result = $user->returnUserById($bdd);
                     <p>Role Actuel :<span class="actuelRole">
                             <?php
                             $role = "";
-                            if ($result->user_role == 2) {
-                                $role = 'Administrator';
-                            } else if ($result->user_role == 1) {
-                                $role = 'Moderator';
-                            } else {
-                                $role = 'Membre';
+                            switch ($result->user_role) {
+                                case 2:
+                                    $role = 'Administrator';
+                                    break;
+                                case 1:
+                                    $role = 'Moderator';
+                                    break;
+                                default:
+                                    $role = 'Membre';
+                                    break;
                             }
                             echo $role;
                             ?>

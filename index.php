@@ -159,6 +159,7 @@ $result = $request->fetchAll(PDO::FETCH_OBJ);
 // ! VERIFIER TOUTES LES ERREURS POSSIBLE EN CHANGEANT LES GET
 // ! INTVAL POUR LA CONNEXION
 // ! REMETTRE LE SETINTERVAL SUR LES FETCH DE L'ADMIN
+// ! VERIFIER AVEC PLESK POUR LES ACCENTS
 
 // TODO: désactiver la touche ENTRER sur l'autocomplétion car elle envoie sur une page erreur
 // TODO: rajouter un header location après le post Delete de la page Cart

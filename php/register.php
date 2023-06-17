@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
             $message['REGISTER_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
         } else {
             $user->register($bdd);
-            header('Location: ./connectFetch.php');
+            header('Location: ./connect.php');
         }
     }
 }
