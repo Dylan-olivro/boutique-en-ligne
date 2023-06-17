@@ -1,6 +1,5 @@
 <?php
 require_once('./include/required.php');
-// ! AJOUTER UN BOUTON VERS LE PANIER
 
 // Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
 if (!isset($_SESSION['user'])) {
@@ -70,72 +69,68 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
 
     <main>
         <section id="container">
-            <section class="containerProfil">
-                <div class="profil">
+            <section class="ProfilContent">
+                <div class="BoxProfil">
                     <!-- Formulaire pour MODIFIER les informations de l'utilisateur -->
-                    <form action="" method="post" id="formProfil">
+                    <form action="" method="post" id="FormProfil">
                         <h3>Modifier ces infos personnelles</h3>
-                        <label for="email">Email</label>
-                        <input type="text" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']->user_email) ?>" class="input">
-                        <label for="firstname">Prénom</label>
-                        <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($_SESSION['user']->user_firstname) ?>" class="input">
-                        <label for="lastname">Nom</label>
-                        <input type="text" id="lastname" name="lastname" value="<?= htmlspecialchars($_SESSION['user']->user_lastname) ?>" class="input">
-                        <label for="password">Mot de passe</label>
-                        <div class="password">
-                            <input type="password" name="password" class="input" id="password" placeholder="Mot de passe">
+                        <label for="email" class="FormChild">Email</label>
+                        <input type="text" id="email" name="email" class="FormChild" value="<?= htmlspecialchars($_SESSION['user']->user_email) ?>">
+                        <label for="firstname" class="FormChild">Prénom</label>
+                        <input type="text" id="firstname" name="firstname" class="FormChild" value="<?= htmlspecialchars($_SESSION['user']->user_firstname) ?>">
+                        <label for="lastname" class="FormChild">Nom</label>
+                        <input type="text" id="lastname" name="lastname" class="FormChild" value="<?= htmlspecialchars($_SESSION['user']->user_lastname) ?>">
+                        <label for="password" class="FormChild">Mot de passe</label>
+                        <div class="BoxPassword FormChild">
+                            <input type="password" name="password" id="password" placeholder="Mot de passe">
                             <button type='button' id="showPassword"><i class="fa-solid fa-eye-slash"></i></button>
                         </div>
                         <!-- Affichage des erreurs -->
-                        <p id="message">
+                        <p id="message" class="FormChild">
                             <?php
                             if (isset($message['UPDATE_ERROR'])) {
                                 echo $message['UPDATE_ERROR'];
                             }
                             ?>
                         </p>
-                        <input type="submit" name="updateUser" id="submit" value="Enregistrer">
-                        <a href="./user/modifyPassword.php" id="updatePassword">Changer de mot de passe</a>
+                        <input type="submit" name="updateUser" id="submit" value="Enregistrer" class="FormChild">
+                        <a href="./user/modifyPassword.php" id="LinkPassword">Changez de mot de passe</a>
                     </form>
                 </div>
                 <!-- Affichage des adresses -->
-                <div class="sectionAdress">
+                <div class="BoxAddress">
                     <h3>Adresses enregistrées</h3>
-                    <div class="addAdress">
+                    <div class="BoxAddAddress">
                         <?php if (count($allUserAdresses) < 6) { ?>
-                            <a href="./user/addAdress.php" id="addAdress">
-                                <div class="link">
-                                    <span>Ajouter une adresse</span>
-                                    <i class="fa-solid fa-chevron-right"></i>
-                                </div>
+                            <a href="./user/addAdress.php" id="LinkAddAddress">
+                                <!-- <div class="link"> -->
+                                <span>Ajouter une adresse</span>
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <!-- </div> -->
                             </a>
                         <?php } else { ?>
-                            <div class="link">
-                                <span>Nombres d'adresses maximum</span>
-                            </div>
+                            <p id="MaxAddress">Nombres d'adresses maximum</p>
                         <?php } ?>
                     </div>
-                    <div class="allAdress">
+                    <div class="ListAddresses">
 
                         <?php
                         foreach ($allUserAdresses as $userAdress) {
                             // var_dump($allUserAdresses);
                         ?>
-                            <div class="adress">
-                                <div class="infoAdress">
-                                    <p class="name"><?= htmlspecialchars($userAdress->address_lastname) . " " . htmlspecialchars($userAdress->address_firstname) ?></p>
+                            <div class="DetailAddress">
+                                <div class="InfoAddress">
+                                    <p id="name"><?= htmlspecialchars($userAdress->address_lastname) . " " . htmlspecialchars($userAdress->address_firstname) ?></p>
                                     <p><?= htmlspecialchars($userAdress->address_numero) . " " . htmlspecialchars($userAdress->address_name) ?></p>
                                     <p><?= htmlspecialchars($userAdress->address_city) . ", " . htmlspecialchars($userAdress->address_postcode) ?></p>
                                     <p>France</p>
-                                    <div>
-                                        <p>N° de télephone:</p>
-                                        <p><?= htmlspecialchars($userAdress->address_telephone) ?></p>
-                                    </div>
+                                    <p><?= htmlspecialchars($userAdress->address_telephone) ?></p>
+
                                 </div>
-                                <div class="edit_delete">
-                                    <a href="./user/modifyAdress.php?id=<?= $userAdress->address_id ?>"><button class="button"><i class="fa-solid fa-pencil"></i></button></a>
+                                <div class="BoxButtons">
+                                    <a href="./user/modifyAdress.php?id=<?= $userAdress->address_id ?>"><button class="ButtonAddress"><i class="fa-solid fa-pencil"></i></button></a>
                                     <form action="" method="post">
-                                        <button type="submit" name="deleteAdress<?= $userAdress->address_id ?>" class="button"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="submit" name="deleteAdress<?= $userAdress->address_id ?>" class="ButtonAddress"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
                                 </div>
                             </div>
