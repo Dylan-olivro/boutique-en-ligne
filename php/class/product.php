@@ -81,7 +81,7 @@ class Product
     }
     public function returnAllProductInfo($bdd)
     {
-        $returnProduct = $bdd->prepare('SELECT * FROM products INNER JOIN images ON products.product_id = images.product_id INNER JOIN liaison_items_category ON products.product_id = liaison_items_category.id_item WHERE products.product_id = :product_id');
+        $returnProduct = $bdd->prepare('SELECT * FROM products INNER JOIN images ON products.product_id = images.product_id INNER JOIN liaison_items_category ON products.product_id = liaison_items_category.id_item INNER JOIN category ON category.id = liaison_items_category.id_category WHERE products.product_id = :product_id');
         $returnProduct->execute(['product_id' => $this->id]);
         $result = $returnProduct->fetch(PDO::FETCH_OBJ);
         return $result;

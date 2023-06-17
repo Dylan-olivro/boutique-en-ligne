@@ -27,6 +27,7 @@ if ($_SESSION['user']->user_role == 0) {
 
         $category = new Category(null, null, null);
         $result_cat = $category->returnAllCategories($bdd);
+        // var_dump($result_cat);
 
         $user = new User(null, null, null, null, null, null);
         $result_users = $user->returnAllUser($bdd);
@@ -95,7 +96,16 @@ if ($_SESSION['user']->user_role == 0) {
                                 </div>
                                 <div class="divInput">
                                     <label for="categoryItem">Category</label>
-                                    <input type="number" id="categoryItem" name="categoryItem" autocomplete="off">
+                                    <select name="categoryItem" id="categoryItem">
+                                        <?php
+                                        foreach ($result_cat as $cat) {
+                                            if ($cat->id_parent != 0) { ?>
+                                                <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                                        <?php
+                                            }
+                                        } ?>
+                                    </select>
+                                    <!-- <input type="number" id="categoryItem" name="categoryItem" autocomplete="off"> -->
                                 </div>
                                 <div class="divInputFile">
                                     <label for="image">Image</label>
@@ -123,7 +133,17 @@ if ($_SESSION['user']->user_role == 0) {
                             <label for="nameCategory">Name</label>
                             <input type="text" name="nameCategory" id="nameCategory">
                             <label for="idParent">ID parent</label>
-                            <input type="number" name="idParent" id="idParent">
+                            <select name="idParent" id="idParent">
+                                <?php
+                                foreach ($result_cat as $cat) {
+                                    if ($cat->id_parent == 0) { ?>
+                                        <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                                <?php
+                                    }
+                                } ?>
+                                <option value="0">Nouveau Parent</option>
+                            </select>
+                            <!-- <input type="number" name="idParent" id="idParent"> -->
                             <p id="messageCategories"></p>
                             <div class="submit">
                                 <input type="submit" name="buttonAddCategory" value="Ajouter">
@@ -168,8 +188,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteCategories' . $key_cat->id])) {
                                 $category->setId($key_cat->id);
-                                // $delete = $category->deleteCategory($bdd);
-                                // header('Location: admin.php');
+                                $delete = $category->deleteCategory($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
@@ -215,8 +235,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteProduct' . $key_product->product_id])) {
                                 $product->setId($key_product->product_id);
-                                // $delete = $product->deleteProduct($bdd);
-                                // header('Location: admin.php');
+                                $delete = $product->deleteProduct($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
@@ -272,8 +292,8 @@ if ($_SESSION['user']->user_role == 0) {
                         <?php
                             if (isset($_POST['deleteUser' . $key_user->user_id])) {
                                 $user->setId($key_user->user_id);
-                                // $delete = $user->deleteUserByID($bdd);
-                                // header('Location: admin.php');
+                                $delete = $user->deleteUserByID($bdd);
+                                header('Location: admin.php');
                             }
                         }
                         ?>
