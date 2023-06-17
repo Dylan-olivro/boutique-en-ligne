@@ -49,7 +49,12 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-
+#allHeader {
+  color: whitesmoke;
+}
+#allHeader a {
+  color: whitesmoke;
+}
 main {
   max-width: 1920px;
   margin: auto;
@@ -70,7 +75,7 @@ main {
 
 .iconNavDiv {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   width: 20%;
   justify-content: end;
 }
@@ -89,7 +94,7 @@ main {
   color: var(--button-color);
 }
 .iconNav:hover {
-  border: 2px solid white;
+  border: 2px solid whitesmoke;
   border-radius: 20px;
 }
 .iconNav:hover i {
@@ -100,25 +105,28 @@ main {
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: #232b41;
+  background-color: var(--nav-color);
+  padding: 0.5%;
 }
 
 .navTop {
   width: 95%;
   display: flex;
   justify-content: space-between;
-  padding: 1% 0;
+  /* padding: 1% 0; */
+  align-items: center;
 }
 
 #searchBar {
   width: 100%;
   border-radius: 5px;
   padding: 1%;
+  background-color: whitesmoke;
 }
 
 .navTop i,
 .iconBurger {
-  font-size: 1.5em;
+  font-size: 2.5em;
   padding: 0 5px;
 }
 
@@ -160,7 +168,7 @@ main {
 }
 
 .categoriesNav {
-  background-color: lightcoral;
+  background-color: #4b5d8d;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -214,7 +222,31 @@ main {
   width: 100vw;
   height: 100vh;
 } */
+#cartSpan {
+  position: relative;
+}
+#cart-icon {
+  width: 3em;
+  /* fill: rgb(255, 255, 255); */
+}
+#cartSpan svg path,
+#cartSpan svg g {
+  fill: rgb(255, 255, 255) !important;
+}
+#cartSpan:hover svg path,
+#cartSpan:hover #sumQuantity,
+#cartSpan:hover svg g {
+  color: var(--text-input-color) !important;
+  fill: var(--text-input-color) !important;
+}
 
+#sumQuantity {
+  color: whitesmoke;
+  position: absolute;
+  top: 0;
+  left: 55%;
+  transform: translateX(-50%); 
+}
 .resultsDiv {
   display: flex;
 }
@@ -252,7 +284,7 @@ main {
 .categoriesUl {
   display: flex;
   justify-content: space-between;
-  padding: 0;
+  padding: 3px;
 }
 
 /* icon burger */
@@ -295,8 +327,8 @@ main {
 }
 
 .dark-mode {
-  background-color: black;
-  color: white;
+  background-color: whitesmoke;
+  color: black;
 }
 
 /* fin icon burger */
@@ -306,6 +338,10 @@ main {
   display: inline-block;
 }
 
+.userLink a {
+  text-decoration: none;
+  color: black !important;
+}
 .userLink {
   right: 0;
   display: none;

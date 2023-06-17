@@ -126,10 +126,38 @@ if (isset($_POST['vider'])) {
                                 <p class="price"><?= htmlspecialchars($product->product_price) ?>€</p>
                                 <p class="quantity"><?= htmlspecialchars($product->cart_quantity) ?></p>
                                 <form action="" method="post">
-                                    <button type="submit" name="delete<?= $product->cart_id ?>" id="delete"><i class="fa-solid fa-xmark"></i></button>
+                                    <button type="submit" name="add<?= $product->cart_id ?>" id="add" style="background-color:transparent">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                    <button type="submit" name="delete<?= $product->cart_id ?>" id="delete">
+                                        <?php
+                                        if ($product->cart_quantity <= 1) {
+                                        ?>
+                                            <i class="fa-solid fa-xmark"></i>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <i class="fa-solid fa-minus"></i>
+                                        <?php
+                                        }
+                                        ?>
+                                    </button>
                                 </form>
                             </div>
                         <?php
+                            if (isset($_POST['add' . $product->cart_id])) {
+                                $req2 = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
+                                $req2->execute(['product_id' => $product->product_id]);
+                                $res2 = $req2->fetch(PDO::FETCH_OBJ);
+
+                                $req3 = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
+                                $req3->execute([
+                                    'cart_quantity' => $res2->cart_quantity + 1,
+                                    'product_id' => $product->product_id
+                                ]);
+                                echo '<i class="fa-solid fa-circle-check" style="color: #0cad00;"></i> Article ajouté au panier.';
+                                header('Location: cartPage.php');
+                            }
                             // var_dump((int)$product->cart_quantity == 1);
                             // var_dump((int)$product->cart_quantity);
                             // var_dump((int)$product->product_id);
@@ -151,6 +179,7 @@ if (isset($_POST['vider'])) {
                                     ]);
                                     echo '<i class="fa-solid fa-circle-minus fa-lg" style="color: #ff0000;"></i> Article supprimé du panier.';
                                 }
+                                header('Location: cartPage.php');
                             }
                             // * FIN TEST
 

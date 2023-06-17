@@ -16,15 +16,13 @@ function includeFooter($image)
 
             <div class="card-client">
                 <div class="user-picture">
-                    <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path>
-                    </svg>
+                <img src="<?= $image ?>assets/photoCharles.jpg" alt="">
                 </div>
                 <p class="name-client"> Charles
 
                 </p>
                 <div class="social-media">
-                    <a href="#">
+                <a href="https://charles-caltagirone.students-laplateforme.io/" target="_blank">
                         <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2.9 -2.9 63.80 63.80" xml:space="preserve" stroke="#ffffff" stroke-width="4.466">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.11599999999999999"></g>
@@ -40,7 +38,7 @@ function includeFooter($image)
                         </svg>
                         <span class="tooltip-social">Github</span>
                     </a>
-                    <a href="#">
+                    <a href="https://www.linkedin.com/in/charles-caltagirone/" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                             <path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path>
                         </svg>
