@@ -5,7 +5,7 @@ require_once('./include/required.php');
 $returnProduct = $bdd->prepare("SELECT * FROM products WHERE product_id = :product_id");
 $returnProduct->execute(['product_id' => $_GET['id']]);
 $result = $returnProduct->fetch(PDO::FETCH_OBJ);
-
+// var_dump($result);
 // Empêche d'aller sur la page si il n'y a aucun produit de selectionner 
 if (!$result) {
     header('Location: ../index.php');
@@ -38,6 +38,23 @@ if (isset($_POST["ajouter"])) {
         echo '<i class="fa-solid fa-circle-check" style="color: #0cad00;"></i> Article ajouté au panier.';
     }
 }
+// Permet de poster un commentaire
+if (isset($_POST['submitComment'])) {
+    $addComment = $bdd->prepare('INSERT INTO comments (comment_text, user_id, product_id) VALUES(:comment_text, :user_id,:product_id)');
+    $addComment->execute([
+        'comment_text' => $_POST['comment'],
+        'user_id' => $_SESSION['user']->user_id,
+        'product_id' => $result->product_id
+    ]);
+    header('Location: detail.php?id=' . $result->product_id);
+}
+
+// Récupération des commentaire du produit
+$returnComments = $bdd->prepare('SELECT comments.*,users.user_firstname FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE product_id = :product_id ORDER BY comments.comment_id DESC');
+$returnComments->execute(['product_id' => $result->product_id]);
+$result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
+// var_dump($result_comments);
+
 ?>
 
 <!DOCTYPE html>
@@ -98,7 +115,60 @@ if (isset($_POST["ajouter"])) {
 
                 </div>
             </div>
+
+            <!-- SECTION COMMENTAIRE -->
+            <section class="CommentsContent">
+                <form action="" method="POST">
+                    <textarea name="comment" placeholder="COMMENTAIRE"></textarea>
+                    <!-- <input type="text" name="comment" placeholder="COMMENTAIRE"> -->
+                    <input type="submit" name="submitComment">
+                </form>
+                <div>
+                    <?php
+                    foreach ($result_comments as $key) { ?>
+                        <div style="background-color: lightcyan; margin: 1%;">
+                            <p>USER  :<?= $key->user_firstname ?></p>
+                            <p>COMMENTAIRE :<?= $key->comment_text ?></p>
+                            <form action="" method="POST">
+                                <input type="text" name="response" placeholder="REPONSE">
+                                <input type="submit" name="submitResponse<?= $key->comment_id ?>">
+                            </form>
+
+                            <?php
+
+                            $returnResponses = $bdd->prepare('SELECT responses.*,users.user_firstname FROM responses INNER JOIN comments ON responses.comment_id = comments.comment_id INNER JOIN users ON responses.response_user_id = users.user_id WHERE product_id = :product_id AND comments.comment_id = :comment_id ORDER BY responses.response_id DESC');
+                            $returnResponses->execute([
+                                'product_id' => $result->product_id,
+                                'comment_id' => $key->comment_id
+                            ]);
+                            $result_responses = $returnResponses->fetchAll(PDO::FETCH_OBJ);
+                            // var_dump($result_responses);
+
+                            foreach ($result_responses as $key2) { ?>
+                                <div style="background-color: lightsalmon; margin: 1%;">
+                                    <p>USER REPONSE : <?= $key2->user_firstname ?></p>
+                                    <p>REPONSE : <?= $key2->response_text ?></p>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    <?php
+                        if (isset($_POST['submitResponse' . $key->comment_id])) {
+                            $addResponse = $bdd->prepare('INSERT INTO responses (response_text, comment_id,response_user_id) VALUES(:response_text, :comment_id, :response_user_id)');
+                            $addResponse->execute([
+                                'response_text' => $_POST['response'],
+                                'comment_id' => $key->comment_id,
+                                'response_user_id' => $_SESSION['user']->user_id
+                            ]);
+                            header('Location: detail.php?id=' . $result->product_id);
+                        }
+                    }
+                    ?>
+                </div>
+            </section>
         </section>
+
     </main>
     <?php require_once('./include/footer.php') ?>
 </body>

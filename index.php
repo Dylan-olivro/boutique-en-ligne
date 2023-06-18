@@ -157,6 +157,7 @@ $result = $request->fetchAll(PDO::FETCH_OBJ);
 // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
 // ? Quand les inputs sont différents de vide mettre leur border en --button-color
 // ? Faire les quantités pour l'historique de commandes
+// // ? Envoyer en base de donnée normalement mais récupérer avec la première lettre en majuscule
 
 
 // ! Corriger l'affichage du numero de telephone dans la modification d'adresse

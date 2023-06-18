@@ -42,8 +42,8 @@ class User
     public function register($bdd)
     {
         $email = trim($this->email);
-        $lastname = trim($this->lastname);
-        $firstname = trim($this->firstname);
+        $lastname = ucfirst(trim($this->lastname));
+        $firstname = ucfirst(trim($this->firstname));
         $password = password_hash(trim($this->password), PASSWORD_DEFAULT);
         // Insert du nouveau utilisateur
         $request = $bdd->prepare("INSERT INTO users (user_email,user_lastname,user_firstname,user_password) VALUES(:user_email,:user_lastname,:user_firstname,:user_password)");
@@ -98,8 +98,8 @@ class User
     public function update($bdd, $password_bdd)
     {
         $email = trim($this->email);
-        $lastname = trim($this->lastname);
-        $firstname = trim($this->firstname);
+        $lastname = ucfirst(trim($this->lastname));
+        $firstname = ucfirst(trim($this->firstname));
         $password = trim($this->password);
 
         $request = $bdd->prepare("UPDATE users SET user_email = :user_email, user_firstname = :user_firstname, user_lastname = :user_lastname, user_password = :user_password WHERE user_id = :user_id ");
