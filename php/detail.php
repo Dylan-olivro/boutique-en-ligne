@@ -127,10 +127,10 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
                     <?php
                     foreach ($result_comments as $key) { ?>
                         <div style="background-color: lightcyan; margin: 1%;">
-                            <p>USER  :<?= $key->user_firstname ?></p>
+                            <p>USER :<?= $key->user_firstname ?></p>
                             <p>COMMENTAIRE :<?= $key->comment_text ?></p>
                             <form action="" method="POST">
-                                <input type="text" name="response" placeholder="REPONSE">
+                                <textarea name="response" placeholder="REPONSE"></textarea>
                                 <input type="submit" name="submitResponse<?= $key->comment_id ?>">
                             </form>
 

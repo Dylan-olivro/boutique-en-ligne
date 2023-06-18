@@ -44,7 +44,7 @@ if (isset($data)) {
             $message['UPDATE_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCe n\'est pas le bon mot de passe';
         } else {
             $user->update($bdd, $res->user_password);
-            $message['UPDATE_SUCCES'] = "Données enregistrées avec succès";
+            $message['UPDATE_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspDonnées enregistrées avec succès';
         }
     }
 } else {

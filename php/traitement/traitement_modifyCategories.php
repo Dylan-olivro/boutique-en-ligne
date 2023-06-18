@@ -28,7 +28,7 @@ if (isset($data)) {
     } else {
         $category = new Category($id, $name, $idParent);
         $category->updateCategory($bdd);
-        $message['CATEGORY_SUCCES'] = "Catégorie Modifier";
+        $message['CATEGORY_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspCatégorie Modifier';
     }
 } else {
     $message['CATEGORY_ERROR'] = "Données manquantes";

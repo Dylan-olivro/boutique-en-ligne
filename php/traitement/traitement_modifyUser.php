@@ -35,7 +35,7 @@ if (isset($data)) {
                 'user_role' => $role,
                 'user_id' => $id
             ]);
-            $message['USER_SUCCES'] = "Utilisateur Modifier";
+            $message['USER_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspUtilisateur Modifier';
         }
     }
 } else {

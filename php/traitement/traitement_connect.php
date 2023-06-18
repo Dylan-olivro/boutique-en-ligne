@@ -38,7 +38,7 @@ if (isset($data)) {
                 // $_SESSION['user']->user_role = (int)$res->user_role;
 
                 $_SESSION['user'] = $result;
-                $message['CONNECT_SUCCES'] = "Utilisateur connecté avec succès";
+                $message['CONNECT_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspUtilisateur connecté avec succès';
             } else {
                 $message['CONNECT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe mot de passe est incorrect.';
             }
