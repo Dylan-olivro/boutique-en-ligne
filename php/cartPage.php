@@ -56,6 +56,17 @@ if (isset($_POST['valider'])) {
                 }
             }
             $total = array_sum($prices);
+
+            // Récupération du code promo rentrer par l'utilisateur
+            $returnCode = $bdd->prepare('SELECT * FROM codes WHERE code_name = :code_name');
+            $returnCode->execute(['code_name' => $_POST['code']]);
+            $result_code = $returnCode->fetch(PDO::FETCH_OBJ);
+
+            // Si le code promo existe, nouveau prix avec la réduction
+            if ($result_code) {
+                $discount = (intval($result_code->code_discount) * $total) / 100;
+                $total = $total - $discount;
+            }
             // Création de numéro de commande
             $orderNumber = str_replace(".", "-", strtoupper(uniqid('', true)));
 
@@ -235,6 +246,9 @@ if (isset($_POST['vider'])) {
                                     }
                                     ?>
                                 </select>
+                            </div>
+                            <div>
+                                <input type="text" name="code">
                             </div>
                             <div class="formOrderValide">
                                 <input type="submit" name="valider" value="Passer la commande">
