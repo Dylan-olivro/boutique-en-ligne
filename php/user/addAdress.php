@@ -35,17 +35,17 @@ if (isset($_POST['submit'])) {
     } elseif (!Address::formatTelephoneAccept($telephone)) {
         $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe numéro de téléphone est invalide.';
     } elseif (User::isToBig($nom)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire moins de 30 caractères.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire moins de 30 caractères.';
     } elseif (User::isToBig($prenom)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire moins de 30 caractères.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire moins de 30 caractères.';
     } elseif (User::isToSmall($nom)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire plus de 2 caractères.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom doit faire plus de 2 caractères.';
     } elseif (User::isToSmall($prenom)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire plus de 2 caractères.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe prénom doit faire plus de 2 caractères.';
     } elseif (!User::isAName($nom)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom n\'est pas valide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe nom n\'est pas valide.';
     } elseif (!User::isAName($prenom)) {
-        $message['erreur'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe pr&nom n\'est pas valide.';
+        $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe pr&nom n\'est pas valide.';
     } elseif (count($allUserAddresses) >= 6) {
         $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspNombres maximum d\'adresse atteint (6).';
     } else {
@@ -71,6 +71,7 @@ if (isset($_POST['submit'])) {
     <?php require_once('../include/head.php'); ?>
     <title>Adress Add</title>
     <link rel="stylesheet" href="../../css/addAddress.css">
+    <script src="../../js/user/addAddress.js" defer></script>
 </head>
 
 <body>

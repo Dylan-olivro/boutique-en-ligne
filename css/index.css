@@ -60,7 +60,7 @@
   width: 100%;
   text-align: center;
 }
-.CardProduct:hover .ProductName {
+.ProductName:hover {
   color: var(--button-color);
 }
 .BoxPriceBtn {

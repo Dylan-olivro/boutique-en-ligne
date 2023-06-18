@@ -6,17 +6,15 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+$address = new Address($_GET['id'], $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+$userAddress = $address->returnAddressesById($bdd);
 // Récupération de l'adresse à modifier
-if (isset($_GET['id'])) {
-    $address = new Address($_GET['id'], $_SESSION['user']->user_id, null, null, null, null, null, null, null);
-    $userAddress = $address->returnAddressesById($bdd);
-
-    // Empêche d'aller sur la page si il n'y a aucun ID selectionner dans le lien ou si l'ID ne correspond pas à une adresse de l'utilisateur
-    if (!$userAddress) {
-        header('Location: ../profil.php');
-        exit();
-    }
+// Empêche d'aller sur la page si il n'y a aucun ID selectionner dans le lien ou si l'ID ne correspond pas à une adresse de l'utilisateur
+if (!$userAddress) {
+    header('Location: ../profil.php');
+    exit();
 }
+
 
 // * Ne s'active que si le JAVASCRIPT est désactivé
 // Mise à jour de l'adresse sélectionner
@@ -77,6 +75,7 @@ if (isset($_POST['submit'])) {
     <?php require_once('../include/head.php'); ?>
     <title>Adress Modify</title>
     <link rel="stylesheet" href="../../css/modifyAddress.css">
+    <script src="../../js/user/modifyAddress.js" defer></script>
 </head>
 
 <body>
@@ -88,6 +87,7 @@ if (isset($_POST['submit'])) {
                 <!-- Formulaire pour MODIFIER l'adresse de l'utilisateur -->
                 <form action="" method="post" id="FormUpdateAddress">
                     <h3>Modifier votre adresse</h3>
+                    <input type="hidden" name="addressID" value="<?= htmlspecialchars($_GET['id']) ?>">
                     <label for="numero" class="FormChild">Numero</label>
                     <input type="number" name="numero" id="numero" class="FormChild" value="<?= htmlspecialchars($userAddress->address_numero) ?>" autofocus>
                     <label for="name" class="FormChild">Name</label>

@@ -4,6 +4,17 @@
 $request = $bdd->prepare("SELECT *,count(*) FROM liaison_product_order INNER JOIN products ON liaison_product_order.product_id = products.product_id INNER JOIN images ON images.product_id = products.product_id WHERE image_main = 1 GROUP BY products.product_id ORDER BY count(*) DESC LIMIT 4");
 $request->execute();
 $result = $request->fetchAll(PDO::FETCH_OBJ);
+
+
+
+if (isset($_POST['aaa'])) {
+    // if (preg_match("/^[[:alpha:]]([-' ]?[[:alpha:]])*$/", trim($_POST['test']))) {
+    if (isName($_POST['test'])) {
+        echo 1;
+    } else {
+        echo 2;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +26,10 @@ $result = $request->fetchAll(PDO::FETCH_OBJ);
 </head>
 
 <body>
+    <form action="" method="POST">
+        <input type="text" name="test">
+        <input type="submit" name="aaa">
+    </form>
     <?php require_once('./php/include/header.php') ?>
     <main>
         <section id="Container">

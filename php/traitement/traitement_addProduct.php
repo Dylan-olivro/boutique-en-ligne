@@ -50,9 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $image = new Image(null, $resultID->product_id, $file, 1);
             $image->addImage($bdd);
 
-            $message['PRODUCT_SUCCES'] = "Produit ajouté";
+            $message['PRODUCT_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspProduit ajouté.';
         } else {
-            $message['PRODUCT_ERROR'] = "Image error";
+            $message['PRODUCT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspImage error';
         }
     }
 } else {

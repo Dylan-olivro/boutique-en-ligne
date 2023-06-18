@@ -45,7 +45,7 @@ if (isset($data)) {
             $message['REGISTER_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCette email est déjà utilisé';
         } else {
             $user->register($bdd);
-            $message['REGISTER_SUCCES'] = "Données enregistrées avec succès";
+            $message['REGISTER_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspDonnées enregistrées avec succès';
         }
     }
 } else {
