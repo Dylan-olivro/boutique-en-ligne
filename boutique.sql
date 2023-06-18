@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 17 juin 2023 à 14:22
+-- Généré le : dim. 18 juin 2023 à 16:44
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -46,9 +46,11 @@ CREATE TABLE `addresses` (
 --
 
 INSERT INTO `addresses` (`address_id`, `user_id`, `address_numero`, `address_name`, `address_postcode`, `address_city`, `address_telephone`, `address_lastname`, `address_firstname`) VALUES
-(57, 1, 413, 'dsdsds', '87887', 'KFLDFDL', '06 5555 55 53', 'Hfjdjfd', 'Dsjdksd'),
-(58, 1, 123, 'azerty', '12345', 'QSDSDF', '01 02 03 04 05', 'Dylan', 'Lmmlml'),
-(61, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan');
+(61, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan'),
+(65, 1, 43, 'zezezeeze ze ze', '43434', 'HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH', '04 38 28 38 28', 'Rerer', 'Rerer'),
+(66, 1, 23, 'rue Leon Jouhaux', '32433', 'FDFDFDFD', '09 03 03 03 03', 'Dfdfdf', 'Fdfdf'),
+(67, 2, 323, 'dsdsds dsdsds d s ds ds ds ds d', '53535', 'DSDSDSDSD', '04 38 28 38 28', 'SDsdsd', 'Sdsdsd'),
+(68, 1, 11, 'rue qulquzqqlz', '11111', 'AAAAAAADD', '01 11 11 11 11', 'Aaadss', 'Dsdsds');
 
 -- --------------------------------------------------------
 
@@ -127,6 +129,34 @@ CREATE TABLE `codes` (
 
 INSERT INTO `codes` (`code_id`, `code_name`, `code_discount`) VALUES
 (1, 'ruben', 100);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `comments`
+--
+
+CREATE TABLE `comments` (
+  `comment_id` int(11) NOT NULL,
+  `comment_text` text NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `comment_text`, `user_id`, `product_id`) VALUES
+(2, 'dsf qsdfsqdfuqsodifsqodif uqsoidfuqosifuoqsf', 1, 10),
+(4, 'erzerzaerezr izaerazoe uriaozeruopazi', 1, 10),
+(5, 'bxbcwcbxw nbwcvwxnbcv<wnbvcw<nbcv<wnc<', 1, 10),
+(6, 'Commentairee de dylan', 2, 10),
+(7, 'dsdfsdfsdfsdfsd', 2, 81),
+(8, 'dwsdsqdq', 2, 81),
+(9, 'jsdq fk jsqdkfj kqsldfj qklsdfjqlskdj fqslkdfj qlskmdfjqslkdmfj qslkmdf jqlsmkdfjqslkdfj qsdlkmfj qsldmkf jqslkmf jsqlkfj qksdlfj qsdlkf jqsdlkfjqslkdfjqlsdkfjsqdlkfj klsdqfjsdqfj klsqdfj dskqlf jqsdfjqs ldfj qkslddf jsq ldfjqs lfjqsldf qsjdfqsdjf klqsdjf lqmsdfj mldqskfjqsljfsqlk fjqslkf jqsd', 2, 81),
+(10, 'dsdsdsdsd\r\nsds\r\nds\r\nd\r\ns\r\n', 2, 81),
+(11, 'commetnaire sdjfksdjkf sjdfksdjkfqqsod fqsoifq\' zl qdf', 1, 81);
 
 -- --------------------------------------------------------
 
@@ -562,6 +592,35 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `responses`
+--
+
+CREATE TABLE `responses` (
+  `response_id` int(11) NOT NULL,
+  `response_text` text NOT NULL,
+  `comment_id` int(11) NOT NULL,
+  `response_user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `responses`
+--
+
+INSERT INTO `responses` (`response_id`, `response_text`, `comment_id`, `response_user_id`) VALUES
+(1, ' Ceci est une réponse', 5, 0),
+(2, 'deuxieme reponse', 4, 1),
+(3, 'sdkf jsdjrit srovivcjxvio s', 4, 2),
+(4, 'RFeponse de dylan', 6, 2),
+(5, 'dsfjslkd fjsdlkfjksldfls', 2, 2),
+(6, 'qskdqlms kdlmqsd klqmsd ', 2, 2),
+(7, 'cvxvcvxcvxcvxcv', 4, 2),
+(8, 'dsdsdsdsds', 7, 2),
+(9, 'QSDqsQ', 8, 2),
+(10, 'fqs fqsdlfsdqùiof opùqsdfiopq ùsdùfiqsd f', 9, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `users`
 --
 
@@ -579,7 +638,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_email`, `user_lastname`, `user_firstname`, `user_password`, `user_role`) VALUES
-(1, 'admin@laplateforme.io', 'admin', 'admin', '$2y$10$uFx8wvlAhgmw93DDzIno/O/w5g2JN20kXPwvC83HnKWfsdG1y4Fd6', 2),
+(1, 'admin@laplateforme.io', 'Admin', 'Admin', '$2y$10$uFx8wvlAhgmw93DDzIno/O/w5g2JN20kXPwvC83HnKWfsdG1y4Fd6', 2),
 (2, 'dylan@gmail.com', 'dylan', 'dylan', '$2y$10$tNWkG3pj51SovDx3dtUzMO.8z.kjTDt4w5NlVtxYhItsDbJFrVoAi', 1),
 (3, 'charles@gmail.com', 'charles', 'charles', '$2y$10$VQv69RMVPjKQ/ywJ7Rexje8ZbyoQnU5qWx/tNdWFJuJdWbdAQjxAy', 1),
 (43, 'test@laplateforme.io', 'test', 'test', '$2y$10$WlEaL/qLA.if9MmeF7Sv1O13ZGCR6FbjslsY7MlRv5FZlhv0VRHdK', 1),
@@ -621,6 +680,12 @@ ALTER TABLE `codes`
   ADD PRIMARY KEY (`code_id`);
 
 --
+-- Index pour la table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`comment_id`);
+
+--
 -- Index pour la table `images`
 --
 ALTER TABLE `images`
@@ -651,6 +716,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Index pour la table `responses`
+--
+ALTER TABLE `responses`
+  ADD PRIMARY KEY (`response_id`);
+
+--
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
@@ -664,13 +735,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT pour la table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT pour la table `category`
@@ -685,16 +756,22 @@ ALTER TABLE `codes`
   MODIFY `code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT pour la table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT pour la table `images`
 --
 ALTER TABLE `images`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT pour la table `liaison_items_category`
 --
 ALTER TABLE `liaison_items_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT pour la table `liaison_product_order`
@@ -712,7 +789,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT pour la table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+
+--
+-- AUTO_INCREMENT pour la table `responses`
+--
+ALTER TABLE `responses`
+  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `users`
