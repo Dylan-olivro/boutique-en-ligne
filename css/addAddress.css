@@ -60,27 +60,17 @@
   background-color: var(--main-color) !important;
 }
 
-/* @media screen and (max-width: 1440px) {
-  #formLogin > * {
-    width: 90%;
-  }
-}
-@media screen and (max-width: 1040px) {
-  .form {
-    width: 60%;
-  }
-  #formLogin {
-    width: 100%;
-  }
-}
-@media screen and (max-width: 768px) {
-  .form {
+@media screen and (max-width: 1024px) {
+  .MainContent {
     width: 80%;
   }
 }
+
 @media screen and (max-width: 425px) {
-  .demande {
-    flex-direction: column;
-    margin: 5% 0;
+  .MainContent {
+    width: 100%;
   }
-}  */
+  .FormChild {
+    width: 100%;
+  }
+}

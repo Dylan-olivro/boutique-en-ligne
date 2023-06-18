@@ -58,32 +58,44 @@ if (isset($_POST["ajouter"])) {
 
         <section id="container">
             <!-- Affichage du produit -->
-            <div id="item">
-                <div id="imageItem">
+            <div class="MainContent">
+                <div class="BoxImg">
                     <img src="../assets/img_item/<?= $result_images[0]->image_name ?>" alt="">
                 </div>
-                <div id="detailItem">
-                    <p><?= htmlspecialchars($result->product_name) ?></p>
+                <div class="BoxDetail">
+                    <p id="productName"><?= htmlspecialchars($result->product_name) ?></p>
 
-                    <div id="description">Description :
+                    <div id="description">
+                        <p>Description :</p>
                         <p><?= htmlspecialchars_decode($result->product_description) ?></p>
                     </div>
 
-                    <div id="price_cart">
-                        <p><?= htmlspecialchars($result->product_price) ?>€</p>
-                        <p class="stock"><?= htmlspecialchars($result->product_stock) ?></p>
+                </div>
+                <div class="BoxPriceStockButton">
+                    <div class="test">
+
+                        <p id="price"><?= htmlspecialchars($result->product_price) ?>€</p>
+                        <p id="stock"><?= htmlspecialchars($result->product_stock) ?></p>
                         <?php
                         // Affiche le bouton 'ajouter au panier' si l'utilisateu est connecté et si le stock est supérieur à 1
                         if (isset($_SESSION['user'])) {
                             if ($result->product_stock > 0) { ?>
                                 <form action="" method="post">
-                                    <input type="submit" name="ajouter" value="Ajouter au panier">
+                                    <button type="submit" class="button" name="ajouter">
+                                        <span class="button__text">Add Item</span>
+                                        <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+                                                <line y2="19" y1="5" x2="12" x1="12"></line>
+                                                <line y2="12" y1="12" x2="19" x1="5"></line>
+                                            </svg></span>
+                                    </button>
+                                    <!-- <input type="submit" name="ajouter" value="Ajouter au panier"> -->
                                 </form>
                         <?php
                             }
                         }
                         ?>
                     </div>
+
                 </div>
             </div>
         </section>

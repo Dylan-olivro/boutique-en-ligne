@@ -22,7 +22,7 @@ fetch(`traitement/traitement_detail.php?id=${getID()}`)
 //   console.log(input.value.length);
 // });
 
-let stock = document.querySelectorAll(".stock");
+let stock = document.querySelectorAll("#stock");
 stock.forEach((element) => {
   checkStock(element.textContent, element);
 });

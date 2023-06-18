@@ -74,6 +74,7 @@ $result = $request->fetchAll(PDO::FETCH_OBJ);
                                     'cart_quantity' => 1
                                 ]);
                             }
+                            header('Location: index.php');
                         }
                     }
                     ?>
@@ -135,6 +136,7 @@ $result = $request->fetchAll(PDO::FETCH_OBJ);
                                     'cart_quantity' => 1
                                 ]);
                             }
+                            header('Location: index.php');
                         }
                     }
                     ?>
