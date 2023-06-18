@@ -156,12 +156,16 @@ $result = $request->fetchAll(PDO::FETCH_OBJ);
 
 // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
 // ? Quand les inputs sont différents de vide mettre leur border en --button-color
+// ? Faire les quantités pour l'historique de commandes
+
 
 // ! Corriger l'affichage du numero de telephone dans la modification d'adresse
+// ! Condition pour la taille de l'adresse (il faut que ca passe en version mobile)
+// ! Faire le responsive pour l'historique de commande
+
 // ! VERIFIER TOUTES LES ERREURS POSSIBLE EN CHANGEANT LES GET
 // ! INTVAL POUR LA CONNEXION
 // ! REMETTRE LE SETINTERVAL SUR LES FETCH DE L'ADMIN
-// ! VERIFIER AVEC PLESK POUR LES ACCENTS
 
 // TODO: désactiver la touche ENTRER sur l'autocomplétion car elle envoie sur une page erreur
 // TODO: rajouter un header location après le post Delete de la page Cart

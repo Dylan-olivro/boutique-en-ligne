@@ -164,4 +164,24 @@ class Order
 
         return $this;
     }
+
+    /**
+     * Get the value of number
+     */ 
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Set the value of number
+     *
+     * @return  self
+     */ 
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
 }

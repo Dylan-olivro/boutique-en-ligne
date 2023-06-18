@@ -111,6 +111,7 @@
   color: #fff;
   padding: 3px 0;
   margin-left: 1%;
+  margin-bottom: 1%;
 }
 #LinkAddAddress {
   color: #fff;
@@ -129,7 +130,6 @@
 }
 /** Liste des adresses  */
 .ListAddresses {
-  padding: 1% 0;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
@@ -141,7 +141,7 @@
   border-radius: 10px;
   width: 100%;
   padding: 1%;
-  margin: 1%;
+  margin: 0 1% 1%;
   color: #fff;
   justify-content: space-between;
 }
@@ -284,4 +284,40 @@ img {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+@media screen and (max-width: 1024px) {
+  .ProfilContent {
+    flex-direction: column;
+    height: auto;
+  }
+  .BoxProfil {
+    margin-bottom: 3%;
+  }
+  .BoxAddAddress {
+    width: 50%;
+  }
+  .allCommand {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ProfilContent {
+    width: 100%;
+  }
+  .allCommand {
+    width: 100%;
+  }
+  .BoxAddress h3 {
+    margin: 2% 0;
+  }
+}
+@media screen and (max-width: 425px) {
+  .FormChild {
+    width: 100%;
+  }
+  .BoxAddAddress {
+    width: 100%;
+    margin: 0;
+  }
 }

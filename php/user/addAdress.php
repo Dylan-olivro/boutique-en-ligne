@@ -49,9 +49,15 @@ if (isset($_POST['submit'])) {
     } elseif (count($allUserAddresses) >= 6) {
         $INSERT_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspNombres maximum d\'adresse atteint (6).';
     } else {
-
-        $address = new Address(null, $_SESSION['user']->user_id, $numero, $name, $postcode, $city, null, $prenom, $nom);
+        // $address = new Address(null, $_SESSION['user']->user_id, $numero, $name, $postcode, $city, null, $prenom, $nom);
         $tel = $address->returnFormatTel($telephone);
+        // Mise à jour de l'objet Address
+        $address->setNumero($numero);
+        $address->setName($name);
+        $address->setPostcode($postcode);
+        $address->setCity($city);
+        $address->setFirstname($prenom);
+        $address->setLastname($nom);
         $address->setTelephone($tel);
         $address->addAddress($bdd);
         header('Location: ../profil.php');

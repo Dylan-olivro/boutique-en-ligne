@@ -135,7 +135,8 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                         <?php
                             // Delete l'adresse selectionné
                             if (isset($_POST['deleteAdress' . $userAdress->address_id])) {
-                                $address = new Address($userAdress->address_id, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+                                // $address = new Address($userAdress->address_id, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+                                $address->setId($userAdress->address_id);
                                 $address->deleteAddress($bdd);
                                 header('Location: profil.php');
                             }
