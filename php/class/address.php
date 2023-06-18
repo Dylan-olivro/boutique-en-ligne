@@ -70,7 +70,7 @@ class Address
         $postcode = trim($this->postcode);
         $city = strtoupper(trim($this->city));
         $telephone = trim($this->telephone);
-        $firstname = ucfirst(trim($this->city));
+        $firstname = ucfirst(trim($this->firstname));
         $lastname = ucfirst(trim($this->lastname));
 
         $updateAdress = $bdd->prepare('UPDATE addresses SET address_numero = :address_numero, address_name = :address_name, address_postcode = :address_postcode, address_city = :address_city, address_telephone = :address_telephone, address_firstname = :address_firstname, address_lastname = :address_lastname WHERE address_id = :address_id AND user_id = :user_id');

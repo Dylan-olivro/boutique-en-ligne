@@ -58,7 +58,13 @@ if (isset($_POST['valider'])) {
             $total = array_sum($prices);
             // Création de numéro de commande
             $orderNumber = str_replace(".", "-", strtoupper(uniqid('', true)));
-            $order = new Order($lastInsertId, $_SESSION['user']->user_id, $date, $total, $_POST['adress'], $orderNumber);
+
+            // Mise à jour de l'objet Order
+            $order->setId($lastInsertId);
+            $order->setTotal($total);
+            $order->setAddress($_POST['adress']);
+            $order->setNumber($orderNumber);
+            // $order = new Order($lastInsertId, $_SESSION['user']->user_id, $date, $total, $_POST['adress'], $orderNumber);
 
             $order->updateOrder($bdd);
             $cart->deleteCart($bdd);

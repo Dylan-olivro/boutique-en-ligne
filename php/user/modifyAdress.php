@@ -56,7 +56,15 @@ if (isset($_POST['submit'])) {
     } elseif (!User::isAName($prenom)) {
         $UPDATE_ADDRESS_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe pr&nom n\'est pas valide.';
     } else {
-        $address = new Address($userAddress->address_id, $_SESSION['user']->user_id, $numero, $name, $postcode, $city, $telephone, $prenom, $nom);
+
+        $address->setNumero($numero);
+        $address->setName($name);
+        $address->setPostcode($postcode);
+        $address->setCity($city);
+        $address->setTelephone($telephone);
+        $address->setFirstname($prenom);
+        $address->setLastname($nom);
+        // $address = new Address($userAddress->address_id, $_SESSION['user']->user_id, $numero, $name, $postcode, $city, $telephone, $prenom, $nom);
         $address->updateAddress($bdd);
         header('Location: ../profil.php');
     }
