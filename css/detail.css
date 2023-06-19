@@ -238,7 +238,6 @@
 .rating:not(:checked) > input {
   position: absolute;
   appearance: none;
-  top: 0;
 }
 .rating:not(:checked) > label {
   float: right;
