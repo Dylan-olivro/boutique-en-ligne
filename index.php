@@ -9,10 +9,6 @@ $requestAllItems = $bdd->prepare("SELECT * FROM products INNER JOIN images ON pr
 $requestAllItems->execute();
 $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 
-if (isset($_POST['submit'])) {
-    var_dump($_POST['ok']);
-    echo mb_strlen(str_replace("\n", '', $_POST['ok']));
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,10 +20,6 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <form action="" method="POST">
-        <textarea name="ok" id="" cols="30" rows="10"></textarea>
-        <input type="submit" name="submit">
-    </form>
     <?php require_once('./php/include/header.php') ?>
     <main>
         <section id="Container">
@@ -190,10 +182,5 @@ if (isset($_POST['submit'])) {
 // TODO: FAIRE la gestions des promotions
 // TODO: FAIRE la gestion des tags produits
 // TODO: FAIRE un système de payement fonctionnel
-// TODO: FAIRE une génération de numéro de commande
-// TODO: FAIRE le calcul de la TVA
-// TODO: FAIRE un systéme de commentaire
-// TODO: FAIRE les avis d'utilisateurs
-// TODO: FAIRE le rating d'un produit
 // TODO: FAIRE une gestion des commentaires par l'Administrateur
 ?>

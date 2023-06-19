@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 18 juin 2023 à 16:44
+-- Généré le : lun. 19 juin 2023 à 15:13
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -46,11 +46,13 @@ CREATE TABLE `addresses` (
 --
 
 INSERT INTO `addresses` (`address_id`, `user_id`, `address_numero`, `address_name`, `address_postcode`, `address_city`, `address_telephone`, `address_lastname`, `address_firstname`) VALUES
-(61, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan'),
-(65, 1, 43, 'zezezeeze ze ze', '43434', 'HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH', '04 38 28 38 28', 'Rerer', 'Rerer'),
-(66, 1, 23, 'rue Leon Jouhaux', '32433', 'FDFDFDFD', '09 03 03 03 03', 'Dfdfdf', 'Fdfdf'),
 (67, 2, 323, 'dsdsds dsdsds d s ds ds ds ds d', '53535', 'DSDSDSDSD', '04 38 28 38 28', 'SDsdsd', 'Sdsdsd'),
-(68, 1, 11, 'rue qulquzqqlz', '11111', 'AAAAAAADD', '01 11 11 11 11', 'Aaadss', 'Dsdsds');
+(69, 1, 11, 'rue Leon Jouhaux', '55555', 'é\"(\'\"é\'(&\'', '09 03 03 03 03', 'Admin', 'Dylan'),
+(70, 1, 232, 'dzeze', '22322', 'DSDSD', '09 03 03 03 03', 'Dsdsdsd', 'Sdsdsd'),
+(71, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan'),
+(72, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan'),
+(73, 1, 43, 'zezezeeze ze ze', '43434', 'HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH', '04 38 28 38 28', 'Rerer', 'Rerer'),
+(74, 1, 22, 'rue léon jouhaux', '23232', 'CHARENTE-MARITIME', '09 03 03 03 03', 'Sdsdsd', 'Sdsdsd');
 
 -- --------------------------------------------------------
 
@@ -64,6 +66,13 @@ CREATE TABLE `carts` (
   `product_id` int(11) NOT NULL,
   `cart_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `carts`
+--
+
+INSERT INTO `carts` (`cart_id`, `user_id`, `product_id`, `cart_quantity`) VALUES
+(136, 1, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -128,7 +137,8 @@ CREATE TABLE `codes` (
 --
 
 INSERT INTO `codes` (`code_id`, `code_name`, `code_discount`) VALUES
-(1, 'ruben', 100);
+(1, 'TEST', 50),
+(2, 'DYLAN', 5);
 
 -- --------------------------------------------------------
 
@@ -140,23 +150,9 @@ CREATE TABLE `comments` (
   `comment_id` int(11) NOT NULL,
   `comment_text` text NOT NULL,
   `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL
+  `product_id` int(11) NOT NULL,
+  `comment_rating` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `comments`
---
-
-INSERT INTO `comments` (`comment_id`, `comment_text`, `user_id`, `product_id`) VALUES
-(2, 'dsf qsdfsqdfuqsodifsqodif uqsoidfuqosifuoqsf', 1, 10),
-(4, 'erzerzaerezr izaerazoe uriaozeruopazi', 1, 10),
-(5, 'bxbcwcbxw nbwcvwxnbcv<wnbvcw<nbcv<wnc<', 1, 10),
-(6, 'Commentairee de dylan', 2, 10),
-(7, 'dsdfsdfsdfsdfsd', 2, 81),
-(8, 'dwsdsqdq', 2, 81),
-(9, 'jsdq fk jsqdkfj kqsldfj qklsdfjqlskdj fqslkdfj qlskmdfjqslkdmfj qslkmdf jqlsmkdfjqslkdfj qsdlkmfj qsldmkf jqslkmf jsqlkfj qksdlfj qsdlkf jqsdlkfjqslkdfjqlsdkfjsqdlkfj klsdqfjsdqfj klsqdfj dskqlf jqsdfjqs ldfj qkslddf jsq ldfjqs lfjqsldf qsjdfqsdjf klqsdjf lqmsdfj mldqskfjqsljfsqlk fjqslkf jqsd', 2, 81),
-(10, 'dsdsdsdsd\r\nsds\r\nds\r\nd\r\ns\r\n', 2, 81),
-(11, 'commetnaire sdjfksdjkf sjdfksdjkfqqsod fqsoifq\' zl qdf', 1, 81);
 
 -- --------------------------------------------------------
 
@@ -454,7 +450,12 @@ INSERT INTO `liaison_product_order` (`id`, `product_id`, `order_id`) VALUES
 (53, 81, 70),
 (54, 81, 70),
 (55, 81, 70),
-(56, 81, 70);
+(56, 81, 70),
+(57, 81, 71),
+(58, 81, 72),
+(59, 81, 73),
+(60, 81, 73),
+(61, 16, 74);
 
 -- --------------------------------------------------------
 
@@ -477,7 +478,11 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `order_total`, `order_address`, `order_number`) VALUES
 (69, 1, '2023-06-15 23:44:42', '9196.00', '413 dsdsds, 87887 KFLDFDL', '648B864A68A6D4-00773925'),
-(70, 1, '2023-06-16 00:01:35', '13794.00', '413 dsdsds, 87887 KFLDFDL', '648B8A3F12D798-36935007');
+(70, 1, '2023-06-16 00:01:35', '13794.00', '413 dsdsds, 87887 KFLDFDL', '648B8A3F12D798-36935007'),
+(71, 1, '2023-06-18 18:30:06', '2299.00', '75 rue Leon Jouhaux, 83200 TOULON', '648F310E794D95-80559902'),
+(72, 1, '2023-06-18 18:30:19', '1149.50', '75 rue Leon Jouhaux, 83200 TOULON', '648F311BB2F609-26907360'),
+(73, 1, '2023-06-18 19:32:23', '4598.00', '75 rue Leon Jouhaux, 83200 TOULON', '648F3FA7E56CA0-16834988'),
+(74, 1, '2023-06-18 19:32:58', '106.40', '75 rue Leon Jouhaux, 83200 TOULON', '648F3FCA387669-03513470');
 
 -- --------------------------------------------------------
 
@@ -514,7 +519,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (13, 'Gigabyte Radeon RX 6700 XT EAGLE', 'Carte graphique PCI-Express - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR', '2023-05-30 15:04:46', '338.00', 500),
 (14, 'Samsung Série 970 EVO Plus 2 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Contrôleur Samsung Phoenix - Lecture max : 3500 Mo/s - Ecriture max : 3300 Mo/s - Mémoire TLC 3D', '2023-05-30 15:05:00', '99.00', 500),
 (15, 'KFA2 GeForce RTX 3060 Ti (1-Click OC) (LHR)', 'Carte graphique overclockée - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR - Mémoire GDDR6', '2023-05-30 15:05:17', '319.00', 500),
-(16, 'KFA2 GeForce GTX 1630 EX (1-Click OC)', 'Carte graphique - Compatible VR', '2023-05-30 15:06:01', '112.00', 500),
+(16, 'KFA2 GeForce GTX 1630 EX (1-Click OC)', 'Carte graphique - Compatible VR', '2023-05-30 15:06:01', '112.00', 499),
 (17, 'Crucial P3 1 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Lecture max : 3500 Mo/s - Ecriture max : 3000 Mo/s - Mémoire QLC', '2023-05-30 15:06:11', '51.00', 500),
 (18, 'ASUS ROG STRIX B760-F GAMING WIFI', 'Carte mère ATX - Socket 1700 - Chipset Intel B760 - USB 3.2 Type C - SATA 6 Gb/s - M.2 - WiFi - LEDs intégrées', '2023-05-30 15:06:54', '249.00', 500),
 (19, 'ASUS ROG STRIX B760-A GAMING WIFI DDR4 + opération COD Modern Warfare 2', 'Carte mère ATX - Socket 1700 - Chipset Intel B760 - USB 3.2 Type C - SATA 6 Gb/s - M.2 - WiFi - LEDs intégrées', '2023-05-30 15:07:35', '229.00', 500),
@@ -579,7 +584,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (78, 'Gigabyte G5 (GE-51FR263SH) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6&quot; Full HD (1920 x 1080) 144 Hz - Intel Core i5-12500H 12-Core 3.3 Ghz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:26:14', '829.00', 500),
 (79, 'MSI Thin GF63 (12UDX-242FR) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-12450H Octo-Core 3,3 GHz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:27:08', '849.00', 500),
 (80, 'Acer Nitro 5 (AN517-54-53A2) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-11400H Hexa-Core 2.7 GHz - 16 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 2.7 Kg - Windows 11', '2023-06-05 15:28:33', '1079.00', 500),
-(81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 490),
+(81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 486),
 (82, 'AKRacing Core EX - Rouge / Noir', 'Fauteuil Gamer - Tissu - Accoudoirs 3D réglables - Assise inclinable - Poids supporté 150 Kg', '2023-06-05 15:33:10', '249.00', 500),
 (83, 'DXRacer Air R1S (rose)', 'Fauteuil Gamer - Maille respirante - Accoudoirs 3D réglables - Dossier inclinable jusqu\'à  135°- Poids supporté 114 kg', '2023-06-05 15:34:14', '289.00', 500),
 (84, 'Noblechairs Icon - Noir / Bleu', 'Fauteuil Gamer - Simili Cuir - Accoudoirs 4D réglables - Poids supporté 150 Kg', '2023-06-05 15:35:18', '389.00', 500),
@@ -601,22 +606,6 @@ CREATE TABLE `responses` (
   `comment_id` int(11) NOT NULL,
   `response_user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `responses`
---
-
-INSERT INTO `responses` (`response_id`, `response_text`, `comment_id`, `response_user_id`) VALUES
-(1, ' Ceci est une réponse', 5, 0),
-(2, 'deuxieme reponse', 4, 1),
-(3, 'sdkf jsdjrit srovivcjxvio s', 4, 2),
-(4, 'RFeponse de dylan', 6, 2),
-(5, 'dsfjslkd fjsdlkfjksldfls', 2, 2),
-(6, 'qskdqlms kdlmqsd klqmsd ', 2, 2),
-(7, 'cvxvcvxcvxcvxcv', 4, 2),
-(8, 'dsdsdsdsds', 7, 2),
-(9, 'QSDqsQ', 8, 2),
-(10, 'fqs fqsdlfsdqùiof opùqsdfiopq ùsdùfiqsd f', 9, 1);
 
 -- --------------------------------------------------------
 
@@ -735,13 +724,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT pour la table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT pour la table `category`
@@ -753,13 +742,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT pour la table `codes`
 --
 ALTER TABLE `codes`
-  MODIFY `code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `images`
@@ -777,13 +766,13 @@ ALTER TABLE `liaison_items_category`
 -- AUTO_INCREMENT pour la table `liaison_product_order`
 --
 ALTER TABLE `liaison_product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT pour la table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT pour la table `products`
@@ -795,7 +784,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT pour la table `responses`
 --
 ALTER TABLE `responses`
-  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `users`

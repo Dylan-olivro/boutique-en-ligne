@@ -126,7 +126,9 @@ if (isset($_POST['vider'])) {
 
                     if (!empty($result_cart)) {
                         // Affichage du panier
-                        foreach ($result_cart as $product) { ?>
+                        foreach ($result_cart as $product) {
+                            var_dump($product);
+                    ?>
                             <div class="cartDetail">
                                 <div class="cartProduct">
                                     <div class="cartImage">
@@ -162,13 +164,13 @@ if (isset($_POST['vider'])) {
                             </div>
                         <?php
                             if (isset($_POST['add' . $product->cart_id])) {
-                                $req2 = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
-                                $req2->execute(['product_id' => $product->product_id]);
-                                $res2 = $req2->fetch(PDO::FETCH_OBJ);
+                                // $req2 = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
+                                // $req2->execute(['product_id' => $product->product_id]);
+                                // $res2 = $req2->fetch(PDO::FETCH_OBJ);
 
                                 $req3 = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
                                 $req3->execute([
-                                    'cart_quantity' => $res2->cart_quantity + 1,
+                                    'cart_quantity' => $product->cart_quantity + 1,
                                     'product_id' => $product->product_id
                                 ]);
                                 echo '<i class="fa-solid fa-circle-check" style="color: #0cad00;"></i> Article ajouté au panier.';
