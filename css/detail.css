@@ -116,10 +116,115 @@
 .button:active {
   border: 1px solid #2e8644;
 }
-/** Commentaire  */
+/**  Section Commentaire et Réponse  */
 .CommentsContent {
   width: 100%;
   background-color: var(--div-color);
   border-radius: 10px;
   margin-top: 3%;
+  padding: 2%;
+  color: #fff;
+}
+.CommentsContent h3 {
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 3%;
+}
+
+/**  Commentaire */
+.BoxFormComments {
+  display: flex;
+  width: 50%;
+  margin-bottom: 2%;
+}
+#FormComments {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: end;
+}
+#FormComments textarea {
+  width: 100%;
+  resize: none;
+  height: 200px;
+  border-radius: 10px;
+  padding: 1% 1% 5%;
+  background-color: var(--input-color);
+  color: #fff;
+}
+#COMMENT_ERROR {
+  width: 100%;
+  display: flex;
+  margin: 1% 0;
+  height: 35px;
+  align-items: center;
+  color: #ffa938;
+  justify-content: space-between;
+}
+#count {
+  color: #fff;
+}
+#FormComments input {
+  width: 20%;
+  background-color: var(--button-color);
+  padding: 1%;
+  border-radius: 10px;
+  margin-top: 1%;
+  color: #fff;
+}
+#FormComments input:hover {
+  background-color: var(--main-color) !important;
+  cursor: pointer;
+}
+.BoxComments {
+  background-color: var(--nav-color);
+  margin-bottom: 1%;
+  border-radius: 10px;
+  padding: 1%;
+}
+#comment {
+  margin: 1% 0;
+}
+/**  Réponse */
+.BoxResponse {
+  background-color: var(--border-color);
+  border-radius: 10px;
+  padding: 1%;
+  margin-bottom: 1%;
+}
+.BoxFormResponses {
+  display: flex;
+  width: 30%;
+  margin-bottom: 2%;
+}
+#FormResponses {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: end;
+}
+#FormResponses textarea {
+  width: 100%;
+  resize: none;
+  height: 100px;
+  border-radius: 10px;
+  padding: 1%;
+  background-color: var(--input-color);
+  color: #fff;
+}
+#FormResponses input {
+  width: 20%;
+  background-color: var(--button-color);
+  padding: 1%;
+  border-radius: 10px;
+  margin-top: 3%;
+  color: #fff;
+}
+#FormResponses input:hover {
+  background-color: var(--main-color) !important;
+  cursor: pointer;
+}
+#response {
+  margin: 1% 0;
 }

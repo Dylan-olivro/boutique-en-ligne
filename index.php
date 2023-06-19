@@ -5,15 +5,13 @@ $request = $bdd->prepare("SELECT *,count(*) FROM liaison_product_order INNER JOI
 $request->execute();
 $result = $request->fetchAll(PDO::FETCH_OBJ);
 
+$requestAllItems = $bdd->prepare("SELECT * FROM products INNER JOIN images ON products.product_id = images.product_id WHERE image_main = 1 ORDER BY products.product_date DESC LIMIT 4");
+$requestAllItems->execute();
+$resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 
-
-if (isset($_POST['aaa'])) {
-    // if (preg_match("/^[[:alpha:]]([-' ]?[[:alpha:]])*$/", trim($_POST['test']))) {
-    if (isName($_POST['test'])) {
-        echo 1;
-    } else {
-        echo 2;
-    }
+if (isset($_POST['submit'])) {
+    var_dump($_POST['ok']);
+    echo mb_strlen(str_replace("\n", '', $_POST['ok']));
 }
 ?>
 <!DOCTYPE html>
@@ -27,8 +25,8 @@ if (isset($_POST['aaa'])) {
 
 <body>
     <form action="" method="POST">
-        <input type="text" name="test">
-        <input type="submit" name="aaa">
+        <textarea name="ok" id="" cols="30" rows="10"></textarea>
+        <input type="submit" name="submit">
     </form>
     <?php require_once('./php/include/header.php') ?>
     <main>
@@ -98,30 +96,30 @@ if (isset($_POST['aaa'])) {
 
             <!-- DIV POUR LES PRODUTIS LES PLUS ????????? -->
             <div class="MainContent">
-                <h2>LES PLUS POPULAIRES</h2>
+                <h2>NOUVEAUTÉS</h2>
                 <div class="BoxProducts">
                     <?php
-                    foreach ($result as $key) { ?>
+                    foreach ($resultAllItems as $key2) { ?>
                         <div class="CardProduct">
-                            <a href="./php/detail.php?id=<?= $key->image_id ?>" class="LinkProduct">
+                            <a href="./php/detail.php?id=<?= $key2->image_id ?>" class="LinkProduct">
                                 <div class="divImg">
-                                    <img src="./assets/img_item/<?= $key->image_name ?>" alt="">
+                                    <img src="./assets/img_item/<?= $key2->image_name ?>" alt="">
                                 </div>
                             </a>
 
                             <div class="BoxDetailProduct">
 
-                                <a href="./php/detail.php?id=<?= $key->image_id ?>" class="LinkProduct">
+                                <a href="./php/detail.php?id=<?= $key2->image_id ?>" class="LinkProduct">
                                     <div class="BoxProductName">
-                                        <p class="ProductName"><?= CoupePhrase(htmlspecialchars($key->product_name), 40) ?></p>
+                                        <p class="ProductName"><?= CoupePhrase(htmlspecialchars($key2->product_name), 40) ?></p>
                                     </div>
                                 </a>
 
                                 <div class="BoxPriceBtn">
-                                    <p class="ProductPrice"><?= htmlspecialchars($key->product_price) ?>€</p>
+                                    <p class="ProductPrice"><?= htmlspecialchars($key2->product_price) ?>€</p>
                                     <?php if (isset($_SESSION['user'])) { ?>
                                         <form action="" method="post" id="FormCart">
-                                            <button type="submit" name="ButtonAddCartNew<?= $key->product_id ?>" id="ButtonAddCartNew"><i class="fa-solid fa-cart-plus"></i></button>
+                                            <button type="submit" name="ButtonAddCartNew<?= $key2->product_id ?>" id="ButtonAddCartNew"><i class="fa-solid fa-cart-plus"></i></button>
                                         </form>
                                     <?php } ?>
                                 </div>
@@ -130,10 +128,10 @@ if (isset($_POST['aaa'])) {
 
                         </div>
                     <?php
-                        if (isset($_POST['ButtonAddCartNew' . $key->product_id])) {
+                        if (isset($_POST['ButtonAddCartNew' . $key2->product_id])) {
                             // Récupère la quantité du produit
                             $quantity = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
-                            $quantity->execute(['product_id' => $key->product_id]);
+                            $quantity->execute(['product_id' => $key2->product_id]);
                             $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
 
                             // Insert le produit de la page dans le panier en gérant la quantité
@@ -141,13 +139,13 @@ if (isset($_POST['aaa'])) {
                                 $updateQuantity = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
                                 $updateQuantity->execute([
                                     'cart_quantity' => $result_quantity->cart_quantity + 1,
-                                    'product_id' => $key->product_id
+                                    'product_id' => $key2->product_id
                                 ]);
                             } else {
                                 $insertQuantity = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
                                 $insertQuantity->execute([
                                     'user_id' => $_SESSION['user']->user_id,
-                                    'product_id' => $key->product_id,
+                                    'product_id' => $key2->product_id,
                                     'cart_quantity' => 1
                                 ]);
                             }
@@ -174,6 +172,7 @@ if (isset($_POST['aaa'])) {
 // ? Faire les quantités pour l'historique de commandes
 // // ? Envoyer en base de donnée normalement mais récupérer avec la première lettre en majuscule
 
+// ! Ajouter et modifier un produit nl2br() et if(empty(trim($textarea)))
 
 // ! Corriger l'affichage du numero de telephone dans la modification d'adresse
 // ! Condition pour la taille de l'adresse (il faut que ca passe en version mobile)

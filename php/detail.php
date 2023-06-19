@@ -40,13 +40,20 @@ if (isset($_POST["ajouter"])) {
 }
 // Permet de poster un commentaire
 if (isset($_POST['submitComment'])) {
-    $addComment = $bdd->prepare('INSERT INTO comments (comment_text, user_id, product_id) VALUES(:comment_text, :user_id,:product_id)');
-    $addComment->execute([
-        'comment_text' => $_POST['comment'],
-        'user_id' => $_SESSION['user']->user_id,
-        'product_id' => $result->product_id
-    ]);
-    header('Location: detail.php?id=' . $result->product_id);
+    $comment = $_POST['comment'];
+    if (empty(trim($comment))) {
+        $COMMENT_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspVeuillez saisir un commentaire.';
+    } elseif (mb_strlen(str_replace("\n", '', $comment)) > 2000) {
+        $COMMENT_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCommentaire trop long (2000max).';
+    } else {
+        $addComment = $bdd->prepare('INSERT INTO comments (comment_text, user_id, product_id) VALUES(:comment_text, :user_id,:product_id)');
+        $addComment->execute([
+            'comment_text' => $_POST['comment'],
+            'user_id' => $_SESSION['user']->user_id,
+            'product_id' => $result->product_id
+        ]);
+        header('Location: detail.php?id=' . $result->product_id);
+    }
 }
 
 // Récupération des commentaire du produit
@@ -118,21 +125,29 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
 
             <!-- SECTION COMMENTAIRE -->
             <section class="CommentsContent">
-                <form action="" method="POST">
-                    <textarea name="comment" placeholder="COMMENTAIRE"></textarea>
-                    <!-- <input type="text" name="comment" placeholder="COMMENTAIRE"> -->
-                    <input type="submit" name="submitComment">
-                </form>
-                <div>
+                <h3>COMMENTAIRES</h3>
+                <div class="BoxFormComments">
+                    <form action="" method="POST" id="FormComments">
+                        <textarea name="comment" id="TextareaComment" placeholder="Écrire un commentaire..."></textarea>
+                        <!-- <input type="text" name="comment" placeholder="COMMENTAIRE"> -->
+                        <p id="COMMENT_ERROR"><span><?= isset($COMMENT_ERROR) ? $COMMENT_ERROR : ''; ?></span><span id="count">0/2000</span></p>
+                        <input type="submit" name="submitComment">
+
+                    </form>
+                </div>
+                <div class="BoxCommentResponse">
                     <?php
                     foreach ($result_comments as $key) { ?>
-                        <div style="background-color: lightcyan; margin: 1%;">
-                            <p>USER :<?= $key->user_firstname ?></p>
-                            <p>COMMENTAIRE :<?= $key->comment_text ?></p>
-                            <form action="" method="POST">
-                                <textarea name="response" placeholder="REPONSE"></textarea>
-                                <input type="submit" name="submitResponse<?= $key->comment_id ?>">
-                            </form>
+                        <div class="BoxComments">
+                            <p>Commenté par <?= htmlspecialchars(ucfirst($key->user_firstname)) ?></p>
+                            <p id="comment"><?= nl2br(htmlspecialchars($key->comment_text)) ?></p>
+                            <!-- <p style="color: blue;">Répondre</p> -->
+                            <div class="BoxFormResponses">
+                                <form action="" method="POST" id="FormResponses">
+                                    <textarea name="response" placeholder="Ajoutez une réponse..."></textarea>
+                                    <input type="submit" name="submitResponse<?= $key->comment_id ?>">
+                                </form>
+                            </div>
 
                             <?php
 
@@ -145,9 +160,9 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
                             // var_dump($result_responses);
 
                             foreach ($result_responses as $key2) { ?>
-                                <div style="background-color: lightsalmon; margin: 1%;">
-                                    <p>USER REPONSE : <?= $key2->user_firstname ?></p>
-                                    <p>REPONSE : <?= $key2->response_text ?></p>
+                                <div class="BoxResponse">
+                                    <p>Réponse de <?= htmlspecialchars(ucfirst($key2->user_firstname)) ?></p>
+                                    <p id="response"><?= nl2br(htmlspecialchars($key2->response_text)) ?></p>
                                 </div>
                             <?php
                             }
@@ -155,13 +170,20 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
                         </div>
                     <?php
                         if (isset($_POST['submitResponse' . $key->comment_id])) {
-                            $addResponse = $bdd->prepare('INSERT INTO responses (response_text, comment_id,response_user_id) VALUES(:response_text, :comment_id, :response_user_id)');
-                            $addResponse->execute([
-                                'response_text' => $_POST['response'],
-                                'comment_id' => $key->comment_id,
-                                'response_user_id' => $_SESSION['user']->user_id
-                            ]);
-                            header('Location: detail.php?id=' . $result->product_id);
+                            $response = $_POST['response'];
+                            if (empty(trim($response))) {
+                                $RESPONSE_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspVeuillez saisir une réponse.';
+                            } elseif (mb_strlen(str_replace("\n", '', $response)) > 2000) {
+                                $RESPONSE_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&Réponse trop long (2000max).';
+                            } else {
+                                $addResponse = $bdd->prepare('INSERT INTO responses (response_text, comment_id,response_user_id) VALUES(:response_text, :comment_id, :response_user_id)');
+                                $addResponse->execute([
+                                    'response_text' => $_POST['response'],
+                                    'comment_id' => $key->comment_id,
+                                    'response_user_id' => $_SESSION['user']->user_id
+                                ]);
+                                header('Location: detail.php?id=' . $result->product_id);
+                            }
                         }
                     }
                     ?>

@@ -52,6 +52,9 @@
   width: 200px;
   border-radius: 10px;
 }
+.BoxDetailProduct {
+  width: 100%;
+}
 .BoxProductName {
   width: 100%;
   color: #fff;
