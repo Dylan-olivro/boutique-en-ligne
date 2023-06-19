@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 17 juin 2023 à 14:22
+-- Généré le : lun. 19 juin 2023 à 15:13
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -46,9 +46,13 @@ CREATE TABLE `addresses` (
 --
 
 INSERT INTO `addresses` (`address_id`, `user_id`, `address_numero`, `address_name`, `address_postcode`, `address_city`, `address_telephone`, `address_lastname`, `address_firstname`) VALUES
-(57, 1, 413, 'dsdsds', '87887', 'KFLDFDL', '06 5555 55 53', 'Hfjdjfd', 'Dsjdksd'),
-(58, 1, 123, 'azerty', '12345', 'QSDSDF', '01 02 03 04 05', 'Dylan', 'Lmmlml'),
-(61, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan');
+(67, 2, 323, 'dsdsds dsdsds d s ds ds ds ds d', '53535', 'DSDSDSDSD', '04 38 28 38 28', 'SDsdsd', 'Sdsdsd'),
+(69, 1, 11, 'rue Leon Jouhaux', '55555', 'é\"(\'\"é\'(&\'', '09 03 03 03 03', 'Admin', 'Dylan'),
+(70, 1, 232, 'dzeze', '22322', 'DSDSD', '09 03 03 03 03', 'Dsdsdsd', 'Sdsdsd'),
+(71, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan'),
+(72, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan'),
+(73, 1, 43, 'zezezeeze ze ze', '43434', 'HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH', '04 38 28 38 28', 'Rerer', 'Rerer'),
+(74, 1, 22, 'rue léon jouhaux', '23232', 'CHARENTE-MARITIME', '09 03 03 03 03', 'Sdsdsd', 'Sdsdsd');
 
 -- --------------------------------------------------------
 
@@ -62,6 +66,13 @@ CREATE TABLE `carts` (
   `product_id` int(11) NOT NULL,
   `cart_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `carts`
+--
+
+INSERT INTO `carts` (`cart_id`, `user_id`, `product_id`, `cart_quantity`) VALUES
+(136, 1, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -126,7 +137,22 @@ CREATE TABLE `codes` (
 --
 
 INSERT INTO `codes` (`code_id`, `code_name`, `code_discount`) VALUES
-(1, 'ruben', 100);
+(1, 'TEST', 50),
+(2, 'DYLAN', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `comments`
+--
+
+CREATE TABLE `comments` (
+  `comment_id` int(11) NOT NULL,
+  `comment_text` text NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `comment_rating` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -424,7 +450,12 @@ INSERT INTO `liaison_product_order` (`id`, `product_id`, `order_id`) VALUES
 (53, 81, 70),
 (54, 81, 70),
 (55, 81, 70),
-(56, 81, 70);
+(56, 81, 70),
+(57, 81, 71),
+(58, 81, 72),
+(59, 81, 73),
+(60, 81, 73),
+(61, 16, 74);
 
 -- --------------------------------------------------------
 
@@ -447,7 +478,11 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `order_total`, `order_address`, `order_number`) VALUES
 (69, 1, '2023-06-15 23:44:42', '9196.00', '413 dsdsds, 87887 KFLDFDL', '648B864A68A6D4-00773925'),
-(70, 1, '2023-06-16 00:01:35', '13794.00', '413 dsdsds, 87887 KFLDFDL', '648B8A3F12D798-36935007');
+(70, 1, '2023-06-16 00:01:35', '13794.00', '413 dsdsds, 87887 KFLDFDL', '648B8A3F12D798-36935007'),
+(71, 1, '2023-06-18 18:30:06', '2299.00', '75 rue Leon Jouhaux, 83200 TOULON', '648F310E794D95-80559902'),
+(72, 1, '2023-06-18 18:30:19', '1149.50', '75 rue Leon Jouhaux, 83200 TOULON', '648F311BB2F609-26907360'),
+(73, 1, '2023-06-18 19:32:23', '4598.00', '75 rue Leon Jouhaux, 83200 TOULON', '648F3FA7E56CA0-16834988'),
+(74, 1, '2023-06-18 19:32:58', '106.40', '75 rue Leon Jouhaux, 83200 TOULON', '648F3FCA387669-03513470');
 
 -- --------------------------------------------------------
 
@@ -484,7 +519,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (13, 'Gigabyte Radeon RX 6700 XT EAGLE', 'Carte graphique PCI-Express - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR', '2023-05-30 15:04:46', '338.00', 500),
 (14, 'Samsung Série 970 EVO Plus 2 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Contrôleur Samsung Phoenix - Lecture max : 3500 Mo/s - Ecriture max : 3300 Mo/s - Mémoire TLC 3D', '2023-05-30 15:05:00', '99.00', 500),
 (15, 'KFA2 GeForce RTX 3060 Ti (1-Click OC) (LHR)', 'Carte graphique overclockée - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR - Mémoire GDDR6', '2023-05-30 15:05:17', '319.00', 500),
-(16, 'KFA2 GeForce GTX 1630 EX (1-Click OC)', 'Carte graphique - Compatible VR', '2023-05-30 15:06:01', '112.00', 500),
+(16, 'KFA2 GeForce GTX 1630 EX (1-Click OC)', 'Carte graphique - Compatible VR', '2023-05-30 15:06:01', '112.00', 499),
 (17, 'Crucial P3 1 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Lecture max : 3500 Mo/s - Ecriture max : 3000 Mo/s - Mémoire QLC', '2023-05-30 15:06:11', '51.00', 500),
 (18, 'ASUS ROG STRIX B760-F GAMING WIFI', 'Carte mère ATX - Socket 1700 - Chipset Intel B760 - USB 3.2 Type C - SATA 6 Gb/s - M.2 - WiFi - LEDs intégrées', '2023-05-30 15:06:54', '249.00', 500),
 (19, 'ASUS ROG STRIX B760-A GAMING WIFI DDR4 + opération COD Modern Warfare 2', 'Carte mère ATX - Socket 1700 - Chipset Intel B760 - USB 3.2 Type C - SATA 6 Gb/s - M.2 - WiFi - LEDs intégrées', '2023-05-30 15:07:35', '229.00', 500),
@@ -549,7 +584,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (78, 'Gigabyte G5 (GE-51FR263SH) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6&quot; Full HD (1920 x 1080) 144 Hz - Intel Core i5-12500H 12-Core 3.3 Ghz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:26:14', '829.00', 500),
 (79, 'MSI Thin GF63 (12UDX-242FR) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-12450H Octo-Core 3,3 GHz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:27:08', '849.00', 500),
 (80, 'Acer Nitro 5 (AN517-54-53A2) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-11400H Hexa-Core 2.7 GHz - 16 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 2.7 Kg - Windows 11', '2023-06-05 15:28:33', '1079.00', 500),
-(81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 490),
+(81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 486),
 (82, 'AKRacing Core EX - Rouge / Noir', 'Fauteuil Gamer - Tissu - Accoudoirs 3D réglables - Assise inclinable - Poids supporté 150 Kg', '2023-06-05 15:33:10', '249.00', 500),
 (83, 'DXRacer Air R1S (rose)', 'Fauteuil Gamer - Maille respirante - Accoudoirs 3D réglables - Dossier inclinable jusqu\'à  135°- Poids supporté 114 kg', '2023-06-05 15:34:14', '289.00', 500),
 (84, 'Noblechairs Icon - Noir / Bleu', 'Fauteuil Gamer - Simili Cuir - Accoudoirs 4D réglables - Poids supporté 150 Kg', '2023-06-05 15:35:18', '389.00', 500),
@@ -558,6 +593,19 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (87, 'HTC VIVE PRO 2', 'Casque de réalité virtuelle - 5120 x 2880 - 120 Hz', '2023-06-07 12:53:25', '699.00', 500),
 (88, 'HTC Station de base 2.0', 'Station de base pour VIVE Pro et VIVE Pro Eye', '2023-06-07 12:56:33', '199.00', 500),
 (89, 'HTC Tracker 3.0', 'Détecteur de mouvement polyvalent pour HTC Vive', '2023-06-07 12:59:51', '139.00', 500);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `responses`
+--
+
+CREATE TABLE `responses` (
+  `response_id` int(11) NOT NULL,
+  `response_text` text NOT NULL,
+  `comment_id` int(11) NOT NULL,
+  `response_user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -579,7 +627,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_email`, `user_lastname`, `user_firstname`, `user_password`, `user_role`) VALUES
-(1, 'admin@laplateforme.io', 'admin', 'admin', '$2y$10$uFx8wvlAhgmw93DDzIno/O/w5g2JN20kXPwvC83HnKWfsdG1y4Fd6', 2),
+(1, 'admin@laplateforme.io', 'Admin', 'Admin', '$2y$10$uFx8wvlAhgmw93DDzIno/O/w5g2JN20kXPwvC83HnKWfsdG1y4Fd6', 2),
 (2, 'dylan@gmail.com', 'dylan', 'dylan', '$2y$10$tNWkG3pj51SovDx3dtUzMO.8z.kjTDt4w5NlVtxYhItsDbJFrVoAi', 1),
 (3, 'charles@gmail.com', 'charles', 'charles', '$2y$10$VQv69RMVPjKQ/ywJ7Rexje8ZbyoQnU5qWx/tNdWFJuJdWbdAQjxAy', 1),
 (43, 'test@laplateforme.io', 'test', 'test', '$2y$10$WlEaL/qLA.if9MmeF7Sv1O13ZGCR6FbjslsY7MlRv5FZlhv0VRHdK', 1),
@@ -621,6 +669,12 @@ ALTER TABLE `codes`
   ADD PRIMARY KEY (`code_id`);
 
 --
+-- Index pour la table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`comment_id`);
+
+--
 -- Index pour la table `images`
 --
 ALTER TABLE `images`
@@ -651,6 +705,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Index pour la table `responses`
+--
+ALTER TABLE `responses`
+  ADD PRIMARY KEY (`response_id`);
+
+--
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
@@ -664,13 +724,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT pour la table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT pour la table `category`
@@ -682,37 +742,49 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT pour la table `codes`
 --
 ALTER TABLE `codes`
-  MODIFY `code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `images`
 --
 ALTER TABLE `images`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT pour la table `liaison_items_category`
 --
 ALTER TABLE `liaison_items_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT pour la table `liaison_product_order`
 --
 ALTER TABLE `liaison_product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT pour la table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT pour la table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+
+--
+-- AUTO_INCREMENT pour la table `responses`
+--
+ALTER TABLE `responses`
+  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `users`

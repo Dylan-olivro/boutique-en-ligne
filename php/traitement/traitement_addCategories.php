@@ -21,7 +21,7 @@ if (isset($data)) {
     } else {
         $category = new Category(null, $name, $IDParent);
         $category->addCategory($bdd);
-        $message['CATEGORY_SUCCES'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspCatégorie Ajoutée.';
+        $message['CATEGORY_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspCatégorie Ajoutée.';
     }
 } else {
     $message['CONNECT_ERROR'] = "Données manquantes";

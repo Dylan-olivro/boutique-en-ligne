@@ -1,62 +1,80 @@
-
-#addCategory {
-  background-color: var(--div-color);
-  border: 1px solid var(--border-color);
-  padding: 1% 1% 2%;
-  border-radius: 10px;
-  width: 70%;
+#container {
   display: flex;
+  justify-content: center;
+  width: 95%;
+  margin: 2% 0;
+}
+
+/** Formulaire */
+
+.MainContent {
+  display: flex;
+  width: 50%;
+}
+#FormCategories {
+  background-color: var(--div-color);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
-  margin: 5% 0;
+  padding: 2%;
 }
-#addCategory h3 {
+#FormCategories h3 {
+  font-size: 1.5rem;
   color: #fff;
-  font-size: 2rem;
   text-align: center;
+  margin: 2% 0;
 }
-#addCategory {
-  width: 30%;
+.FormChild {
+  width: 80%;
+  border-radius: 10px;
+  outline: none;
+  height: 50px;
 }
-#formCategories {
-  /* background-color: aqua; */
+#FormCategories label {
+  color: white;
   display: flex;
-  flex-direction: column;
-  width: 90%;
-  margin: 1% 0;
-}
-#formCategories {
-  margin: 5% 0;
-}
-#formCategories label {
-  color: #fff;
+  align-items: end;
   font-style: italic;
 }
-#formCategories input {
+#FormCategories input,
+#FormCategories select {
+  padding: 2%;
   background-color: var(--input-color);
   color: #fff;
-  outline: none;
-  border-radius: 5px;
 }
-
+#idParent {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
 #messageCategories {
-  width: 100%;
   color: #ffa938;
   display: flex;
   align-items: center;
   font-size: 0.8rem;
-  height: 35px;
-  margin: 0;
 }
-.submit {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-.submit input {
-  width: 50%;
+#submit {
+  padding: 0 !important;
+  background-color: var(--button-color) !important;
   cursor: pointer;
 }
-#nameCategory {
-  margin-bottom: 2%;
+#submit:hover {
+  background-color: var(--main-color) !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .MainContent {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .MainContent {
+    width: 100%;
+  }
+  .FormChild {
+    width: 100%;
+  }
 }

@@ -22,7 +22,7 @@
   padding: 2%;
 }
 #FormConnect h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   color: #fff;
   text-align: center;
   margin: 2% 0;
@@ -79,31 +79,29 @@
 }
 .Inscription {
   margin: 3% 0;
+  color: #fff;
 }
 #Link {
   color: var(--button-color);
 }
-/* @media screen and (max-width: 1440px) {
-  #formLogin > * {
-    width: 90%;
-  }
-}
-@media screen and (max-width: 1040px) {
-  .form {
-    width: 60%;
-  }
-  #formLogin {
-    width: 100%;
-  }
-}
-@media screen and (max-width: 768px) {
-  .form {
+
+@media screen and (max-width: 1024px) {
+  .MainContent {
     width: 80%;
   }
 }
+
 @media screen and (max-width: 425px) {
-  .demande {
-    flex-direction: column;
-    margin: 5% 0;
+  .MainContent {
+    width: 100%;
   }
-}  */
+  .FormChild {
+    width: 100%;
+  }
+  .Inscription {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

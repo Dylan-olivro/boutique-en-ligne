@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $image->updateMainImage($bdd, $result->image_name);
         }
 
-        $message['PRODUCT_SUCCES'] = "Produit ajouté";
+        $message['PRODUCT_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspProduit ajouté';
     }
 } else {
     $message['PRODUCT_ERROR'] = "Données manquantes";

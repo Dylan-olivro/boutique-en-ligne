@@ -1,50 +1,76 @@
-.form {
-  background-color: var(--div-color);
-  border: 1px solid var(--border-color);
-  padding: 1% 1% 2%;
-  border-radius: 10px;
-  /* width: 70%; */
+#container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 3% 0;
-}
-.form h3 {
-  color: #fff;
-  font-size: 2rem;
-  text-align: center;
+  justify-content: center;
+  width: 95%;
+  margin: 2% 0;
 }
 
-#formUpdateAdress {
-  /* background-color: aqua; */
+/** Formulaire */
+
+.MainContent {
   display: flex;
+  width: 50%;
+}
+#FormAddAddress {
+  background-color: var(--div-color);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  width: 100%;
   flex-direction: column;
-  width: 90%;
-  margin: 1% 0;
+  align-items: center;
+  padding: 2%;
 }
-#formUpdateAdress {
-  margin: 5% 0;
-}
-#formUpdateAdress label {
+#FormAddAddress h3 {
+  font-size: 1.5rem;
   color: #fff;
+  text-align: center;
+  margin: 2% 0;
+}
+.FormChild {
+  width: 80%;
+  border-radius: 10px;
+  outline: none;
+  height: 50px;
+}
+#FormAddAddress label {
+  color: white;
+  display: flex;
+  align-items: end;
   font-style: italic;
 }
-#formUpdateAdress input {
+#FormAddAddress input {
+  padding: 2%;
   background-color: var(--input-color);
   color: #fff;
-  outline: none;
-  border-radius: 5px;
 }
 
 #message {
-  width: 100%;
   color: #ffa938;
   display: flex;
   align-items: center;
   font-size: 0.8rem;
-  height: 35px;
-  margin: 0;
 }
-.submit {
+#submit {
+  padding: 0 !important;
   background-color: var(--button-color) !important;
+  cursor: pointer;
+}
+#submit:hover {
+  background-color: var(--main-color) !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .MainContent {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .MainContent {
+    width: 100%;
+  }
+  .FormChild {
+    width: 100%;
+  }
 }

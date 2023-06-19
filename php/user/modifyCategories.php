@@ -1,14 +1,15 @@
 <?php require_once('../include/required.php');
 
-// Empêche les utilisateurs que ne sont pas connecté de venir sur cette page
-if (!isset($_SESSION['user'])) {
-    header('Location:../../index.php');
-}
-
+// Récupération de la catégorie sélectionnée
 $category = new Category($_GET['id'], null, null);
 $result = $category->returnCategory($bdd);
 $result_cat = $category->returnAllCategories($bdd);
-var_dump($result);
+
+// Empêche les utilisateurs qui ne sont pas ADMINISTRATEUR
+if (!$result || $_SESSION['user']->user_role != 2) {
+    header('Location: ../../index.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,33 +25,30 @@ var_dump($result);
     <?php require_once('../include/header.php'); ?>
 
     <main>
-        <!-- Formulaire pour MODIFIER l'adresse de l'utilisateur -->
-        <div id="addCategory">
-            <!-- Formulaire pour AJOUTER une catégorie -->
-            <h3>Modifier une Categorie</h3>
-            <form action="" method="post" id="formCategories">
-                <input type="hidden" name="id" value="<?= htmlspecialchars($_GET['id']) ?>">
-                <label for="nameCategory">Name</label>
-                <input type="text" name="nameCategory" id="nameCategory" value="<?= htmlspecialchars($result->name) ?>">
-                <label for="idParent">ID parent</label>
-                <select name="idParent" id="idParent">
-                    <option value="<?= $result->id_parent ?>">Current</option>
-                    <?php
-                    foreach ($result_cat as $cat) {
-                        if ($cat->id_parent == 0) { ?>
-                            <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
-                    <?php
-                        }
-                    } ?>
-                    <option value="0">Nouveau Parent</option>
-                </select>
-                <p id="messageCategories"></p>
-                <div class="submit">
-                    <input type="submit" name="submit " value="Modifier">
-                </div>
-            </form>
-
-        </div>
+        <section id="container">
+            <div class="MainContent">
+                <form action="" method="post" id="FormCategories">
+                    <h3>Modifier une Categorie</h3>
+                    <input type="hidden" name="id" value="<?= htmlspecialchars($_GET['id']) ?>">
+                    <label for="nameCategory" class="FormChild">Name</label>
+                    <input type="text" name="nameCategory" id="nameCategory" class="FormChild" value="<?= htmlspecialchars($result->name) ?>">
+                    <label for="idParent" class="FormChild">Catégorie parent</label>
+                    <select name="idParent" id="idParent" class="FormChild">
+                        <option value="<?= $result->id_parent ?>">Actuellement</option>
+                        <?php
+                        foreach ($result_cat as $cat) {
+                            if ($cat->id_parent == 0) { ?>
+                                <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                        <?php
+                            }
+                        } ?>
+                        <option value="0">Nouveau Parent</option>
+                    </select>
+                    <p id="messageCategories" class="FormChild"></p>
+                    <input type="submit" name="submit" id="submit" class="FormChild" value="Modifier">
+                </form>
+            </div>
+        </section>
     </main>
     <?php require_once('../include/footer.php') ?>
 </body>

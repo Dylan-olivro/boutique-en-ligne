@@ -1,5 +1,5 @@
-const formEl = document.querySelector("#FormCategories");
-const message = document.querySelector("#messageCategories");
+const formEl = document.querySelector("#FormAddAddress");
+const message = document.querySelector("#message");
 
 formEl.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -7,7 +7,7 @@ formEl.addEventListener("submit", (event) => {
   const formData = new FormData(formEl);
   const data = Object.fromEntries(formData);
 
-  fetch("../traitement/traitement_modifyCategories.php", {
+  fetch("../traitement/traitement_addAddress.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
@@ -19,15 +19,14 @@ formEl.addEventListener("submit", (event) => {
     })
     .then((data) => {
       console.log(data);
-      if (data.CATEGORY_ERROR) {
-        message.innerHTML = data.CATEGORY_ERROR;
+      if (data.INSERT_ADDRESS_ERROR) {
+        message.innerHTML = data.INSERT_ADDRESS_ERROR;
       } else {
-        formEl.reset();
-        window.location.href = `${getURL()}php/admin.php`;
+        window.location.href = `${getURL()}php/profil.php`;
         message.style.color = "green";
-        message.innerHTML = data.CATEGORY_SUCCES;
+        message.innerHTML = data.INSERT_ADDRESS_SUCCES;
+        formEl.reset();
       }
     })
     .catch((error) => console.log(error));
 });
-

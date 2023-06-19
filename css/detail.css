@@ -1,114 +1,287 @@
-/* #item {
-/*  SECTION  */
 #container {
-  margin: 12px;
-}
-/* DIV */
-#item {
-  margin: auto !important;
-  display: flex;
-  width: 80%;
-  background-color: var(--section-color);
-  border: 1px solid var( --border-color);
-  border-radius: 10px;
-}
-#imageItem {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
+  margin: 2% 0;
+}
+.MainContent {
+  background-color: var(--div-color);
+  display: flex;
+  padding: 2%;
+  width: 90%;
+  border-radius: 10px;
+}
+.BoxImg {
   flex: 1;
 }
-#imageItem img {
+.BoxImg img {
   width: 400px;
   border-radius: 10px;
 }
-#detailItem {
-  flex: 1;
-  margin-left: 12px;
-  color: white;
-}
-#price_cart {
+.BoxDetail {
+  flex: 3;
+  padding: 0 1%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-} */
-
-/* Style pour la section principale */
-main {
-  padding: 20px;
+  color: #fff;
 }
-
-/* Style pour le conteneur */
-#container {
-  display: flex;
-  justify-content: center;
-}
-
-/* Style pour l'élément */
-#item {
-  display: flex;
-  align-items: center;
-  background-color: #f2f2f2;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-/* Style pour l'image du produit */
-#imageItem {
-  margin-right: 20px;
-}
-
-#imageItem img {
-  width: 200px;
-  height: auto;
-}
-
-/* Style pour les détails du produit */
-#detailItem {
-  flex-grow: 1;
-}
-
-#detailItem p {
+#productName {
+  font-size: 1.5rem;
+  margin-bottom: 3%;
   font-weight: bold;
 }
-
-/* Style pour la description du produit */
 #description {
-  margin-top: 10px;
+  font-size: 1.3rem;
 }
-
-#description p {
-  margin: 0;
+#description p:nth-child(1) {
+  margin-bottom: 2%;
 }
-
-/* Style pour le prix et le panier */
-#price_cart {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-#price_cart p {
-  margin: 0;
-  margin-right: 10px;
-}
-
-#price_cart .stock {
+#description p:nth-child(2) {
   font-style: italic;
 }
-
-#price_cart form {
-  margin: 0;
+.BoxPriceStockButton {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-#price_cart input[type="submit"] {
-  padding: 5px 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 3px;
+.test {
+  height: 50%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#price {
+  font-size: 2rem;
+  color: var(--price-color);
+}
+#stock {
+  font-size: 1.5rem;
+}
+/** Bouton Add Item */
+.button {
+  position: relative;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #34974d;
+  background-color: #3aa856;
+  border-radius: 10px;
+}
+.button__icon {
+  border-radius: 10px;
+}
+.button,
+.button__icon,
+.button__text {
+  transition: all 0.3s;
+}
+.button .button__text {
+  transform: translateX(30px);
+  color: #fff;
+  font-weight: 600;
+}
+.button .button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: #34974d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button .svg {
+  width: 30px;
+  stroke: #fff;
+}
+.button:hover {
+  background: #34974d;
+}
+.button:hover .button__text {
+  color: transparent;
+}
+.button:hover .button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+.button:active .button__icon {
+  background-color: #2e8644;
+}
+.button:active {
+  border: 1px solid #2e8644;
+}
+/**  Section Commentaire et Réponse  */
+.CommentsContent {
+  width: 100%;
+  background-color: var(--div-color);
+  border-radius: 10px;
+  margin-top: 3%;
+  padding: 2%;
+  color: #fff;
+}
+.CommentsContent h3 {
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 3%;
+}
+.UserComment {
+  font-weight: bold;
+}
+/**  Commentaire */
+.BoxFormComments {
+  display: flex;
+  width: 50%;
+  margin-bottom: 2%;
+}
+#FormComments {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: end;
+}
+#FormComments textarea {
+  width: 100%;
+  resize: none;
+  height: 200px;
+  border-radius: 10px;
+  padding: 1% 1% 5%;
+  background-color: var(--input-color);
+  color: #fff;
+}
+#COMMENT_ERROR,
+#RESPONSE_ERROR {
+  width: 100%;
+  display: flex;
+  margin: 1% 0;
+  height: 35px;
+  align-items: center;
+  color: #ffa938;
+  justify-content: space-between;
+}
+#count {
+  color: #fff;
+}
+#FormComments > input {
+  width: 20%;
+  background-color: var(--button-color);
+  padding: 1%;
+  border-radius: 10px;
+  margin-top: 1%;
+  color: #fff;
+}
+#FormComments > input:hover {
+  background-color: var(--main-color) !important;
   cursor: pointer;
 }
+.BoxComments {
+  background-color: var(--nav-color);
+  margin-bottom: 1%;
+  border-radius: 10px;
+  padding: 1%;
+  position: relative;
+}
+#comment {
+  margin: 1% 0;
+  word-break: break-word;
+}
+/**  Réponse */
+.BoxResponse {
+  background-color: var(--border-color);
+  border-radius: 10px;
+  padding: 1%;
+  margin-bottom: 1%;
+}
+.BoxFormResponses {
+  display: flex;
+  width: 30%;
+  margin-bottom: 2%;
+}
+#FormResponses {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: end;
+}
+#FormResponses textarea {
+  width: 100%;
+  resize: none;
+  height: 100px;
+  border-radius: 10px;
+  padding: 1%;
+  background-color: var(--input-color);
+  color: #fff;
+}
+#FormResponses input {
+  width: 20%;
+  background-color: var(--button-color);
+  padding: 1%;
+  border-radius: 10px;
+  margin-top: 3%;
+  color: #fff;
+}
+#FormResponses input:hover {
+  background-color: var(--main-color) !important;
+  cursor: pointer;
+}
+#response {
+  margin: 1% 0;
+  word-break: break-word;
+}
+/** Note étoiles  */
+.rating:not(:checked) > input {
+  position: absolute;
+  appearance: none;
+  top: 0;
+}
+.rating:not(:checked) > label {
+  float: right;
+  cursor: pointer;
+  font-size: 50px;
+  color: #666;
+}
+.rating:not(:checked) > label:before {
+  content: "★";
+}
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+  color: #e58e09;
+}
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: #ff9e0b;
+}
+.rating > input:checked ~ label {
+  color: #ffa723;
+}
 
-#price_cart input[type="submit"]:hover {
-  background-color: #45a049;
+/** Affichage des étoiles sur les commentaires */
+.ShowRating {
+  position: absolute;
+  top: 0;
+  right: 5%;
+}
+.ShowRating:not(:checked) > input {
+  position: absolute;
+  appearance: none;
+}
+.ShowRating:not(:checked) > label {
+  float: right;
+  font-size: 40px;
+  color: #666;
+}
+.ShowRating:not(:checked) > label:before {
+  content: "★";
+}
+.ShowRating > input:checked ~ label {
+  color: #ffa723;
 }

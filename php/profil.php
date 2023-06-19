@@ -6,6 +6,7 @@ if (!isset($_SESSION['user'])) {
     header('Location:../index.php');
 }
 
+// * Ne s'active que si le JAVASCRIPT est désactivé
 // Met à jour les informations de l'utilisateur
 if (isset($_POST['updateUser'])) {
     $email = $_POST['email'];
@@ -103,10 +104,8 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                     <div class="BoxAddAddress">
                         <?php if (count($allUserAdresses) < 6) { ?>
                             <a href="./user/addAdress.php" id="LinkAddAddress">
-                                <!-- <div class="link"> -->
                                 <span>Ajouter une adresse</span>
                                 <i class="fa-solid fa-chevron-right"></i>
-                                <!-- </div> -->
                             </a>
                         <?php } else { ?>
                             <p id="MaxAddress">Nombres d'adresses maximum</p>
@@ -115,9 +114,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                     <div class="ListAddresses">
 
                         <?php
-                        foreach ($allUserAdresses as $userAdress) {
-                            // var_dump($allUserAdresses);
-                        ?>
+                        foreach ($allUserAdresses as $userAdress) { ?>
                             <div class="DetailAddress">
                                 <div class="InfoAddress">
                                     <p id="name"><?= htmlspecialchars($userAdress->address_lastname) . " " . htmlspecialchars($userAdress->address_firstname) ?></p>
@@ -127,6 +124,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                     <p><?= htmlspecialchars($userAdress->address_telephone) ?></p>
 
                                 </div>
+                                <!-- Button supprimer et modifier une adresse -->
                                 <div class="BoxButtons">
                                     <a href="./user/modifyAdress.php?id=<?= $userAdress->address_id ?>"><button class="ButtonAddress"><i class="fa-solid fa-pencil"></i></button></a>
                                     <form action="" method="post">
@@ -137,7 +135,8 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                         <?php
                             // Delete l'adresse selectionné
                             if (isset($_POST['deleteAdress' . $userAdress->address_id])) {
-                                $address = new Address($userAdress->address_id, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+                                // $address = new Address($userAdress->address_id, $_SESSION['user']->user_id, null, null, null, null, null, null, null);
+                                $address->setId($userAdress->address_id);
                                 $address->deleteAddress($bdd);
                                 header('Location: profil.php');
                             }

@@ -37,11 +37,6 @@ function isLetter($a)
     return preg_match("/^\pL+([- ']\pL+)*$/u", $a) ? true : false;
 }
 
-// function special_login($login)
-// {
-//     return preg_match("#^[a-z0-9]+$#", $login) ? true : false;
-// }
-
 function returnPriceHT(float $priceTTC)
 {
     $tva = 20 / 100;
@@ -63,16 +58,6 @@ function CoupePhrase($txt, $long = 50)
     $txt = substr($txt, 0, $long);
     return substr($txt, 0, strrpos($txt, ' ')) . '...';
 }
-
-// function is_valid($number)
-// {
-//     if (is_numeric($number)) {
-//         list($nu, $de) = explode('.', $number);
-//         return (strlen($de) < 3 || !isset($de)) ? TRUE : FALSE;
-//     } else {
-//         return FALSE;
-//     }
-// }
 
 function isNumberWithDecimal($a)
 {
