@@ -116,10 +116,172 @@
 .button:active {
   border: 1px solid #2e8644;
 }
-/** Commentaire  */
+/**  Section Commentaire et Réponse  */
 .CommentsContent {
   width: 100%;
   background-color: var(--div-color);
   border-radius: 10px;
   margin-top: 3%;
+  padding: 2%;
+  color: #fff;
+}
+.CommentsContent h3 {
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 3%;
+}
+.UserComment {
+  font-weight: bold;
+}
+/**  Commentaire */
+.BoxFormComments {
+  display: flex;
+  width: 50%;
+  margin-bottom: 2%;
+}
+#FormComments {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: end;
+}
+#FormComments textarea {
+  width: 100%;
+  resize: none;
+  height: 200px;
+  border-radius: 10px;
+  padding: 1% 1% 5%;
+  background-color: var(--input-color);
+  color: #fff;
+}
+#COMMENT_ERROR,
+#RESPONSE_ERROR {
+  width: 100%;
+  display: flex;
+  margin: 1% 0;
+  height: 35px;
+  align-items: center;
+  color: #ffa938;
+  justify-content: space-between;
+}
+#count {
+  color: #fff;
+}
+#FormComments > input {
+  width: 20%;
+  background-color: var(--button-color);
+  padding: 1%;
+  border-radius: 10px;
+  margin-top: 1%;
+  color: #fff;
+}
+#FormComments > input:hover {
+  background-color: var(--main-color) !important;
+  cursor: pointer;
+}
+.BoxComments {
+  background-color: var(--nav-color);
+  margin-bottom: 1%;
+  border-radius: 10px;
+  padding: 1%;
+  position: relative;
+}
+#comment {
+  margin: 1% 0;
+  word-break: break-word;
+}
+/**  Réponse */
+.BoxResponse {
+  background-color: var(--border-color);
+  border-radius: 10px;
+  padding: 1%;
+  margin-bottom: 1%;
+}
+.BoxFormResponses {
+  display: flex;
+  width: 30%;
+  margin-bottom: 2%;
+}
+#FormResponses {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: end;
+}
+#FormResponses textarea {
+  width: 100%;
+  resize: none;
+  height: 100px;
+  border-radius: 10px;
+  padding: 1%;
+  background-color: var(--input-color);
+  color: #fff;
+}
+#FormResponses input {
+  width: 20%;
+  background-color: var(--button-color);
+  padding: 1%;
+  border-radius: 10px;
+  margin-top: 3%;
+  color: #fff;
+}
+#FormResponses input:hover {
+  background-color: var(--main-color) !important;
+  cursor: pointer;
+}
+#response {
+  margin: 1% 0;
+  word-break: break-word;
+}
+/** Note étoiles  */
+.rating:not(:checked) > input {
+  position: absolute;
+  appearance: none;
+  top: 0;
+}
+.rating:not(:checked) > label {
+  float: right;
+  cursor: pointer;
+  font-size: 50px;
+  color: #666;
+}
+.rating:not(:checked) > label:before {
+  content: "★";
+}
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+  color: #e58e09;
+}
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: #ff9e0b;
+}
+.rating > input:checked ~ label {
+  color: #ffa723;
+}
+
+/** Affichage des étoiles sur les commentaires */
+.ShowRating {
+  position: absolute;
+  top: 0;
+  right: 5%;
+}
+.ShowRating:not(:checked) > input {
+  position: absolute;
+  appearance: none;
+}
+.ShowRating:not(:checked) > label {
+  float: right;
+  font-size: 40px;
+  color: #666;
+}
+.ShowRating:not(:checked) > label:before {
+  content: "★";
+}
+.ShowRating > input:checked ~ label {
+  color: #ffa723;
 }
