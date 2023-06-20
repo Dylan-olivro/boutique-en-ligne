@@ -156,7 +156,7 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
                                 // Affichage du bouton delete le commentaire, si c'est le commentaire de l'utilisateur
                                 if ($_SESSION['user']->user_id == $key->user_id) { ?>
                             <form action="" method="POST">
-                                <button type="submit" name="deleteComment<?= $key->comment_id ?>">Supprimer votre commentaire</button>
+                                <button type="submit" name="deleteComment<?= $key->comment_id ?>" id="DeleleCommentOrResponse">Supprimer votre commentaire</button>
                             </form>
                         <?php
                                 } ?>
@@ -177,12 +177,38 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
                         <p id="comment"><?= nl2br(htmlspecialchars($key->comment_text)) ?></p>
 
                         <div class="BoxFormResponses">
-                            <form action="" method="POST" id="FormResponses">
-                                <textarea name="response" placeholder="Ajoutez une réponse..."></textarea>
+                            <button id="click<?= $key->comment_id ?>">Répondre</button>
+                            <form action="" method="POST" id="FormResponses<?= $key->comment_id ?>" style='display:none;'>
+                                <textarea name="response" id="TextareaResponse<?= $key->comment_id ?>" placeholder="Ajoutez une réponse..."></textarea>
+                                <p id="RESPONSE_ERROR"><span><?= isset($RESPONSE_ERROR) ? $RESPONSE_ERROR : ''; ?></span><span id="count<?= $key->comment_id ?>">0/2000</span></p>
                                 <input type="submit" name="submitResponse<?= $key->comment_id ?>">
                             </form>
                         </div>
+                        <script>
+                            // Permet de differencier les forms et les span répondre de tout les formulaires repondre
+                            let form<?= $key->comment_id ?> = document.querySelector('#FormResponses<?= $key->comment_id ?>');
+                            let click<?= $key->comment_id ?> = document.querySelector('#click<?= $key->comment_id ?>');
 
+                            // Quand on click sur "répondre" un formulaire apparait 
+                            click<?= $key->comment_id ?>.addEventListener('click', () => {
+                                form<?= $key->comment_id ?>.style.display = 'block';
+                                click<?= $key->comment_id ?>.style.display = 'none';
+
+                                let textarea<?= $key->comment_id ?> = document.getElementById("TextareaResponse<?= $key->comment_id ?>");
+                                let count<?= $key->comment_id ?> = document.getElementById("count<?= $key->comment_id ?>");
+
+                                // Compteur de caractères
+                                textarea<?= $key->comment_id ?>.addEventListener("keyup", () => {
+                                    count<?= $key->comment_id ?>.innerText = `${textarea<?= $key->comment_id ?>.value.length}/2000`;
+                                    if (textarea<?= $key->comment_id ?>.value.length > 2000) {
+                                        count<?= $key->comment_id ?>.style.color = "#c7161d";
+                                    } else {
+                                        count<?= $key->comment_id ?>.style.color = "";
+                                    }
+                                });
+
+                            })
+                        </script>
                         <?php
                         // Efface le commentaire et les réponses lié à ce commentaire
                         if (isset($_POST['deleteComment' . $key->comment_id])) {
@@ -210,7 +236,7 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
                                 // Affichage du bouton delete la réponse, si c'est la réponse de l'utilisateur
                                 if ($_SESSION['user']->user_id == $key2->response_user_id) { ?>
                                     <form action="" method="POST">
-                                        <button type="submit" name="deleteResponse<?= $key2->response_id ?>">Supprimer votre réponse</button>
+                                        <button type="submit" name="deleteResponse<?= $key2->response_id ?>" id="DeleleCommentOrResponse">Supprimer votre réponse</button>
                                     </form>
                                 <?php } ?>
                                 <p id="response"><?= nl2br(htmlspecialchars($key2->response_text)) ?></p>
