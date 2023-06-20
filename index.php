@@ -179,7 +179,7 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 // ! INTVAL POUR LA CONNEXION
 // ! REMETTRE LE SETINTERVAL SUR LES FETCH DE L'ADMIN
 
-// TODO: désactiver la touche ENTRER sur l'autocomplétion car elle envoie sur une page erreur
+// TODO: Empiler des quantité dans l'historique des commandes
 // TODO: FAIRE toutes les verif en html, php et js pour les formulaires des pages admin, cartPage, profil, addAdress, modifyAdress, modifyPassword 
 // TODO: FAIRE la maquette
 // TODO: FAIRE le MCD

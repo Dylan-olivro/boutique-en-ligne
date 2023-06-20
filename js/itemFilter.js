@@ -39,21 +39,48 @@ $(triSelect).change(function () {
   let triSelected = $("#triSelect option:selected").text();
   if (triSelected) {
     allItems.innerHTML = "";
-    if (triSelected == "Par popularité") {
-      fetchItems(fetchTri + "?populaire");
-    } else if (triSelected == "Par nouveauté") {
-      fetchItems(fetchTri + "?nouveau");
-    } else if (triSelected == "Par prix croissant") {
-      fetchItems(fetchTri + "?croissant");
-    } else if (triSelected == "Par prix décroissant") {
-      fetchItems(fetchTri + "?decroissant");
-    } else if (triSelected == "Par ordre de A à Z") {
-      fetchItems(fetchTri + "?aZ");
-    } else if (triSelected == "Par ordre de Z à A") {
-      fetchItems(fetchTri + "?zA");
-    } else if (triSelected == "Par disponibilité") {
-      fetchItems(fetchTri + "?dispo");
+    switch (triSelected) {
+      case 'Popularité':
+        fetchItems(fetchTri + "?populaire");
+        break;
+      case 'Nouveauté':
+        fetchItems(fetchTri + "?nouveau");
+        break;
+      case 'Du - cher au + cher':
+        fetchItems(fetchTri + "?croissant");
+        break;
+      case 'Du + cher au - cher':
+        fetchItems(fetchTri + "?decroissant");
+        break;
+      case 'Alphabétique A-Z':
+        fetchItems(fetchTri + "?aZ");
+        break;
+      case 'Alphabétique Z-A':
+        fetchItems(fetchTri + "?zA");
+        break;
+      case 'Disponibilité':
+        fetchItems(fetchTri + "?dispo");
+        break;
+    
+      default:
+        break;
     }
+    // * autre façon, pas avec SWITCH mais avec des if/else classiques
+  //   if (triSelected == "Popularité") {
+  //     fetchItems(fetchTri + "?populaire");
+  //   } else if (triSelected == "Nouveauté") {
+  //     fetchItems(fetchTri + "?nouveau");
+  //   } else if (triSelected == "Du - cher au + cher") {
+  //     fetchItems(fetchTri + "?croissant");
+  //   } else if (triSelected == "Du + cher au - cher") {
+  //     fetchItems(fetchTri + "?decroissant");
+  //   } else if (triSelected == "Alphabétique A-Z") {
+  //     fetchItems(fetchTri + "?aZ");
+  //   } else if (triSelected == "Alphabétique Z-A") {
+  //     fetchItems(fetchTri + "?zA");
+  //   } else if (triSelected == "Disponibilité") {
+  //     fetchItems(fetchTri + "?dispo");
+  //   }
   }
 });
 
