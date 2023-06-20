@@ -58,14 +58,16 @@ if (isset($_POST['valider'])) {
             $total = array_sum($prices);
 
             // Récupération du code promo rentrer par l'utilisateur
-            $returnCode = $bdd->prepare('SELECT * FROM codes WHERE code_name = :code_name');
-            $returnCode->execute(['code_name' => $_POST['code']]);
-            $result_code = $returnCode->fetch(PDO::FETCH_OBJ);
+            // $returnCode = $bdd->prepare('SELECT * FROM codes WHERE code_name = :code_name');
+            // $returnCode->execute(['code_name' => $_SESSION['code']]);
+            // $result_code = $returnCode->fetch(PDO::FETCH_OBJ);
+            // var_dump($result_code);
 
             // Si le code promo existe, nouveau prix avec la réduction
-            if ($result_code) {
-                $discount = (intval($result_code->code_discount) * $total) / 100;
+            if (isset($_SESSION['code'])) {
+                $discount = (intval($_SESSION['code']) * $total) / 100;
                 $total = $total - $discount;
+                unset($_SESSION['code']);
             }
             // Création de numéro de commande
             $orderNumber = str_replace(".", "-", strtoupper(uniqid('', true)));
@@ -99,7 +101,7 @@ if (isset($_POST['vider'])) {
 
 <head>
     <?php require_once('./include/head.php'); ?>
-    <title>Connect</title>
+    <title>Panier</title>
     <link rel="stylesheet" href="../css/cartPage.css">
     <script src="../js/cart.js" defer></script>
 
@@ -126,9 +128,7 @@ if (isset($_POST['vider'])) {
 
                     if (!empty($result_cart)) {
                         // Affichage du panier
-                        foreach ($result_cart as $product) {
-                            var_dump($product);
-                    ?>
+                        foreach ($result_cart as $product) { ?>
                             <div class="cartDetail">
                                 <div class="cartProduct">
                                     <div class="cartImage">
@@ -220,7 +220,26 @@ if (isset($_POST['vider'])) {
                                 }
                                 array_push($prices, $cartProduct->product_price);
                             }
+
                             $total = array_sum($prices);
+
+                            if (isset($_POST['SubmitCode'])) {
+                                // Récupération du code promo rentrer par l'utilisateur
+                                $returnCode = $bdd->prepare('SELECT * FROM codes WHERE code_name = :code_name');
+                                $returnCode->execute(['code_name' => $_POST['code']]);
+                                $result_code = $returnCode->fetch(PDO::FETCH_OBJ);
+
+                                // Si le code promo existe, nouveau prix avec la réduction
+                                if ($result_code) {
+                                    $discount = (intval($result_code->code_discount) * $total) / 100;
+                                    $total = $total - $discount;
+                                    $CODE_MESSAGE  = 'Code promo appliqué';
+                                    $_SESSION['code'] = $result_code->code_discount;
+                                } else {
+                                    $CODE_MESSAGE  = 'Code promo invalide';
+                                    unset($_SESSION['code']);
+                                }
+                            }
                             ?>
                             <!-- Calcul du prix HT et de la TVA -->
                             <p>HT : <?= returnPriceHT($total) ?>€</p>
@@ -232,39 +251,36 @@ if (isset($_POST['vider'])) {
                     </div>
                     <?php
                     if (!empty($result_cart)) { ?>
+                        <div class="BoxFormCodeFormAddress">
+                            <form method="POST" id="FormCode">
+                                <input type="text" name="code" placeholder="CODE PROMO">
+                                <button type="submit" name="SubmitCode"><i class="fa-solid fa-plus"></i></button>
+                            </form>
+                            <p><?= isset($CODE_MESSAGE) ? $CODE_MESSAGE : ''; ?></p>
+                            <form action="" method="post" class="formOrder">
+                                <p>Choisissez Votre Adresse</p>
+                                <div class="formOrderAddress">
+                                    <select name="adress" id="">
+                                        <?php
+                                        foreach ($allUserAddresses as $userAddress) {
+                                            $orderAddress = sprintf('%d %s, %d %s', htmlspecialchars($userAddress->address_numero), htmlspecialchars($userAddress->address_name), htmlspecialchars($userAddress->address_postcode), htmlspecialchars($userAddress->address_city));
+                                        ?>
+                                            <option value="<?= $orderAddress ?>">
+                                                <?= $orderAddress ?>
+                                            </option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
 
-                        <form action="" method="post" class="formOrder">
-                            <p>Choisissez Votre Adresse</p>
-                            <div class="formOrderAddress">
-                                <select name="adress" id="">
-                                    <?php
-                                    foreach ($allUserAddresses as $userAddress) {
-                                        $orderAddress = sprintf('%d %s, %d %s', htmlspecialchars($userAddress->address_numero), htmlspecialchars($userAddress->address_name), htmlspecialchars($userAddress->address_postcode), htmlspecialchars($userAddress->address_city));
-                                    ?>
-                                        <option value="<?= $orderAddress ?>">
-                                            <?= $orderAddress ?>
-                                        </option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div>
-                                <input type="text" name="code">
-                            </div>
-                            <div class="formOrderValide">
-                                <input type="submit" name="valider" value="Passer la commande">
-                            </div>
-                        </form>
+                                <div class="formOrderValide">
+                                    <input type="submit" name="valider" value="Passer la commande">
+                                </div>
+                            </form>
+                        </div>
 
-                        <p>
-                            <?php
-                            // ! PEUT ETRE A SUPPRIMER
-                            if (isset($ORDER_ERROR)) {
-                                echo $ORDER_ERROR;
-                            }
-                            ?>
-                        </p>
+
                     <?php
                     }
                     ?>
