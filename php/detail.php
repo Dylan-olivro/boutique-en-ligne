@@ -17,25 +17,27 @@ $result_images = $image->returnImagesByID($bdd);
 
 // Insert le produit de la page dans le panier en gérant la quantité
 if (isset($_POST["ajouter"])) {
-    $req2 = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
-    $req2->execute(['product_id' => $result->product_id]);
-    $res2 = $req2->fetch(PDO::FETCH_OBJ);
+    $quantity = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id AND user_id = :user_id");
+    $quantity->execute([
+        'product_id' => $result->product_id,
+        'user_id' => $_SESSION['user']->user_id
+    ]);
+    $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
 
-    if ($req2->rowCount() > 0) {
-        $req3 = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
-        $req3->execute([
-            'cart_quantity' => $res2->cart_quantity + 1,
-            'product_id' => $result->product_id
+    if ($quantity->rowCount() > 0) {
+        $updateQuantity = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id AND user_id = :user_id");
+        $updateQuantity->execute([
+            'cart_quantity' => $result_quantity->cart_quantity + 1,
+            'product_id' => $result->product_id,
+            'user_id' => $_SESSION['user']->user_id
         ]);
-        echo '<i class="fa-solid fa-circle-check" style="color: #0cad00;"></i> Article ajouté au panier.';
     } else {
-        $req = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
-        $req->execute([
+        $insertQuantity = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
+        $insertQuantity->execute([
             'user_id' => $_SESSION['user']->user_id,
             'product_id' => $result->product_id,
             'cart_quantity' => 1
         ]);
-        echo '<i class="fa-solid fa-circle-check" style="color: #0cad00;"></i> Article ajouté au panier.';
     }
 }
 // Permet de poster un commentaire

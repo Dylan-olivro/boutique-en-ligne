@@ -8,7 +8,6 @@ let searchResultsDesktopDiv = document.getElementById(
   "searchResultsDesktopDiv"
 ); //la div globale
 let searchResultsBurgerDiv = document.getElementById("searchResultsBurgerDiv"); //la div globale
-// let searchResults = document.getElementById("searchResultsDesktop"); //la div des résultats
 // console.log(document.body.clientWidth);
 
 // if (searchResultsInput) {
@@ -27,16 +26,13 @@ searchResultsInput.addEventListener("keyup", () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.length == 0) {
           let noResult = document.createElement("p");
           noResult.innerText = "Aucun résultat trouvé";
           searchResultsDesktopDiv.append(noResult);
         }
         data.forEach((element) => {
-          // console.log(element);
-          // console.log(searchResultsInput);
-          // console.log(element.name);
           let resultsDiv = document.createElement("div");
           let resultsImgDiv = document.createElement("div");
           let resultsNameDescDiv = document.createElement("div");
@@ -168,3 +164,18 @@ window.addEventListener("click", function (e) {
     categoriesUlDiv.style.display = "";
   }
 // });
+
+// désactiver la touche ENTREE dans le input de recherche
+searchResultsInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    return false;
+  }
+});
+// la même chose pour la searchBar du burger
+searchInputBurger.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    return false;
+  }
+});

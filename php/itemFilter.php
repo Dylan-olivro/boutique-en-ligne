@@ -19,14 +19,16 @@ require_once('./include/required.php');
             <div class="tri">
                 <form action="" method="get" class="triForm">
                     <select name="triSelect" id="triSelect">
-                        <option value="Par popularité">Par popularité</option>
-                        <option value="Par nouveauté">Par nouveauté</option>
-                        <option value="Par prix croissant">Par prix croissant</option>
-                        <option value="Par prix décroissant">Par prix décroissant</option>
-                        <option value="Par Par ordre de A à Z">Par ordre de A à Z</option>
-                        <option value="Par ordre de Z à A">Par ordre de Z à A</option>
-                        <option value="Par disponibilité">Par disponibilité</option>
+                        <option value="Popularité">Popularité</option>
+                        <option value="Nouveauté">Nouveauté</option>
+                        <option value="Du - cher au + cher">Du - cher au + cher</option>
+                        <option value="Du + cher au - cher">Du + cher au - cher</option>
+                        <option value="Alphabétique A-Z">Alphabétique A-Z</option>
+                        <option value="Alphabétique Z-A">Alphabétique Z-A</option>
+                        <option value="Disponibilité">Disponibilité</option>
                     </select>
+                    <!-- //* autre option d'affichage des filtres, pas par un select/option mais par des boutons
+                    <input type="button" id="priceTri" value="Par prix"> -->
                 </form>
             </div>
             <div class="catAndItems">
