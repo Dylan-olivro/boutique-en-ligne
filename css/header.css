@@ -338,6 +338,9 @@ main {
   position: relative;
   display: inline-block;
 }
+.userIcon:hover .userLink {
+display: block;
+}
 
 .userLink a {
   text-decoration: none;
