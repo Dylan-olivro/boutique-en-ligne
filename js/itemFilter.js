@@ -1,4 +1,5 @@
 let allItems = document.getElementById("allItems");
+let priceTri = document.getElementById("priceTri");
 let chevronCat = document.querySelectorAll(".chevronCat");
 let chevronCatIcon = document.querySelectorAll(".chevronCatIcon");
 let triSelect = document.getElementById("triSelect");
@@ -16,6 +17,20 @@ let urlGetSplit = urlGet.split("?");
 
 let fetchFilter = "traitement/traitement_filter.php";
 let fetchTri = "traitement/traitement_tri.php";
+
+
+// // * autre option d'affichage des filtres, pas par un select/option mais par des boutons
+// let state = 1;
+// $(priceTri).click(() => {
+//   allItems.innerHTML = "";
+//   if ((state == 1)) {
+//     fetchItems(fetchTri + "?croissant");
+//     state = 2;
+//   } else if (state == 2) {
+//     fetchItems(fetchTri + "?decroissant");
+//     state = 1;
+//   }
+// });
 
 /**
  * Système de filtre par tri, prix, etc
@@ -53,9 +68,7 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
     );
     childElement[0].classList.toggle("categoryChildDivBlock");
     allItems.innerHTML = "";
-    fetchItems(
-      fetchFilter+`?categoryParent=` + categoryParentRadio[i].id
-    );
+    fetchItems(fetchFilter + `?categoryParent=` + categoryParentRadio[i].id);
   });
 }
 
@@ -184,9 +197,7 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
     // window.history.pushState({urlPath:'/page1'},"",'/page1')
 
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
-    fetchItems(
-      fetchFilter + `?categoryParent=` + categoryParentRadio[i].id
-    );
+    fetchItems(fetchFilter + `?categoryParent=` + categoryParentRadio[i].id);
     // console.log(categoryChild[i].id);
   });
 }

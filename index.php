@@ -60,16 +60,21 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
                     <?php
                         if (isset($_POST['ButtonAddCartPopular' . $key->product_id])) {
                             // Récupère la quantité du produit
-                            $quantity = $bdd->prepare("SELECT cart_quantity FROM carts WHERE product_id = :product_id");
-                            $quantity->execute(['product_id' => $key->product_id]);
+                            $quantity = $bdd->prepare("SELECT cart_quantity FROM carts WHERE product_id = :product_id AND user_id = :user_id");
+                            $quantity->execute([
+                                'product_id' => $key->product_id,
+                                'user_id' => $_SESSION['user']->user_id
+                            ]);
                             $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
+                            var_dump($result_quantity);
 
                             // Insert le produit de la page dans le panier en gérant la quantité
                             if ($quantity->rowCount() > 0) {
-                                $updateQuantity = $bdd->prepare("UPDATE carts SET cart_quantity= :cart_quantity WHERE product_id = :product_id");
+                                $updateQuantity = $bdd->prepare("UPDATE carts SET cart_quantity= :cart_quantity WHERE product_id = :product_id AND user_id = :user_id");
                                 $updateQuantity->execute([
                                     'cart_quantity' => $result_quantity->cart_quantity + 1,
-                                    'product_id' => $key->product_id
+                                    'product_id' => $key->product_id,
+                                    'user_id' => $_SESSION['user']->user_id
                                 ]);
                             } else {
                                 $insertQuantity = $bdd->prepare("INSERT INTO carts(user_id, product_id, cart_quantity) VALUES (:user_id,:product_id,:cart_quantity)");
@@ -175,7 +180,6 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 // ! REMETTRE LE SETINTERVAL SUR LES FETCH DE L'ADMIN
 
 // TODO: désactiver la touche ENTRER sur l'autocomplétion car elle envoie sur une page erreur
-// TODO: rajouter un header location après le post Delete de la page Cart
 // TODO: FAIRE toutes les verif en html, php et js pour les formulaires des pages admin, cartPage, profil, addAdress, modifyAdress, modifyPassword 
 // TODO: FAIRE la maquette
 // TODO: FAIRE le MCD

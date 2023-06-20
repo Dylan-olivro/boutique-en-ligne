@@ -5,7 +5,7 @@ let iconBurger = document.querySelector(".iconBurger");
 let categoriesNav = document.querySelector(".categoriesNav");
 let userIcon = document.querySelector(".userIcon");
 let userLink = document.querySelector(".userLink");
-let cartIcon  = document.getElementById("cart-icon");
+let cartIcon = document.getElementById("cart-icon");
 
 function burger(div) {
   div.classList.toggle("change");

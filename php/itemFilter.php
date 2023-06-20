@@ -27,6 +27,8 @@ require_once('./include/required.php');
                         <option value="Par ordre de Z à A">Par ordre de Z à A</option>
                         <option value="Par disponibilité">Par disponibilité</option>
                     </select>
+                    <!-- //* autre option d'affichage des filtres, pas par un select/option mais par des boutons
+                    <input type="button" id="priceTri" value="Par prix"> -->
                 </form>
             </div>
             <div class="catAndItems">
