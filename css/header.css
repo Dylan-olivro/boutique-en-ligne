@@ -86,10 +86,10 @@ main {
   cursor: pointer;
 }
 
-.logo {
-  padding: 7px;
-  width: 20%;
+#logoImg {
+  width: 20%; 
 }
+
 .logo i {
   color: var(--button-color);
 }
@@ -146,6 +146,7 @@ main {
 
 .categoriesUl a {
   text-decoration: none;
+  color: white;
 }
 
 .categoriesUl li:hover {
