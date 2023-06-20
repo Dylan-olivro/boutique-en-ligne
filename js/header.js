@@ -14,13 +14,13 @@ iconBurger.addEventListener("click", () => {
   categoriesNav.classList.toggle("flexClass");
 });
 
-window.addEventListener("click", function (e) {
-  if (userIcon.contains(e.target)) {
-    userLink.style.display = "flex";
-  } else {
-    userLink.style.display = "none";
-  }
-});
+// window.addEventListener("click", function (e) {
+//   if (userIcon.contains(e.target)) {
+//     userLink.style.display = "flex";
+//   } else {
+//     userLink.style.display = "none";
+//   }
+// });
 
 chevronRight.forEach((element) => {
   element.addEventListener("click", () => {
