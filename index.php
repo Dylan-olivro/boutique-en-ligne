@@ -166,7 +166,6 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 
 // ! Ajouter et modifier un produit nl2br() et if(empty(trim($textarea)))
 
-// ! Corriger l'affichage du numero de telephone dans la modification d'adresse
 // ! Condition pour la taille de l'adresse (il faut que ca passe en version mobile)
 // ! Faire le responsive pour l'historique de commande
 

@@ -215,7 +215,7 @@
   color: #fff;
 }
 
-#FormComments>input {
+#FormComments > input {
   width: 20%;
   background-color: var(--button-color);
   padding: 1%;
@@ -224,7 +224,7 @@
   color: #fff;
 }
 
-#FormComments>input:hover {
+#FormComments > input:hover {
   background-color: var(--main-color) !important;
   cursor: pointer;
 }
@@ -310,36 +310,36 @@
   margin-top: 2%;
 }
 /** Note étoiles  */
-.rating:not(:checked)>input {
+.rating:not(:checked) > input {
   position: absolute;
   appearance: none;
 }
 
-.rating:not(:checked)>label {
+.rating:not(:checked) > label {
   float: right;
   cursor: pointer;
   font-size: 50px;
   color: #666;
 }
 
-.rating:not(:checked)>label:before {
+.rating:not(:checked) > label:before {
   content: "★";
 }
 
-.rating>input:checked+label:hover,
-.rating>input:checked+label:hover~label,
-.rating>input:checked~label:hover,
-.rating>input:checked~label:hover~label,
-.rating>label:hover~input:checked~label {
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
   color: #e58e09;
 }
 
-.rating:not(:checked)>label:hover,
-.rating:not(:checked)>label:hover~label {
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
   color: #ff9e0b;
 }
 
-.rating>input:checked~label {
+.rating > input:checked ~ label {
   color: #ffa723;
 }
 
@@ -350,22 +350,22 @@
   right: 5%;
 }
 
-.ShowRating:not(:checked)>input {
+.ShowRating:not(:checked) > input {
   position: absolute;
   appearance: none;
 }
 
-.ShowRating:not(:checked)>label {
+.ShowRating:not(:checked) > label {
   float: right;
   font-size: 40px;
   color: #666;
 }
 
-.ShowRating:not(:checked)>label:before {
+.ShowRating:not(:checked) > label:before {
   content: "★";
 }
 
-.ShowRating>input:checked~label {
+.ShowRating > input:checked ~ label {
   color: #ffa723;
 }
 
@@ -376,21 +376,94 @@
   flex-direction: row-reverse;
 }
 
-.AvgRating:not(:checked)>input {
+.AvgRating:not(:checked) > input {
   position: absolute;
   appearance: none;
 }
 
-.AvgRating:not(:checked)>label {
+.AvgRating:not(:checked) > label {
   float: right;
   font-size: 40px;
   color: #666;
 }
 
-.AvgRating:not(:checked)>label:before {
+.AvgRating:not(:checked) > label:before {
   content: "★";
 }
 
-.AvgRating>input:checked~label {
+.AvgRating > input:checked ~ label {
   color: #ffa723;
+}
+@media screen and (max-width: 1440px) {
+  .MainContent {
+    width: 100%;
+  }
+  #description p:nth-child(2) {
+    font-size: 1rem;
+  }
+  .BoxImg img {
+    width: 350px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .BoxImg {
+    display: flex;
+    align-items: center;
+  }
+  .BoxImg img {
+    width: 150px;
+  }
+  .BoxFormComments {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .MainContent {
+    flex-direction: column;
+  }
+  .BoxImg {
+    justify-content: center;
+    margin: 2% 0;
+  }
+  .BoxImg img {
+    width: 250px;
+  }
+  .BoxPSB {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    margin: 2% 0;
+  }
+  #price {
+    font-size: 1.5rem;
+  }
+  #stock {
+    font-size: 1rem;
+  }
+  .BoxFormComments {
+    width: 100%;
+  }
+  .BoxFormResponses {
+    width: 70%;
+  }
+  .ShowRating:not(:checked) > label {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .BoxPSB {
+    flex-direction: column;
+  }
+  #stock {
+    margin: 2% 0;
+  }
+  .BoxFormResponses {
+    width: 100%;
+  }
+  .ShowRating {
+    position: initial;
+    display:flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+  }
 }
