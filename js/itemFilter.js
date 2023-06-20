@@ -1,4 +1,5 @@
 let allItems = document.getElementById("allItems");
+let priceTri = document.getElementById("priceTri");
 let chevronCat = document.querySelectorAll(".chevronCat");
 let chevronCatIcon = document.querySelectorAll(".chevronCatIcon");
 let triSelect = document.getElementById("triSelect");
@@ -17,6 +18,20 @@ let urlGetSplit = urlGet.split("?");
 let fetchFilter = "traitement/traitement_filter.php";
 let fetchTri = "traitement/traitement_tri.php";
 
+
+// // * autre option d'affichage des filtres, pas par un select/option mais par des boutons
+// let state = 1;
+// $(priceTri).click(() => {
+//   allItems.innerHTML = "";
+//   if ((state == 1)) {
+//     fetchItems(fetchTri + "?croissant");
+//     state = 2;
+//   } else if (state == 2) {
+//     fetchItems(fetchTri + "?decroissant");
+//     state = 1;
+//   }
+// });
+
 /**
  * Système de filtre par tri, prix, etc
  */
@@ -24,21 +39,48 @@ $(triSelect).change(function () {
   let triSelected = $("#triSelect option:selected").text();
   if (triSelected) {
     allItems.innerHTML = "";
-    if (triSelected == "Par popularité") {
-      fetchItems(fetchTri + "?populaire");
-    } else if (triSelected == "Par nouveauté") {
-      fetchItems(fetchTri + "?nouveau");
-    } else if (triSelected == "Par prix croissant") {
-      fetchItems(fetchTri + "?croissant");
-    } else if (triSelected == "Par prix décroissant") {
-      fetchItems(fetchTri + "?decroissant");
-    } else if (triSelected == "Par ordre de A à Z") {
-      fetchItems(fetchTri + "?aZ");
-    } else if (triSelected == "Par ordre de Z à A") {
-      fetchItems(fetchTri + "?zA");
-    } else if (triSelected == "Par disponibilité") {
-      fetchItems(fetchTri + "?dispo");
+    switch (triSelected) {
+      case 'Popularité':
+        fetchItems(fetchTri + "?populaire");
+        break;
+      case 'Nouveauté':
+        fetchItems(fetchTri + "?nouveau");
+        break;
+      case 'Du - cher au + cher':
+        fetchItems(fetchTri + "?croissant");
+        break;
+      case 'Du + cher au - cher':
+        fetchItems(fetchTri + "?decroissant");
+        break;
+      case 'Alphabétique A-Z':
+        fetchItems(fetchTri + "?aZ");
+        break;
+      case 'Alphabétique Z-A':
+        fetchItems(fetchTri + "?zA");
+        break;
+      case 'Disponibilité':
+        fetchItems(fetchTri + "?dispo");
+        break;
+    
+      default:
+        break;
     }
+    // * autre façon, pas avec SWITCH mais avec des if/else classiques
+  //   if (triSelected == "Popularité") {
+  //     fetchItems(fetchTri + "?populaire");
+  //   } else if (triSelected == "Nouveauté") {
+  //     fetchItems(fetchTri + "?nouveau");
+  //   } else if (triSelected == "Du - cher au + cher") {
+  //     fetchItems(fetchTri + "?croissant");
+  //   } else if (triSelected == "Du + cher au - cher") {
+  //     fetchItems(fetchTri + "?decroissant");
+  //   } else if (triSelected == "Alphabétique A-Z") {
+  //     fetchItems(fetchTri + "?aZ");
+  //   } else if (triSelected == "Alphabétique Z-A") {
+  //     fetchItems(fetchTri + "?zA");
+  //   } else if (triSelected == "Disponibilité") {
+  //     fetchItems(fetchTri + "?dispo");
+  //   }
   }
 });
 
@@ -53,9 +95,7 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
     );
     childElement[0].classList.toggle("categoryChildDivBlock");
     allItems.innerHTML = "";
-    fetchItems(
-      fetchFilter+`?categoryParent=` + categoryParentRadio[i].id
-    );
+    fetchItems(fetchFilter + `?categoryParent=` + categoryParentRadio[i].id);
   });
 }
 
@@ -184,9 +224,7 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
     // window.history.pushState({urlPath:'/page1'},"",'/page1')
 
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
-    fetchItems(
-      fetchFilter + `?categoryParent=` + categoryParentRadio[i].id
-    );
+    fetchItems(fetchFilter + `?categoryParent=` + categoryParentRadio[i].id);
     // console.log(categoryChild[i].id);
   });
 }

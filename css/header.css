@@ -93,10 +93,10 @@ main {
 .logo i {
   color: var(--button-color);
 }
-.iconNav:hover {
+/* .iconNav:hover {
   border: 2px solid whitesmoke;
   border-radius: 20px;
-}
+} */
 .iconNav:hover i {
   color: var(--text-input-color);
 }

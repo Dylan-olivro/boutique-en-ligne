@@ -127,7 +127,6 @@ if (isset($_POST['vider'])) {
                     if (!empty($result_cart)) {
                         // Affichage du panier
                         foreach ($result_cart as $product) {
-                            var_dump($product);
                     ?>
                             <div class="cartDetail">
                                 <div class="cartProduct">
