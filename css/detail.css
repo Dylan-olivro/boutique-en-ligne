@@ -47,7 +47,7 @@
   justify-content: center;
   align-items: center;
 }
-.test {
+.BoxPSB {
   height: 50%;
   flex-direction: column;
   display: flex;
@@ -134,6 +134,15 @@
 .UserComment {
   font-weight: bold;
 }
+#DeleleCommentOrResponse {
+  background-color: transparent;
+  border: none;
+  color: #c7161d;
+  font-style: italic;
+}
+#DeleleCommentOrResponse:hover {
+  text-decoration: underline;
+}
 /**  Commentaire */
 .BoxFormComments {
   display: flex;
@@ -165,6 +174,7 @@
   color: #ffa938;
   justify-content: space-between;
 }
+
 #count {
   color: #fff;
 }
@@ -200,16 +210,25 @@
 }
 .BoxFormResponses {
   display: flex;
-  width: 30%;
+  width: 50%;
   margin-bottom: 2%;
 }
-#FormResponses {
-  display: flex;
+.ClickResponse {
+  background-color: transparent;
+  font-style: italic;
+  border: none;
+  color: var(--button-color);
+}
+.ClickResponse:hover {
+  text-decoration: underline;
+}
+.FormResponses {
+  display: none;
   flex-direction: column;
   width: 100%;
   align-items: end;
 }
-#FormResponses textarea {
+.FormResponses textarea {
   width: 100%;
   resize: none;
   height: 100px;
@@ -218,21 +237,35 @@
   background-color: var(--input-color);
   color: #fff;
 }
-#FormResponses input {
+.FormResponses input {
   width: 20%;
   background-color: var(--button-color);
   padding: 1%;
   border-radius: 10px;
-  margin-top: 3%;
   color: #fff;
 }
-#FormResponses input:hover {
+.FormResponses input:hover {
   background-color: var(--main-color) !important;
   cursor: pointer;
+}
+.TextareaReponse {
+  width: 100%;
+  resize: none;
+  height: 100px;
+  border-radius: 10px;
+  padding: 1%;
+  background-color: var(--input-color);
+  color: #fff;
 }
 #response {
   margin: 1% 0;
   word-break: break-word;
+}
+.BoxSubmitResponse {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-top: 2%;
 }
 /** Note étoiles  */
 .rating:not(:checked) > input {

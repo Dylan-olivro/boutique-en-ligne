@@ -102,7 +102,7 @@ class Cart
     {
         return $this->quantity;
     }
-    
+
     /**
      * Set the value of product_id
      *
@@ -111,7 +111,7 @@ class Cart
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
-        
+
         return $this;
     }
-}   
+}

@@ -97,7 +97,7 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
 
                 </div>
                 <div class="BoxPriceStockButton">
-                    <div class="test">
+                    <div class="BoxPSB">
 
                         <p id="price"><?= htmlspecialchars($result->product_price) ?>€</p>
                         <p id="stock"><?= htmlspecialchars($result->product_stock) ?></p>
@@ -177,13 +177,16 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
                         <p id="comment"><?= nl2br(htmlspecialchars($key->comment_text)) ?></p>
 
                         <div class="BoxFormResponses">
-                            <button id="click<?= $key->comment_id ?>">Répondre</button>
-                            <form action="" method="POST" id="FormResponses<?= $key->comment_id ?>" style='display:none;'>
-                                <textarea name="response" id="TextareaResponse<?= $key->comment_id ?>" placeholder="Ajoutez une réponse..."></textarea>
-                                <p id="RESPONSE_ERROR"><span><?= isset($RESPONSE_ERROR) ? $RESPONSE_ERROR : ''; ?></span><span id="count<?= $key->comment_id ?>">0/2000</span></p>
-                                <input type="submit" name="submitResponse<?= $key->comment_id ?>">
+                            <button id="click<?= $key->comment_id ?>" class="ClickResponse">Répondre</button>
+                            <form action="" method="POST" id="FormResponses<?= $key->comment_id ?>" class="FormResponses">
+                                <textarea name="response" id="TextareaResponse<?= $key->comment_id ?>" class="TextareaReponse" placeholder="Ajoutez une réponse..."></textarea>
+                                <div class="BoxSubmitResponse">
+                                    <p id="RESPONSE_ERROR"><span id="count<?= $key->comment_id ?>" class="">0/2000</span></p>
+                                    <input type="submit" name="submitResponse<?= $key->comment_id ?>">
+                                </div>
                             </form>
                         </div>
+
                         <script>
                             // Permet de differencier les forms et les span répondre de tout les formulaires repondre
                             let form<?= $key->comment_id ?> = document.querySelector('#FormResponses<?= $key->comment_id ?>');
@@ -191,7 +194,7 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
 
                             // Quand on click sur "répondre" un formulaire apparait 
                             click<?= $key->comment_id ?>.addEventListener('click', () => {
-                                form<?= $key->comment_id ?>.style.display = 'block';
+                                form<?= $key->comment_id ?>.style.display = 'flex';
                                 click<?= $key->comment_id ?>.style.display = 'none';
 
                                 let textarea<?= $key->comment_id ?> = document.getElementById("TextareaResponse<?= $key->comment_id ?>");
@@ -209,6 +212,7 @@ $result_comments = $returnComments->fetchAll(PDO::FETCH_OBJ);
 
                             })
                         </script>
+
                         <?php
                         // Efface le commentaire et les réponses lié à ce commentaire
                         if (isset($_POST['deleteComment' . $key->comment_id])) {
