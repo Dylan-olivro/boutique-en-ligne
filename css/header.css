@@ -1,3 +1,4 @@
+/** DEFAULT CSS  */
 :root {
   --background-color: #111b33;
   --section-color: #1d273d;
@@ -18,27 +19,22 @@
   --main-color: #005078;
   --second-color: #007cb8;
 }
-
-html {
-  scroll-behavior: smooth;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 body {
   line-height: 1.5;
 }
-
 i,
 button {
   cursor: pointer;
 }
-
 button,
 input,
 optgroup,
@@ -49,6 +45,9 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
+
+/** HEADER  */
+
 #allHeader {
   color: whitesmoke;
 }
@@ -75,27 +74,24 @@ main {
 
 .iconNavDiv {
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   width: 20%;
   justify-content: end;
 }
 
 .iconNav {
   padding: 7px;
-  border: 2px solid transparent;
   cursor: pointer;
 }
 
 #logoImg {
-  width: 20%; 
+  height: 80px;
 }
 
 .logo i {
   color: var(--button-color);
 }
 .iconNav:hover {
-  border: 2px solid whitesmoke;
-  border-radius: 20px;
 }
 .iconNav:hover i {
   color: var(--text-input-color);
@@ -126,10 +122,14 @@ main {
 
 .navTop i,
 .iconBurger {
-  font-size: 2.5em;
+  font-size: 2em;
   padding: 0 5px;
 }
-
+.iconBurger {
+  display: flex ;
+  flex-direction: column;
+  /* justify-content: center; */
+}
 .navTop a {
   color: #000;
 }
@@ -225,9 +225,10 @@ main {
 } */
 #cartSpan {
   position: relative;
+  padding-bottom: 0;
 }
 #cart-icon {
-  width: 3em;
+  width: 2.5em;
   /* fill: rgb(255, 255, 255); */
 }
 #cartSpan svg path,
@@ -304,7 +305,7 @@ main {
 .bar3 {
   width: 25px;
   height: 3px;
-  background-color: #333;
+  background-color: #fff;
   margin: 6px 0 !important;
   transition: 0.4s;
 }
@@ -339,7 +340,7 @@ main {
   display: inline-block;
 }
 .userIcon:hover .userLink {
-display: block;
+  display: block;
 }
 
 .userLink a {
@@ -373,7 +374,23 @@ display: block;
   .searchBarBurgerForm {
     display: block;
   }
-
+  .logo {
+    width: 30%;
+  }
+  .iconNavDiv {
+    width: auto;
+  }
+  #cart-icon {
+    width: 1.5em;
+  }
+  #logoImg {
+    width: 100%;
+    object-fit: contain;
+  }
+  .navTop i,
+  .iconBurger {
+    font-size: 1.5em;
+  }
   .searchBarDiv,
   .categoriesNav,
   .dropdown:hover .dropdown-content {
