@@ -6,6 +6,7 @@
   width: 95%;
   margin: 2% 0;
 }
+
 .MainContent {
   background-color: var(--div-color);
   display: flex;
@@ -13,13 +14,16 @@
   width: 90%;
   border-radius: 10px;
 }
+
 .BoxImg {
   flex: 1;
 }
+
 .BoxImg img {
   width: 400px;
   border-radius: 10px;
 }
+
 .BoxDetail {
   flex: 3;
   padding: 0 1%;
@@ -27,20 +31,33 @@
   flex-direction: column;
   color: #fff;
 }
+
+.BoxAverageCount {
+  display: flex;
+  align-items: center;
+}
+
+.countRating {
+  margin-left: 1%;
+}
+
 #productName {
   font-size: 1.5rem;
-  margin-bottom: 3%;
   font-weight: bold;
 }
+
 #description {
   font-size: 1.3rem;
 }
+
 #description p:nth-child(1) {
   margin-bottom: 2%;
 }
+
 #description p:nth-child(2) {
   font-style: italic;
 }
+
 .BoxPriceStockButton {
   flex: 1;
   display: flex;
@@ -54,13 +71,16 @@
   align-items: center;
   justify-content: space-evenly;
 }
+
 #price {
   font-size: 2rem;
   color: var(--price-color);
 }
+
 #stock {
   font-size: 1.5rem;
 }
+
 /** Bouton Add Item */
 .button {
   position: relative;
@@ -73,19 +93,23 @@
   background-color: #3aa856;
   border-radius: 10px;
 }
+
 .button__icon {
   border-radius: 10px;
 }
+
 .button,
 .button__icon,
 .button__text {
   transition: all 0.3s;
 }
+
 .button .button__text {
   transform: translateX(30px);
   color: #fff;
   font-weight: 600;
 }
+
 .button .button__icon {
   position: absolute;
   transform: translateX(109px);
@@ -96,26 +120,33 @@
   align-items: center;
   justify-content: center;
 }
+
 .button .svg {
   width: 30px;
   stroke: #fff;
 }
+
 .button:hover {
   background: #34974d;
 }
+
 .button:hover .button__text {
   color: transparent;
 }
+
 .button:hover .button__icon {
   width: 148px;
   transform: translateX(0);
 }
+
 .button:active .button__icon {
   background-color: #2e8644;
 }
+
 .button:active {
   border: 1px solid #2e8644;
 }
+
 /**  Section Commentaire et Réponse  */
 .CommentsContent {
   width: 100%;
@@ -125,12 +156,14 @@
   padding: 2%;
   color: #fff;
 }
+
 .CommentsContent h3 {
   text-align: center;
   font-size: 2rem;
   color: #fff;
   margin-bottom: 3%;
 }
+
 .UserComment {
   font-weight: bold;
 }
@@ -149,12 +182,14 @@
   width: 50%;
   margin-bottom: 2%;
 }
+
 #FormComments {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: end;
 }
+
 #FormComments textarea {
   width: 100%;
   resize: none;
@@ -164,6 +199,7 @@
   background-color: var(--input-color);
   color: #fff;
 }
+
 #COMMENT_ERROR,
 #RESPONSE_ERROR {
   width: 100%;
@@ -178,7 +214,8 @@
 #count {
   color: #fff;
 }
-#FormComments > input {
+
+#FormComments>input {
   width: 20%;
   background-color: var(--button-color);
   padding: 1%;
@@ -186,10 +223,12 @@
   margin-top: 1%;
   color: #fff;
 }
-#FormComments > input:hover {
+
+#FormComments>input:hover {
   background-color: var(--main-color) !important;
   cursor: pointer;
 }
+
 .BoxComments {
   background-color: var(--nav-color);
   margin-bottom: 1%;
@@ -197,10 +236,12 @@
   padding: 1%;
   position: relative;
 }
+
 #comment {
   margin: 1% 0;
   word-break: break-word;
 }
+
 /**  Réponse */
 .BoxResponse {
   background-color: var(--border-color);
@@ -208,6 +249,7 @@
   padding: 1%;
   margin-bottom: 1%;
 }
+
 .BoxFormResponses {
   display: flex;
   width: 50%;
@@ -268,31 +310,36 @@
   margin-top: 2%;
 }
 /** Note étoiles  */
-.rating:not(:checked) > input {
+.rating:not(:checked)>input {
   position: absolute;
   appearance: none;
 }
-.rating:not(:checked) > label {
+
+.rating:not(:checked)>label {
   float: right;
   cursor: pointer;
   font-size: 50px;
   color: #666;
 }
-.rating:not(:checked) > label:before {
+
+.rating:not(:checked)>label:before {
   content: "★";
 }
-.rating > input:checked + label:hover,
-.rating > input:checked + label:hover ~ label,
-.rating > input:checked ~ label:hover,
-.rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
+
+.rating>input:checked+label:hover,
+.rating>input:checked+label:hover~label,
+.rating>input:checked~label:hover,
+.rating>input:checked~label:hover~label,
+.rating>label:hover~input:checked~label {
   color: #e58e09;
 }
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
+
+.rating:not(:checked)>label:hover,
+.rating:not(:checked)>label:hover~label {
   color: #ff9e0b;
 }
-.rating > input:checked ~ label {
+
+.rating>input:checked~label {
   color: #ffa723;
 }
 
@@ -302,18 +349,48 @@
   top: 0;
   right: 5%;
 }
-.ShowRating:not(:checked) > input {
+
+.ShowRating:not(:checked)>input {
   position: absolute;
   appearance: none;
 }
-.ShowRating:not(:checked) > label {
+
+.ShowRating:not(:checked)>label {
   float: right;
   font-size: 40px;
   color: #666;
 }
-.ShowRating:not(:checked) > label:before {
+
+.ShowRating:not(:checked)>label:before {
   content: "★";
 }
-.ShowRating > input:checked ~ label {
+
+.ShowRating>input:checked~label {
+  color: #ffa723;
+}
+
+/** Affichage de la moyenne sous le titre */
+.AvgRating {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.AvgRating:not(:checked)>input {
+  position: absolute;
+  appearance: none;
+}
+
+.AvgRating:not(:checked)>label {
+  float: right;
+  font-size: 40px;
+  color: #666;
+}
+
+.AvgRating:not(:checked)>label:before {
+  content: "★";
+}
+
+.AvgRating>input:checked~label {
   color: #ffa723;
 }

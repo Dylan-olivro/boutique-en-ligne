@@ -40,12 +40,7 @@ function includeHeader($bdd, $index, $url, $image)
                 </div>
                 <div class="iconNavDiv">
                     <span class="iconNav userIcon">
-                        <?php
-                        if (isset($_SESSION['user']) && (int)$_SESSION['user']->user_role !== 0) {
-                            echo '<i class="fa-solid fa-user-gear"></i>';
-                        } else {
-                            echo '<i class="fa-solid fa-user"></i>';
-                        }
+                        <?= isset($_SESSION['user']) && (int)$_SESSION['user']->user_role !== 0 ? '<i class="fa-solid fa-user-gear"></i>' : '<i class="fa-solid fa-user"></i>';
                         ?>
                         <div class="userLink">
                             <?php
