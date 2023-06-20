@@ -168,10 +168,9 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 // ? Quand les inputs sont différents de vide mettre leur border en --button-color
 // ? Faire les quantités pour l'historique de commandes
 // // ? Envoyer en base de donnée normalement mais récupérer avec la première lettre en majuscule
-
+// ! Quand on ouvre les categories en version mobile, impossible de les réouvrir en desktop
 // ! Ajouter et modifier un produit nl2br() et if(empty(trim($textarea)))
 
-// ! Corriger l'affichage du numero de telephone dans la modification d'adresse
 // ! Condition pour la taille de l'adresse (il faut que ca passe en version mobile)
 // ! Faire le responsive pour l'historique de commande
 

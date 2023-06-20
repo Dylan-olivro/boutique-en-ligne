@@ -154,6 +154,7 @@ class User
     public function disconnect()
     {
         unset($_SESSION['user']);
+        unset($_SESSION['code']);
     }
 
     // * SECONDARY FUNCTION -------------------------------------------------------------
