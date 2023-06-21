@@ -102,12 +102,14 @@ if (isset($_POST['vider'])) {
     <title>Connect</title>
     <link rel="stylesheet" href="../css/cartPage.css">
     <script src="../js/cart.js" defer></script>
-
+    <!-- Importation de la SDK JavaScript PayPal -->
+    
+    
 </head>
 
 <body>
     <?php require_once('./include/header.php'); ?>
-
+    
     <main>
         <section id="container">
             <!-- <section class="containerCart"> -->
@@ -124,10 +126,10 @@ if (isset($_POST['vider'])) {
                     </div>
                     <?php
 
-                    if (!empty($result_cart)) {
+if (!empty($result_cart)) {
                         // Affichage du panier
                         foreach ($result_cart as $product) {
-                            var_dump($product);
+                            
                     ?>
                             <div class="cartDetail">
                                 <div class="cartProduct">
@@ -153,8 +155,8 @@ if (isset($_POST['vider'])) {
                                         <?= $product->cart_quantity <= 1 ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-minus"></i>' ?>
                                         <?php
                                         // if ($product->cart_quantity <= 1) {
-                                        //     echo ' <i class="fa-solid fa-xmark"></i>';
-                                        // } else {
+                                            //     echo ' <i class="fa-solid fa-xmark"></i>';
+                                            // } else {
                                         //     echo ' <i class="fa-solid fa-minus"></i>';
                                         // }
                                         ?>
@@ -203,13 +205,13 @@ if (isset($_POST['vider'])) {
                             <p>Votre panier est vide !</p>
                             <a href="./itemFilter.php"><button>Découvrez nos produits</button></a>
                         </div>
-                    <?php } ?>
-                </div>
+                        <?php } ?>
+                    </div>
 
-                <div class="order">
-                    <div class="total">
-                        <div class="totalDetail">
-                            <?php
+                    <div class="order">
+                        <div class="total">
+                            <div class="totalDetail">
+                                <?php
                             // Récupère les prix dans un tableau
                             $prices = [];
                             foreach ($result_cart as $cartProduct) {
@@ -244,7 +246,7 @@ if (isset($_POST['vider'])) {
                                         <option value="<?= $orderAddress ?>">
                                             <?= $orderAddress ?>
                                         </option>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </select>
@@ -252,11 +254,16 @@ if (isset($_POST['vider'])) {
                             <div>
                                 <input type="text" name="code">
                             </div>
-                            <div class="formOrderValide">
+                            <!-- <div class="formOrderValide">
                                 <input type="submit" name="valider" value="Passer la commande">
-                            </div>
+                            </div> -->
+                            <div id="paypal-boutons"></div>
+                            <script>
+	                        // 2. Afficher le bouton PayPal
+	                            paypal.Buttons().render("#paypal-boutons");
+                                </script>
                         </form>
-
+                        
                         <p>
                             <?php
                             // ! PEUT ETRE A SUPPRIMER
@@ -265,7 +272,7 @@ if (isset($_POST['vider'])) {
                             }
                             ?>
                         </p>
-                    <?php
+                        <?php
                     }
                     ?>
                 </div>
@@ -273,9 +280,63 @@ if (isset($_POST['vider'])) {
         </section>
     </main>
     <?php require_once('./include/footer.php') ?>
+    <!-- Paiment Paypal -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AWRNBckiLuydQeSqVv6AKLW9DF5d7kcn6bjRpywPh0i8egtzIThYr3nVshvdCWdA7cSauQ8axWrr5qzu"></script>
+  <script> 
+    paypal.Buttons({
+
+    // Configurer la transaction
+    createOrder : function (data, actions) {
+
+    // Les produits à payer avec leurs details
+    let produits = [
+        {
+            name : "Produit 1",
+            description : "Description du produit 1",
+            quantity : 1,
+            unit_amount : { value : 9.9, currency_code : "USD" }
+        },
+        {
+            name : "Produit 2",
+            description : "Description du produit 2",
+            quantity : 1,
+            unit_amount : { value : 8.0, currency_code : "USD" }
+        }
+    ];
+
+    // Le total des produits
+    let total_amount = produits.reduce(function (total, product) {
+        return total + product.unit_amount.value * product.quantity;
+    }, 0);
+
+    // La transaction
+    return actions.order.create({
+        purchase_units : [{
+            items : produits,
+            amount : {
+                value : total_amount,
+                currency_code : "USD",
+                breakdown : {
+                    item_total : { value : total_amount, currency_code : "USD" }
+                }
+            }
+        }]
+    });
+}, onApprove(data){
+    console.log("payer");
+},
+
+    
+	//  Annuler la transaction
+	onCancel : function (data) {
+		alert("Transaction annulée !");
+	}
+
+}).render("#paypal-boutons");
+</script>
 </body>
 <style>
-
-</style>
+    
+    </style>
 
 </html>
