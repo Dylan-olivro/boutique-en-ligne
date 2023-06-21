@@ -1,5 +1,6 @@
 <?php
 require_once('./include/required.php');
+// var_dump($_SESSION);
 
 // Récupération du produit
 $returnProduct = $bdd->prepare("SELECT * FROM products WHERE product_id = :product_id");
@@ -99,19 +100,19 @@ $countRating = $resultAverageAndCount->countRating;
                 <div class="BoxDetail">
                     <p id="productName"><?= htmlspecialchars($result->product_name) ?></p>
                     <div class="BoxAverageCount">
-                    <div class="AvgRating">
-                        <input type="radio" id="star5Avg" value="5" disabled <?= $averageComment == 5 ? 'checked' : ''; ?>>
-                        <label for="star5Avg" title="text"></label>
-                        <input type="radio" id="star4Avg" value="4" disabled <?= $averageComment == 4 ? 'checked' : ''; ?>>
-                        <label for="star4Avg" title="text"></label>
-                        <input type="radio" id="star3Avg" value="3" disabled <?= $averageComment == 3 ? 'checked' : ''; ?>>
-                        <label for="star3Avg" title="text"></label>
-                        <input type="radio" id="star2Avg" value="2" disabled <?= $averageComment == 2 ? 'checked' : ''; ?>>
-                        <label for="star2Avg" title="text"></label>
-                        <input type="radio" id="star1Avg" value="1" disabled <?= $averageComment == 1 ? 'checked' : ''; ?>>
-                        <label for="star1Avg" title="text"></label>
-                    </div>
-                    <span class="countRating">(<?=$countRating?> évalutions)</span>
+                        <div class="AvgRating">
+                            <input type="radio" id="star5Avg" value="5" disabled <?= $averageComment == 5 ? 'checked' : ''; ?>>
+                            <label for="star5Avg" title="text"></label>
+                            <input type="radio" id="star4Avg" value="4" disabled <?= $averageComment == 4 ? 'checked' : ''; ?>>
+                            <label for="star4Avg" title="text"></label>
+                            <input type="radio" id="star3Avg" value="3" disabled <?= $averageComment == 3 ? 'checked' : ''; ?>>
+                            <label for="star3Avg" title="text"></label>
+                            <input type="radio" id="star2Avg" value="2" disabled <?= $averageComment == 2 ? 'checked' : ''; ?>>
+                            <label for="star2Avg" title="text"></label>
+                            <input type="radio" id="star1Avg" value="1" disabled <?= $averageComment == 1 ? 'checked' : ''; ?>>
+                            <label for="star1Avg" title="text"></label>
+                        </div>
+                        <span class="countRating">(<?= $countRating ?> évalutions)</span>
                     </div>
                     <div id="description">
                         <p>Description :</p>
@@ -150,25 +151,28 @@ $countRating = $resultAverageAndCount->countRating;
             <section class="CommentsContent">
                 <h3>COMMENTAIRES</h3>
                 <div class="BoxFormComments">
-                    <form action="" method="POST" id="FormComments">
-                        <div class="rating">
-                            <input type="radio" id="star5" name="rate" value="5">
-                            <label for="star5" title="text"></label>
-                            <input type="radio" id="star4" name="rate" value="4">
-                            <label for="star4" title="text"></label>
-                            <input type="radio" id="star3" name="rate" value="3">
-                            <label for="star3" title="text"></label>
-                            <input type="radio" id="star2" name="rate" value="2">
-                            <label for="star2" title="text"></label>
-                            <input type="radio" id="star1" name="rate" value="1">
-                            <label for="star1" title="text"></label>
-                        </div>
-                        <textarea name="comment" id="TextareaComment" placeholder="Écrire un commentaire..."></textarea>
-                        <!-- <input type="text" name="comment" placeholder="COMMENTAIRE"> -->
-                        <p id="COMMENT_ERROR"><span><?= isset($COMMENT_ERROR) ? $COMMENT_ERROR : ''; ?></span><span id="count">0/2000</span></p>
-                        <input type="submit" name="submitComment">
+                    <?php if (isset($_SESSION['user'])) { ?>
 
-                    </form>
+                        <form action="" method="POST" id="FormComments">
+                            <div class="rating">
+                                <input type="radio" id="star5" name="rate" value="5">
+                                <label for="star5" title="text"></label>
+                                <input type="radio" id="star4" name="rate" value="4">
+                                <label for="star4" title="text"></label>
+                                <input type="radio" id="star3" name="rate" value="3">
+                                <label for="star3" title="text"></label>
+                                <input type="radio" id="star2" name="rate" value="2">
+                                <label for="star2" title="text"></label>
+                                <input type="radio" id="star1" name="rate" value="1">
+                                <label for="star1" title="text"></label>
+                            </div>
+                            <textarea name="comment" id="TextareaComment" placeholder="Écrire un commentaire..."></textarea>
+                            <!-- <input type="text" name="comment" placeholder="COMMENTAIRE"> -->
+                            <p id="COMMENT_ERROR"><span><?= isset($COMMENT_ERROR) ? $COMMENT_ERROR : ''; ?></span><span id="count">0/2000</span></p>
+                            <input type="submit" name="submitComment">
+
+                        </form>
+                    <?php } ?>
                 </div>
                 <div class="BoxCommentResponse">
                     <?php
@@ -177,7 +181,7 @@ $countRating = $resultAverageAndCount->countRating;
                             <p class="UserComment">Commenté par <?= htmlspecialchars(ucfirst($key->user_firstname)) ?>
                                 <?php
                                 // Affichage du bouton delete le commentaire, si c'est le commentaire de l'utilisateur
-                                if ($_SESSION['user']->user_id == $key->user_id) { ?>
+                                if (isset($_SESSION['user']) && ($_SESSION['user']->user_id == $key->user_id || $_SESSION['user']->user_role > 0)) { ?>
                             <form action="" method="POST">
                                 <button type="submit" name="deleteComment<?= $key->comment_id ?>" id="DeleleCommentOrResponse">Supprimer votre commentaire</button>
                             </form>
@@ -200,14 +204,17 @@ $countRating = $resultAverageAndCount->countRating;
                         <p id="comment"><?= nl2br(htmlspecialchars($key->comment_text)) ?></p>
 
                         <div class="BoxFormResponses">
-                            <button id="click<?= $key->comment_id ?>" class="ClickResponse">Répondre</button>
-                            <form action="" method="POST" id="FormResponses<?= $key->comment_id ?>" class="FormResponses">
-                                <textarea name="response" id="TextareaResponse<?= $key->comment_id ?>" class="TextareaReponse" placeholder="Ajoutez une réponse..."></textarea>
-                                <div class="BoxSubmitResponse">
-                                    <p id="RESPONSE_ERROR"><span id="count<?= $key->comment_id ?>" class="">0/2000</span></p>
-                                    <input type="submit" name="submitResponse<?= $key->comment_id ?>">
-                                </div>
-                            </form>
+                            <?php if (isset($_SESSION['user'])) { ?>
+
+                                <button id="click<?= $key->comment_id ?>" class="ClickResponse">Répondre</button>
+                                <form action="" method="POST" id="FormResponses<?= $key->comment_id ?>" class="FormResponses">
+                                    <textarea name="response" id="TextareaResponse<?= $key->comment_id ?>" class="TextareaReponse" placeholder="Ajoutez une réponse..."></textarea>
+                                    <div class="BoxSubmitResponse">
+                                        <p id="RESPONSE_ERROR"><span id="count<?= $key->comment_id ?>" class="">0/2000</span></p>
+                                        <input type="submit" name="submitResponse<?= $key->comment_id ?>">
+                                    </div>
+                                </form>
+                            <?php } ?>
                         </div>
 
                         <script>
@@ -261,7 +268,7 @@ $countRating = $resultAverageAndCount->countRating;
                                 <p class="UserComment">Réponse de <?= htmlspecialchars(ucfirst($key2->user_firstname)) ?></p>
                                 <?php
                                 // Affichage du bouton delete la réponse, si c'est la réponse de l'utilisateur
-                                if ($_SESSION['user']->user_id == $key2->response_user_id) { ?>
+                                if (isset($_SESSION['user']) && ($_SESSION['user']->user_id == $key2->response_user_id || $_SESSION['user']->user_role > 0)) { ?>
                                     <form action="" method="POST">
                                         <button type="submit" name="deleteResponse<?= $key2->response_id ?>" id="DeleleCommentOrResponse">Supprimer votre réponse</button>
                                     </form>
