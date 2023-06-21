@@ -170,7 +170,7 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 // // ? Envoyer en base de donnée normalement mais récupérer avec la première lettre en majuscule
 // ! Quand on ouvre les categories en version mobile, impossible de les réouvrir en desktop
 // ! Ajouter et modifier un produit nl2br() et if(empty(trim($textarea)))
-
+// ! Condition pour l'admin d'effacer les commentaires et les réponses
 // ! Condition pour la taille de l'adresse (il faut que ca passe en version mobile)
 // ! Faire le responsive pour l'historique de commande
 
