@@ -6,6 +6,8 @@ $returnProduct = $bdd->prepare("SELECT * FROM products WHERE product_id = :produ
 $returnProduct->execute(['product_id' => $_GET['id']]);
 $result = $returnProduct->fetch(PDO::FETCH_OBJ);
 
+$date = date("Y-m-d H:i:s");
+
 // Empêche d'aller sur la page si il n'y a aucun produit de selectionner 
 if (!$result) {
     header('Location: ../index.php');
@@ -50,12 +52,13 @@ if (isset($_POST['submitComment'])) {
     } elseif (!isset($_POST['rate'])) {
         $COMMENT_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&nbspVeuillez saisir une note.';
     } else {
-        $addComment = $bdd->prepare('INSERT INTO comments (comment_text, user_id, product_id,comment_rating) VALUES(:comment_text, :user_id,:product_id,:comment_rating)');
+        $addComment = $bdd->prepare('INSERT INTO comments (comment_text, user_id, product_id,comment_rating, comment_date) VALUES(:comment_text, :user_id,:product_id,:comment_rating,:comment_date)');
         $addComment->execute([
             'comment_text' => $_POST['comment'],
             'user_id' => $_SESSION['user']->user_id,
             'product_id' => $result->product_id,
-            'comment_rating' => $_POST['rate']
+            'comment_rating' => $_POST['rate'],
+            'comment_date' => $date
         ]);
         header('Location: detail.php?id=' . $result->product_id);
     }
@@ -111,7 +114,7 @@ $countRating = $resultAverageAndCount->countRating;
                         <input type="radio" id="star1Avg" value="1" disabled <?= $averageComment == 1 ? 'checked' : ''; ?>>
                         <label for="star1Avg" title="text"></label>
                     </div>
-                    <span class="countRating">(<?=$countRating?> évalutions)</span>
+                    <span class="countRating"><a href="#BoxCommentResponse">(<?=$countRating?> évalutions)</a></span>
                     </div>
                     <div id="description">
                         <p>Description :</p>
@@ -147,7 +150,7 @@ $countRating = $resultAverageAndCount->countRating;
             </div>
 
             <!-- SECTION COMMENTAIRE -->
-            <section class="CommentsContent">
+            <section class="CommentsContent" id="CommentsContent">
                 <h3>COMMENTAIRES</h3>
                 <div class="BoxFormComments">
                     <form action="" method="POST" id="FormComments">
@@ -170,11 +173,12 @@ $countRating = $resultAverageAndCount->countRating;
 
                     </form>
                 </div>
-                <div class="BoxCommentResponse">
+                <div class="BoxCommentResponse" id="BoxCommentResponse">
                     <?php
                     foreach ($result_comments as $key) { ?>
                         <div class="BoxComments">
                             <p class="UserComment">Commenté par <?= htmlspecialchars(ucfirst($key->user_firstname)) ?>
+                            <p id="commentDate"><?=htmlspecialchars($key->comment_date)?></p>
                                 <?php
                                 // Affichage du bouton delete le commentaire, si c'est le commentaire de l'utilisateur
                                 if ($_SESSION['user']->user_id == $key->user_id) { ?>
@@ -259,6 +263,7 @@ $countRating = $resultAverageAndCount->countRating;
                         foreach ($result_responses as $key2) { ?>
                             <div class="BoxResponse">
                                 <p class="UserComment">Réponse de <?= htmlspecialchars(ucfirst($key2->user_firstname)) ?></p>
+                                <p id="responseDate"><?=htmlspecialchars($key2->response_date)?></p>
                                 <?php
                                 // Affichage du bouton delete la réponse, si c'est la réponse de l'utilisateur
                                 if ($_SESSION['user']->user_id == $key2->response_user_id) { ?>
@@ -287,11 +292,12 @@ $countRating = $resultAverageAndCount->countRating;
                             } elseif (mb_strlen(str_replace("\n", '', $response)) > 2000) {
                                 $RESPONSE_ERROR = '<i class="fa-solid fa-circle-exclamation"></i>&Réponse trop longue (2000max).';
                             } else {
-                                $addResponse = $bdd->prepare('INSERT INTO responses (response_text, comment_id,response_user_id) VALUES(:response_text, :comment_id, :response_user_id)');
+                                $addResponse = $bdd->prepare('INSERT INTO responses (response_text, comment_id,response_user_id,response_date) VALUES(:response_text, :comment_id, :response_user_id,:response_date)');
                                 $addResponse->execute([
                                     'response_text' => $_POST['response'],
                                     'comment_id' => $key->comment_id,
-                                    'response_user_id' => $_SESSION['user']->user_id
+                                    'response_user_id' => $_SESSION['user']->user_id,
+                                    'response_date' => $date
                                 ]);
                                 header('Location: detail.php?id=' . $result->product_id);
                             }

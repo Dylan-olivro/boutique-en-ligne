@@ -236,7 +236,9 @@
   padding: 1%;
   position: relative;
 }
-
+#commentDate, #responseDate{
+  font-size: 0.8em;
+}
 #comment {
   margin: 1% 0;
   word-break: break-word;
