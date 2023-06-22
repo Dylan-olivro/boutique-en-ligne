@@ -196,7 +196,7 @@ $countRating = $resultAverageAndCount->countRating;
                                 // Affichage du bouton delete le commentaire, si c'est le commentaire de l'utilisateur
                                 if (isset($_SESSION['user']) && ($_SESSION['user']->user_id == $key->user_id || $_SESSION['user']->user_role > 0)) { ?>
                             <form action="" method="POST">
-                                <button type="submit" name="deleteComment<?= $key->comment_id ?>" id="DeleleCommentOrResponse">Supprimer votre commentaire</button>
+                                <button type="submit" name="deleteComment<?= $key->comment_id ?>" id="DeleleCommentOrResponse" onclick="return confirm(`Voulez vous vraiment supprimer ce commentaire ?`)">Supprimer votre commentaire</button>
                             </form>
                         <?php
                                 } ?>
@@ -284,7 +284,7 @@ $countRating = $resultAverageAndCount->countRating;
                                 // Affichage du bouton delete la réponse, si c'est la réponse de l'utilisateur
                                 if (isset($_SESSION['user']) && ($_SESSION['user']->user_id == $key2->response_user_id || $_SESSION['user']->user_role > 0)) { ?>
                                     <form action="" method="POST">
-                                        <button type="submit" name="deleteResponse<?= $key2->response_id ?>" id="DeleleCommentOrResponse">Supprimer votre réponse</button>
+                                        <button type="submit" name="deleteResponse<?= $key2->response_id ?>" id="DeleleCommentOrResponse" onclick="return confirm(`Voulez vous vraiment supprimer cette réponse ?`)">Supprimer votre réponse</button>
                                     </form>
                                 <?php } ?>
                                 <p id="response"><?= nl2br(htmlspecialchars($key2->response_text)) ?></p>

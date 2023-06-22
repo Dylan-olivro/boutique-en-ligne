@@ -182,7 +182,7 @@ if ($_SESSION['user']->user_role == 0) {
                                 </td>
                                 <td>
                                     <form action="" method="POST">
-                                        <button type="submit" name="deleteCategories<?= $key_cat->id ?>" id="<?= $key_cat->id ?>"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="submit" name="deleteCategories<?= $key_cat->id ?>" id="<?= $key_cat->id ?>" onclick="return confirm(`Voulez vous vraiment supprimer cette catégorie ?`)"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -230,7 +230,7 @@ if ($_SESSION['user']->user_role == 0) {
                                 </td>
                                 <td>
                                     <form action="" method="POST">
-                                        <button type="submit" name="deleteProduct<?= $key_product->product_id ?>" id="<?= $key_product->product_id ?>"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="submit" name="deleteProduct<?= $key_product->product_id ?>" id="<?= $key_product->product_id ?>" onclick="return confirm(`Voulez vous vraiment supprimer ce produit ?`)"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -288,7 +288,7 @@ if ($_SESSION['user']->user_role == 0) {
                                 </td>
                                 <td>
                                     <form action="" method="POST">
-                                        <button type="submit" name="deleteUser<?= $key_user->user_id ?>" id="<?= $key_user->user_id ?>"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="submit" name="deleteUser<?= $key_user->user_id ?>" id="<?= $key_user->user_id ?>" onclick="return confirm(`Voulez vous vraiment supprimer cette utilisateur ?`)"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
                                 </td>
                             </tr>

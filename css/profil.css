@@ -241,8 +241,8 @@
   color: #fff;
   gap: 5%;
 }
-img {
-  width: 100px;
+.command img {
+  width: 100px ;
   border-radius: 20px;
 }
 .infoProduct {

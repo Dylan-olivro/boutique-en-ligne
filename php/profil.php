@@ -128,7 +128,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                 <div class="BoxButtons">
                                     <a href="./user/modifyAdress.php?id=<?= $userAdress->address_id ?>"><button class="ButtonAddress"><i class="fa-solid fa-pencil"></i></button></a>
                                     <form action="" method="post">
-                                        <button type="submit" name="deleteAdress<?= $userAdress->address_id ?>" class="ButtonAddress"><i class="fa-solid fa-trash-can"></i></button>
+                                        <button type="submit" name="deleteAdress<?= $userAdress->address_id ?>" class="ButtonAddress" onclick="return confirm(`Voulez vous vraiment supprimer cette adresse ?`)"><i class="fa-solid fa-trash-can"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -177,9 +177,9 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                     <p><?= htmlspecialchars($userOrder->order_number) ?></p>
                                 </div>
                             </div>
-                            <?php foreach ($product as $infoProduct) { 
+                            <?php foreach ($product as $infoProduct) {
                                 // var_dump($infoProduct);
-                                ?>
+                            ?>
                                 <div class="command">
                                     <img src="../assets/img_item/<?= $infoProduct->image_name ?>" alt="">
                                     <div class="infoProduct">
@@ -187,7 +187,7 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                             <p class="titleProduct"><?= htmlspecialchars($infoProduct->product_name) ?></p>
                                         </a>
                                         <p class="price"><?= htmlspecialchars($infoProduct->product_price * $infoProduct->product_quantity) ?> €</p>
-                                        <p class="quantity">(<?=htmlspecialchars($infoProduct->product_price)?> x<?= htmlspecialchars($infoProduct->product_quantity) ?>)</p>
+                                        <p class="quantity">(<?= htmlspecialchars($infoProduct->product_price) ?> x<?= htmlspecialchars($infoProduct->product_quantity) ?>)</p>
                                     </div>
                                 </div>
                             <?php } ?>
