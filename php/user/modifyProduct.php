@@ -38,31 +38,36 @@ $result_cat = $category->returnAllCategories($bdd);
                 <input type="text" id="nameItem" name="nameItem" autocomplete="off" value="<?= htmlspecialchars($result->product_name) ?>">
 
                 <div class="groupInput">
-                    <div class="divInput">
-                        <label for="priceItem">Price</label>
-                        <input type="text" id="priceItem" name="priceItem" autocomplete="off" value="<?= htmlspecialchars($result->product_price) ?>">
+                    <div class="BoxInput">
+                        <div class="divInput">
+                            <label for="priceItem">Price</label>
+                            <input type="text" id="priceItem" name="priceItem" autocomplete="off" value="<?= htmlspecialchars($result->product_price) ?>">
+                        </div>
+                        <div class="divInput">
+                            <label for="stockItem">Stock</label>
+                            <input type="number" id="stockItem" name="stockItem" autocomplete="off" value="<?= htmlspecialchars($result->product_stock) ?>">
+                        </div>
                     </div>
-                    <div class="divInput">
-                        <label for="stockItem">Stock</label>
-                        <input type="number" id="stockItem" name="stockItem" autocomplete="off" value="<?= htmlspecialchars($result->product_stock) ?>">
-                    </div>
-                    <div class="divInput">
-                        <label for="categoryItem">Category</label>
-                        <select name="categoryItem" id="categoryItem">
-                            <option value="<?= $result->id_category ?>" selected><?= $result->name ?></option>
-                            <?php
-                            foreach ($result_cat as $cat) {
-                                if ($cat->id_parent != 0) { ?>
-                                    <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
-                            <?php
-                                }
-                            } ?>
-                        </select>
+                    <div class="BoxInput">
 
-                    </div>
-                    <div class="divInputFile">
-                        <label for="image">Image</label>
-                        <input type="file" id="image" name="image">
+                        <div class="divInput">
+                            <label for="categoryItem">Category</label>
+                            <select name="categoryItem" id="categoryItem">
+                                <option value="<?= $result->id_category ?>" selected><?= $result->name ?></option>
+                                <?php
+                                foreach ($result_cat as $cat) {
+                                    if ($cat->id_parent != 0) { ?>
+                                        <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                                <?php
+                                    }
+                                } ?>
+                            </select>
+
+                        </div>
+                        <div class="divInput">
+                            <label for="image">Image</label>
+                            <input type="file" id="image" name="image">
+                        </div>
                     </div>
                 </div>
 

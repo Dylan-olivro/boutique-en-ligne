@@ -164,28 +164,9 @@ main {
   flex-direction: column;
   width: 45%;
 }
-.divInput:nth-child(1),
-.divInput:nth-child(2) {
-  /* display: flex; */
-  /* width: 15%; */
-}
-.divInput:nth-child(3),
-.divInput:nth-child(4) {
-  /* display: flex; */
-  /* width: 30%; */
-}
-.divInputFile {
-  /* width: 35%; */
-}
-.divInputFile input {
-  /* display: none; */
-}
-.groupInput div input {
-  /* display: flex; */
-  /* width: 100%; */
-}
 
 #descriptionItem {
+  padding: 1%;
   border-radius: 5px;
   resize: none;
   height: 100px;
@@ -212,6 +193,11 @@ main {
 .submit input {
   width: 50%;
   cursor: pointer;
+  padding: 0 !important;
+  background-color: var(--button-color) !important;
+}
+.submit input:hover {
+  background-color: var(--main-color) !important;
 }
 .formEdit {
   width: 90%;
@@ -468,7 +454,7 @@ tbody button a {
     flex-direction: column;
   }
   #addItem,
-  #addCategory {
+  .MainContent {
     width: 100%;
     margin-bottom: 1%;
   }
@@ -494,10 +480,19 @@ tbody button a {
   }
 }
 @media screen and (max-width: 425px) {
-  .statsText {
-    display: none;
+  .stats {
+    /* display: none; */
+    flex-direction: column;
+    align-items: center;
   }
   .cardStat {
-    width: 40%;
+    width: 80%;
+  }
+  .BoxInput {
+    flex-direction: column;
+  }
+  .divInput {
+    width: 100%;
+    margin-bottom: 1%;
   }
 }
