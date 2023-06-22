@@ -18,6 +18,20 @@ require_once('./include/required.php');
         <div id="container">
             <div class="tri">
                 <form action="" method="get" class="triForm">
+                    <select name="triCategories" id="triCategories">
+                        <?php
+                        $returnCategory = $bdd->prepare('SELECT * FROM category');
+                        $returnCategory->execute();
+                        $resultCategory = $returnCategory->fetchAll(PDO::FETCH_OBJ);
+
+                        foreach ($resultCategory as $key) {
+                        ?>
+                            <option id="<?= $key->id; ?>" value="<?= $key->id; ?>"><?= $key->name; ?>
+                            </option>
+                        <?php
+                        };
+                        ?>
+                    </select>
                     <select name="triSelect" id="triSelect">
                         <option value="Popularité">Popularité</option>
                         <option value="Nouveauté">Nouveauté</option>
@@ -36,7 +50,9 @@ require_once('./include/required.php');
                     <div id="filterDiv">
                         <?php
                         foreach ($resultCategoryParent as $key) {
+                            // var_dump($key['name']);                                
                         ?>
+
                             <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
                                 <ul>
                                     <li class="resultParent dropdown-toggle" id="<?= $key->id; ?>">
