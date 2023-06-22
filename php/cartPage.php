@@ -9,6 +9,8 @@ if (!isset($_SESSION['user'])) {
 $cart = new Cart(null, $_SESSION['user']->user_id, null, null);
 $result_cart = $cart->returnCart($bdd);
 
+// var_dump($result_cart);
+
 // Récupère les stock dans un tableau
 $stock = [];
 foreach ($result_cart as $product) {
@@ -47,13 +49,12 @@ if (isset($_POST['valider'])) {
                     'product_id' => $cartProduct->product_id
                 ]);
                 // Insertion du nombre de produit dans le panier, dans la table de liaison
-                for ($i = 0; $i < (int)$cartProduct->cart_quantity; $i++) {
-                    $insertLiaison = $bdd->prepare('INSERT INTO liaison_product_order (order_id,product_id) VALUES (:order_id,:product_id)');
+                    $insertLiaison = $bdd->prepare('INSERT INTO liaison_product_order (order_id,product_id, product_quantity) VALUES (:order_id,:product_id,:product_quantity)');
                     $insertLiaison->execute([
                         'order_id' => $lastInsertId,
-                        'product_id' => $cartProduct->product_id
+                        'product_id' => $cartProduct->product_id,
+                        'product_quantity' => $cartProduct->cart_quantity
                     ]);
-                }
             }
             $total = array_sum($prices);
 
@@ -148,7 +149,6 @@ if (isset($_POST['vider'])) {
                                         <i class="fa-solid fa-plus"></i>
                                     </button>
                                     <button type="submit" name="delete<?= $product->cart_id ?>" id="delete">
-
                                         <!-- Affiche - ou + en fonction de la quantité dans le panier -->
                                         <?= $product->cart_quantity <= 1 ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-minus"></i>' ?>
                                         <?php
@@ -158,18 +158,13 @@ if (isset($_POST['vider'])) {
                                         //     echo ' <i class="fa-solid fa-minus"></i>';
                                         // }
                                         ?>
-
                                     </button>
                                 </form>
                             </div>
                         <?php
                             if (isset($_POST['add' . $product->cart_id])) {
-                                // $req2 = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
-                                // $req2->execute(['product_id' => $product->product_id]);
-                                // $res2 = $req2->fetch(PDO::FETCH_OBJ);
-
-                                $req3 = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
-                                $req3->execute([
+                                $requestUpdateCart = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
+                                $requestUpdateCart->execute([
                                     'cart_quantity' => $product->cart_quantity + 1,
                                     'product_id' => $product->product_id
                                 ]);
@@ -180,20 +175,18 @@ if (isset($_POST['vider'])) {
                             // décrémente ou supprime du panier un produit
                             if (isset($_POST['delete' . $product->cart_id])) {
                                 if ((int)$product->cart_quantity > 1) {
-                                    $req3 = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE user_id = :user_id AND product_id = :product_id");
-                                    $req3->execute([
+                                    $requestUpdateCart = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE user_id = :user_id AND product_id = :product_id");
+                                    $requestUpdateCart->execute([
                                         'cart_quantity' => $product->cart_quantity - 1,
                                         'user_id' => $_SESSION['user']->user_id,
                                         'product_id' => $product->product_id
                                     ]);
-                                    echo '<i class="fa-solid fa-circle-minus fa-lg" style="color: #ff0000;"></i> Article supprimé du panier.';
                                 } elseif ((int)$product->cart_quantity == 1) {
-                                    $req = $bdd->prepare("DELETE FROM `carts` WHERE user_id = :user_id AND product_id = :product_id ");
-                                    $req->execute([
+                                    $requestDeleteCart = $bdd->prepare("DELETE FROM `carts` WHERE user_id = :user_id AND product_id = :product_id ");
+                                    $requestDeleteCart->execute([
                                         'user_id' => $_SESSION['user']->user_id,
                                         'product_id' => $product->product_id
                                     ]);
-                                    echo '<i class="fa-solid fa-circle-minus fa-lg" style="color: #ff0000;"></i> Article supprimé du panier.';
                                 }
                                 header('Location: cartPage.php');
                             }

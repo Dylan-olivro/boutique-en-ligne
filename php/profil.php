@@ -177,14 +177,17 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                     <p><?= htmlspecialchars($userOrder->order_number) ?></p>
                                 </div>
                             </div>
-                            <?php foreach ($product as $infoProduct) { ?>
+                            <?php foreach ($product as $infoProduct) { 
+                                // var_dump($infoProduct);
+                                ?>
                                 <div class="command">
                                     <img src="../assets/img_item/<?= $infoProduct->image_name ?>" alt="">
                                     <div class="infoProduct">
                                         <a href="./detail.php?id=<?= $infoProduct->product_id ?>">
                                             <p class="titleProduct"><?= htmlspecialchars($infoProduct->product_name) ?></p>
                                         </a>
-                                        <p class="price"><?= htmlspecialchars($infoProduct->product_price) ?>€</p>
+                                        <p class="price"><?= htmlspecialchars($infoProduct->product_price * $infoProduct->product_quantity) ?> €</p>
+                                        <p class="quantity">(<?=htmlspecialchars($infoProduct->product_price)?> x<?= htmlspecialchars($infoProduct->product_quantity) ?>)</p>
                                     </div>
                                 </div>
                             <?php } ?>

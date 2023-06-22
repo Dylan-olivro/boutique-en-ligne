@@ -115,7 +115,7 @@ $countRating = $resultAverageAndCount->countRating;
                             <input type="radio" id="star1Avg" value="1" disabled <?= $averageComment == 1 ? 'checked' : ''; ?>>
                             <label for="star1Avg" title="text"></label>
                         </div>
-                        <span class="countRating"><a href="#BoxCommentResponse">(<?= $countRating ?> évalutions)</a></span>
+                        <span class="countRating"><a href="#BoxCommentResponse">(<?= $countRating ?> évalution<?= $countRating > 1 ? 's' : '' ?>)</a></span>
                     </div>
                     <div id="description">
                         <p>Description :</p>
@@ -128,11 +128,11 @@ $countRating = $resultAverageAndCount->countRating;
 
                         <p id="price"><?= htmlspecialchars($result->product_price) ?>€</p>
                         <p id="stock"><?= htmlspecialchars($result->product_stock) ?></p>
+                        <form action="" method="post">
                         <?php
                         // Affiche le bouton 'ajouter au panier' si l'utilisateu est connecté et si le stock est supérieur à 1
                         if (isset($_SESSION['user'])) {
                             if ($result->product_stock > 0) { ?>
-                                <form action="" method="post">
                                     <button type="submit" class="button" name="ajouter">
                                         <span class="button__text">Add Item</span>
                                         <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
@@ -140,11 +140,20 @@ $countRating = $resultAverageAndCount->countRating;
                                                 <line y2="12" y1="12" x2="19" x1="5"></line>
                                             </svg></span>
                                     </button>
-                                </form>
-                        <?php
+                                    <?php
                             }
+                        }else{
+                            ?>
+                            <a class="button__link" href="./connect.php">
+                            <button type="button" class="button" name="ajouter">
+                                        <span class="button__text button__text__connexion">Se connecter</span>
+                                        <span class="button__icon"><i class="fa-solid fa-user"></i></span>
+                                    </button>
+                            </a>
+                            <?php
                         }
                         ?>
+                        </form>
                     </div>
 
                 </div>
