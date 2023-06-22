@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $message['PRODUCT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspAucun ID selectionné.';
     } elseif (empty($name)) {
         $message['PRODUCT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Name est vide.';
-    } elseif (empty($description)) {
+    } elseif (empty(trim($description))) {
         $message['PRODUCT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Description est vide';
     } elseif (empty($price)) {
         $message['PRODUCT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe champ Prix est vide.';
