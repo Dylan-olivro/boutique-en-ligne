@@ -126,6 +126,6 @@ function includeFooter($image)
             </div>
 
         </section>
-        <p id="copyright">&copy; Copyright 2023 - Dylan Olivro - Charles Caltagirone- Gaetan Baudran Tous droits réservés</p>
+        <p id="copyright">&copy; Copyright 2023 - Dylan Olivro - Charles Caltagirone - Gaetan Baudran - Tous droits réservés</p>
     </footer>
 <?php }

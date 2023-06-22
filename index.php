@@ -5,6 +5,7 @@ $request = $bdd->prepare("SELECT *,count(*) FROM liaison_product_order INNER JOI
 $request->execute();
 $result = $request->fetchAll(PDO::FETCH_OBJ);
 
+// Requête pour récupérer les produits les plus récents
 $requestAllItems = $bdd->prepare("SELECT * FROM products INNER JOIN images ON products.product_id = images.product_id WHERE image_main = 1 ORDER BY products.product_date DESC LIMIT 4");
 $requestAllItems->execute();
 $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);

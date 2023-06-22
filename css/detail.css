@@ -36,6 +36,14 @@
   display: flex;
   align-items: center;
 }
+.BoxAverageCount a {
+  text-decoration: none;
+  font-style: italic;
+  color: whitesmoke;
+}
+.BoxAverageCount a:hover {
+  text-decoration: underline;
+}
 
 .countRating {
   margin-left: 1%;
@@ -110,6 +118,15 @@
   font-weight: 600;
 }
 
+.button .button__text__connexion {
+  transform: translateX(8px) !important;
+}
+.button__link {
+  text-decoration: none;
+}
+.button__link i {
+  color: whitesmoke;
+}
 .button .button__icon {
   position: absolute;
   transform: translateX(109px);
@@ -236,7 +253,8 @@
   padding: 1%;
   position: relative;
 }
-#commentDate, #responseDate{
+#commentDate,
+#responseDate {
   font-size: 0.8em;
 }
 #comment {
@@ -464,7 +482,7 @@
   }
   .ShowRating {
     position: initial;
-    display:flex;
+    display: flex;
     flex-direction: row-reverse;
     justify-content: start;
   }

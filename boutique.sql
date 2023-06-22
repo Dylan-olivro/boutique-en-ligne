@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 21 juin 2023 à 14:20
+-- Généré le : jeu. 22 juin 2023 à 13:19
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -34,14 +34,14 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   `address_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `address_numero` int NOT NULL,
-  `address_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `address_postcode` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `address_city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `address_telephone` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `address_lastname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `address_firstname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `address_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address_postcode` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address_city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address_telephone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address_lastname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address_firstname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`address_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `addresses`
@@ -54,7 +54,8 @@ INSERT INTO `addresses` (`address_id`, `user_id`, `address_numero`, `address_nam
 (71, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan'),
 (72, 1, 75, 'rue Leon Jouhaux', '83200', 'TOULON', '06 43 17 21 20', 'Olivro', 'Dylan'),
 (73, 1, 43, 'zezezeeze ze ze', '43434', 'HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH', '04 38 28 38 28', 'Rerer', 'Rerer'),
-(74, 1, 22, 'rue léon jouhaux', '23232', 'CHARENTE-MARITIME', '09 03 03 03 03', 'Sdsdsd', 'Sdsdsd');
+(74, 1, 22, 'rue léon jouhaux', '23232', 'CHARENTE-MARITIME', '09 03 03 03 03', 'Sdsdsd', 'Sdsdsd'),
+(75, 3, 1, 'rue rouge', '59856', 'JESAISPAS', '05 05 56 06 86', 'Robert', 'Pires');
 
 -- --------------------------------------------------------
 
@@ -69,17 +70,15 @@ CREATE TABLE IF NOT EXISTS `carts` (
   `product_id` int NOT NULL,
   `cart_quantity` int NOT NULL,
   PRIMARY KEY (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=180 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `carts`
 --
 
 INSERT INTO `carts` (`cart_id`, `user_id`, `product_id`, `cart_quantity`) VALUES
-(155, 49, 5, 3),
-(156, 49, 81, 2),
-(160, 1, 55, 5),
-(161, 1, 81, 6);
+(178, 1, 11, 1),
+(179, 3, 81, 1);
 
 -- --------------------------------------------------------
 
@@ -90,7 +89,7 @@ INSERT INTO `carts` (`cart_id`, `user_id`, `product_id`, `cart_quantity`) VALUES
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `id_parent` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -138,7 +137,7 @@ INSERT INTO `category` (`id`, `name`, `id_parent`) VALUES
 DROP TABLE IF EXISTS `codes`;
 CREATE TABLE IF NOT EXISTS `codes` (
   `code_id` int NOT NULL AUTO_INCREMENT,
-  `code_name` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `code_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `code_discount` int NOT NULL,
   PRIMARY KEY (`code_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -160,28 +159,13 @@ INSERT INTO `codes` (`code_id`, `code_name`, `code_discount`) VALUES
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `comment_id` int NOT NULL AUTO_INCREMENT,
-  `comment_text` text COLLATE utf8mb4_general_ci NOT NULL,
+  `comment_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
   `comment_rating` int NOT NULL,
   `comment_date` datetime NOT NULL,
   PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `comments`
---
-
-INSERT INTO `comments` (`comment_id`, `comment_text`, `user_id`, `product_id`, `comment_rating`, `comment_date`) VALUES
-(3, 'test 1', 1, 81, 1, '0000-00-00 00:00:00'),
-(4, 'test2', 1, 81, 2, '0000-00-00 00:00:00'),
-(5, 'test3', 1, 81, 3, '0000-00-00 00:00:00'),
-(6, 'test4', 1, 81, 4, '0000-00-00 00:00:00'),
-(7, 'test5', 1, 81, 5, '0000-00-00 00:00:00'),
-(8, 'zazda', 1, 81, 1, '0000-00-00 00:00:00'),
-(9, 'test', 1, 55, 3, '0000-00-00 00:00:00'),
-(10, 'test date', 1, 81, 2, '2023-06-21 14:11:18'),
-(11, 'test', 1, 81, 4, '2023-06-21 14:11:31');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -193,7 +177,7 @@ DROP TABLE IF EXISTS `images`;
 CREATE TABLE IF NOT EXISTS `images` (
   `image_id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
-  `image_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `image_main` tinyint(1) NOT NULL,
   PRIMARY KEY (`image_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -422,75 +406,24 @@ CREATE TABLE IF NOT EXISTS `liaison_product_order` (
   `id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
   `order_id` int NOT NULL,
+  `product_quantity` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `liaison_product_order`
 --
 
-INSERT INTO `liaison_product_order` (`id`, `product_id`, `order_id`) VALUES
-(1, 1, 2),
-(2, 2, 2),
-(3, 3, 2),
-(4, 1, 3),
-(5, 2, 3),
-(6, 3, 3),
-(7, 20, 4),
-(8, 16, 4),
-(9, 16, 5),
-(10, 19, 5),
-(11, 16, 6),
-(12, 19, 6),
-(13, 16, 7),
-(14, 19, 7),
-(15, 15, 8),
-(16, 3, 8),
-(17, 26, 9),
-(18, 39, 9),
-(19, 24, 10),
-(20, 19, 10),
-(21, 1, 11),
-(22, 1, 13),
-(23, 1, 24),
-(24, 1, 27),
-(25, 26, 27),
-(26, 26, 29),
-(27, 26, 30),
-(28, 26, 31),
-(29, 26, 32),
-(30, 26, 33),
-(31, 26, 34),
-(32, 6, 35),
-(33, 12, 36),
-(34, 6, 55),
-(35, 12, 57),
-(36, 5, 65),
-(37, 5, 65),
-(38, 5, 65),
-(39, 5, 66),
-(40, 5, 66),
-(41, 5, 66),
-(42, 5, 67),
-(43, 5, 67),
-(44, 5, 67),
-(45, 24, 68),
-(46, 39, 68),
-(47, 81, 69),
-(48, 81, 69),
-(49, 81, 69),
-(50, 81, 69),
-(51, 81, 70),
-(52, 81, 70),
-(53, 81, 70),
-(54, 81, 70),
-(55, 81, 70),
-(56, 81, 70),
-(57, 81, 71),
-(58, 81, 72),
-(59, 81, 73),
-(60, 81, 73),
-(61, 16, 74);
+INSERT INTO `liaison_product_order` (`id`, `product_id`, `order_id`, `product_quantity`) VALUES
+(1, 11, 1, 4),
+(2, 47, 1, 3),
+(3, 56, 1, 3),
+(4, 74, 1, 1),
+(5, 5, 2, 3),
+(6, 12, 2, 1),
+(7, 65, 2, 2),
+(8, 81, 2, 2),
+(9, 87, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -504,22 +437,18 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `user_id` int NOT NULL,
   `order_date` datetime NOT NULL,
   `order_total` decimal(10,2) NOT NULL,
-  `order_address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `order_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `order_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `order_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `orders`
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `order_total`, `order_address`, `order_number`) VALUES
-(69, 1, '2023-06-15 23:44:42', '9196.00', '413 dsdsds, 87887 KFLDFDL', '648B864A68A6D4-00773925'),
-(70, 1, '2023-06-16 00:01:35', '13794.00', '413 dsdsds, 87887 KFLDFDL', '648B8A3F12D798-36935007'),
-(71, 1, '2023-06-18 18:30:06', '2299.00', '75 rue Leon Jouhaux, 83200 TOULON', '648F310E794D95-80559902'),
-(72, 1, '2023-06-18 18:30:19', '1149.50', '75 rue Leon Jouhaux, 83200 TOULON', '648F311BB2F609-26907360'),
-(73, 1, '2023-06-18 19:32:23', '4598.00', '75 rue Leon Jouhaux, 83200 TOULON', '648F3FA7E56CA0-16834988'),
-(74, 1, '2023-06-18 19:32:58', '106.40', '75 rue Leon Jouhaux, 83200 TOULON', '648F3FCA387669-03513470');
+(1, 1, '2023-06-22 12:25:55', '3173.00', '11 rue Leon Jouhaux, 55555 é\"(\'\"é\'(&\'', '64943DD33AB0F4-28739591'),
+(2, 49, '2023-06-22 13:08:34', '8478.00', '', '649447D3016741-18889447');
 
 -- --------------------------------------------------------
 
@@ -530,8 +459,8 @@ INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `order_total`, `order
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `product_id` int NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `product_description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `product_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `product_date` datetime NOT NULL,
   `product_price` decimal(10,2) NOT NULL,
   `product_stock` int NOT NULL,
@@ -544,17 +473,17 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_date`, `product_price`, `product_stock`) VALUES
 (1, 'AMD Ryzen 5 5600X (3.7 GHz)', 'Processeur Socket AM4 - Hexa Core - Cache 35 Mo - Vermeer', '2023-05-30 14:55:55', '187.00', 500),
-(2, 'DDR5 Corsair Vengeance - 32 Go (2 x 16 Go) 5200 MHz - CAS 40', 'Mémoire DDR5 - PC-41600 - Low-Profile', '2023-05-30 14:56:40', '179.00', 500),
+(2, 'DDR5 Corsair Vengeance - 32 Go (2 x 16 Go) 5200 MHz - CAS 40', 'Mémoire DDR5 - PC-41600 - Low-Profile', '2023-05-30 14:56:40', '179.00', 496),
 (3, 'Intel Core i5-13600KF (3.5 GHz)', 'Processeur Socket 1700 - 14 coeurs - Cache 24 Mo - Raptor Lake - Ventirad non inclus', '2023-05-30 14:59:22', '369.00', 500),
 (4, 'DDR5 Kingston Fury Beast Black - 32 Go (2 x 16 Go) 5600 MHz - CAS 40', 'Mémoire DDR5 - PC-44800 - Low-Profile', '2023-05-30 14:59:38', '159.00', 500),
-(5, 'AMD Ryzen 5 5600 (3.5 GHz)', 'Processeur Socket AM4 - Hexa Core - Cache 35 Mo - Vermeer - Ventirad inclus', '2023-05-30 15:00:01', '169.00', 500),
+(5, 'AMD Ryzen 5 5600 (3.5 GHz)', 'Processeur Socket AM4 - Hexa Core - Cache 35 Mo - Vermeer - Ventirad inclus', '2023-05-30 15:00:01', '169.00', 495),
 (6, 'AMD Ryzen 7 5700X (3.4 GHz)', 'Processeur Socket AM4 - Octo Core - Cache 36 Mo - Vermeer - Ventirad non inclus', '2023-05-30 15:00:38', '244.00', 500),
 (7, 'DDR4 G.Skill Trident Z RGB - 16 Go (2 x 8 Go) 3600 MHz - CAS 18', 'Kit Dual Channel - Mémoire DDR4 Optimisée Intel - PC-28800 - LED RGB', '2023-05-30 15:00:56', '53.00', 500),
 (8, 'Intel Core i5-12400F (2.5 GHz)', 'Processeur Socket 1700 - Hexa Core - Cache 18 Mo - Alder Lake - Ventirad inclus', '2023-05-30 15:01:46', '178.00', 500),
 (9, 'DDR5 Crucial PRO - 32 Go (2 x 16 Go) 5600 MHz - CAS 46', 'Mémoire DDR5 - PC-44800 - Low-Profile - Optimisée AMD EXPO', '2023-05-30 15:02:16', '129.00', 500),
 (10, 'DDR5 Textorm - 32 Go (2 x 16 Go) 4800 MHz - CAS 40', 'Mémoire DDR5 - PC-38400 - Low-Profile', '2023-05-30 15:03:09', '139.00', 500),
-(11, 'Gainward GeForce RTX 4070 Ghost + Diablo IV offert !', 'Carte graphique - Avec backplate - Compatible VR', '2023-05-30 15:03:10', '610.00', 500),
-(12, 'Asus Radeon RX 6650 XT DUAL O8G', 'Carte graphique - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR', '2023-05-30 15:03:57', '299.00', 500),
+(11, 'Gainward GeForce RTX 4070 Ghost + Diablo IV offert !', 'Carte graphique - Avec backplate - Compatible VR', '2023-05-30 15:03:10', '610.00', 496),
+(12, 'Asus Radeon RX 6650 XT DUAL O8G', 'Carte graphique - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR', '2023-05-30 15:03:57', '299.00', 499),
 (13, 'Gigabyte Radeon RX 6700 XT EAGLE', 'Carte graphique PCI-Express - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR', '2023-05-30 15:04:46', '338.00', 500),
 (14, 'Samsung Série 970 EVO Plus 2 To', 'SSD M.2 - PCI-Express 3.0 NVMe - Contrôleur Samsung Phoenix - Lecture max : 3500 Mo/s - Ecriture max : 3300 Mo/s - Mémoire TLC 3D', '2023-05-30 15:05:00', '99.00', 500),
 (15, 'KFA2 GeForce RTX 3060 Ti (1-Click OC) (LHR)', 'Carte graphique overclockée - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR - Mémoire GDDR6', '2023-05-30 15:05:17', '319.00', 500),
@@ -581,7 +510,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (36, 'Câbles ethernet RJ45 CAT6 F/UTP - Noir - 3 Mètres - Textorm', 'Mâle / Mâle', '2023-05-30 15:20:51', '6.00', 500),
 (37, 'Câbles ethernet RJ45 CAT6 U/UTP - Blanc - 5 Mètres - Textorm', 'Mâle / Mâle', '2023-05-30 15:22:09', '7.00', 500),
 (38, 'Câbles USB 3.0 Type A - 1.8 mètre - Bleu', 'Câbles USB 3.0 Type A Mâle/Mâle', '2023-05-30 15:25:18', '8.00', 500),
-(39, 'Adaptateur USB 3.0 Type C Mâle vers USB 3.0 Type A Femelle', 'Cet adaptateur adaptateur USB Type C Mâle / USB 3.0 Type A Femelle permet de connecter tout accessoire ou périphérique prévu pour de l\'USB C via un port USB 3.0 Type A.', '2023-05-30 15:28:12', '0.00', 500),
+(39, 'Adaptateur USB 3.0 Type C Mâle vers USB 3.0 Type A Femelle', 'Cet adaptateur adaptateur USB Type C Mâle / USB 3.0 Type A Femelle permet de connecter tout accessoire ou périphérique prévu pour de l\'USB C via un port USB 3.0 Type A.', '2023-05-30 15:28:12', '0.00', 498),
 (40, 'Câbles SATA - 50 cm', 'Câbles SATA Mâle / Mâle', '2023-05-30 15:29:15', '5.00', 500),
 (41, 'Ducky Channel One 2 Mini RGB Blanc (Cherry MX Blue) (AZERTY)', 'Clavier Gamer mécanique - Rétroéclairage RGB - Switch Cherry MX Blue', '2023-06-05 12:25:52', '114.00', 500),
 (42, 'Logitech G910 Orion Spectrum (Romer-G) (AZERTY)', 'Clavier Gamer mécanique - Rétroéclairage 16.8M de couleurs touche par touche - Switches Romer-G', '2023-06-05 12:28:08', '79.00', 500),
@@ -589,7 +518,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (44, 'Speedlink Ludicium (AZERTY)', 'Clavier Gamer', '2023-06-05 12:38:30', '9.00', 500),
 (45, 'Roccat Vulcan Pro (Switch Titan Optique Tactile) (AZERTY)', 'Clavier Gamer mécanique - Rétroéclairage AIMO 16.8 M de couleurs - Switches Roccat Titan Optique Tactile - Repose-poignets détachable', '2023-06-05 12:40:17', '99.00', 500),
 (46, 'Logitech G502 HERO', 'Souris Gamer optique - Résolution ajustable 100 à  16 000 dpi - 11 boutons programmables', '2023-06-05 12:42:32', '49.00', 500),
-(47, 'Razer Basilisk v3', 'Souris Gamer optique - Résolution ajustable 26 000 dpi - 11 boutons programmables', '2023-06-05 12:43:43', '69.00', 500),
+(47, 'Razer Basilisk v3', 'Souris Gamer optique - Résolution ajustable 26 000 dpi - 11 boutons programmables', '2023-06-05 12:43:43', '69.00', 497),
 (48, 'Cooler Master MM720 - Matte Black', 'Souris Gamer optique - Résolution ajustable 16000 DPI - RGB - 6 boutons - 49 grammes', '2023-06-05 12:45:10', '49.00', 500),
 (49, 'MSI Gaming M99', 'Souris Gamer optique - Résolution ajustable 4000 dpi - 7 boutons - Rétroéclairage RGB', '2023-06-05 12:46:41', '24.00', 500),
 (50, 'SteelSeries Prime+', 'Souris Gamer optique - Résolution ajustable jusqu\'à  18 000 dpi - 5 boutons programmables', '2023-06-05 12:47:50', '39.00', 500),
@@ -597,8 +526,8 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (52, 'AOC 24G2SPAE', 'Moniteur 23.6&quot; IPS 165 Hz - Full HD - 1 ms MPRT - DisplayPort / HDMI / VGA - Bords fins', '2023-06-05 12:51:05', '169.00', 500),
 (53, 'Iiyama G-Master G2470HSU-B1 FreeSync', 'Moniteur 23.8&quot; IPS LED 165 Hz - Full HD - 0.8 ms MPRT - DisplayPort / HDMI - HP intégrés - Bords extra-fins - Hub USB', '2023-06-05 12:51:44', '179.00', 500),
 (54, 'AOC CQ27G2U/BK Adaptive Sync (dalle incurvée) + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 27&quot; VA 144 Hz - 2560 x 1440 px (QHD) - 1 ms - DisplayPort / HDMI (x2) - Pied réglable - Bords extra-fins - Hub USB', '2023-06-05 12:52:33', '279.00', 500),
-(55, 'Gigabyte M28U VRR + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 28&quot; IPS 144 Hz - HDR 400 - 3840 x 2160 px (Ultra HD 4K) - 1 ms - DisplayPort / HDMI 2.1 (x2) - Pied réglable - Bords extra-fins - Hub USB - Switch KVM intégré', '2023-06-05 12:53:19', '589.00', 500),
-(56, 'Blue Yeti USB Blackout', 'Microphone Gamer - PC - USB', '2023-06-05 12:57:12', '139.00', 500),
+(55, 'Gigabyte M28U VRR + 1 jeu au choix offert sur Gamesplanet !', 'Moniteur 28&quot; IPS 144 Hz - HDR 400 - 3840 x 2160 px (Ultra HD 4K) - 1 ms - DisplayPort / HDMI 2.1 (x2) - Pied réglable - Bords extra-fins - Hub USB - Switch KVM intégré', '2023-06-05 12:53:19', '589.00', 490),
+(56, 'Blue Yeti USB Blackout', 'Microphone Gamer - PC - USB', '2023-06-05 12:57:12', '139.00', 497),
 (57, 'Streamplify Mic Arm', 'Microphone USB - cardioäde - 2 modes de sortie audio - fonction mise en sourdine - Rétroéclairage RGB - filtre pop - bras de montage', '2023-06-05 12:57:58', '99.00', 500),
 (58, 'HyperX Quadcast S', 'Microphone pour PC - USB', '2023-06-05 12:58:51', '159.00', 500),
 (59, 'Razer Seiren Mini - Mercury', 'Microphone PC - USB', '2023-06-05 12:59:54', '49.00', 500),
@@ -607,7 +536,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (62, 'Logitech HD Pro Webcam C920 Refresh', 'Webcam Full HD 1080p - Résolution photo 15 Mpx', '2023-06-05 13:28:46', '99.00', 500),
 (63, 'Microsoft Modern Webcam', 'Webcam Full HD 1080p - HDR et True Look - Certifiée Microsoft Teams', '2023-06-05 13:30:47', '65.00', 500),
 (64, 'Razer Kiyo', 'Webcam HD 720p/60fps - Résolution photo 4 Mpx', '2023-06-05 13:32:12', '89.00', 500),
-(65, 'Logitech Streamcam - Graphite', 'Stream Cam - Webcam Full HD 60 fps', '2023-06-05 13:33:00', '139.00', 500),
+(65, 'Logitech Streamcam - Graphite', 'Stream Cam - Webcam Full HD 60 fps', '2023-06-05 13:33:00', '139.00', 498),
 (66, 'Logitech G PRO X', 'Casque-micro gamer 2.0 - PC - USB ou 1 x Jack 3.5 mm - Carte Son externe', '2023-06-05 13:35:15', '99.00', 500),
 (67, 'HyperX Cloud II - Gun Metal', 'Casque-micro gamer 7.1 - PC / PS4 - USB ou 1 x Jack 3.5 mm', '2023-06-05 13:36:47', '89.00', 500),
 (68, 'Steelseries Arctis 9 - Noir', 'Steelseries Arctis 9 - Noir', '2023-06-05 13:38:01', '149.00', 500),
@@ -616,20 +545,20 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (71, 'Aerocool Cylon Mini - Blanc', 'Boitier PC Mini Tour - mATX / Mini-ITX - USB 3.0 - Avec fenêtre (pleine taille)', '2023-06-05 13:56:50', '39.00', 500),
 (72, 'Zalman S2 TG', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.0 - Avec fenêtre (pleine taille)', '2023-06-05 13:57:32', '49.00', 500),
 (73, 'Corsair 4000D Airflow - Noir', 'Boitier PC Moyen Tour - E-ATX / ATX / mATX / Mini-ITX - USB 3.1 Type C - Avec fenêtre (pleine taille)', '2023-06-05 13:58:43', '99.00', 500),
-(74, 'NZXT H5 Flow - Blanc', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.1 Type C - Avec fenêtre (pleine taille)', '2023-06-05 13:59:35', '109.00', 500),
+(74, 'NZXT H5 Flow - Blanc', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.1 Type C - Avec fenêtre (pleine taille)', '2023-06-05 13:59:35', '109.00', 499),
 (75, 'Mars Gaming MC-ART - Blanc', 'Boitier PC Moyen Tour - ATX / micro-ATX / Mini-ITX - USB 3.0 - Avec fenêtre (pleine taille)', '2023-06-05 14:00:34', '51.00', 500),
 (76, 'Antec NX210', 'Boitier PC Moyen Tour - ATX / mATX / Mini-ITX - USB 3.0 - Avec fenêtre (pleine taille)', '2023-06-05 14:05:17', '69.00', 500),
 (77, 'ASUS TUF Gaming F17 (TUF707ZC-HX023) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; Full HD (1920 x 1080) 144 Hz - Intel Core i5-12500H 12-Core 3.3 GHz - 16 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 2.6 Kg - Sans Windows', '2023-06-05 15:24:55', '999.00', 500),
-(78, 'Gigabyte G5 (GE-51FR263SH) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6&quot; Full HD (1920 x 1080) 144 Hz - Intel Core i5-12500H 12-Core 3.3 Ghz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:26:14', '829.00', 500),
+(78, 'Gigabyte G5 (GE-51FR263SH) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6&quot; Full HD (1920 x 1080) 144 Hz - Intel Core i5-12500H 12-Core 3.3 Ghz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:26:14', '829.00', 498),
 (79, 'MSI Thin GF63 (12UDX-242FR) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 15.6\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-12450H Octo-Core 3,3 GHz - 8 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 1.9 Kg - Windows 11', '2023-06-05 15:27:08', '849.00', 500),
 (80, 'Acer Nitro 5 (AN517-54-53A2) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3\'\' Full HD (1920 x 1080) 144 Hz - Intel Core i5-11400H Hexa-Core 2.7 GHz - 16 Go DDR4 - SSD 512 Go - Nvidia GeForce RTX 3050 - 2.7 Kg - Windows 11', '2023-06-05 15:28:33', '1079.00', 500),
-(81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 486),
+(81, 'ASUS ROG Strix G17 (G713PV-LL047W) + 1 jeu au choix offert sur Gamesplanet !', 'PC Portable Gamer 17.3&quot; QHD (2560 x 1440) 240 Hz - AMD Ryzen 9 7845HX 12-Core 3 GHz - 16 Go DDR5 - SSD 1 To - Nvidia GeForce RTX 4060 - 2.8 Kg - Windows 11', '2023-06-05 15:29:33', '2299.00', 476),
 (82, 'AKRacing Core EX - Rouge / Noir', 'Fauteuil Gamer - Tissu - Accoudoirs 3D réglables - Assise inclinable - Poids supporté 150 Kg', '2023-06-05 15:33:10', '249.00', 500),
 (83, 'DXRacer Air R1S (rose)', 'Fauteuil Gamer - Maille respirante - Accoudoirs 3D réglables - Dossier inclinable jusqu\'à  135°- Poids supporté 114 kg', '2023-06-05 15:34:14', '289.00', 500),
 (84, 'Noblechairs Icon - Noir / Bleu', 'Fauteuil Gamer - Simili Cuir - Accoudoirs 4D réglables - Poids supporté 150 Kg', '2023-06-05 15:35:18', '389.00', 500),
 (85, 'Noblechairs Epic - White Edition', 'Fauteuil Gamer - Simili Cuir Hybride - Accoudoirs 4D réglables - Poids supporté 120 Kg', '2023-06-05 15:36:21', '429.00', 500),
 (86, 'Vertagear S-line SL2000 - Noir / Rouge', 'Vertagear S-line SL2000 - Noir / Rouge', '2023-06-05 15:37:13', '214.00', 500),
-(87, 'HTC VIVE PRO 2', 'Casque de réalité virtuelle - 5120 x 2880 - 120 Hz', '2023-06-07 12:53:25', '699.00', 500),
+(87, 'HTC VIVE PRO 2', 'Casque de réalité virtuelle - 5120 x 2880 - 120 Hz', '2023-06-07 12:53:25', '699.00', 496),
 (88, 'HTC Station de base 2.0', 'Station de base pour VIVE Pro et VIVE Pro Eye', '2023-06-07 12:56:33', '199.00', 500),
 (89, 'HTC Tracker 3.0', 'Détecteur de mouvement polyvalent pour HTC Vive', '2023-06-07 12:59:51', '139.00', 500);
 
@@ -642,7 +571,7 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 DROP TABLE IF EXISTS `responses`;
 CREATE TABLE IF NOT EXISTS `responses` (
   `response_id` int NOT NULL AUTO_INCREMENT,
-  `response_text` text COLLATE utf8mb4_general_ci NOT NULL,
+  `response_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `comment_id` int NOT NULL,
   `response_user_id` int NOT NULL,
   `response_date` datetime NOT NULL,
@@ -665,10 +594,10 @@ INSERT INTO `responses` (`response_id`, `response_text`, `comment_id`, `response
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `user_email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_lastname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_firstname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `user_lastname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `user_firstname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `user_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_role` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
