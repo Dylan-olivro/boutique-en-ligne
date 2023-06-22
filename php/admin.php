@@ -87,30 +87,37 @@ if ($_SESSION['user']->user_role == 0) {
                             <input type="text" id="nameItem" name="nameItem" autocomplete="off">
 
                             <div class="groupInput">
-                                <div class="divInput">
-                                    <label for="priceItem">Price</label>
-                                    <input type="text" id="priceItem" name="priceItem" autocomplete="off">
+
+                                <div class="BoxInput">
+                                    <div class="divInput">
+                                        <label for="priceItem">Price</label>
+                                        <input type="text" id="priceItem" name="priceItem" autocomplete="off">
+                                    </div>
+
+                                    <div class="divInput">
+                                        <label for="categoryItem">Category</label>
+                                        <select name="categoryItem" id="categoryItem">
+                                            <?php
+                                            foreach ($result_cat as $cat) {
+                                                if ($cat->id_parent != 0) { ?>
+                                                    <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
+                                            <?php
+                                                }
+                                            } ?>
+                                        </select>
+                                        <!-- <input type="number" id="categoryItem" name="categoryItem" autocomplete="off"> -->
+                                    </div>
                                 </div>
-                                <div class="divInput">
-                                    <label for="stockItem">Stock</label>
-                                    <input type="number" id="stockItem" name="stockItem" autocomplete="off">
-                                </div>
-                                <div class="divInput">
-                                    <label for="categoryItem">Category</label>
-                                    <select name="categoryItem" id="categoryItem">
-                                        <?php
-                                        foreach ($result_cat as $cat) {
-                                            if ($cat->id_parent != 0) { ?>
-                                                <option value="<?= $cat->id ?>"><?= $cat->name ?></option>
-                                        <?php
-                                            }
-                                        } ?>
-                                    </select>
-                                    <!-- <input type="number" id="categoryItem" name="categoryItem" autocomplete="off"> -->
-                                </div>
-                                <div class="divInputFile">
-                                    <label for="image">Image</label>
-                                    <input type="file" id="image" name="image">
+
+                                <div class="BoxInput">
+                                    <div class="divInput">
+                                        <label for="stockItem">Stock</label>
+                                        <input type="number" id="stockItem" name="stockItem" autocomplete="off">
+                                    </div>
+                                    <div class="divInput">
+                                        <label for="image">Image</label>
+                                        <input type="file" id="image" name="image">
+                                    </div>
                                 </div>
                             </div>
 

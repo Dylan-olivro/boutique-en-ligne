@@ -181,11 +181,10 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                 <div class="command">
                                     <img src="../assets/img_item/<?= $infoProduct->image_name ?>" alt="">
                                     <div class="infoProduct">
-                                        <div>
+                                        <a href="./detail.php?id=<?= $infoProduct->product_id ?>">
                                             <p class="titleProduct"><?= htmlspecialchars($infoProduct->product_name) ?></p>
-                                            <p class="price"><?= htmlspecialchars($infoProduct->product_price) ?>€</p>
-                                        </div>
-                                        <a href="./detail.php?id=<?= $infoProduct->product_id ?>"><button>Acheter à nouveau</button></a>
+                                        </a>
+                                        <p class="price"><?= htmlspecialchars($infoProduct->product_price) ?>€</p>
                                     </div>
                                 </div>
                             <?php } ?>
