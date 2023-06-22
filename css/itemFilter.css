@@ -4,6 +4,9 @@
   width: 95%;
 }
 /** TRI  */
+#triCategories{
+  display: none;
+}
 .tri {
   margin-top: 1em;
 }

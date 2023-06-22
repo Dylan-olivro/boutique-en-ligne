@@ -1,8 +1,9 @@
 let allItems = document.getElementById("allItems");
-let priceTri = document.getElementById("priceTri");
 let chevronCat = document.querySelectorAll(".chevronCat");
 let chevronCatIcon = document.querySelectorAll(".chevronCatIcon");
 let triSelect = document.getElementById("triSelect");
+let triCategories = document.getElementById("triCategories");
+// let triCategoriesOptions = document.querySelectorAll("option[name='optionCat'");
 let categoryChildDiv = document.querySelectorAll(".categoryChildDiv");
 let categoryChild = document.querySelectorAll("input[name='subCategory']");
 let resultParent = document.querySelectorAll(".resultParent");
@@ -18,7 +19,16 @@ let urlGetSplit = urlGet.split("?");
 let fetchFilter = "traitement/traitement_filter.php";
 let fetchTri = "traitement/traitement_tri.php";
 
+
+triCategories.addEventListener("change", () => {
+  let triCategoriesID = $("#triCategories option:selected").val();
+  console.log(triCategoriesID);
+  allItems.innerHTML = "";
+  fetchItems(fetchFilter + `?categories=` + triCategoriesID);
+});
+
 // // * autre option d'affichage des filtres, pas par un select/option mais par des boutons
+// let priceTri = document.getElementById("priceTri");
 // let state = 1;
 // $(priceTri).click(() => {
 //   allItems.innerHTML = "";
@@ -83,6 +93,42 @@ $(triSelect).change(function () {
   }
 });
 
+/**
+ * ! Système de filtre par catégories A EFFACER !!!!!!!!!!!!
+ */
+$(triCategories).change(function () {
+  let triSelected = $("#triCategories option:selected").text();
+  if (triSelected) {
+    allItems.innerHTML = "";
+    switch (triSelected) {
+      case "1":
+        fetchItems(fetchTri + "?populaire");
+        break;
+      case "2":
+        fetchItems(fetchTri + "?nouveau");
+        break;
+      case "3":
+        fetchItems(fetchTri + "?croissant");
+        break;
+      case "Du + cher au - cher":
+        fetchItems(fetchTri + "?decroissant");
+        break;
+      case "Alphabétique A-Z":
+        fetchItems(fetchTri + "?aZ");
+        break;
+      case "Alphabétique Z-A":
+        fetchItems(fetchTri + "?zA");
+        break;
+      case "Disponibilité":
+        fetchItems(fetchTri + "?dispo");
+        break;
+
+      default:
+        break;
+    }
+  }
+});
+
 // * afficher ou cacher les child dans le parent correspondant au click du parent
 for (let i = 0; i < categoryParentRadio.length; i++) {
   resultParent[i].addEventListener("click", () => {
@@ -108,7 +154,7 @@ function fetchItems(url) {
       return response.json();
     })
     .then((data) => {
-      // console.log(data);
+      console.log(data);
       data.forEach((element) => {
         // console.log(element);
         let divImg = document.createElement("div");
@@ -168,7 +214,9 @@ if (urlGetSplit.length > 1) {
     for (let i = 0; i < categoryChild.length; i++) {
       if (urlGetId == categoryChild[i].id) {
         categoryChild[i].setAttribute("checked", true);
-        categoryChild[i].parentElement.parentElement.classList.toggle("categoryChildDivBlock");
+        categoryChild[i].parentElement.parentElement.classList.toggle(
+          "categoryChildDivBlock"
+        );
       }
     }
   } else if (urlGetName == "categoryParent") {
@@ -211,6 +259,7 @@ for (let i = 0; i < categoryChild.length; i++) {
 
 for (let i = 0; i < categoryParentRadio.length; i++) {
   categoryParentName[i].addEventListener("click", () => {
+    // console.log(categoryParentRadio[i].id);
     allItems.innerHTML = "";
     categoryParentRadio[i].checked = true;
     let urlGetSplitCategorie = urlGet.split("?");
@@ -224,7 +273,7 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
     );
     // window.history.pushState({urlPath:'/page1'},"",'/page1')
 
-    //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
+    //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie parent
     fetchItems(fetchFilter + `?categoryParent=` + categoryParentRadio[i].id);
     // console.log(categoryChild[i].id);
   });
