@@ -36,14 +36,13 @@ require_once('./include/required.php');
                     <div id="filterDiv">
                         <?php
                         foreach ($resultCategoryParent as $key) {
-                            // var_dump($key['name']);                                
                         ?>
                             <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
                                 <ul>
                                     <li class="resultParent dropdown-toggle" id="<?= $key->id; ?>">
                                         <input class="categoryParentRadio" type="radio" name="categoryParentRadio" id="<?= $key->id; ?>">
                                         <span class="categoryParentName" id="<?= $key->id; ?>"><?= $key->name; ?></span>
-                                        <span class="chevronCat"  id="<?= $key->id; ?>"><i class="chevronCatIcon fa-solid fa-chevron-down" id="chevronCatIcon"></i></span>
+                                        <span class="chevronCat" id="<?= $key->id; ?>"><i class="chevronCatIcon fa-solid fa-chevron-down" id="chevronCatIcon"></i></span>
                                     </li>
                                     <ul class="categoryChildDiv" id="categoryChildDiv<?= $key->id; ?>" data-parent-id="<?= $key->id; ?>">
                                         <?php
@@ -61,7 +60,6 @@ require_once('./include/required.php');
                                         ?>
                                     </ul>
                                 </ul>
-                                </a>
                             </div>
                         <?php
                         }
