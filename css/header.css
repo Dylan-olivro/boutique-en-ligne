@@ -258,6 +258,7 @@ main {
   top: 0;
   left: 55%;
   transform: translateX(-50%);
+  font-size: 0.8rem;
 }
 .resultsDiv {
   display: flex;
@@ -463,5 +464,8 @@ main {
 
   .backToCategories {
     text-align: start;
+  }
+  #sumQuantity {
+    font-size: 0.6rem;
   }
 }
