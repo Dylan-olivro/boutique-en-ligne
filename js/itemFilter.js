@@ -18,7 +18,6 @@ let urlGetSplit = urlGet.split("?");
 let fetchFilter = "traitement/traitement_filter.php";
 let fetchTri = "traitement/traitement_tri.php";
 
-
 // // * autre option d'affichage des filtres, pas par un select/option mais par des boutons
 // let state = 1;
 // $(priceTri).click(() => {
@@ -40,47 +39,47 @@ $(triSelect).change(function () {
   if (triSelected) {
     allItems.innerHTML = "";
     switch (triSelected) {
-      case 'Popularité':
+      case "Popularité":
         fetchItems(fetchTri + "?populaire");
         break;
-      case 'Nouveauté':
+      case "Nouveauté":
         fetchItems(fetchTri + "?nouveau");
         break;
-      case 'Du - cher au + cher':
+      case "Du - cher au + cher":
         fetchItems(fetchTri + "?croissant");
         break;
-      case 'Du + cher au - cher':
+      case "Du + cher au - cher":
         fetchItems(fetchTri + "?decroissant");
         break;
-      case 'Alphabétique A-Z':
+      case "Alphabétique A-Z":
         fetchItems(fetchTri + "?aZ");
         break;
-      case 'Alphabétique Z-A':
+      case "Alphabétique Z-A":
         fetchItems(fetchTri + "?zA");
         break;
-      case 'Disponibilité':
+      case "Disponibilité":
         fetchItems(fetchTri + "?dispo");
         break;
-    
+
       default:
         break;
     }
     // * autre façon, pas avec SWITCH mais avec des if/else classiques
-  //   if (triSelected == "Popularité") {
-  //     fetchItems(fetchTri + "?populaire");
-  //   } else if (triSelected == "Nouveauté") {
-  //     fetchItems(fetchTri + "?nouveau");
-  //   } else if (triSelected == "Du - cher au + cher") {
-  //     fetchItems(fetchTri + "?croissant");
-  //   } else if (triSelected == "Du + cher au - cher") {
-  //     fetchItems(fetchTri + "?decroissant");
-  //   } else if (triSelected == "Alphabétique A-Z") {
-  //     fetchItems(fetchTri + "?aZ");
-  //   } else if (triSelected == "Alphabétique Z-A") {
-  //     fetchItems(fetchTri + "?zA");
-  //   } else if (triSelected == "Disponibilité") {
-  //     fetchItems(fetchTri + "?dispo");
-  //   }
+    //   if (triSelected == "Popularité") {
+    //     fetchItems(fetchTri + "?populaire");
+    //   } else if (triSelected == "Nouveauté") {
+    //     fetchItems(fetchTri + "?nouveau");
+    //   } else if (triSelected == "Du - cher au + cher") {
+    //     fetchItems(fetchTri + "?croissant");
+    //   } else if (triSelected == "Du + cher au - cher") {
+    //     fetchItems(fetchTri + "?decroissant");
+    //   } else if (triSelected == "Alphabétique A-Z") {
+    //     fetchItems(fetchTri + "?aZ");
+    //   } else if (triSelected == "Alphabétique Z-A") {
+    //     fetchItems(fetchTri + "?zA");
+    //   } else if (triSelected == "Disponibilité") {
+    //     fetchItems(fetchTri + "?dispo");
+    //   }
   }
 });
 
@@ -169,6 +168,7 @@ if (urlGetSplit.length > 1) {
     for (let i = 0; i < categoryChild.length; i++) {
       if (urlGetId == categoryChild[i].id) {
         categoryChild[i].setAttribute("checked", true);
+        categoryChild[i].parentElement.parentElement.classList.toggle("categoryChildDivBlock");
       }
     }
   } else if (urlGetName == "categoryParent") {
@@ -176,7 +176,8 @@ if (urlGetSplit.length > 1) {
     for (let i = 0; i < categoryParentRadio.length; i++) {
       if (urlGetId == categoryParentRadio[i].id) {
         categoryParentRadio[i].setAttribute("checked", true);
-        categoryChildDiv[i].style.display = "block";
+        // categoryChildDiv[i].style.display = "block";
+        categoryChildDiv[i].classList.toggle("categoryChildDivBlock");
       }
     }
   }

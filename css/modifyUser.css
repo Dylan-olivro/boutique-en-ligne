@@ -38,6 +38,13 @@
   outline: none;
   color: #fff;
 }
+.FormChild {
+  /* width: 80%; */
+  border-radius: 10px;
+  outline: none;
+  height: 50px;
+  padding: 1%;
+}
 .emailP {
   display: flex;
   flex-direction: column;
@@ -48,6 +55,8 @@
   border-style: inset;
   border-color: rgb(118, 118, 118);
   color: rgb(161, 155, 155);
+  display: flex;
+  align-items: center;
 }
 .actuelRole {
   color: var(--button-color);

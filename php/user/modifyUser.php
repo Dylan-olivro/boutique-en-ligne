@@ -45,14 +45,14 @@ if (!$result || $_SESSION['user']->user_role != 2) {
 
                 <form method="post" id="formUser">
                     <input type="hidden" name="id" value="<?= htmlspecialchars($_GET['id']) ?>">
-                    <p class="emailP">Email : <span class="email"> <?= htmlspecialchars($result->user_email) ?></span></p>
+                    <p class="emailP">Email : <span class="email FormChild"> <?= htmlspecialchars($result->user_email) ?></span></p>
                     <div>
                         <label for="fisrtname">Firstname</label>
-                        <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($result->user_firstname) ?>">
+                        <input type="text" id="firstname" name="firstname" class="FormChild" value="<?= htmlspecialchars($result->user_firstname) ?>">
                     </div>
                     <div>
                         <label for="lastname">Lastname</label>
-                        <input type="text" id="lastname" name="lastname" value="<?= htmlspecialchars($result->user_lastname) ?>">
+                        <input type="text" id="lastname" name="lastname" class="FormChild" value="<?= htmlspecialchars($result->user_lastname) ?>">
                     </div>
                     <p>Role Actuel :<span class="actuelRole">
                             <?php
