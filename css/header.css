@@ -197,7 +197,7 @@ main {
 
 #searchResultsDesktopDiv {
   position: absolute;
-  background-color: lightgreen;
+  background-color: var(--border-color);
   display: none;
   z-index: 3;
   width: 99%;
@@ -263,8 +263,8 @@ main {
   display: flex;
 }
 
-.resultsDiv:hover {
-  background-color: pink;
+.resultsDiv:hover .resultsName {
+  color: var(--button-color);
 }
 
 .resultsImg {
