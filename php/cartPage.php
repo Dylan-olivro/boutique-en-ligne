@@ -23,24 +23,27 @@ $allUserAddresses = $address->returnAddressesByUser($bdd);
 // Valide le panier de l'utilisateur, créer une commande et vide le panier
 if (isset($_POST['valider'])) {
     if (!empty($result_cart)) {
-        if (!in_array(0, $stock)) {
+        if (isset($_POST['address'])) {
 
-            $date = date("Y-m-d H:i:s");
-            $order = new Order(null, $_SESSION['user']->user_id, $date, null, null, null);
-            $order->addOrder($bdd);
 
-            $lastInsertId = $bdd->lastInsertId();
+            if (!in_array(0, $stock)) {
 
-            // Récupère les prix dans un tableau
-            $prices = [];
-            foreach ($result_cart as $cartProduct) {
-                // SI la quantité est supérieur à 1, ajoute le nombre de fois le prix dans le tableau
-                if ($cartProduct->cart_quantity > 1) {
-                    for ($i = 1; $i < (int)$cartProduct->cart_quantity; $i++) {
-                        array_push($prices, $cartProduct->product_price);
+                $date = date("Y-m-d H:i:s");
+                $order = new Order(null, $_SESSION['user']->user_id, $date, null, null, null);
+                $order->addOrder($bdd);
+
+                $lastInsertId = $bdd->lastInsertId();
+
+                // Récupère les prix dans un tableau
+                $prices = [];
+                foreach ($result_cart as $cartProduct) {
+                    // SI la quantité est supérieur à 1, ajoute le nombre de fois le prix dans le tableau
+                    if ($cartProduct->cart_quantity > 1) {
+                        for ($i = 1; $i < (int)$cartProduct->cart_quantity; $i++) {
+                            array_push($prices, $cartProduct->product_price);
+                        }
                     }
-                }
-                array_push($prices, $cartProduct->product_price);
+                    array_push($prices, $cartProduct->product_price);
 
                 // Mise à jour des stock du produit à l'achat
                 $updateStock = $bdd->prepare('UPDATE products SET product_stock = :product_stock WHERE product_id = :product_id');
@@ -58,33 +61,37 @@ if (isset($_POST['valider'])) {
             }
             $total = array_sum($prices);
 
-            // Récupération du code promo rentrer par l'utilisateur
-            // $returnCode = $bdd->prepare('SELECT * FROM codes WHERE code_name = :code_name');
-            // $returnCode->execute(['code_name' => $_SESSION['code']]);
-            // $result_code = $returnCode->fetch(PDO::FETCH_OBJ);
-            // var_dump($result_code);
+                // Récupération du code promo rentrer par l'utilisateur
+                // $returnCode = $bdd->prepare('SELECT * FROM codes WHERE code_name = :code_name');
+                // $returnCode->execute(['code_name' => $_SESSION['code']]);
+                // $result_code = $returnCode->fetch(PDO::FETCH_OBJ);
+                // var_dump($result_code);
 
-            // Si le code promo existe, nouveau prix avec la réduction
-            if (isset($_SESSION['code'])) {
-                $discount = (intval($_SESSION['code']) * $total) / 100;
-                $total = $total - $discount;
-                unset($_SESSION['code']);
+                // Si le code promo existe, nouveau prix avec la réduction
+                if (isset($_SESSION['code'])) {
+                    $discount = (intval($_SESSION['code']) * $total) / 100;
+                    $total = $total - $discount;
+                    unset($_SESSION['code']);
+                }
+                // Création de numéro de commande
+                $orderNumber = str_replace(".", "-", strtoupper(uniqid('', true)));
+
+                // Mise à jour de l'objet Order
+                $order->setId($lastInsertId);
+                $order->setTotal($total);
+                $order->setAddress($_POST['address']);
+                $order->setNumber($orderNumber);
+                // $order = new Order($lastInsertId, $_SESSION['user']->user_id, $date, $total, $_POST['adress'], $orderNumber);
+
+                $order->updateOrder($bdd);
+                $cart->deleteCart($bdd);
+                header('Location: cartPage.php');
+            } else {
+                $ORDER_ERROR = 'Un article dans votre panier a son stock epuisée';
             }
-            // Création de numéro de commande
-            $orderNumber = str_replace(".", "-", strtoupper(uniqid('', true)));
-
-            // Mise à jour de l'objet Order
-            $order->setId($lastInsertId);
-            $order->setTotal($total);
-            $order->setAddress($_POST['adress']);
-            $order->setNumber($orderNumber);
-            // $order = new Order($lastInsertId, $_SESSION['user']->user_id, $date, $total, $_POST['adress'], $orderNumber);
-
-            $order->updateOrder($bdd);
-            $cart->deleteCart($bdd);
-            header('Location: cartPage.php');
         } else {
-            $ORDER_ERROR = 'Un article dans votre panier a son stock epuisée';
+
+            $ORDER_ERROR = 'Veuillez choisir une adresse';
         }
     } else {
         $ORDER_ERROR = 'Panier vide';
@@ -253,7 +260,7 @@ if (isset($_POST['vider'])) {
                             <form action="" method="post" class="formOrder">
                                 <p>Choisissez Votre Adresse</p>
                                 <div class="formOrderAddress">
-                                    <select name="adress" id="">
+                                    <select name="address" id="">
                                         <?php
                                         foreach ($allUserAddresses as $userAddress) {
                                             $orderAddress = sprintf('%d %s, %d %s', htmlspecialchars($userAddress->address_numero), htmlspecialchars($userAddress->address_name), htmlspecialchars($userAddress->address_postcode), htmlspecialchars($userAddress->address_city));
@@ -266,6 +273,7 @@ if (isset($_POST['vider'])) {
                                         ?>
                                     </select>
                                 </div>
+                                <p class=""><?= isset($ORDER_ERROR) ? $ORDER_ERROR : '' ?></p>
 
                                 <div class="formOrderValide">
                                     <input type="submit" name="valider" value="Passer la commande">

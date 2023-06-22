@@ -182,6 +182,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* width: 50%; */
 }
 .BoxFormCodeFormAddress > p {
   margin: 1%;
@@ -215,6 +216,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 }
 .formOrderAddress {
   /* width: 70%; */
@@ -300,8 +302,8 @@ hr {
   .total {
     width: 40%;
   }
-  .formOrder {
-    width: 60%;
+  .BoxFormCodeFormAddress {
+    width: 50%;
   }
   .totalDetail {
     justify-content: space-evenly;
@@ -354,7 +356,7 @@ hr {
     flex-direction: column;
     align-items: center;
   }
-  .formOrder {
+  .BoxFormCodeFormAddress {
     width: 100%;
   }
   .formOrder input {
