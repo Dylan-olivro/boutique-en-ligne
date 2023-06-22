@@ -161,30 +161,16 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 </html>
 
 <?php
-// * Demander si required est néssecaire vu que ça empêche d'afficher les messages d'erreurs !
-// * TRAVAILLER LE CSS SUR DU 1920x1080
 
 // ? FAIRE UNE PAGE POUR VOIR TOUTES NOS COMMANDES
-// ? Quand les inputs sont différents de vide mettre leur border en --button-color
 // ? Faire les quantités pour l'historique de commandes
-// // ? Envoyer en base de donnée normalement mais récupérer avec la première lettre en majuscule
-// ! Quand on ouvre les categories en version mobile, impossible de les réouvrir en desktop
-// ! Ajouter et modifier un produit nl2br() et if(empty(trim($textarea)))
-// ! Condition pour l'admin d'effacer les commentaires et les réponses
-// ! Condition pour la taille de l'adresse (il faut que ca passe en version mobile)
-// ! Faire le responsive pour l'historique de commande
 
-// ! VERIFIER TOUTES LES ERREURS POSSIBLE EN CHANGEANT LES GET
-// ! INTVAL POUR LA CONNEXION
+// ! Quand on ouvre les categories en version mobile, impossible de les réouvrir en desktop
+// ! Condition pour la taille de l'adresse (il faut que ca passe en version mobile)
 // ! REMETTRE LE SETINTERVAL SUR LES FETCH DE L'ADMIN
 
-// TODO: date de mise en ligne
 // TODO: Empiler des quantité dans l'historique des commandes
-// TODO: FAIRE toutes les verif en html, php et js pour les formulaires des pages admin, cartPage, profil, addAdress, modifyAdress, modifyPassword 
-// TODO: FAIRE la maquette
-// TODO: FAIRE le MCD
 // TODO: FAIRE la gestions des promotions
 // TODO: FAIRE la gestion des tags produits
 // TODO: FAIRE un système de payement fonctionnel
-// TODO: FAIRE une gestion des commentaires par l'Administrateur
 ?>
