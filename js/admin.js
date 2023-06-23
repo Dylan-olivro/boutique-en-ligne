@@ -82,7 +82,6 @@ formProduct.addEventListener("submit", (event) => {
   const formData = new FormData(formProduct);
   const imageInput = document.querySelector("#image");
   const imageFile = imageInput.files[0];
-  // console.log("object");
   formData.append("image", imageFile);
 
   fetch("traitement/traitement_addProduct.php", {
@@ -93,7 +92,6 @@ formProduct.addEventListener("submit", (event) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.PRODUCT_ERROR) {
         messageProduct.innerHTML = data.PRODUCT_ERROR;
       } else {
@@ -127,7 +125,6 @@ formCategories.addEventListener("submit", (event) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.CATEGORY_ERROR) {
         messageCategories.innerHTML = data.CATEGORY_ERROR;
       } else {

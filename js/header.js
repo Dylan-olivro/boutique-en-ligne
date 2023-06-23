@@ -49,7 +49,6 @@ let darkMode = document.getElementById("darkMode");
 darkMode.addEventListener("click", () => {
   darkModeIcon.classList.toggle("fa-moon");
   darkModeIcon.classList.toggle("fa-sun");
-  console.log(cartIcon);
 });
 
 //* On change le thème dans le localStorage pour qu'il soit mémorisé

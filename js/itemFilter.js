@@ -33,7 +33,6 @@ let fetchTri = "traitement/traitement_tri.php";
 
 triCategories.addEventListener("change", () => {
   let triCategoriesID = $("#triCategories option:selected").val();
-  console.log(triCategoriesID);
   allItems.innerHTML = "";
   fetchItems(fetchFilter + `?categories=` + triCategoriesID);
 });
@@ -143,7 +142,6 @@ $(triCategories).change(function () {
 // * afficher ou cacher les child dans le parent correspondant au click du parent
 for (let i = 0; i < categoryParentRadio.length; i++) {
   resultParent[i].addEventListener("click", () => {
-    // console.log(chevronCatIcon[i]);
     chevronCatIcon[i].classList.toggle("fa-chevron-down");
     chevronCatIcon[i].classList.toggle("fa-chevron-up");
     let childElement = document.querySelectorAll(
@@ -165,9 +163,7 @@ function fetchItems(url) {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       data.forEach((element) => {
-        // console.log(element);
         let divImg = document.createElement("div");
         let divNameDesc = document.createElement("div");
         let divImgNameDesc = document.createElement("div");
@@ -217,7 +213,6 @@ function fetchItems(url) {
  * Afficher les produits de la catégorie visée dans la nav
  */
 if (urlGetSplit.length > 1) {
-  // console.log(urlGetSplit);
   let urlGetName = urlGetSplit[1].split("=")[0];
   let urlGetId = urlGetSplit[1].split("=")[1];
   if (urlGetName == "subCategory") {
@@ -241,7 +236,6 @@ if (urlGetSplit.length > 1) {
     }
   }
 } else {
-  // console.log("pas d'id");
   //* exécution de la fonction fetchItems dès lors qu'on arrive sur la page
   fetchItems(fetchFilter);
 }
@@ -264,13 +258,11 @@ for (let i = 0; i < categoryChild.length; i++) {
 
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie enfant
     fetchItems(fetchFilter + `?subCategory=` + categoryChild[i].id);
-    // console.log(categoryChild[i].id);
   });
 }
 
 for (let i = 0; i < categoryParentRadio.length; i++) {
   categoryParentName[i].addEventListener("click", () => {
-    // console.log(categoryParentRadio[i].id);
     allItems.innerHTML = "";
     categoryParentRadio[i].checked = true;
     let urlGetSplitCategorie = urlGet.split("?");
@@ -286,6 +278,5 @@ for (let i = 0; i < categoryParentRadio.length; i++) {
 
     //* exécution de la fonction fetchItems dès lors qu'on clique sur une catégorie parent
     fetchItems(fetchFilter + `?categoryParent=` + categoryParentRadio[i].id);
-    // console.log(categoryChild[i].id);
   });
 }

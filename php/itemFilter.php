@@ -50,7 +50,6 @@ require_once('./include/required.php');
                     <div id="filterDiv">
                         <?php
                         foreach ($resultCategoryParent as $key) {
-                            // var_dump($key['name']);                                
                         ?>
 
                             <div class="categoryParentDiv" data-parent-id="<?= $key->id; ?>">
