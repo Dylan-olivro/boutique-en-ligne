@@ -8,17 +8,14 @@ let searchResultsDesktopDiv = document.getElementById(
   "searchResultsDesktopDiv"
 ); //la div globale
 let searchResultsBurgerDiv = document.getElementById("searchResultsBurgerDiv"); //la div globale
-// console.log(document.body.clientWidth);
 
 // if (searchResultsInput) {
 searchResultsInput.addEventListener("keyup", () => {
-  // console.log(searchResultsInput.value);
   searchResultsDesktopDiv.innerHTML = "";
   if (searchResultsInput.value == "") {
     searchResultsDesktopDiv.style.display = "none";
   } else {
     searchResultsDesktopDiv.style.display = "block";
-    // console.log(getPage());
     fetch(
       `./${getPage()[0]}autocompletion.php/?search=${searchResultsInput.value}`
     )
@@ -26,7 +23,6 @@ searchResultsInput.addEventListener("keyup", () => {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
         if (data.length == 0) {
           let noResult = document.createElement("p");
           noResult.innerText = "Aucun résultat trouvé";
@@ -58,7 +54,6 @@ searchResultsInput.addEventListener("keyup", () => {
           resultsLink.href = `./${getPage()[0]}detail.php?id=${
             element.product_id
           }`;
-          // console.log("hello");
 
           // for(i=0; i < 5 ; i++){
           if (searchResultsDesktopDiv.children.length < 5) {
@@ -68,7 +63,6 @@ searchResultsInput.addEventListener("keyup", () => {
             resultsLink.append(resultsDiv);
             searchResultsDesktopDiv.append(resultsLink);
           }
-          // console.log(typeof element);
           // }
 
           // let searchResultsP = document.createElement("p");
@@ -94,9 +88,7 @@ window.addEventListener("click", function (e) {
 // window.addEventListener("resize", () => {
   // * autocomplétion concernant le burger
   if (document.body.clientWidth <= 768) {
-    console.log(document.body.clientWidth);
     searchInputBurger.addEventListener("keyup", () => {
-      console.log('keyup');
       searchResultsBurgerDiv.innerHTML = "";
       if (searchInputBurger.value == "") {
         searchResultsBurgerDiv.style.display = "none";
@@ -115,7 +107,6 @@ window.addEventListener("click", function (e) {
             return response.json();
           })
           .then((data) => {
-            // console.log(data);
             if (data.length == 0) {
               let noResult = document.createElement("p");
               noResult.innerText = "Aucun résultat trouvé";

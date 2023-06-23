@@ -7,7 +7,6 @@ formProduct.addEventListener("submit", (event) => {
   const formData = new FormData(formProduct);
   const imageInput = document.querySelector("#image");
   const imageFile = imageInput.files[0];
-  // console.log("object");
   formData.append("image", imageFile);
 
   fetch("../traitement/traitement_modifyProduct.php", {
@@ -18,7 +17,6 @@ formProduct.addEventListener("submit", (event) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.PRODUCT_ERROR) {
         messageProduct.innerHTML = data.PRODUCT_ERROR;
       } else {

@@ -18,7 +18,6 @@ formEl.addEventListener("submit", (event) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.UPDATE_ADDRESS_ERROR) {
         message.innerHTML = data.UPDATE_ADDRESS_ERROR;
       } else {

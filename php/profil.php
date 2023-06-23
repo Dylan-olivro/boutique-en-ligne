@@ -178,7 +178,6 @@ $allUserAdresses = $address->returnAddressesByUser($bdd);
                                 </div>
                             </div>
                             <?php foreach ($product as $infoProduct) {
-                                // var_dump($infoProduct);
                             ?>
                                 <div class="command">
                                     <img src="../assets/img_item/<?= $infoProduct->image_name ?>" alt="">

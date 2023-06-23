@@ -1,5 +1,6 @@
 <?php
 require_once('../class/user.php');
+require_once('../class/cart.php');
 session_start();
 require_once('../include/bdd.php');
 require_once('../include/function.php');
@@ -38,6 +39,43 @@ if (isset($data)) {
                 // $_SESSION['user']->user_role = (int)$res->user_role;
 
                 $_SESSION['user'] = $result;
+                if (!empty($_SESSION['panier']['id_article'])) {
+
+                    foreach ($_SESSION['panier']['id_article'] as $element) {
+                        $a = array_search($element, $_SESSION['panier']['id_article']); // $key = 2;
+
+                        $quantity = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id AND user_id = :user_id");
+                        $quantity->execute([
+                            'product_id' => $element,
+                            'user_id' => $_SESSION['user']->user_id
+                        ]);
+                        $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
+
+                        if ($quantity->rowCount() > 0) {
+                            $updateQuantity = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id AND user_id = :user_id");
+                            $updateQuantity->execute([
+                                'cart_quantity' => $result_quantity->cart_quantity + $_SESSION['panier']['qte'][$a],
+                                'product_id' => $element,
+                                'user_id' => $_SESSION['user']->user_id
+                            ]);
+                        } else {
+                            $insertQuantity = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
+                            $insertQuantity->execute([
+                                'user_id' => $_SESSION['user']->user_id,
+                                'product_id' => $element,
+                                'cart_quantity' => $_SESSION['panier']['qte'][$a]
+                            ]);
+                        }
+
+                        // $cart = $bdd->prepare("INSERT INTO carts(user_id, product_id, cart_quantity) VALUES (:user_id,:product_id,:cart_quantity)");
+                        // $cart->execute([
+                        //     'user_id' => $_SESSION['user']->user_id,
+                        //     'product_id' => $element,
+                        //     'cart_quantity' => $_SESSION['panier']['qte'][$a]
+                        // ]);
+                    }
+                    unset($_SESSION['panier']);
+                }
                 $message['CONNECT_SUCCES'] = '<i class="fa-solid fa-circle-check"></i>&nbspUtilisateur connecté avec succès';
             } else {
                 $message['CONNECT_ERROR'] = '<i class="fa-solid fa-circle-exclamation"></i>&nbspLe mot de passe est incorrect.';

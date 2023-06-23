@@ -6,7 +6,6 @@ $resultCategoryParent = $returnCategoryParent->fetchAll(PDO::FETCH_OBJ);
 // $nombre = $bdd->prepare('SELECT SUM(cart_quantity) AS sum FROM carts WHERE user_id = :user_id');
 // $nombre->execute(["user_id" => $_SESSION['user']->user_id]);
 // $nombreResult = $nombre->fetch(PDO::FETCH_OBJ);
-// var_dump($nombreResult);
 
 if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
     includeHeader($bdd, './', './php/', './');
@@ -61,6 +60,7 @@ function includeHeader($bdd, $index, $url, $image)
                     <span id="cartSpan" class="iconNav cartSpan">
                         <a href="<?= $url ?>cartPage.php">
                             <?php
+                            // Affichage du nombre de produits dans le panier 
                             if (isset($_SESSION['user'])) {
                                 $numberCart = $bdd->prepare('SELECT SUM(cart_quantity) AS sumQuantity FROM carts WHERE user_id = :user_id');
                                 $numberCart->execute(["user_id" => $_SESSION['user']->user_id]);
@@ -75,7 +75,23 @@ function includeHeader($bdd, $index, $url, $image)
                                     }
                                     ?>
                                 </span>
+                                <?php
+                            } else {
+                                // Affichage du nombre de produits dans le panier pour les utilisateurs pas connecté
+                                if (!empty($_SESSION['panier']['id_article'])) {
+                                    $quantityX = array_sum($_SESSION['panier']['qte']);
+                                ?>
+                                    <span id="sumQuantity">
+                                        <?php
+                                        if ($quantityX > 10) {
+                                            echo "10+";
+                                        } else {
+                                            echo $quantityX;
+                                        }
+                                        ?>
+                                    </span>
                             <?php
+                                }
                             }
                             ?>
                             <svg id="cart-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 256 256" xml:space="preserve">
@@ -116,7 +132,6 @@ function includeHeader($bdd, $index, $url, $image)
                     </li>
                     <?php
                     foreach ($resultCategoryParent as $key) {
-                        // var_dump($key['name']);                                
                     ?>
                         <li class="dropdown" id="">
                             <a class="" href="<?= $url ?>itemFilter.php?categoryParent=<?= $key->id ?>" role="button" data-bs-toggle="" aria-expanded="false">
