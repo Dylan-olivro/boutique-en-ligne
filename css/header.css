@@ -91,7 +91,9 @@ main {
 .logo i {
   color: var(--button-color);
 }
-
+.logo{
+  width: 20%;
+}
 .iconNav:hover i {
   color: var(--text-input-color);
 }

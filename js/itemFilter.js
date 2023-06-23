@@ -15,10 +15,21 @@ let categoryParentRadio = document.querySelectorAll(
 let categoryParentName = document.querySelectorAll(".categoryParentName");
 let urlGet = window.location.href;
 let urlGetSplit = urlGet.split("?");
+console.log(urlGetSplit);
+
+let urlGetId;
+
+if (urlGetSplit[1] != null) {
+  urlGetId = "&subCategory=" + urlGetSplit[1].split("=")[1];
+  console.log(urlGetId);
+  console.log("split ok");
+} else {
+  urlGetId = "";
+  console.log(" PAS de split");
+}
 
 let fetchFilter = "traitement/traitement_filter.php";
 let fetchTri = "traitement/traitement_tri.php";
-
 
 triCategories.addEventListener("change", () => {
   let triCategoriesID = $("#triCategories option:selected").val();
@@ -50,25 +61,25 @@ $(triSelect).change(function () {
     allItems.innerHTML = "";
     switch (triSelected) {
       case "Popularité":
-        fetchItems(fetchTri + "?populaire");
+        fetchItems(fetchTri + "?populaire" + urlGetId);
         break;
       case "Nouveauté":
-        fetchItems(fetchTri + "?nouveau");
+        fetchItems(fetchTri + "?nouveau" + urlGetId);
         break;
       case "Du - cher au + cher":
-        fetchItems(fetchTri + "?croissant");
+        fetchItems(fetchTri + "?croissant" + urlGetId);
         break;
       case "Du + cher au - cher":
-        fetchItems(fetchTri + "?decroissant");
+        fetchItems(fetchTri + "?decroissant" + urlGetId);
         break;
       case "Alphabétique A-Z":
-        fetchItems(fetchTri + "?aZ");
+        fetchItems(fetchTri + "?aZ" + urlGetId);
         break;
       case "Alphabétique Z-A":
-        fetchItems(fetchTri + "?zA");
+        fetchItems(fetchTri + "?zA" + urlGetId);
         break;
       case "Disponibilité":
-        fetchItems(fetchTri + "?dispo");
+        fetchItems(fetchTri + "?dispo" + urlGetId);
         break;
 
       default:
