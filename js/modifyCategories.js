@@ -18,7 +18,6 @@ formEl.addEventListener("submit", (event) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.CATEGORY_ERROR) {
         message.innerHTML = data.CATEGORY_ERROR;
       } else {

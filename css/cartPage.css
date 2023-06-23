@@ -260,6 +260,23 @@
   border-radius: 10px;
   color: #fff;
 }
+.LinkConnect {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+.ButtonConnect {
+  /* width: 100%; */
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  padding: 1% 2%;
+}
+#connect {
+  /* width: 100%; */
+}
 /* --------------------------- */
 .total {
   display: flex;

@@ -54,3 +54,15 @@ if (getURL()[0][1] === '/index.php' || getURL()[0][1] === '/') {
 session_start();
 // ob_start();
 ob_start('ob_gzhandler');
+
+// Création du panier pour les utilisateurs qui ne sont pas connecté
+if (!isset($_SESSION['user'])) {
+    if (!isset($_SESSION['panier'])) {
+        /* Initialisation du panier */
+        $_SESSION['panier'] = array();
+        /* Subdivision du panier */
+        $_SESSION['panier']['id_article'] = array();
+        $_SESSION['panier']['qte'] = array();
+        $_SESSION['panier']['prix'] = array();
+    }
+}

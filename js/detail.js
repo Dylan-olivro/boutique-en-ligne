@@ -6,7 +6,6 @@ stock.forEach((element) => {
 let textarea = document.getElementById("TextareaComment");
 let count = document.getElementById("count");
 
-console.log(textarea.value);
 textarea.addEventListener("keyup", () => {
   count.innerText = `${textarea.value.length}/2000`;
   if (textarea.value.length > 2000) {

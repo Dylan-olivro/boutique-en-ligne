@@ -48,11 +48,9 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 
                                 <div class="BoxPriceBtn">
                                     <p class="ProductPrice"><?= htmlspecialchars($key->product_price) ?>€</p>
-                                    <?php if (isset($_SESSION['user'])) { ?>
-                                        <form action="" method="post" id="FormCart">
-                                            <button type="submit" name="ButtonAddCartPopular<?= $key->product_id ?>" id="ButtonAddCartPopular"><i class="fa-solid fa-cart-plus"></i></button>
-                                        </form>
-                                    <?php } ?>
+                                    <form action="" method="post" id="FormCart">
+                                        <button type="submit" name="ButtonAddCartPopular<?= $key->product_id ?>" id="ButtonAddCartPopular"><i class="fa-solid fa-cart-plus"></i></button>
+                                    </form>
                                 </div>
 
                             </div>
@@ -60,32 +58,46 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
                         </div>
                     <?php
                         if (isset($_POST['ButtonAddCartPopular' . $key->product_id])) {
-                            // Récupère la quantité du produit
-                            $quantity = $bdd->prepare("SELECT cart_quantity FROM carts WHERE product_id = :product_id AND user_id = :user_id");
-                            $quantity->execute([
-                                'product_id' => $key->product_id,
-                                'user_id' => $_SESSION['user']->user_id
-                            ]);
-                            $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
-                            var_dump($result_quantity);
+                            if (isset($_SESSION['user'])) {
 
-                            // Insert le produit de la page dans le panier en gérant la quantité
-                            if ($quantity->rowCount() > 0) {
-                                $updateQuantity = $bdd->prepare("UPDATE carts SET cart_quantity= :cart_quantity WHERE product_id = :product_id AND user_id = :user_id");
-                                $updateQuantity->execute([
-                                    'cart_quantity' => $result_quantity->cart_quantity + 1,
+                                // Récupère la quantité du produit
+                                $quantity = $bdd->prepare("SELECT cart_quantity FROM carts WHERE product_id = :product_id AND user_id = :user_id");
+                                $quantity->execute([
                                     'product_id' => $key->product_id,
                                     'user_id' => $_SESSION['user']->user_id
                                 ]);
+                                $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
+
+                                // Insert le produit de la page dans le panier en gérant la quantité
+                                if ($quantity->rowCount() > 0) {
+                                    $updateQuantity = $bdd->prepare("UPDATE carts SET cart_quantity= :cart_quantity WHERE product_id = :product_id AND user_id = :user_id");
+                                    $updateQuantity->execute([
+                                        'cart_quantity' => $result_quantity->cart_quantity + 1,
+                                        'product_id' => $key->product_id,
+                                        'user_id' => $_SESSION['user']->user_id
+                                    ]);
+                                } else {
+                                    $insertQuantity = $bdd->prepare("INSERT INTO carts(user_id, product_id, cart_quantity) VALUES (:user_id,:product_id,:cart_quantity)");
+                                    $insertQuantity->execute([
+                                        'user_id' => $_SESSION['user']->user_id,
+                                        'product_id' => $key->product_id,
+                                        'cart_quantity' => 1
+                                    ]);
+                                }
+                                header('Location: index.php');
                             } else {
-                                $insertQuantity = $bdd->prepare("INSERT INTO carts(user_id, product_id, cart_quantity) VALUES (:user_id,:product_id,:cart_quantity)");
-                                $insertQuantity->execute([
-                                    'user_id' => $_SESSION['user']->user_id,
-                                    'product_id' => $key->product_id,
-                                    'cart_quantity' => 1
-                                ]);
+                                // Si l'utilisateur n'est pas connecté
+                                // Insert le produit dans la session panier ou augmente sa quantité de 1
+                                $select = array();
+                                $select['id'] = $key->product_id;
+                                $select['qte'] = 1;
+                                $select['prix'] = $key->product_price;
+                                if (modif_qte($key->product_id, '+')) {
+                                } else {
+                                    ajout($select);
+                                }
+                                header('Location: index.php');
                             }
-                            header('Location: index.php');
                         }
                     }
                     ?>
@@ -115,11 +127,9 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
 
                                 <div class="BoxPriceBtn">
                                     <p class="ProductPrice"><?= htmlspecialchars($key2->product_price) ?>€</p>
-                                    <?php if (isset($_SESSION['user'])) { ?>
-                                        <form action="" method="post" id="FormCart">
-                                            <button type="submit" name="ButtonAddCartNew<?= $key2->product_id ?>" id="ButtonAddCartNew"><i class="fa-solid fa-cart-plus"></i></button>
-                                        </form>
-                                    <?php } ?>
+                                    <form action="" method="post" id="FormCart">
+                                        <button type="submit" name="ButtonAddCartNew<?= $key2->product_id ?>" id="ButtonAddCartNew"><i class="fa-solid fa-cart-plus"></i></button>
+                                    </form>
                                 </div>
 
                             </div>
@@ -127,27 +137,42 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
                         </div>
                     <?php
                         if (isset($_POST['ButtonAddCartNew' . $key2->product_id])) {
-                            // Récupère la quantité du produit
-                            $quantity = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
-                            $quantity->execute(['product_id' => $key2->product_id]);
-                            $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
+                            if (isset($_SESSION['user'])) {
 
-                            // Insert le produit de la page dans le panier en gérant la quantité
-                            if ($quantity->rowCount() > 0) {
-                                $updateQuantity = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
-                                $updateQuantity->execute([
-                                    'cart_quantity' => $result_quantity->cart_quantity + 1,
-                                    'product_id' => $key2->product_id
-                                ]);
+                                // Récupère la quantité du produit
+                                $quantity = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
+                                $quantity->execute(['product_id' => $key2->product_id]);
+                                $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
+
+                                // Insert le produit de la page dans le panier en gérant la quantité
+                                if ($quantity->rowCount() > 0) {
+                                    $updateQuantity = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
+                                    $updateQuantity->execute([
+                                        'cart_quantity' => $result_quantity->cart_quantity + 1,
+                                        'product_id' => $key2->product_id
+                                    ]);
+                                } else {
+                                    $insertQuantity = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
+                                    $insertQuantity->execute([
+                                        'user_id' => $_SESSION['user']->user_id,
+                                        'product_id' => $key2->product_id,
+                                        'cart_quantity' => 1
+                                    ]);
+                                }
+                                header('Location: index.php');
                             } else {
-                                $insertQuantity = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
-                                $insertQuantity->execute([
-                                    'user_id' => $_SESSION['user']->user_id,
-                                    'product_id' => $key2->product_id,
-                                    'cart_quantity' => 1
-                                ]);
+                                // Si l'utilisateur n'est pas connecté
+                                // Insert le produit dans la session panier ou augmente sa quantité de 1
+                                $select = array();
+                                $select['id'] = $key->product_id;
+                                $select['qte'] = 1;
+                                $select['prix'] = $key->product_price;
+                                if (modif_qte($key->product_id, '+')) {
+                                } else {
+                                    ajout($select);
+                                }
+                                header('Location: index.php');
                             }
-                            header('Location: index.php');
                         }
                     }
                     ?>

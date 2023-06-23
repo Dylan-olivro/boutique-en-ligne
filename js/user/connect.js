@@ -21,7 +21,6 @@ formEl.addEventListener("submit", (event) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.CONNECT_ERROR) {
         message.innerHTML = data.CONNECT_ERROR;
       } else {
