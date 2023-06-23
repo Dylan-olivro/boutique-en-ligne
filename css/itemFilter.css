@@ -4,7 +4,7 @@
   width: 95%;
 }
 /** TRI  */
-#triCategories{
+#triCategories {
   display: none;
 }
 .tri {
@@ -14,7 +14,8 @@
   display: flex;
   justify-content: end;
 }
-#triSelect {
+#triSelect,
+#triCategories {
   /* width: 80%; */
   border-radius: 10px;
   outline: none;
@@ -158,23 +159,58 @@
   .itemImg {
     width: 100px;
   }
-  .catAndItems {
-    flex-direction: column;
-  }
-  /* .catAndItems form {
+}
+@media screen and (max-width: 768px) {
+  #container {
     width: 100%;
-    position: absolute;
-    bottom: 0;
   }
-  #filterDiv {
+
+  #triCategories {
+    display: block;
+  }
+  .catAndItems form {
+    display: none;
+  }
+  .triForm {
+    justify-content: space-around;
+  }
+  #allItems {
+    width: 100%;
+    border-radius: initial;
+  }
+  .itemPrice {
+    font-size: 1em;
+  }
+}
+@media screen and (max-width: 425px) {
+  .triForm {
+    flex-direction: column;
+    align-items: center;
+  }
+  .triForm > select {
+    width: 95%;
+  }
+  #triCategories {
+    margin-bottom: 2%;
+  }
+  .divGlobal a {
+    width: 100%;
+    padding: 1em;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 25px;
+  }
+  .divNameDesc {
+    width: 100%;
+  }
+  .itemName {
+    margin-bottom: 2%J;
+  }
+  .divPrice {
+    margin: 0 !important;
     display: flex;
     width: 100%;
+    font-weight: bolder;
     justify-content: space-evenly;
   }
-  .categoryChildDivBlock {
-    position: absolute;
-    top: 0;
-    transform: translateY(-100%);
-    z-index: 1;
-  } */
 }
