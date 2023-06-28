@@ -21,16 +21,11 @@ let urlGetId;
 
 if (urlGetSplit[1] != null) {
   urlGetId = "&subCategory=" + urlGetSplit[1].split("=")[1];
-  console.log(urlGetId);
-  console.log("split ok");
 } else {
   urlGetId = "";
-  console.log(" PAS de split");
 }
-
 let fetchFilter = "traitement/traitement_filter.php";
 let fetchTri = "traitement/traitement_tri.php";
-
 triCategories.addEventListener("change", () => {
   let triCategoriesID = $("#triCategories option:selected").val();
   allItems.innerHTML = "";

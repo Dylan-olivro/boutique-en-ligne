@@ -140,16 +140,22 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
                             if (isset($_SESSION['user'])) {
 
                                 // Récupère la quantité du produit
-                                $quantity = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id");
-                                $quantity->execute(['product_id' => $key2->product_id]);
+                                $quantity = $bdd->prepare("SELECT `cart_quantity` FROM `carts` WHERE product_id = :product_id AND user_id = :user_id");
+                                $quantity->execute([
+                                    'product_id' => $key2->product_id,
+                                    'user_id' => $_SESSION['user']->user_id
+                                ]);
                                 $result_quantity = $quantity->fetch(PDO::FETCH_OBJ);
+                                var_dump($result_quantity);
+
 
                                 // Insert le produit de la page dans le panier en gérant la quantité
                                 if ($quantity->rowCount() > 0) {
-                                    $updateQuantity = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id");
+                                    $updateQuantity = $bdd->prepare("UPDATE `carts` SET `cart_quantity`= :cart_quantity WHERE product_id = :product_id AND user_id = :user_id");
                                     $updateQuantity->execute([
                                         'cart_quantity' => $result_quantity->cart_quantity + 1,
-                                        'product_id' => $key2->product_id
+                                        'product_id' => $key2->product_id,
+                                        'user_id' => $_SESSION['user']->user_id
                                     ]);
                                 } else {
                                     $insertQuantity = $bdd->prepare("INSERT INTO `carts`(`user_id`, `product_id`, `cart_quantity`) VALUES (:user_id,:product_id,:cart_quantity)");
@@ -164,10 +170,10 @@ $resultAllItems = $requestAllItems->fetchAll(PDO::FETCH_OBJ);
                                 // Si l'utilisateur n'est pas connecté
                                 // Insert le produit dans la session panier ou augmente sa quantité de 1
                                 $select = array();
-                                $select['id'] = $key->product_id;
+                                $select['id'] = $key2->product_id;
                                 $select['qte'] = 1;
-                                $select['prix'] = $key->product_price;
-                                if (modif_qte($key->product_id, '+')) {
+                                $select['prix'] = $key2->product_price;
+                                if (modif_qte($key2->product_id, '+')) {
                                 } else {
                                     ajout($select);
                                 }
